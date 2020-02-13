@@ -28,26 +28,10 @@ msec_msr = 1
 #    # 2: Paths
 cwd = os.getcwd()
 #Where we store the experiments
-measurements_path = os.path.join(cwd, "..", "measurements", "Unpruned_network")
-if not os.path.isdir(measurements_path):
-    os.makedirs(measurements_path)
-#one folder for each new experiment
-exp_dir = os.path.join(measurements_path, model_name + '_' + str(now))
-if not os.path.exists(exp_dir):
-    os.makedirs(exp_dir)
 #To visualize the learning
 tb_dir = os.path.join(exp_dir, 'tb_logs')
 if not os.path.exists(tb_dir):
     os.makedirs(tb_dir)
-log_power_consumption = os.path.join(exp_dir, 'power_consumption.csv')
-#Time measurement file
-time_log = os.path.join(exp_dir, 'time.csv')
-#metrics measure file
-metrics_log = os.path.join(exp_dir, 'metrics.csv')
-#model summary file
-model_summary_log = os.path.join(exp_dir, 'model_summary.txt')
-#model
-weights_log = os.path.join(exp_dir, 'weights.h5')
 #    # 3: Model parameters
 depth = 4
 start_f = 8
@@ -190,52 +174,4 @@ model_np.fit(train_dataset,
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
 #                              Measurement                                     #
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
-print("Start measurements")
-# 1 : save model summary
-with open(model_summary_log,'w') as fh:
-    # Pass the file handle in as a lambda function to make it callable
-    model_np.summary(print_fn=lambda x: fh.write(x + '\n'))
-    model_np.feature_extractor.summary(print_fn=lambda x: fh.write(x + '\n'))
-    model_np.classifier.summary(print_fn=lambda x: fh.write(x + '\n'))
-
-# 2 : save weights
-model_np.save_weights(weights_log)
-# load weights into new model
-# model_np.load_weights(weights_log)
-# 3 : Accuracy
-result = model_np.evaluate(test_dataset)
-print('metrics measured')
-dictionnary = dict(zip(model_np.metrics_names, result))
-metrics_log_file = open(metrics_log, "w")
-for key in dictionnary:
-    str_metric = key + ', ' + str(dictionnary[key]) + '\n'
-    metrics_log_file.write(str_metric)
-metrics_log_file.close()
-print('metrics file written')
-
-# 4 : Power consumption
-command = 'nvidia-smi' + ' '
-command += '-i' + ' ' + str(gpu_i) + ' '
-command += '--query-gpu=power.draw --format=csv' + ' '
-command += '-lms' + ' ' + str(msec_msr) + ' '
-command += '-f' + ' ' + log_power_consumption + ' '
-args = shlex.split(command)
-p = subprocess.Popen(args)
-eval_out = model_np.predict(test_dataset, steps=len(x_test)/batch_size)
-p.terminate()
-print('Power Consumption measured')
-
-# 3 : Latency and Throughput
-latency = timeit(lambda: model_np.predict(test_dataset, steps=1),
-                        number=100)
-print('Latency measured')
-throughput = timeit(lambda: model_np.predict(test_dataset, steps=len(x_test)/batch_size),
-                          number=100)
-print('Throughput measured')
-time_log_file = open(time_log, "w")
-str_latency = 'latency' + ', ' + str(latency) + '\n'
-str_throughput = 'throughput' + ', ' + str(throughput) + '\n'
-time_log_file.write(str_latency)
-time_log_file.write(str_throughput)
-time_log_file.close()
-print('Time file writen')
+make_measure(model_np, exp_dir, test_dataset, len(x_test)/batch_size)
