@@ -4,12 +4,15 @@
 import tensorflow as tf
 import os
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
+#                               Global Varriables                              #
+# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
+n_epoch = 1
+lr = 5e-4
+# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
 #                              Main functions                                  #
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
 def make_train(model, exp_dir, train_dataset,
                validation_dataset, n_step, v_step):
-    # Constants
-    n_epoch = 1
     # Training
     model_setup(model)
     callbacks = callbacks_init(exp_dir)
@@ -28,8 +31,6 @@ def make_train(model, exp_dir, train_dataset,
 def model_setup(model):
     # Loss
     loss = tf.keras.losses.CategoricalCrossentropy()
-    # learning rate
-    lr = 5e-4
     optimizer = tf.keras.optimizers.Adam(learning_rate=lr)
     # Validation metrics
     metrics = ['accuracy']

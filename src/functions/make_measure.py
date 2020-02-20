@@ -7,6 +7,13 @@ import shlex
 import subprocess
 from timeit import timeit
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
+#                               Global Varriables                              #
+# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
+gpu_i = int(os.environ['CUDA_VISIBLE_DEVICES'])
+msec_msr = 1
+n_iteration_latency = 100
+n_iteration_troughput = 100
+# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
 #                              Main functions                                  #
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
 """
@@ -58,8 +65,6 @@ def save_metric(model, exp_dir, test_dataset):
 def save_power(model, exp_dir, test_dataset, n_step):
     # Path
     log_power_consumption = os.path.join(exp_dir, 'power_consumption.csv')
-    gpu_i = int(os.environ['CUDA_VISIBLE_DEVICES'])
-    msec_msr = 1
     # Create cuda command
     command = 'nvidia-smi' + ' '
     command += '-i' + ' ' + str(gpu_i) + ' '
@@ -77,9 +82,9 @@ def save_time(model, exp_dir, test_dataset, n_step):
     time_log = os.path.join(exp_dir, 'time.csv')
     # Measure Latency & throughput
     latency = timeit(lambda: model.predict(test_dataset, steps=1),
-                            number=100)
+                            number=n_iteration_latency)
     throughput = timeit(lambda: model.predict(test_dataset, steps=n_step),
-                              number=100)
+                              number=n_iteration_troughput)
     throughput = throughput / n_step
     # Save them into a file
     time_log_file = open(time_log, "w")
