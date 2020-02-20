@@ -5,7 +5,7 @@ import tensorflow as tf
 import os
 import shlex
 import subprocess
-from datetime import datetime
+from timeit import timeit
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
 #                              Main functions                                  #
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
@@ -55,9 +55,11 @@ def save_metric(model, exp_dir, test_dataset):
         metrics_log_file.write(str_metric)
     metrics_log_file.close()
 
-def save_power(model, exp_dir, test_datasetp, n_step):
+def save_power(model, exp_dir, test_dataset, n_step):
     # Path
     log_power_consumption = os.path.join(exp_dir, 'power_consumption.csv')
+    gpu_i = int(os.environ['CUDA_VISIBLE_DEVICES'])
+    msec_msr = 1
     # Create cuda command
     command = 'nvidia-smi' + ' '
     command += '-i' + ' ' + str(gpu_i) + ' '
@@ -67,16 +69,16 @@ def save_power(model, exp_dir, test_datasetp, n_step):
     # Start measure the power consumption
     args = shlex.split(command)
     p = subprocess.Popen(args)
-    eval_out = model_np.predict(test_dataset, steps=len(x_test)/batch_size)
+    eval_out = model.predict(test_dataset, steps=n_step)
     p.terminate()
 
 def save_time(model, exp_dir, test_dataset, n_step):
     # Path
     time_log = os.path.join(exp_dir, 'time.csv')
     # Measure Latency & throughput
-    latency = timeit(lambda: model_np.predict(test_dataset, steps=1),
+    latency = timeit(lambda: model.predict(test_dataset, steps=1),
                             number=100)
-    throughput = timeit(lambda: model_np.predict(test_dataset, steps=n_step),
+    throughput = timeit(lambda: model.predict(test_dataset, steps=n_step),
                               number=100)
     throughput = throughput / n_step
     # Save them into a file
