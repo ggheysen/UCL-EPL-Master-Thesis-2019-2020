@@ -5,6 +5,7 @@ import tensorflow as tf
 import os
 import shlex
 import subprocess
+from datetime import datetime
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
 #                              Main functions                                  #
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
@@ -12,15 +13,7 @@ import subprocess
 Function make_measure to make various measurement of the model and save them in
 exp_dir
 """
-def make_measure(model, model_name, cwd, test_dataset, n_step):
-    # Path
-    measurements_path = os.path.join(cwd, "..", "measurements", model_name)
-    if not os.path.isdir(measurements_path):
-        os.makedirs(measurements_path)
-    #one folder for each new experiment
-    exp_dir = os.path.join(measurements_path, model_name + '_' + str(now))
-    if not os.path.exists(exp_dir):
-        os.makedirs(exp_dir)
+def make_measure(model, exp_dir, test_dataset, n_step):
     # Start measure
     print("Start measurements")
     # 1 : save model summary and weights
@@ -28,7 +21,7 @@ def make_measure(model, model_name, cwd, test_dataset, n_step):
     # 2 : Save model perf
     save_metric(model, exp_dir, test_dataset)
     # 3 : Power consumption
-    save_power(model, exp_dir, test_datasetp, n_step)
+    save_power(model, exp_dir, test_dataset, n_step)
     # 4 : Latency and Throughput
     save_time(model, exp_dir, test_dataset, n_step)
     print("Measurement finished")
@@ -83,9 +76,9 @@ def save_time(model, exp_dir, test_dataset, n_step):
     # Measure Latency & throughput
     latency = timeit(lambda: model_np.predict(test_dataset, steps=1),
                             number=100)
-    throughput = timeit(lambda: model_np.predict(test_dataset, steps=n_step,
+    throughput = timeit(lambda: model_np.predict(test_dataset, steps=n_step),
                               number=100)
-    throughput /= n_step
+    throughput = throughput / n_step
     # Save them into a file
     time_log_file = open(time_log, "w")
     str_latency = 'latency' + ', ' + str(latency) + '\n'
