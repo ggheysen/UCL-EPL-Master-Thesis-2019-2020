@@ -62,7 +62,5 @@ def make_dts(x_tr, y_tr, x_v, y_v, x_te, y_te):
                         .shuffle(buffer_size=floor(len(x_v)/batch_size), seed=SEED, reshuffle_each_iteration=True) \
                         .repeat()
     d_te = tf.data.Dataset.from_tensor_slices((x_te, y_te)) \
-                        .batch(batch_size) \
-                        .shuffle(buffer_size=floor(len(x_te)/batch_size), seed=SEED, reshuffle_each_iteration=True) \
-                        .repeat()
+                        .batch(batch_size)
     return d_tr, d_v, d_te
