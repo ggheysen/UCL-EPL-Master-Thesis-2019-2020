@@ -7,7 +7,7 @@ import os
 #                               Global Varriables                              #
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
 n_epoch = 100
-lr = 5e-4
+lr = 1e-3
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
 #                              Main functions                                  #
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
@@ -49,6 +49,6 @@ def callbacks_init(exp_dir):
     callbacks.append(tb_callback)
     es_callback = tf.keras.callbacks.EarlyStopping(monitor='val_accuracy', patience=10, mode = 'max')
     callbacks.append(es_callback)
-    lr_plateau = tf.keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=4, mode='min') #To avoid plateau
+    lr_plateau = tf.keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=3, mode='max') #To avoid plateau
     callbacks.append(lr_plateau)
     return callbacks
