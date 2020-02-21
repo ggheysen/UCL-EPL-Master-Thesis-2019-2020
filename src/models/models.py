@@ -25,11 +25,11 @@ class CNN_NonPruned(tf.keras.Model):
             start_f *= 2
         self.flatten = tf.keras.layers.Flatten()
         self.classifier = tf.keras.Sequential()
-        self.classifier.add(tf.keras.layers.Dense(units=512, activation='relu'))
-        self.classifier.add(tf.keras.layers.Dropout(0.3, seed=SEED))
         self.classifier.add(tf.keras.layers.Dense(units=256, activation='relu'))
         self.classifier.add(tf.keras.layers.Dropout(0.3, seed=SEED))
         self.classifier.add(tf.keras.layers.Dense(units=128, activation='relu'))
+        self.classifier.add(tf.keras.layers.Dropout(0.25, seed=SEED))
+        self.classifier.add(tf.keras.layers.Dense(units=64, activation='relu'))
         self.classifier.add(tf.keras.layers.Dropout(0.25, seed=SEED))
         self.classifier.add(tf.keras.layers.Dense(units=num_classes, activation='softmax'))
         self.classifier.add(tf.keras.layers.Dropout(0.2, seed=SEED))

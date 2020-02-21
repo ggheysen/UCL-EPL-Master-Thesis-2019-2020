@@ -20,7 +20,7 @@ class ConvBlock(tf.keras.Model):
                                              bias_regularizer=tf.keras.regularizers.l2(param)
                                              )
         self.activation = tf.keras.layers.LeakyReLU(alpha=0.3)
-        #self.pooling = tf.keras.layers.MaxPool2D(pool_size=(2, 2))
+        self.pooling = tf.keras.layers.MaxPool2D(pool_size=(2, 2))
 
     def call(self, inputs):
         x = self.conv2d(inputs)
