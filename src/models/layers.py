@@ -40,13 +40,15 @@ class ResConvBlock(tf.keras.Model):
                                              kernel_regularizer=tf.keras.regularizers.l2(param), #To limit overfitting
                                              bias_regularizer=tf.keras.regularizers.l2(param)
                                              )
+        self.Normalization = tf.keras.layers.BatchNormalization()
         self.activation = tf.keras.layers.LeakyReLU(alpha=0.3)
         self.pooling = tf.keras.layers.MaxPool2D(pool_size=(2, 2))
         self.add = tf.keras.layers.Concatenate()
 
     def call(self, inputs):
         x = self.conv2d(inputs)
-        x = self.activation(x)
         x = self.add([x, inputs])
+        x = self.activation(x)
+        x = self.Normalization(x)
         x = self.pooling(x)
         return x
