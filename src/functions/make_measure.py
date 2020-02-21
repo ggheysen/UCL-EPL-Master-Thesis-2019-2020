@@ -25,12 +25,15 @@ def make_measure(model, exp_dir, test_dataset, n_step):
     print("Start measurements")
     # 1 : save model summary and weights
     save_model(model, exp_dir)
+    print("Model saved")
     # 2 : Save model perf
     save_metric(model, exp_dir, test_dataset)
+    print("Metric saved")
     # 3 : Power consumption
     save_power(model, exp_dir, test_dataset, n_step)
     # 4 : Latency and Throughput
     save_time(model, exp_dir, test_dataset, n_step)
+    print("Time saved")
     print("Measurement finished")
 
 
@@ -65,12 +68,14 @@ def save_metric(model, exp_dir, test_dataset):
 def save_power(model, exp_dir, test_dataset, n_step):
     # Path
     log_power_consumption = os.path.join(exp_dir, 'power_consumption.csv')
+    print(log_power_consumption)
     # Create cuda command
     command = 'nvidia-smi' + ' '
     command += '-i' + ' ' + str(gpu_i) + ' '
     command += '--query-gpu=power.draw --format=csv' + ' '
     command += '-lms' + ' ' + str(msec_msr) + ' '
     command += '-f' + ' ' + log_power_consumption + ' '
+    print(command)
     # Start measure the power consumption
     args = shlex.split(command)
     p = subprocess.Popen(args)
