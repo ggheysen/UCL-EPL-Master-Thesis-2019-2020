@@ -5,8 +5,8 @@ import tensorflow as tf
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
 #                               Global Variables                               #
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
-depth_res = 5
-depth_conv = 2
+depth_res = 6
+depth_conv = 1
 start_f = 8
 num_classes = 10
 img_h = 32
