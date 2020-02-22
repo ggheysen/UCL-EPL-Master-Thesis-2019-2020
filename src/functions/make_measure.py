@@ -46,9 +46,9 @@ def save_model(model, exp_dir):
     weights_log = os.path.join(exp_dir, 'weights.h5')
     # Save model summary
     model_summary_log_file = open(model_summary_log,'w')
-    model.summary(print_fn=lambda x: model_summary_log_file.write(x + '\n'))
-    model.feature_extractor.summary(print_fn=lambda x: model_summary_log_file.write(x + '\n'))
-    model.classifier.summary(print_fn=lambda x: model_summary_log_file.write(x + '\n'))
+    model.model().summary(print_fn=lambda x: model_summary_log_file.write(x + '\n'))
+    model.f_e().summary(print_fn=lambda x: model_summary_log_file.write(x + '\n'))
+    model.cl().summary(print_fn=lambda x: model_summary_log_file.write(x + '\n'))
     model_summary_log_file.close()
     # Save model weights
     model.save_weights(weights_log)
