@@ -3,6 +3,7 @@
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
 import tensorflow as tf
 import os
+from tensorflow_model_optimization.sparsity import keras as sparsity
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
 #                               Global Varriables                              #
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
@@ -12,10 +13,10 @@ lr = 1e-3
 #                              Main functions                                  #
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
 def make_train(model, exp_dir, train_dataset,
-               validation_dataset, n_step, v_step):
+               validation_dataset, n_step, v_step, pruning):
     # Training
     model_setup(model)
-    callbacks = callbacks_init(exp_dir)
+    callbacks = callbacks_init(exp_dir, pruning)
     model.fit(train_dataset,
                  epochs=n_epoch,
                  callbacks=callbacks,
@@ -23,6 +24,9 @@ def make_train(model, exp_dir, train_dataset,
                  steps_per_epoch= n_step,
                  validation_steps= v_step
                 )
+    if (pruning):
+        model = sparsity.strip_pruning(model)
+    return model
 
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
 #                              Additional functions                            #
@@ -36,7 +40,7 @@ def model_setup(model):
     # Compile Model
     model.compile(optimizer=optimizer, loss=loss, metrics=metrics)
 
-def callbacks_init(exp_dir):
+def callbacks_init(exp_dir, pruning):
     # Path
     tb_dir = os.path.join(exp_dir, 'tb_logs')
     if not os.path.exists(tb_dir):
@@ -51,4 +55,7 @@ def callbacks_init(exp_dir):
     callbacks.append(es_callback)
     lr_plateau = tf.keras.callbacks.ReduceLROnPlateau(monitor='val_accuracy', factor=0.1, patience=2, mode='max', verbose=1) #To avoid plateau
     callbacks.append(lr_plateau)
+    if (pruning):
+        callbacks.append(sparsity.UpdatePruningStep())
+        callbacks.append(sparsity.PruningSummaries(log_dir=logdir, profile_batch=0))
     return callbacks
