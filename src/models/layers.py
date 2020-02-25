@@ -3,6 +3,7 @@
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
 import tensorflow as tf
 import numpy as np
+from tensorflow_model_optimization.sparsity import keras as sparsity
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
 #                               Global Variables                               #
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
@@ -54,9 +55,9 @@ class ResConvBlock(tf.keras.Model):
         x = self.pooling(x)
         return x
 
-class ResConvBlock(tf.keras.Model):
+class PrunableResConvBlock(tf.keras.Model):
     def __init__(self, num_filters):
-        super(ResConvBlock, self).__init__()
+        super(PrunableResConvBlock, self).__init__()
         self.conv2d = tf.keras.layers.Conv2D(filters=num_filters,
                                              kernel_size=(3, 3),
                                              strides=(1, 1),
@@ -76,3 +77,6 @@ class ResConvBlock(tf.keras.Model):
         x = self.activation(x)
         x = self.pooling(x)
         return x
+
+    def prune(self):
+        return None

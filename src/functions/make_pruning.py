@@ -25,5 +25,15 @@ def make_pruning(model, step_train):
                                                        end_step=end_step,
                                                        frequency=frequency)
     }
-    model = sparsity.prune_low_magnitude(model, **pruning_params)
-    return model
+    #p_model = tf.keras.Sequential()
+    #for layer in model.layers:
+    #    if (isinstance(layer, sparsity.PrunableLayer)):
+    #        p_model.add(sparsity.prune_low_magnitude(
+    #        layer,
+    #        **pruning_params
+    #        ))
+    #    else:
+    #        p_model.add(layer)
+    #model = sparsity.prune_low_magnitude(model, **pruning_params)
+    #return p_model
+    model.pruning(**pruning_params)

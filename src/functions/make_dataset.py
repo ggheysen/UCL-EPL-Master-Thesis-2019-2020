@@ -43,6 +43,10 @@ def normalize_data(x_tr, y_tr, x_te, y_te):
     x_te_n = x_te  / 255
     y_tr_n = tf.keras.utils.to_categorical(y_tr, num_classes)
     y_te_n = tf.keras.utils.to_categorical(y_te, num_classes)
+    x_tr_n = tf.cast(x_tr_n, tf.float32)
+    x_te_n = tf.cast(x_te_n, tf.float32)
+    y_tr_n = tf.cast(y_tr_n, tf.float32)
+    y_te_n = tf.cast(y_te_n, tf.float32)
     return (x_tr_n, y_tr_n), (x_te_n, y_te_n)
 
 def make_validation(x, y):

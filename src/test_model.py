@@ -8,6 +8,7 @@ from src.functions.make_train import make_train
 from src.functions.make_measure import make_measure
 from src.functions.make_dataset import make_dataset
 from src.functions.make_model import make_model
+from src.functions.make_pruning import make_pruning
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
 #                               Global Varriables                              #
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
@@ -52,18 +53,18 @@ def test_model(model_name, model_class, pruning):
     # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
     #                          Model Training                                  #
     # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
-    make_train(model, exp_dir, train_dataset, validation_dataset,
-                train_step, validation_step, False)
+    #make_train(model, exp_dir, train_dataset, validation_dataset,
+    #            train_step, validation_step, False)
 
     if(pruning):
         # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
         #                              Pruning                                 #
         # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
-        model = make_pruning(model, train_step)
+        make_pruning(model, train_step)
         # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
         #                           Model Training                             #
         # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
-        model = make_train(model, exp_dir, train_dataset, validation_dataset,
+        make_train(model, exp_dir, train_dataset, validation_dataset,
                     train_step, validation_step, pruning)
 
         # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
