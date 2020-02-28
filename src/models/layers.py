@@ -2,81 +2,58 @@
 #                                  Import                                      #
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
 import tensorflow as tf
-import numpy as np
-from tensorflow_model_optimization.sparsity import keras as sparsity
-# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
-#                               Global Variables                               #
-# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
-param = 1e-3
+import src.config as config
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
 #                             Layer definition                                 #
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
-class ConvBlock(tf.keras.Model):
-    def __init__(self, num_filters):
-        super(ConvBlock, self).__init__()
-        self.conv2d = tf.keras.layers.Conv2D(filters=num_filters,
+def classifier(num_classes, input):
+    ret = input
+    ret = tf.keras.layers.Dense(units=2048, activation='relu')(ret)
+    ret = tf.keras.layers.Dropout(0.3, seed=config.SEED)(ret)
+    ret = tf.keras.layers.Dense(units=512, activation='relu')(ret)
+    ret = tf.keras.layers.Dropout(0.3, seed=config.SEED)(ret)
+    ret = tf.keras.layers.Dense(units=128, activation='relu')(ret)
+    ret = tf.keras.layers.Dropout(0.25, seed=config.SEED)(ret)
+    ret = tf.keras.layers.Dense(units=32, activation='relu')(ret)
+    ret = tf.keras.layers.Dropout(0.25, seed=config.SEED)(ret)
+    ret = tf.keras.layers.Dense(units=config.num_classes, activation='softmax')(ret)
+    return ret
+
+def feature_extractor(start_f, init_f, depth, input):
+    s_f = start_f
+    i_f = init_f
+    ret = input
+    for i in range(depth):
+        ret = tf.keras.layers.Conv2D(filters=s_f,
                                              kernel_size=(3, 3),
                                              strides=(1, 1),
                                              padding='same',
-                                             kernel_regularizer=tf.keras.regularizers.l2(param), #To limit overfitting
-                                             bias_regularizer=tf.keras.regularizers.l2(param)
-                                             )
-        self.Normalization = tf.keras.layers.BatchNormalization()
-        self.activation = tf.keras.layers.LeakyReLU(alpha=0.3)
-        self.pooling = tf.keras.layers.MaxPool2D(pool_size=(2, 2))
+                                             kernel_regularizer=tf.keras.regularizers.l2(config.l2_param), #To limit overfitting
+                                             bias_regularizer=tf.keras.regularizers.l2(config.l2_param)
+                                             )(ret)
+        ret = tf.keras.layers.BatchNormalization()(ret)
+        ret = tf.keras.layers.LeakyReLU(alpha=0.2)(ret)
+        ret = tf.keras.layers.MaxPool2D(pool_size=(2, 2))(ret)
+        s_f = (s_f + i_f ) * 2
+        i_f = s_f
+    return ret
 
-    def call(self, inputs):
-        x = self.conv2d(inputs)
-        x = self.Normalization(x)
-        x = self.activation(x)
-        x = self.pooling(x)
-        return x
-
-class ResConvBlock(tf.keras.Model):
-    def __init__(self, num_filters):
-        super(ResConvBlock, self).__init__()
-        self.conv2d = tf.keras.layers.Conv2D(filters=num_filters,
+def resnet_feature_extractor(start_f, init_f, depth, input):
+    s_f = start_f
+    i_f = init_f
+    ret = input
+    for i in range(depth):
+        conv = tf.keras.layers.Conv2D(filters=s_f,
                                              kernel_size=(3, 3),
                                              strides=(1, 1),
                                              padding='same',
-                                             kernel_regularizer=tf.keras.regularizers.l2(param), #To limit overfitting
-                                             bias_regularizer=tf.keras.regularizers.l2(param)
-                                             )
-        self.Normalization = tf.keras.layers.BatchNormalization()
-        self.activation = tf.keras.layers.LeakyReLU(alpha=0.2)
-        self.pooling = tf.keras.layers.MaxPool2D(pool_size=(2, 2))
-        self.add = tf.keras.layers.Concatenate()
-
-    def call(self, inputs):
-        x = self.conv2d(inputs)
-        x = self.add([x, inputs])
-        x = self.Normalization(x)
-        x = self.activation(x)
-        x = self.pooling(x)
-        return x
-
-class PrunableResConvBlock(tf.keras.Model):
-    def __init__(self, num_filters):
-        super(PrunableResConvBlock, self).__init__()
-        self.conv2d = tf.keras.layers.Conv2D(filters=num_filters,
-                                             kernel_size=(3, 3),
-                                             strides=(1, 1),
-                                             padding='same',
-                                             kernel_regularizer=tf.keras.regularizers.l2(param), #To limit overfitting
-                                             bias_regularizer=tf.keras.regularizers.l2(param)
-                                             )
-        self.Normalization = tf.keras.layers.BatchNormalization()
-        self.activation = tf.keras.layers.LeakyReLU(alpha=0.2)
-        self.pooling = tf.keras.layers.MaxPool2D(pool_size=(2, 2))
-        self.add = tf.keras.layers.Concatenate()
-
-    def call(self, inputs):
-        x = self.conv2d(inputs)
-        x = self.add([x, inputs])
-        x = self.Normalization(x)
-        x = self.activation(x)
-        x = self.pooling(x)
-        return x
-
-    def prune(self):
-        return None
+                                             kernel_regularizer=tf.keras.regularizers.l2(config.l2_param), #To limit overfitting
+                                             bias_regularizer=tf.keras.regularizers.l2(config.l2_param)
+                                             )(ret)
+        conv = tf.keras.layers.BatchNormalization()(conv)
+        ret += conv
+        ret = tf.keras.layers.LeakyReLU(alpha=0.2)(ret)
+        ret = tf.keras.layers.MaxPool2D(pool_size=(2, 2))(ret)
+        s_f = (s_f + i_f ) * 2
+        i_f = s_f
+    return ret
