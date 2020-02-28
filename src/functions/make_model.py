@@ -2,20 +2,19 @@
 #                                  Import                                      #
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
 import tensorflow as tf
-# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
-#                               Global Variables                               #
-# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
-depth = 5
-start_f = 16
-num_classes = 10
-img_h = 32
-img_w = 32
+import src.config as config
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
 #                             Models definition                                #
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
-def make_model(model_class):
-    model = model_class(depth=depth,
-                        start_f=start_f,
-                        num_classes=num_classes)
-    model.build(input_shape=(None, img_h, img_w, 3)) # Build Model (Required)
+"""
+make_model function returns a keras functional Model corresponding to the model
+returned by the function model_maker (found in src/models/models.py)
+"""
+def make_model(model_maker):
+    # Input layer
+    input = tf.keras.layers.Input(shape=(config.img_h, config.img_w, config.img_d))
+    # Create the model
+    out = model_maker(config.start_f, config.depth, config.num_classes, input)
+    # Build the network
+    model = tf.keras.models.Model(inputs=input, outputs=out)
     return model
