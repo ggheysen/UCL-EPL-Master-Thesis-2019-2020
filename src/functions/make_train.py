@@ -8,10 +8,10 @@ from tensorflow_model_optimization.sparsity import keras as sparsity
 #                              Main functions                                  #
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
 def make_train(model, exp_dir, train_dataset,
-               validation_dataset, n_step, v_step, ispruning):
+               validation_dataset, n_step, v_step):
     # Training
     model_setup(model)
-    callbacks = callbacks_init(exp_dir, ispruning)
+    callbacks = callbacks_init(exp_dir)
     model.fit(train_dataset,
                  epochs=n_epoch,
                  callbacks=callbacks,
@@ -19,8 +19,6 @@ def make_train(model, exp_dir, train_dataset,
                  steps_per_epoch= n_step,
                  validation_steps= v_step
                 )
-    if (ispruning):
-        model.strip_prn()
 
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
 #                              Additional functions                            #
@@ -35,19 +33,13 @@ def model_setup(model):
     model.compile(optimizer=optimizer, loss=loss, metrics=metrics)
 
 def callbacks_init(exp_dir, ispruning):
-    # callbacks creation
     callbacks = []
-    if (ispruning):
-        callbacks.append(sparsity.UpdatePruningStep())
-        callbacks.append(sparsity.PruningSummaries(log_dir=tb_dir, profile_batch=0))
-    else:
-        tb_callback = tf.keras.callbacks.TensorBoard(log_dir=tb_dir,
-                                                 profile_batch=0,
-                                                 histogram_freq=1)  # if 1 shows weights histograms
-        callbacks.append(tb_callback)
-        es_callback = tf.keras.callbacks.EarlyStopping(monitor='val_accuracy', patience=15, mode = 'max')
-        callbacks.append(es_callback)
-        lr_plateau = tf.keras.callbacks.ReduceLROnPlateau(monitor='val_accuracy', factor=0.1, patience=2, mode='max', verbose=1) #To avoid plateau
-        callbacks.append(lr_plateau)
-    print(callbacks)
+    tb_callback = tf.keras.callbacks.TensorBoard(log_dir=tb_dir,
+                                             profile_batch=0,
+                                             histogram_freq=1)  # if 1 shows weights histograms
+    callbacks.append(tb_callback)
+    es_callback = tf.keras.callbacks.EarlyStopping(monitor='val_accuracy', patience=15, mode = 'max')
+    callbacks.append(es_callback)
+    lr_plateau = tf.keras.callbacks.ReduceLROnPlateau(monitor='val_accuracy', factor=0.1, patience=2, mode='max', verbose=1) #To avoid plateau
+    callbacks.append(lr_plateau)
     return callbacks
