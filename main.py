@@ -7,6 +7,6 @@ from src.models.models import *
 #                                  Results                                     #
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
 # Unpruned network
-#test_model('Unpruned_network', CNN_NonPruned, False)
+test_model('Unpruned_network', CNN, False)
 # Unstructured pruning
-test_model('Unstructured_pruning_network', CNN_UnstructuredPruning, True)
+test_model('Unstructured_pruning_network', CNN, True)
