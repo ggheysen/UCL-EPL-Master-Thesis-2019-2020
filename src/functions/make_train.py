@@ -4,37 +4,37 @@
 import tensorflow as tf
 import os
 from tensorflow_model_optimization.sparsity import keras as sparsity
+import src.config as config
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
 #                              Main functions                                  #
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
-def make_train(model, exp_dir, train_dataset,
+def make_train(model, train_dataset,
                validation_dataset, n_step, v_step):
     # Training
     model_setup(model)
-    callbacks = callbacks_init(exp_dir)
+    callbacks = callbacks_init()
     model.fit(train_dataset,
-                 epochs=n_epoch,
+                 epochs=config.t_epoch,
                  callbacks=callbacks,
                  validation_data=validation_dataset,
                  steps_per_epoch= n_step,
                  validation_steps= v_step
                 )
-
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
 #                              Additional functions                            #
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
 def model_setup(model):
     # Loss
     loss = tf.keras.losses.CategoricalCrossentropy()
-    optimizer = tf.keras.optimizers.Adam(learning_rate=lr)
+    optimizer = tf.keras.optimizers.Adam(learning_rate=config.lr)
     # Validation metrics
     metrics = ['accuracy']
     # Compile Model
     model.compile(optimizer=optimizer, loss=loss, metrics=metrics)
 
-def callbacks_init(exp_dir, ispruning):
+def callbacks_init():
     callbacks = []
-    tb_callback = tf.keras.callbacks.TensorBoard(log_dir=tb_dir,
+    tb_callback = tf.keras.callbacks.TensorBoard(log_dir=config.tb_dir,
                                              profile_batch=0,
                                              histogram_freq=1)  # if 1 shows weights histograms
     callbacks.append(tb_callback)
