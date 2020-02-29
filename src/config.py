@@ -42,3 +42,10 @@ initial_sparsity=0.50
 final_sparsity=0.90
 p_begin_step=0
 p_frequency=100
+# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
+#                                    Measure                                   #
+# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
+gpu_i = int(os.environ['CUDA_VISIBLE_DEVICES'])
+msec_msr = 1
+n_iteration_latency = 100
+n_iteration_troughput = 100
