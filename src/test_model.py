@@ -9,24 +9,14 @@ from src.functions.make_measure import make_measure
 from src.functions.make_dataset import make_dataset
 from src.functions.make_model import make_model
 from src.functions.make_pruning import make_pruning
-# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
-#                               Global Varriables                              #
-# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
-SEED = 1234
+import src.config as config
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
 #                              Main functions                                  #
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
-def test_model(model_name, model_class, pruning):
+def test_model(model_n, model_maker, pruning):
     # Setup
-    now = datetime.now().strftime('%b%d_%H-%M-%S')
-    tf.random.set_seed(SEED)
-    cwd = os.getcwd()
-    measurements_path = os.path.join(cwd, "measurements", model_name)
-    if not os.path.isdir(measurements_path):
-        os.makedirs(measurements_path)
-    exp_dir = os.path.join(measurements_path, model_name + '_' + str(now))
-    if not os.path.exists(exp_dir):
-        os.makedirs(exp_dir)
+    setup_path(model_n)
+    tf.random.set_seed(config.SEED)
     # GPU config memory growth
     gpus = tf.config.experimental.list_physical_devices('GPU')
     if gpus:
@@ -48,31 +38,48 @@ def test_model(model_name, model_class, pruning):
     # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
     #                          Model Creation                                  #
     # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
-    model = make_model(model_class)
+    model = make_model(model_maker)
 
     # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
     #                          Model Training                                  #
     # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
-    #make_train(model, exp_dir, train_dataset, validation_dataset,
-    #            train_step, validation_step, False)
+    make_train(model, train_dataset, validation_dataset,
+                train_step, validation_step)
 
     if(pruning):
         # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
         #                              Pruning                                 #
         # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
-        make_pruning(model, train_step)
+        model = make_pruning(model, train_dataset, validation_dataset, train_step, validation_step)
         # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
         #                           Model Training                             #
         # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
-        make_train(model, exp_dir, train_dataset, validation_dataset,
-                    train_step, validation_step, pruning)
+        make_train(model, train_dataset, validation_dataset,
+                    train_step, validation_step)
 
         # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
         #                             Measurement                              #
         # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
-        make_measure(model, exp_dir, test_dataset, test_step)
+        make_measure(model, test_dataset, test_step)
     else:
         # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
         #                             Measurement                              #
         # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
-        make_measure(model, exp_dir, test_dataset, test_step)
+        make_measure(model, test_dataset, test_step)
+
+# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
+#                              Additional functions                            #
+# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
+def setup_path(model_n):
+    config.model_name = model_n
+    config.now = datetime.now().strftime('%b%d_%H-%M-%S')
+    config.cwd = os.getcwd()
+    config.measurements_path = os.path.join(config.cwd, "measurements", config.model_name)
+    if not os.path.isdir(config.measurements_path):
+        os.makedirs(config.measurements_path)
+    config.exp_dir = os.path.join(config.measurements_path, config.model_name + '_' + str(config.now))
+    if not os.path.exists(config.exp_dir):
+        os.makedirs(config.exp_dir)
+    config.tb_dir = os.path.join(config.exp_dir, 'tb_logs')
+    if not os.path.exists(config.tb_dir):
+        os.makedirs(config.tb_dir)
