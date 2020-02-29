@@ -5,18 +5,13 @@ import tensorflow as tf
 import os
 from tensorflow_model_optimization.sparsity import keras as sparsity
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
-#                               Global Varriables                              #
-# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
-n_epoch = 1
-lr = 1e-3
-# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
 #                              Main functions                                  #
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
 def make_train(model, exp_dir, train_dataset,
-               validation_dataset, n_step, v_step, pruning):
+               validation_dataset, n_step, v_step, ispruning):
     # Training
     model_setup(model)
-    callbacks = callbacks_init(exp_dir, pruning)
+    callbacks = callbacks_init(exp_dir, ispruning)
     model.fit(train_dataset,
                  epochs=n_epoch,
                  callbacks=callbacks,
@@ -24,7 +19,7 @@ def make_train(model, exp_dir, train_dataset,
                  steps_per_epoch= n_step,
                  validation_steps= v_step
                 )
-    if (pruning):
+    if (ispruning):
         model.strip_prn()
 
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
@@ -39,14 +34,10 @@ def model_setup(model):
     # Compile Model
     model.compile(optimizer=optimizer, loss=loss, metrics=metrics)
 
-def callbacks_init(exp_dir, pruning):
-    # Path
-    tb_dir = os.path.join(exp_dir, 'tb_logs')
-    if not os.path.exists(tb_dir):
-        os.makedirs(tb_dir)
+def callbacks_init(exp_dir, ispruning):
     # callbacks creation
     callbacks = []
-    if (pruning):
+    if (ispruning):
         callbacks.append(sparsity.UpdatePruningStep())
         callbacks.append(sparsity.PruningSummaries(log_dir=tb_dir, profile_batch=0))
     else:
