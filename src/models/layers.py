@@ -51,8 +51,8 @@ def resnet_feature_extractor(start_f, init_f, depth, input):
                                              bias_regularizer=tf.keras.regularizers.l2(config.l2_param)
                                              )(ret)
         conv = tf.keras.layers.BatchNormalization()(conv)
+        conv = tf.keras.layers.LeakyReLU(alpha=0.2)(conv)
         ret = tf.keras.layers.Concatenate()([conv, ret])
-        ret = tf.keras.layers.LeakyReLU(alpha=0.2)(ret)
         ret = tf.keras.layers.MaxPool2D(pool_size=(2, 2))(ret)
         s_f = (s_f + i_f ) * 2
         i_f = s_f
