@@ -20,6 +20,9 @@ def make_dataset():
     (x_tr, y_tr), (x_v, y_v) = make_validation(x_tr, y_tr)
     # 4: We create a dataset
     d_tr, d_v, d_te = make_dts(x_tr, y_tr, x_v, y_v, x_te, y_te)
+    # 5: We apply data augmentaion
+    data_augmentation(d_tr)
+    data_augmentation(d_v)
     step_tr = floor(len(x_tr)/config.batch_size)
     step_v = floor(len(x_v)/config.batch_size)
     step_te = floor(len(x_te)/config.batch_size)
@@ -47,14 +50,31 @@ def make_validation(x, y):
     return (x_t, y_t), (x_v, y_v)
 
 def make_dts(x_tr, y_tr, x_v, y_v, x_te, y_te):
-    d_tr = tf.data.Dataset.from_tensor_slices((x_tr, y_tr)) \
-                        .batch(config.batch_size) \
-                        .shuffle(buffer_size=floor(len(x_tr)/config.batch_size), seed=config.SEED, reshuffle_each_iteration=True) \
-                        .repeat()
-    d_v  = tf.data.Dataset.from_tensor_slices((x_v, y_v)) \
-                        .batch(config.batch_size) \
-                        .shuffle(buffer_size=floor(len(x_v)/config.batch_size), seed=config.SEED, reshuffle_each_iteration=True) \
-                        .repeat()
+    d_tr = tf.data.Dataset.from_tensor_slices((x_tr, y_tr))\
+                        .shuffle(buffer_size=floor(len(x_tr)/config.batch_size), seed=config.SEED, reshuffle_each_iteration=True)\
+                        .repeat()\
+                        .batch(config.batch_size)
+
+    d_v = tf.data.Dataset.from_tensor_slices((x_v, y_v))\
+                        .shuffle(buffer_size=floor(len(x_v)/config.batch_size), seed=config.SEED, reshuffle_each_iteration=True)\
+                        .repeat()\
+                        .batch(config.batch_size)
     d_te = tf.data.Dataset.from_tensor_slices((x_te, y_te)) \
                         .batch(config.batch_size)
     return d_tr, d_v, d_te
+
+def data_augmentation(dt):
+    dt.map(flip_image) \
+      .map(color_image)
+
+def flip_image(image, label):
+    image =  tf.image.random_flip_left_right(image, seed=config.SEED)
+    image =  tf.image.random_flip_up_down(image, seed=config.SEED)
+    return image, label
+
+def color_image(image, label):
+    image = tf.image.random_hue(image, 0.08, seed=config.SEED)
+    image = tf.image.random_saturation(image, 0.6, 1.6, seed=config.SEED)
+    image = tf.image.random_brightness(image, 0.05, seed=config.SEED)
+    image = tf.image.random_contrast(image, 0.7, 1.3, seed=config.SEED)
+    return image, label
