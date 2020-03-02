@@ -23,6 +23,7 @@ def make_dataset():
     # 5: We apply data augmentaion
     data_augmentation(d_tr)
     data_augmentation(d_v)
+    # 6: We compute the number of step per epoch
     step_tr = floor(len(x_tr)/config.batch_size)
     step_v = floor(len(x_v)/config.batch_size)
     step_te = floor(len(x_te)/config.batch_size)
