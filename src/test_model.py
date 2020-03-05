@@ -15,7 +15,7 @@ import src.config as config
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
 def test_model(model_n, model_maker, pruning):
     # Setup
-    setup_path(model_n)
+    setup_path(model_n, pruning)
     tf.random.set_seed(config.SEED)
     # GPU config memory growth
     gpus = tf.config.experimental.list_physical_devices('GPU')
@@ -44,7 +44,7 @@ def test_model(model_n, model_maker, pruning):
     #                          Model Training                                  #
     # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
     make_train(model, train_dataset, validation_dataset,
-                train_step, validation_step)
+                train_step, validation_step, False)
 
     if(pruning):
         # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
@@ -55,22 +55,23 @@ def test_model(model_n, model_maker, pruning):
         #                           Model Training                             #
         # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
         make_train(model, train_dataset, validation_dataset,
-                    train_step, validation_step)
+                    train_step, validation_step, pruning)
 
         # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
         #                             Measurement                              #
         # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
-        make_measure(model, test_dataset, test_step)
+        #make_measure(model, test_dataset, test_step)
     else:
         # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
         #                             Measurement                              #
         # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
-        make_measure(model, test_dataset, test_step)
+        print('yo')
+        #make_measure(model, test_dataset, test_step)
 
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
 #                              Additional functions                            #
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
-def setup_path(model_n):
+def setup_path(model_n, pruning):
     config.model_name = model_n
     config.now = datetime.now().strftime('%b%d_%H-%M-%S')
     config.cwd = os.getcwd()
@@ -83,3 +84,10 @@ def setup_path(model_n):
     config.tb_dir = os.path.join(config.exp_dir, 'tb_logs')
     if not os.path.exists(config.tb_dir):
         os.makedirs(config.tb_dir)
+    if (pruning):
+        config.tb_prune_dir = os.path.join(config.exp_dir, 'tb_prune_logs')
+        if not os.path.exists(config.tb_prune_dir):
+            os.makedirs(config.tb_prune_dir)
+        config.tb_dir2 = os.path.join(config.exp_dir, 'tb_logs2')
+        if not os.path.exists(config.tb_dir2):
+            os.makedirs(config.tb_dir2)

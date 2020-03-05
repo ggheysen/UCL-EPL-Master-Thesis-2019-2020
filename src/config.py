@@ -14,6 +14,8 @@ global cwd
 global measurements_path
 global exp_dir
 global tb_dir
+global tb_dir2
+global tb_prune_dir
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
 #                                  Dataset                                     #
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
@@ -27,7 +29,7 @@ img_d = 3
 global model_name
 num_classes = 10
 depth = 5
-start_f = 16
+start_f = 4
 l2_param = 1e-3
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
 #                                  Train                                       #
@@ -41,7 +43,7 @@ p_epochs = 100
 initial_sparsity=0.50
 final_sparsity=0.90
 p_begin_step=0
-p_frequency=10
+p_frequency=5
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
 #                                    Measure                                   #
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #

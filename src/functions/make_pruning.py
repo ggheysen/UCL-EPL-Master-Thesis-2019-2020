@@ -45,5 +45,5 @@ def model_setup(model):
 def callbacks_init():
     callbacks = []
     callbacks.append(sparsity.UpdatePruningStep())
-    callbacks.append(sparsity.PruningSummaries(log_dir=config.tb_dir, profile_batch=0))
+    callbacks.append(sparsity.PruningSummaries(log_dir=config.tb_prune_dir, profile_batch=0))
     return callbacks

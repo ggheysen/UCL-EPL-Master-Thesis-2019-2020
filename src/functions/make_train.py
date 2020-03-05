@@ -9,10 +9,10 @@ import src.config as config
 #                              Main functions                                  #
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% #
 def make_train(model, train_dataset,
-               validation_dataset, n_step, v_step):
+               validation_dataset, n_step, v_step, pruning):
     # Training
     model_setup(model)
-    callbacks = callbacks_init()
+    callbacks = callbacks_init(pruning)
     model.fit(train_dataset,
                  epochs=config.t_epoch,
                  callbacks=callbacks,
@@ -32,9 +32,13 @@ def model_setup(model):
     # Compile Model
     model.compile(optimizer=optimizer, loss=loss, metrics=metrics)
 
-def callbacks_init():
+def callbacks_init(pruning):
     callbacks = []
-    tb_callback = tf.keras.callbacks.TensorBoard(log_dir=config.tb_dir,
+    if (pruning):
+        logdir = config.tb_dir2
+    else:
+        logdir = config.tb_dir
+    tb_callback = tf.keras.callbacks.TensorBoard(log_dir=logdir,
                                              profile_batch=0,
                                              histogram_freq=1)  # if 1 shows weights histograms
     callbacks.append(tb_callback)
