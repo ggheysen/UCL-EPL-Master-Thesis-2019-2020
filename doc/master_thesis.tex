@@ -1,36 +1,14 @@
 % EPL master thesis covers template
 \documentclass{src/1.Cover/EPL-master-thesis-covers-EN}
-\usepackage{afterpage}
-\usepackage{float}
-\usepackage{graphicx}
 
-% Please fill in the following boxes
 % Title of the thesis
-\title{Main title of the master thesis (possibly split on several lines)}
-
+\title{Accelerating Convolutional Neural Network for FPGA}
 % Subtitle - remove this line if not applicable
-\subtitle{Optional subtitle}
+\subtitle{using Depthwise Separable Convolution and Pruning}
 
 % Name of the student author(s)
 \author{Guillaume \textsc{Gheysen}}
 
-% Official title of the master degree (copy/paste from list below)
-% Master [120] in Biomedical Engineering
-% Master [120] in Chemical and Materials Engineering
-% Master [120] in Civil Engineering
-% Master [120] in Computer Science
-% Master [120] in Computer Science and Engineering
-% Master [120] in Cybersecurity
-% Master [120] in Data Sciences Engineering
-% Master [120] in Data Science: Information technology
-% Master [120] in Electrical Engineering
-% Master [120] in Electro-mechanical Engineering
-% Master [120] in Mathematical Engineering
-% Master [120] in Mechanical Engineering
-% Master [120] in Physical Engineering
-% Master [60] in Computer Science
-% Specialised master in nanotechnologies
-% Specialised master in nuclear engineering
 \degreetitle{Master [120] in Computer Science and Engineering}
 
 % Name of the supervisor(s)
@@ -48,17 +26,29 @@
 \begin{document}
   	% Front cover page
 	\maketitle
-	% Abstract
+	\pagenumbering{gobble}
+	%% Abstract
 	\input{src/2.Abstract/Abstract}
-	\newpage
-	\newpage
-	% Acknowledgments
+	
+	%% Acknowledgments
 	\input{src/3.Acknowledgments/Acknowledgments}
-	\newpage
-	\newpage
-	% table of content
+	
+	%% table of contents & figures
 	\tableofcontents
+	\newpage
 	\listoffigures
+	\afterpage{\blankpage}
+	\newpage
+	\pagenumbering{arabic} 
+	
+	%% Introduction
+	\input{src/4.Introduction/Introduction}
+	
+	%% Part 1
+	\input{src/5.Background/Background}
+  	
+  	%% Bibliography
+	\input{src/0.Bibliography/Bibliography}
   	% Back cover page
   	\backcoverpage
 

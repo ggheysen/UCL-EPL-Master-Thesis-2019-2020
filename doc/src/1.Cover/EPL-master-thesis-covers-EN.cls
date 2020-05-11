@@ -5,7 +5,7 @@
 \LoadClass[12pt, a4paper, openright]{report}
 
 % Usefull packages
-\usepackage[utf8x]{inputenc}
+\usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \RequirePackage{microtype}   % Improves typography
 \RequirePackage[T1]{fontenc}
@@ -15,6 +15,19 @@
 \RequirePackage{geometry}
 \RequirePackage{tabto}		 % Tabulation
 \RequirePackage{anyfontsize} % size of fonts
+\usepackage{afterpage}
+\usepackage{float}
+\usepackage[nottoc]{tocbibind}
+\usepackage{graphicx}
+\usepackage[
+backend=biber,
+style=numeric,
+sorting=none,
+citestyle=numeric
+]{biblatex}
+
+% Bibliography
+\addbibresource{src/0.Bibliography/build/thesis.bib}
 
 % Commands for title, readers, authors, dates, specialities,...
 \RequirePackage{etoolbox}
@@ -32,6 +45,20 @@
 \newcommand{\readerfour}[1]{\def\@readerfour{#1}}
 \newcommand{\readerfive}[1]{\def\@readerfive{#1}}
 \newcommand{\years}[1]{\def\@years{#1}}
+\newcommand\blankpage{%
+    \null
+    \thispagestyle{empty}%
+    \addtocounter{page}{-1}%
+    \newpage}
+\usepackage{titlesec}
+\titleclass{\part}{top}
+\titleformat{\part}[display]
+  {\normalfont\huge\bfseries}{\centering\partname\ \thepart}{20pt}{\Huge\centering}
+\titlespacing*{\part}{0pt}{50pt}{40pt}
+\titleclass{\chapter}{straight}
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
+\titlespacing*{\chapter} {0pt}{50pt}{40pt}
 
 % Lenghts
 \newlength{\tabAuthor}
