@@ -17,16 +17,28 @@
 
 % Name of the reader(s)
 \readerone{Victor \textsc{Joos de Ter Beerst}}
-\readertwo{Martin \textsc{Lefèvre}}			% remove if not applicable
+\readertwo{Martin \textsc{Lefèvre}}	 
 
 % Academic year (update if necessary)
 \years{2019--2020}
+
+% Acronym
+\newacronym{ml}{ML}{Machine Learning}
+\newacronym{ai}{AI}{Artificial Intelligence}
+\newacronym{nn}{NN}{Neural Networks}
+\newacronym{dl}{DL}{Deep Learning}
+\newacronym{cnn}{CNN}{Convolutional Neural Network}
+\newacronym{cpu}{CPU}{Central Processing Unit}
+\newacronym{fpga}{FPGA}{Field-Programmable Gate Array}
+\newacronym{gpu}{GPU}{Graphical Processing Unit}
+\newacronym{asic}{ASIC}{Application-Specific Integrated Circuit}
 
 % Document
 \begin{document}
   	% Front cover page
 	\maketitle
 	\pagenumbering{gobble}
+	
 	%% Abstract
 	\input{src/2.Abstract/Abstract}
 	
@@ -39,6 +51,10 @@
 	\listoffigures
 	\afterpage{\blankpage}
 	\newpage
+	\printnoidxglossary[type=\acronymtype, title=List of Abrevation, nonumberlist=true, toctitle=List of terms]
+	\afterpage{\blankpage}
+	\newpage
+	
 	\pagenumbering{arabic} 
 	
 	%% Introduction

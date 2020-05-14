@@ -1,4 +1,14 @@
 \chapter{Introduction}
+\tab Since de 1950s, \acrfull{ml}, a subset of \acrfull{ai}, has revolutionized several fields in the last decades. \acrfull{nn} are a subfield of \acrshort{ml} and that is from \acrshort{nn} that spawned \acrfull{dl}  \cite{alom_history_2018}. From the last decade, \acrshort{dl} is gaining in interest and the domains of applications have growth rapidly \cite{wason_deep_2018}. The accuracy of those models have also increased. For example, in 2015, the image classification model on ImageNet dataset achieves 94.6\% on average \cite{russakovsky_imagenet_2015}.\newline
+
+In particular, \acrfull{cnn} have demonstrated their effectiveness in the image detection and recognition applications \cite{shawahna_fpga-based_2019}. However, the performance comes at the price for a large computational cost (bil-lion of operations and millions of parameters). To Train and evaluate a large scale CNN, general \acrshort{cpu} would not provide enough requirements. To improve the throughput and latency of the \acrshort{cnn}, dedicated hardware such as \acrfull{gpu}, \acrfull{asic} and \acrfull{fpga}. \acrshort{cpu} and \acrshort{gpu} clusters are the dominant platforms but those are power hungry \cite{liu_uniform_2019}. \acrshort{fpga} seems then to be a promising solution becauses it combines the reprogrammabilty of the \acrshort{cpu} and the performance of the \acrshort{asic}.
 \section*{Structure of the thesis}
+\tab This master thesis is divided into three parts. \newline
+
+The first part introduces the background and knowledge necessary to understand the context of this thesis. The chapter \ref{chap:cnn} details the theory behind the \acrshort{cnn} and the approaches of pruning and depthwise separable convolutions. Then the concept of \acrshort{fpga} is explained at chapter \ref{chap:fpga}. We detail there the workflow and \acrshort{fpga} designs. \newline
+
+The second part describes the related works and how this work is positioned in comparison to the state-of-art. First the various optimizations techniques to optimize inference on \acrshort{fpga} are explained in chapter \ref{chap:inf}. Second the techniques to compress models will be described in chapter \ref{chap:compress}. \newline
+
+The third part is focus on detailing the purpose of this thesis and what work has been done. The chapter \ref{chap:arch} explains how the architecture has been developped using other work. The chapter \ref{chap:measure} shows then the effective implementation on a \acrshort{fpga}.
 \afterpage{\blankpage}
 \newpage

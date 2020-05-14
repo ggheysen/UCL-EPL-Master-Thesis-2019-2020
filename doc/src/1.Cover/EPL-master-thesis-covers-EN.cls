@@ -19,12 +19,19 @@
 \usepackage{float}
 \usepackage[nottoc]{tocbibind}
 \usepackage{graphicx}
+\usepackage{csquotes}
 \usepackage[
 backend=biber,
 style=numeric,
 sorting=none,
 citestyle=numeric
 ]{biblatex}
+% Load the package
+\usepackage[acronym]{glossaries}
+ 
+% Generate the glossary
+\makenoidxglossaries
+
 
 % Bibliography
 \addbibresource{src/0.Bibliography/build/thesis.bib}
