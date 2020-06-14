@@ -26,6 +26,7 @@ style=numeric,
 sorting=none,
 citestyle=numeric
 ]{biblatex}
+\usepackage{svg}
 % Load the package
 \usepackage[acronym]{glossaries}
  

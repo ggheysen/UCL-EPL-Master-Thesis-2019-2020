@@ -1,3 +1,41 @@
-\chapter{Convolutional Neural Network}
-\label{chap:cnn}
+    \chapter{Convolutional Neural Network} \label{chap:cnn}
+A \acrfull{cnn} is a type of \acrlong{nn} that is specialized in analyzing visual imagery. It has shown explemplary performance on serveral competitions related to Computer Vision and Image Processing \cite{khan_survey_2020}. \newline \newline
+The first section introduces the building blocks of a \acrshort{cnn}. We start from the first and most simple element and then show the improvements. \newline \newline
+The second section is concentrated on the training of a \acrshort{cnn}. \newline \newline
+The third section details various models and techniques to perform model compression.
+%%%%%%%%%%%%%%%%
+    \section{Layers}
+A layer is a high-level build block in \acrshort{dl}. It is a set of operations, weights and non-linear functions. It transforms an input into an output which will be used as input for another layer. The collections of layer is then used to build a \acrlong{cnn}. We begin our understanding of the layer theory by explaining the perceptron, the simplest element of a neural Network.
+%%%
+    \subsection{Perceptron} \label{subs:perceptron}
+    \input{src/5.Background/subsection/CNN_Perceptron}
+%%%
+    \subsection{Fully Connected} \label{subs:fcl}
+    \input{src/5.Background/subsection/CNN_FCN}
+%%%
+\subsection{2D Convolution} \label{subs:2dconv}
+blabla
+%%%
+\subsection{\acrlong{dsc}}
+blabla
+%%%
+\subsection{Bottleneck Convolution}
+blabla
+%%%
+\subsection{Activation} \label{subs:acti}
+blabla
+%%%
+\subsection{Pooling}
+blabla
+%%%%%%%%%%%%%%%%
+\section{Training}
+blabla
+%%%%%%%%%%%%%%%%
+\section{Models}
+blabla
+%%%
+\subsection{Pruning}
+blabla
+%%%
+\subsection{Quantification}
 blabla
