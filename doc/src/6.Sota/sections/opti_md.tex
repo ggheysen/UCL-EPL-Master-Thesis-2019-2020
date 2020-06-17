@@ -6,12 +6,30 @@ SqueezeNet \cite{iandola_squeezenet_2016} uses an architecture similar to AlexNe
 %
 NasNet \cite{zoph_learning_2018} uses a search method, \acrfull{nas}, to find good convolutional architectures on a dataset of interest. A controller recurrent neural network saloes child networks with different architecture. The learned architecture is flexible as it may be scaled in terms of computational cost. However the resulting network ends up very complex \cite{sandler_mobilenetv2_2019}.\newline \newline
 %
-MobileNet.\newline \newline
+MobileNet \cite{howard_mobilenets_2017} uses \acrshort{dsc}, described in section \ref{subs:dsc}, to build small and low latency models that can be matched to the design requirements. It sets also 2 hyper-parameters to set the model size and throughput: width multiplier $\alpha \in [1; 0[$, which reduces the number of input and output channel at each layer, and resolution multiplier $\rho \in [1; 0[$,  which reduces spatially the input and output \acrshort{fm} at each layer.\newline \newline
 %
 ShuffleNet \cite{zhang_shufflenet_2018} is a computation-efficient architecture designed for mobile devices with very limited computing power. It reduces computation cost while maintaining accuracy by using \textbf{pointwise group convolution} which reduces computation complexity of $1 \times 1$ convolution. It uses also \textbf{channel shufﬂe} on the channels such that \textbf{group convolutions} obtain information from different groups. Then more powerful structures can be build  with multiple group convolutional layer. \newline \newline
 %
-MobileNetV2 \cite{sandler_mobilenetv2_2019} is an improvement of MobileNet.\newline \newline
+MobileNetV2 \cite{sandler_mobilenetv2_2019} is an improvement of MobileNet in terms of accuracy and does not require special operators. MobileNetV2 has already been developed at section \ref{subs:mbv2}. The architecture developed by this work has been developed on MobileNetV2 because of its simplicity and its state-of-the-art performance (see table \ref{tab:mbv2}).
 %
+\begin{table}
+    \center
+    \begin{tabular}{ | c | c | c c | c| }
+        \hline \hline
+        Network & Top 1 & Params & MAdds & CPU \\
+        \hline \hline
+        MobileNetV1 & 70.6 & 4.2M & 575M & 113ms \\
+        ShuffleNet (1.5) & 71.5 & \textbf{3.4M} & 292M & - \\
+        ShuffleNet (x2)  & 73.7 & 5.4M & 524M & - \\
+        NasNet-A & 74.0 & 5.3M & 564M & 183ms \\
+        \hline
+        MobileNetV2 & \textbf{72.0} & \textbf{3.4M} & \textbf{300M} & \textbf{75ms} \\
+        MobileNetV2 (1.4) & \textbf{74.7} & 6.9M & 585M & \textbf{143ms} \\
+        \hline \hline
+    \end{tabular}
+    \caption{Performance on ImageNet, comparison for different networks \cite{sandler_mobilenetv2_2019}}
+    \label{tab:mbv2}
+\end{table}
 \subsection{Pruning}
 \subsection{Quantization}
 The approach
