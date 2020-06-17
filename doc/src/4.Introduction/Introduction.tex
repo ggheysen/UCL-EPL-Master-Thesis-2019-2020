@@ -36,13 +36,15 @@ This master thesis is divided in 8 chapters. \newline \newline
 %
 Chapter \ref{chap:cnn} details the theory behind \acrshort{cnn} and goes deeper into its computational background. It develops also model compression optimizations allowing a reduction of the size and the computational complexity of the model. \newline \newline
 %
-The concept of \acrshort{fpga} is explained in chapter \ref{chap:fpga}. We detail there the workflow and \acrshort{fpga} designs. Solutions to the issue of mapping a \acrshort{cnn} model on \acrshort{fpga} are described too. \newline \newline
+The concept of \acrshort{fpga} is explained in chapter \ref{chap:fpga}. We detail there the workflow and \acrshort{fpga} designs. Solutions to the issues of mapping a \acrshort{cnn} model on \acrshort{fpga} are described too. \newline \newline
 %
-Chapter \ref{chap:inf} and chapter \ref{chap:compress} discuss the state-of-art of the inference optimization techniques on \ref{chap:inf} and the compression methods.\newline \newline
+Chapter \ref{chap:inf} discusses the state-of-art of the inference optimization techniques on FPGA. We do a review of the different approaches and see which are the more promising ones. \newline \newline
+%
+As we have shown at chapter \ref{chap:inf} why we have chosen pruning to be the core of this work, chapter \ref{chap:compress} develops state-of-the-art architecture using pruning to accelerate inference.
 %
 Chapter \ref{chap:arch} is focused on how to build an efficient architecture on \acrshort{fpga} and uses this knowledge to design our architecture using pruning and depthwise separable convolution.\newline \newline
 %
-Chapter \ref{chap:measure} explains the simulation on SystemVerilog of the architecture developed in chapter \ref{chap:arch}. Potential improvements will be discussed.\newline \newline
+Chapter \ref{chap:measure} explains the simulation on SystemVerilog of the architecture developed in chapter \ref{chap:arch} and details the experiments on this simulation. Potential improvements will be discussed.\newline \newline
 %
 Finally, a conclusion on results obtained and discussion on future works is done in chapter \ref{chap:ccl}.
 \afterpage{\blankpage}
