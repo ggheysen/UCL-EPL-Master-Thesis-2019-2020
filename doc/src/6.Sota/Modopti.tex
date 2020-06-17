@@ -7,10 +7,11 @@ The three main optimization can be categorized according to \cite{abdelouahab_ac
     \item \textbf{Datapath Optimization}: because of the limited resources on a \acrshort{fpga}, memory if often the bottleneck and optimizing the memory management can increase the throughput. More details can be found in section \ref{sec:dtptopti}.
     \item \textbf{\acrshort{cnn} model Optimization}: an important issue of \acrshort{cnn} is their computational complexity and their hardware utilization. A solution is then to use approximate computing and trade accury for acceleration. This work focus on this kind of optimization. More details can be found in section \ref{sec:mdopti}.
 \end{itemize}
-
 %%%%%%%%%%%%
-\include{src/6.Sota/sections/opti_algo}
+\input{src/6.Sota/sections/opti_algo}
 %%%%%%%%%%%%
-\include{src/6.Sota/sections/opti_dtpt}
+\input{src/6.Sota/sections/opti_dtpt}
 %%%%%%%%%%%%
-\include{src/6.Sota/sections/opti_md}
+\input{src/6.Sota/sections/opti_md}
+%%%%%%%%%%%%
+\input{src/6.Sota/sections/opti_ccl}

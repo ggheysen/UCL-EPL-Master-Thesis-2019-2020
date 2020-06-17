@@ -1,2 +1,11 @@
 \section{Model Optimizations} \label{sec:mdopti}
-blabla
+\subsection{Architectural Compression}
+The size of the model can be reduced by changing the architectures of the models. As many approaches have been proposed, we focus our interest on architectures that target the embedded space.
+SqueezeNet \cite{} uses an architecture similar to AlexNet and replaces all layers (except the first and last one) by \textbf{Fire Module}. The \textbf{Fire Module} is a building blocks where the convolution filter is composed of two layers. The first one is composed only of $1 \times 1$ filters and the second one is composed of $1 \times 1$ and $3 \times 3$ convolutions. We can reduce with this method the number of parameters of AlexNet from $240$MB to $4.8$MB. The number of parameters can even be reduced to $0.47$MB with no loss of accuracy from the baseline AlexNet method by applying Deep Compression \cite{}. \newline \newline
+NasNet.\newline \newline
+ShuffleNet.\newline \newline
+MobileNet.\newline \newline
+MobileNetV2 \cite{} is an improvement of MobileNet.\newline \newline
+\subsection{Pruning}
+\subsection{Quantization}
+The approach 
