@@ -1,0 +1,17 @@
+[0] Config.pm:304> INFO - This is Biber 2.14
+[0] Config.pm:307> INFO - Logfile is 'build/master_thesis.blg'
+[143] biber-MSWIN64:322> INFO - === 
+[198] Biber.pm:415> INFO - Reading 'build/master_thesis.bcf'
+[405] Biber.pm:943> INFO - Found 25 citekeys in bib section 0
+[440] Biber.pm:4256> INFO - Processing section 0
+[441] Utils.pm:75> INFO - Globbing data source 'src/0.Bibliography/build/thesis.bib'
+[466] Utils.pm:91> INFO - Globbed data source 'src/0.Bibliography/build/thesis.bib' to src/0.Bibliography/build/thesis.bib
+[491] Biber.pm:4455> INFO - Looking for bibtex format file 'src/0.Bibliography/build/thesis.bib' for section 0
+[500] bibtex.pm:1653> INFO - LaTeX decoding ...
+[677] bibtex.pm:1471> INFO - Found BibTeX data source 'src/0.Bibliography/build/thesis.bib'
+[1106] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[1106] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[1106] Biber.pm:4084> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'en-US'
+[1107] Biber.pm:4090> INFO - No sort tailoring available for locale 'en-US'
+[1157] bbl.pm:652> INFO - Writing 'build/master_thesis.bbl' with encoding 'UTF-8'
+[1195] bbl.pm:755> INFO - Output to build/master_thesis.bbl

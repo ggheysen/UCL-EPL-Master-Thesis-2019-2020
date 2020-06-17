@@ -1,11 +1,17 @@
 \section{Model Optimizations} \label{sec:mdopti}
-\subsection{Architectural Compression}
-The size of the model can be reduced by changing the architectures of the models. As many approaches have been proposed, we focus our interest on architectures that target the embedded space.
-SqueezeNet \cite{} uses an architecture similar to AlexNet and replaces all layers (except the first and last one) by \textbf{Fire Module}. The \textbf{Fire Module} is a building blocks where the convolution filter is composed of two layers. The first one is composed only of $1 \times 1$ filters and the second one is composed of $1 \times 1$ and $3 \times 3$ convolutions. We can reduce with this method the number of parameters of AlexNet from $240$MB to $4.8$MB. The number of parameters can even be reduced to $0.47$MB with no loss of accuracy from the baseline AlexNet method by applying Deep Compression \cite{}. \newline \newline
-NasNet.\newline \newline
-ShuffleNet.\newline \newline
+\subsection{Efficient Model Design}
+The size of the model can be reduced by changing the architectures of the models. As many approaches have been proposed, we focus our interest on architectures that target the embedded space. \newline \newline
+%
+SqueezeNet \cite{iandola_squeezenet_2016} uses an architecture similar to AlexNet and replaces all layers (except the first and last one) by \textbf{Fire Module}. The \textbf{Fire Module} is a building blocks where the convolution filter is composed of two layers. The first one is composed only of $1 \times 1$ filters and the second one is composed of $1 \times 1$ and $3 \times 3$ convolutions. We can reduce with this method the number of parameters of AlexNet from $240$MB to $4.8$MB. The number of parameters can even be reduced to $0.47$MB with no loss of accuracy from the baseline AlexNet method by applying Deep Compression \cite{han_deep_2016}. \newline \newline
+%
+NasNet \cite{zoph_learning_2018} uses a search method, \acrfull{nas}, to find good convolutional architectures on a dataset of interest. A controller recurrent neural network saloes child networks with different architecture. The learned architecture is flexible as it may be scaled in terms of computational cost. However the resulting network ends up very complex \cite{sandler_mobilenetv2_2019}.\newline \newline
+%
 MobileNet.\newline \newline
-MobileNetV2 \cite{} is an improvement of MobileNet.\newline \newline
+%
+ShuffleNet \cite{zhang_shufflenet_2018} is a computation-efficient architecture designed for mobile devices with very limited computing power. It reduces computation cost while maintaining accuracy by using \textbf{pointwise group convolution} which reduces computation complexity of $1 \times 1$ convolution. It uses also \textbf{channel shufﬂe} on the channels such that \textbf{group convolutions} obtain information from different groups. Then more powerful structures can be build  with multiple group convolutional layer. \newline \newline
+%
+MobileNetV2 \cite{sandler_mobilenetv2_2019} is an improvement of MobileNet.\newline \newline
+%
 \subsection{Pruning}
 \subsection{Quantization}
-The approach 
+The approach
