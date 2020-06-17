@@ -479,6 +479,71 @@
       \endverb
       \keyw{accelerator,FPGA,2D CNN,2D MAC array,3D CNN,HLS,matrix multiplication,uniform architecture}
     \endentry
+    \entry{qasaimeh_comparing_2019}{article}{}
+      \name{author}{6}{}{%
+        {{hash=c7b1d1e4be2e24df3726082eb0ccff12}{%
+           family={Qasaimeh},
+           familyi={Q\bibinitperiod},
+           given={Murad},
+           giveni={M\bibinitperiod}}}%
+        {{hash=9f9e2266ae0c370aca016dd4df2bc32c}{%
+           family={Denolf},
+           familyi={D\bibinitperiod},
+           given={Kristof},
+           giveni={K\bibinitperiod}}}%
+        {{hash=02d013b1d542cd4ff975d1b9c146897a}{%
+           family={Lo},
+           familyi={L\bibinitperiod},
+           given={Jack},
+           giveni={J\bibinitperiod}}}%
+        {{hash=7ef5e13f65c4d6e5e2294aa61a6cd1a0}{%
+           family={Vissers},
+           familyi={V\bibinitperiod},
+           given={Kees},
+           giveni={K\bibinitperiod}}}%
+        {{hash=922ccf0ca052888f3b1182cd93497b98}{%
+           family={Zambreno},
+           familyi={Z\bibinitperiod},
+           given={Joseph},
+           giveni={J\bibinitperiod}}}%
+        {{hash=9b25445b674e978ec360d2cb50011045}{%
+           family={Jones},
+           familyi={J\bibinitperiod},
+           given={Phillip\bibnamedelima H.},
+           giveni={P\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+      }
+      \strng{namehash}{651553eef967ac1d9d91faa470e3a6a0}
+      \strng{fullhash}{73a67b9a64b57f43b167e619cf93256e}
+      \strng{bibnamehash}{651553eef967ac1d9d91faa470e3a6a0}
+      \strng{authorbibnamehash}{651553eef967ac1d9d91faa470e3a6a0}
+      \strng{authornamehash}{651553eef967ac1d9d91faa470e3a6a0}
+      \strng{authorfullhash}{73a67b9a64b57f43b167e619cf93256e}
+      \field{sortinit}{9}
+      \field{sortinithash}{54047ffb55bdefa0694bbd554c1b11a0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Developing high performance embedded vision applications requires balancing run-time performance with energy constraints. Given the mix of hardware accelerators that exist for embedded computer vision (e.g. multi-core CPUs, GPUs, and FPGAs), and their associated vendor optimized vision libraries, it becomes a challenge for developers to navigate this fragmented solution space. To aid with determining which embedded platform is most suitable for their application, we conduct a comprehensive benchmark of the run-time performance and energy efficiency of a wide range of vision kernels. We discuss rationales for why a given underlying hardware architecture innately performs well or poorly based on the characteristics of a range of vision kernel categories. Specifically, our study is performed for three commonly used HW accelerators for embedded vision applications: ARM57 CPU, Jetson TX2 GPU and ZCU102 FPGA, using their vendor optimized vision libraries: OpenCV, VisionWorks and xfOpenCV. Our results show that the GPU achieves an energy/frame reduction ratio of 1.1-3.2x compared to the others for simple kernels. While for more complicated kernels and complete vision pipelines, the FPGA outperforms the others with energy/frame reduction ratios of 1.2-22.3x. It is also observed that the FPGA performs increasingly better as a vision application's pipeline complexity grows.}
+      \field{annotation}{Comment: 8 pages, Design Automation Conference (DAC), The 15th IEEE International Conference on Embedded Software and Systems, 2019}
+      \field{journaltitle}{arXiv:1906.11879 [cs, eess]}
+      \field{month}{5}
+      \field{note}{arXiv: 1906.11879}
+      \field{title}{Comparing {Energy} {Efficiency} of {CPU}, {GPU} and {FPGA} {Implementations} for {Vision} {Kernels}}
+      \field{urlday}{17}
+      \field{urlmonth}{6}
+      \field{urlyear}{2020}
+      \field{year}{2019}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb arXiv Fulltext PDF:C\:\\Users\\Guigui\\Zotero\\storage\\CUYP8DAD\\Qasaimeh et al. - 2019 - Comparing Energy Efficiency of CPU, GPU and FPGA I.pdf:application/pdf;arXiv.org Snapshot:C\:\\Users\\Guigui\\Zotero\\storage\\WGFMBFSP\\1906.html:text/html
+      \endverb
+      \verb{urlraw}
+      \verb http://arxiv.org/abs/1906.11879
+      \endverb
+      \verb{url}
+      \verb http://arxiv.org/abs/1906.11879
+      \endverb
+      \keyw{Computer Science - Computer Vision and Pattern Recognition,Electrical Engineering and Systems Science - Image and Video Processing}
+    \endentry
     \entry{abdelouahab_accelerating_2018}{article}{}
       \name{author}{4}{}{%
         {{hash=15242fb1e4e41b508d222ce58d296476}{%
@@ -508,8 +573,8 @@
       \strng{authorbibnamehash}{f925797610f89b616830186ac29704e1}
       \strng{authornamehash}{f925797610f89b616830186ac29704e1}
       \strng{authorfullhash}{3d899e07e97b7eecbb169ab53c9740c0}
-      \field{sortinit}{9}
-      \field{sortinithash}{54047ffb55bdefa0694bbd554c1b11a0}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{shorttitle}
       \field{abstract}{Convolutional Neural Networks (CNNs) are currently adopted to solve an ever greater number of problems, ranging from speech recognition to image classification and segmentation. The large amount of processing required by CNNs calls for dedicated and tailored hardware support methods. Moreover, CNN workloads have a streaming nature, well suited to reconfigurable hardware architectures such as FPGAs. The amount and diversity of research on the subject of CNN FPGA acceleration within the last 3 years demonstrates the tremendous industrial and academic interest. This paper presents a state-of-the-art of CNN inference accelerators over FPGAs. The computational workloads, their parallelism and the involved memory accesses are analyzed. At the level of neurons, optimizations of the convolutional and fully connected layers are explained and the performances of the different methods compared. At the network level, approximate computing and datapath optimization methods are covered and state-of-the-art approaches compared. The methods and tools investigated in this survey represent the recent trends in FPGA CNN inference accelerators and will fuel the future advances on efficient hardware deep learning.}
@@ -796,8 +861,8 @@
       \strng{authorbibnamehash}{36464aa2dd0a29ccad0a32a0fb44c0bb}
       \strng{authornamehash}{36464aa2dd0a29ccad0a32a0fb44c0bb}
       \strng{authorfullhash}{36464aa2dd0a29ccad0a32a0fb44c0bb}
-      \field{sortinit}{1}
-      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{sortinit}{2}
+      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{Deep convolutional neural networks take GPU days of compute time to train on large data sets. Pedestrian detection for self driving cars requires very low latency. Image recognition for mobile phones is constrained by limited processing resources. The success of convolutional neural networks in these situations is limited by how fast we can compute them. Conventional FFT based convolution is fast for large filters, but state of the art convolutional neural networks use small, 3x3 filters. We introduce a new class of fast algorithms for convolutional neural networks using Winograd's minimal filtering algorithms. The algorithms compute minimal complexity convolution over small tiles, which makes them fast with small filters and small batch sizes. We benchmark a GPU implementation of our algorithm with the VGG network and show state of the art throughput at batch sizes from 1 to 64.}
@@ -855,8 +920,8 @@
       \strng{authorbibnamehash}{70179dd377b16c4cfcc0748ef0bd028a}
       \strng{authornamehash}{70179dd377b16c4cfcc0748ef0bd028a}
       \strng{authorfullhash}{8d58d04315a5e1c06300772330b235d7}
-      \field{sortinit}{1}
-      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{sortinit}{2}
+      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{shorttitle}
       \field{abstract}{In this paper we describe a new mobile architecture, MobileNetV2, that improves the state of the art performance of mobile models on multiple tasks and benchmarks as well as across a spectrum of different model sizes. We also describe efficient ways of applying these mobile models to object detection in a novel framework we call SSDLite. Additionally, we demonstrate how to build mobile semantic segmentation models through a reduced form of DeepLabv3 which we call Mobile DeepLabv3. The MobileNetV2 architecture is based on an inverted residual structure where the input and output of the residual block are thin bottleneck layers opposite to traditional residual models which use expanded representations in the input an MobileNetV2 uses lightweight depthwise convolutions to filter features in the intermediate expansion layer. Additionally, we find that it is important to remove non-linearities in the narrow layers in order to maintain representational power. We demonstrate that this improves performance and provide an intuition that led to this design. Finally, our approach allows decoupling of the input/output domains from the expressiveness of the transformation, which provides a convenient framework for further analysis. We measure our performance on Imagenet classification, COCO object detection, VOC image segmentation. We evaluate the trade-offs between accuracy, and number of operations measured by multiply-adds (MAdd), as well as the number of parameters}
@@ -1199,8 +1264,8 @@
       \strng{authorbibnamehash}{0d0bedac75e50046fa9280fe8d33a092}
       \strng{authornamehash}{0d0bedac75e50046fa9280fe8d33a092}
       \strng{authorfullhash}{1ab56e2fe4cb92a0ce5386b24371ef6f}
-      \field{sortinit}{2}
-      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
+      \field{sortinit}{3}
+      \field{sortinithash}{a37a8ef248a93c322189792c34fc68c9}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{shorttitle}
       \field{abstract}{Recent research on deep neural networks has focused primarily on improving accuracy. For a given accuracy level, it is typically possible to identify multiple DNN architectures that achieve that accuracy level. With equivalent accuracy, smaller DNN architectures offer at least three advantages: (1) Smaller DNNs require less communication across servers during distributed training. (2) Smaller DNNs require less bandwidth to export a new model from the cloud to an autonomous car. (3) Smaller DNNs are more feasible to deploy on FPGAs and other hardware with limited memory. To provide all of these advantages, we propose a small DNN architecture called SqueezeNet. SqueezeNet achieves AlexNet-level accuracy on ImageNet with 50x fewer parameters. Additionally, with model compression techniques we are able to compress SqueezeNet to less than 0.5MB (510x smaller than AlexNet). The SqueezeNet architecture is available for download here: https://github.com/DeepScale/SqueezeNet}
@@ -1224,7 +1289,7 @@
       \verb{url}
       \verb http://arxiv.org/abs/1602.07360
       \endverb
-      \keyw{Computer Science - Artificial Intelligence,Computer Science - Computer Vision and Pattern Recognition}
+      \keyw{Computer Science - Computer Vision and Pattern Recognition,Computer Science - Artificial Intelligence}
     \endentry
     \entry{han_deep_2016}{article}{}
       \name{author}{3}{}{%
@@ -1250,8 +1315,8 @@
       \strng{authorbibnamehash}{84bcde7dcf518d77e606ada9b3016020}
       \strng{authornamehash}{84bcde7dcf518d77e606ada9b3016020}
       \strng{authorfullhash}{84bcde7dcf518d77e606ada9b3016020}
-      \field{sortinit}{2}
-      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
+      \field{sortinit}{3}
+      \field{sortinithash}{a37a8ef248a93c322189792c34fc68c9}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{shorttitle}
       \field{abstract}{Neural networks are both computationally intensive and memory intensive, making them difficult to deploy on embedded systems with limited hardware resources. To address this limitation, we introduce "deep compression", a three stage pipeline: pruning, trained quantization and Huffman coding, that work together to reduce the storage requirement of neural networks by 35x to 49x without affecting their accuracy. Our method first prunes the network by learning only the important connections. Next, we quantize the weights to enforce weight sharing, finally, we apply Huffman coding. After the first two steps we retrain the network to fine tune the remaining connections and the quantized centroids. Pruning, reduces the number of connections by 9x to 13x; Quantization then reduces the number of bits that represent each connection from 32 to 5. On the ImageNet dataset, our method reduced the storage required by AlexNet by 35x, from 240MB to 6.9MB, without loss of accuracy. Our method reduced the size of VGG-16 by 49x from 552MB to 11.3MB, again with no loss of accuracy. This allows fitting the model into on-chip SRAM cache rather than off-chip DRAM memory. Our compression method also facilitates the use of complex neural networks in mobile applications where application size and download bandwidth are constrained. Benchmarked on CPU, GPU and mobile GPU, compressed network has 3x to 4x layerwise speedup and 3x to 7x better energy efficiency.}
@@ -1306,8 +1371,8 @@
       \strng{authorbibnamehash}{7732c13c59acbfe077121b1a24b2996b}
       \strng{authornamehash}{7732c13c59acbfe077121b1a24b2996b}
       \strng{authorfullhash}{b8d20b76d341cb4f7bf04d797284db2d}
-      \field{sortinit}{2}
-      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
+      \field{sortinit}{3}
+      \field{sortinithash}{a37a8ef248a93c322189792c34fc68c9}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{Developing neural network image classification models often requires significant architecture engineering. In this paper, we study a method to learn the model architectures directly on the dataset of interest. As this approach is expensive when the dataset is large, we propose to search for an architectural building block on a small dataset and then transfer the block to a larger dataset. The key contribution of this work is the design of a new search space (the "NASNet search space") which enables transferability. In our experiments, we search for the best convolutional layer (or "cell") on the CIFAR-10 dataset and then apply this cell to the ImageNet dataset by stacking together more copies of this cell, each with their own parameters to design a convolutional architecture, named "NASNet architecture". We also introduce a new regularization technique called ScheduledDropPath that significantly improves generalization in the NASNet models. On CIFAR-10 itself, NASNet achieves 2.4\% error rate, which is state-of-the-art. On ImageNet, NASNet achieves, among the published works, state-of-the-art accuracy of 82.7\% top-1 and 96.2\% top-5 on ImageNet. Our model is 1.2\% better in top-1 accuracy than the best human-invented architectures while having 9 billion fewer FLOPS - a reduction of 28\% in computational demand from the previous state-of-the-art model. When evaluated at different levels of computational cost, accuracies of NASNets exceed those of the state-of-the-art human-designed models. For instance, a small version of NASNet also achieves 74\% top-1 accuracy, which is 3.1\% better than equivalently-sized, state-of-the-art models for mobile platforms. Finally, the learned features by NASNet used with the Faster-RCNN framework surpass state-of-the-art by 4.0\% achieving 43.1\% mAP on the COCO dataset.}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7400 64-bit) (preloaded format=pdflatex 2020.5.12)  17 JUN 2020 19:09
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7400 64-bit) (preloaded format=pdflatex 2020.5.12)  17 JUN 2020 21:33
 entering extended mode
 **./master_thesis.tex
 (master_thesis.tex
@@ -969,52 +969,52 @@ Using TeX to sort glossary entries---this may take a while
 [6] [6] (src/4.Introduction/Introduction.tex
 Chapter 1.
 
-Underfull \hbox (badness 10000) in paragraph at lines 2--10
+Underfull \hbox (badness 10000) in paragraph at lines 3--34
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2--10
+Underfull \hbox (badness 10000) in paragraph at lines 3--34
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2--10
+Underfull \hbox (badness 10000) in paragraph at lines 3--34
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2--10
+Underfull \hbox (badness 10000) in paragraph at lines 3--34
 
  []
 
 [1]
-Underfull \hbox (badness 10000) in paragraph at lines 11--19
+Underfull \hbox (badness 10000) in paragraph at lines 35--49
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 11--19
+Underfull \hbox (badness 10000) in paragraph at lines 35--49
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 11--19
+Underfull \hbox (badness 10000) in paragraph at lines 35--49
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 11--19
+Underfull \hbox (badness 10000) in paragraph at lines 35--49
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 11--19
+Underfull \hbox (badness 10000) in paragraph at lines 35--49
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 11--19
+Underfull \hbox (badness 10000) in paragraph at lines 35--49
 
  []
 
@@ -1043,7 +1043,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 1--3
  []
 
 [4]
-<Images/perceptron.pdf, id=75, 330.34822pt x 118.08011pt>
+<Images/perceptron.pdf, id=76, 330.34822pt x 118.08011pt>
 File: Images/perceptron.pdf Graphic file (type pdf)
 <use Images/perceptron.pdf>
 Package pdftex.def Info: Images/perceptron.pdf  used on input line 8.
@@ -1054,7 +1054,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 3--13
  []
 
 (src/5.Background/subsection/CNN_FCN.tex
-<Images/fcl.pdf, id=76, 263.46443pt x 165.06685pt>
+<Images/fcl.pdf, id=77, 263.46443pt x 165.06685pt>
 File: Images/fcl.pdf Graphic file (type pdf)
 <use Images/fcl.pdf>
 Package pdftex.def Info: Images/fcl.pdf  used on input line 6.
@@ -1237,13 +1237,13 @@ Package logreq Info: Writing requests to 'master_thesis.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 21787 strings out of 481005
- 387762 string characters out of 2918981
- 1148459 words of memory out of 3000000
- 37026 multiletter control sequences out of 15000+200000
- 628793 words of font info for 130 fonts, out of 3000000 for 9000
+ 21795 strings out of 481005
+ 387947 string characters out of 2918981
+ 1149575 words of memory out of 3000000
+ 37030 multiletter control sequences out of 15000+200000
+ 628975 words of font info for 132 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 65i,7n,70p,2013b,1776s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 65i,10n,70p,2013b,1776s stack positions out of 5000i,500n,10000p,200000b,50000s
 {D:/MiKTex/fonts/enc/dvips/lm/lm-ec.enc}{D:/MiKTex/fonts/enc/dvips/lm/lm-math
 sy.enc}{D:/MiKTex/fonts/enc/dvips/lm/lm-mathit.enc}{D:/MiKTex/fonts/enc/dvips/l
 m/lm-ts1.enc}{D:/MiKTex/fonts/enc/dvips/lm/lm-mathex.enc}{D:/MiKTex/fonts/enc/d
@@ -1256,8 +1256,8 @@ lm/lmr8.pfb><D:/MiKTex/fonts/type1/public/lm/lmri12.pfb><D:/MiKTex/fonts/type1/
 public/lm/lmsy10.pfb><D:/MiKTex/fonts/type1/public/lm/lmsy8.pfb><D:/MiKTex/font
 s/type1/public/lm/lmtt12.pfb><D:/MiKTex/fonts/type1/urw/helvetic/uhvb8a.pfb><D:
 /MiKTex/fonts/type1/urw/helvetic/uhvr8a.pfb>
-Output written on D:\GitRepo\Memoire\doc\build\master_thesis.pdf (41 pages, 418
-156 bytes).
+Output written on D:\GitRepo\Memoire\doc\build\master_thesis.pdf (41 pages, 419
+215 bytes).
 PDF statistics:
  303 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

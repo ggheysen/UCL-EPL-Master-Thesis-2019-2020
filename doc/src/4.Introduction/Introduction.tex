@@ -5,7 +5,25 @@
 Statistical machine learning has a major issue in the selection of an appropriate feature space where input instances have desired properties for solving a particular problem \cite{arnold_introduction_2011}. A relevant solution would be automatic learning of the features using \acrfull{nn}. From this idea spawned \acrfull{dl} architectures composed of layers of non-linearity processings \cite{alom_history_2018}. From the last decade, \acrshort{dl} is gaining in interest and the domains of applications have grown rapidly \cite{wason_deep_2018}. The accuracy of those models has also increased. For example, in 2015, the image classification model on ImageNet dataset achieved 94.6\% on average \cite{russakovsky_imagenet_2015}.\newline \newline
 %
 A particular type of \acrshort{dl} model, \acrfull{cnn}, has demonstrated its effectiveness in the image detection and recognition applications \cite{shawahna_fpga-based_2019}. However, the performance comes at the price for a large computational cost (billion of operations and millions of parameters). To train and evaluate a large scale CNN, general \acrfull{cpu} would not provide enough computational power. To improve the throughput and latency of the \acrshort{cnn}, dedicated hardware such as \acrfull{gpu}, \acrfull{asic} and \acrfull{fpga} can be used. \acrshort{cpu} and \acrshort{gpu} clusters are the dominant platforms to perform \acrshort{cnn} inferences because they offer the best performance in terms of computational throughput but those are power-hungry \cite{liu_uniform_2019}.
-\acrshort{fpga} and \acrshort{asic} seem then to be a promising solution because they are more energy-efficient. As \acrshort{fpga} has reconfigurability and can be developed faster than \acrshort{asic}, it is more suitable for the development of a \acrshort{cnn} because of the \acrshort{cnn} streaming workloads. \newline \newline
+\acrshort{fpga} and \acrshort{asic} seem then to be a promising solution because they are more energy-efficient. This has been demonstrated by \cite{qasaimeh_comparing_2019}, where FPGA outperforms increasingly better as a vision application’s pipeline complexity grows (which is the case for \acrshort{cnn}). We can observe in table \ref{tab:benchener} the FPGA’s Reduction Ratios with repsect to GPU for various vision application’s pipeline. As \acrshort{fpga} has reconfigurability and can be developed faster than \acrshort{asic}, it is more suitable for the development of a \acrshort{cnn} because of the \acrshort{cnn} streaming workloads.
+\begin{table}
+    \center
+    \begin{tabular}{|c|c|}
+        \hline
+        Pipeline & Energy/frame (mJ/f) \\
+        \hline
+        Background Subtraction & 1.74 $\times$\\
+        \hline
+        Color Segmentation & 1.86 $\times$ \\
+        \hline
+        Harris Corners Tracking & 3.94 $\times$ \\
+        \hline
+        Stereo Block Matching & 8.83 $\times$ \\
+        \hline
+    \end{tabular}
+    \caption{FPGA’s Reduction Ratios with repsect to GPU \cite{qasaimeh_comparing_2019}}
+    \label{tab:benchener}
+\end{table} \newline \newline
 %
 \acrshort{cnn} acceleration is moving towards \acrshort{fpga} for two reasons: recent technology put FPGA performance within striking distance to GPUs and recent trends in \acrshort{cnn} increase the sparsity of CNNs and use extreme compact data types (\acrshort{fpga} are designed to handle irregular parallelism and custom data types) \cite{abdelouahab_accelerating_2018}. However, \acrshort{fpga} is resource-constraint and the challenge is to find a mapping between the computational model and the execution model. \newline \newline
 %
@@ -16,7 +34,7 @@ However, as pruning has already been studied by various works for standard convo
 \section*{Structure of the thesis}
 This master thesis is divided in 8 chapters. \newline \newline
 %
-Chapter \ref{chap:cnn} details the theory behind \acrshort{cnn} and goes deeper into its computational background. It explores also model compression optimizations allowing a reduction of the computational complexity of the model and the size of the parameters. \newline \newline
+Chapter \ref{chap:cnn} details the theory behind \acrshort{cnn} and goes deeper into its computational background. It develops also model compression optimizations allowing a reduction of the size and the computational complexity of the model. \newline \newline
 %
 The concept of \acrshort{fpga} is explained in chapter \ref{chap:fpga}. We detail there the workflow and \acrshort{fpga} designs. Solutions to the issue of mapping a \acrshort{cnn} model on \acrshort{fpga} are described too. \newline \newline
 %
@@ -24,7 +42,7 @@ Chapter \ref{chap:inf} and chapter \ref{chap:compress} discuss the state-of-art 
 %
 Chapter \ref{chap:arch} is focused on how to build an efficient architecture on \acrshort{fpga} and uses this knowledge to design our architecture using pruning and depthwise separable convolution.\newline \newline
 %
-Chapter \ref{chap:measure} explains the simulation on SystemVerilog of the architecture developed in chapter \ref{chap:arch}. Results will also be discussed on possible improvements.\newline \newline
+Chapter \ref{chap:measure} explains the simulation on SystemVerilog of the architecture developed in chapter \ref{chap:arch}. Potential improvements will be discussed.\newline \newline
 %
 Finally, a conclusion on results obtained and discussion on future works is done in chapter \ref{chap:ccl}.
 \afterpage{\blankpage}
