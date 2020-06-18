@@ -24,13 +24,73 @@ The \acrshort{cnn} can be therefore modeled as a topology matrix and we only hav
     \caption{Graph represenation of a convolution layer}
 \end{figure}
 \subsection{Loop Optimization} \label{subsec:loopopti}
-\acrfull{simd} accelerators were proposed to solve the static systolic array inefficiency. The general computation flow can be described as follow:
+Loop optimizations techniques were already described at section \ref{sec:loopopti}. Unrolling parameters, tiling parameters and loop ordering are up to the programmer to set. We are going to review different works who have studied the design space exploration of such parameters. \newline \newline
+%
+The work of \cite{zhang_optimizing_2015} proposes an analytical solution using the roofline model \cite{williams_roofline_2009} to identify the CNN design with best performance and lowest \acrshort{fpga} resource requirement. They have chosen a loop unrolling of ($T_{if} \times T_{of}$) to avoid complex connection topologies for all arrays. It allows a spatial reutilisation of pixels for $T_{of}$ unrolls, and the temporal reutilisation of weight for ($T_{ox} \times T_{oy}$). We can observe their accelerator structure on figure \ref{lst:accelerator}. However, the disadvantage of this method is the need of a large local memory to store the partial sums ($T_{of} \times T_{ox} \times T_{oy}$).
+%
+\begin{figure}
+    \centering
+    \begin{lstlisting}[language=Java]
+// Load weights
+// Load input FM
+% on-chip data computation
+for(kx=0; kx<Nkx; kx+=1){
+    for(ky=0; ky<Nky; ky+=1){
+        for(tix=0; tix<min(ix+Tix, Nix); tix+=1){
+            for(tiy=0; tiy<min(iy+Tiy, Niy); tiy+=1){
+                for(tof=0; tof<min(of+Tof, Nof); tof+=1){
+                #pragma HLS UNROLL
+                    for(tif=0; tif<min(if+Tif, Nif); tif+=1){
+                    #pragma HLS UNROLL
+                    L : output_fm[tof][tix][tiy] +=
+                    weights[tof][tif][kx][ky]*
+                    input_fm[tif][S*tix+kx][S*tiy+ky];
+                    }
+                }
+            }
+        }
+    }
+}
+// Load input FM
+    \end{lstlisting}
+    \label{lst:accelerator}
+    \caption{Architecture loop ordering \cite{zhang_optimizing_2015}}
+\end{figure} \newline
+%
+Once the loop ordering and unrolling parameters have been set, the roofline methode can be used to find the optimal tiling parameters. This design exploration method uses two limits to find the best trade-off between memory bandwith and computational speed:
 \begin{enumerate}
-    \item Fetch \acrshort{fm}s and weights from the external memory (\acrshort{dram}) to on-chip buffer.
-    \item The \acrshort{fm}s and weights are streamed into the \acrshort{pe}.
-    \item 
+    \item \textbf{Computational roof}:$= \frac{\text{\# of operations}}{\# of execution cycles}$.
+    \item \textbf{Communication roof}:$= \frac{\text{\# of operations}}{\# of external data access}$
 \end{enumerate}
-\subsubsection{Loop Unrolling}
-\subsubsection{Loop Tiling}
-\subsubsection{Loop Interchange}
-\subsection{Design space exploration}
+The roofline method is shown of figure \ref{fig:roofmeth}. In this figure, the implementation C and D achieves the highest possible performance on the \acrshort{fpga}. However, the implementation C is prefered because it requires least bandwith.
+%
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{roofmethod.pdf}
+    \label{fig:roofmeth}
+    \caption{Design space of platform-supported designs  \cite{zhang_optimizing_2015}}
+\end{figure} \newline \newline
+%
+A different approach has been studied by \cite{ma_optimizing_2018}. It proposes a design space exploration regarding to the various design objectives. They have proposed two flowcharts on figure \ref{fig:flowchart} in order to
+\begin{itemize}
+    \item \textbf{Latency}: $P_*$ should be common factors of  $T_*$ for all convolution layers to fully utilize \acrshort{pe}s, and $T_*$ to be the common factors of  $N_*$ to make full use of external memory transactions.
+    \item \textbf{Partial sum storage}: to minimize the concurrent storage of partial sums in local memory and allowing to keep them into the PE, we should prior the computation of an output pixel in order to evacuate it to the external memory.
+    \item \textbf{On-chip memory access}: on-chip memory access can be minimized by reusing at most pixels or weights in the \acrshort{pe}s.
+    \item \textbf{External memory access}: to minimize external access, a sufficient buffer size should be assigned to pixels and weights.
+\end{itemize}
+%
+\begin{figure}
+\centering
+    \begin{subfigure}{.45\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{fwch1.pdf}
+    \caption{ }
+    \end{subfigure}
+    \begin{subfigure}{.45\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{fwch2.pdf}
+    \caption{ }
+    \end{subfigure}
+    \label{fig:flowchart}
+    \caption{Design space exploration of: (a) total number of partial sums that need to be stored in memory; (b) the number of external memory accesses \cite{ma_optimizing_2018}}
+\end{figure}

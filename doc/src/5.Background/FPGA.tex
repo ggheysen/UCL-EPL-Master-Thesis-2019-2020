@@ -1,3 +1,9 @@
 \chapter{FPGA}
 \label{chap:fpga}
-blabla
+\section{Loop optimization techniques} \label{sec:loopopti}
+\acrfull{simd} accelerators were proposed to solve the static systolic array inefficiency. The general computation flow can be described as follow:
+\begin{enumerate}
+    \item Fetch \acrshort{fm}s and weights from the external memory (\acrshort{dram}) to on-chip buffer.
+    \item The \acrshort{fm}s and weights are streamed into the \acrshort{pe}.
+    \item
+\end{enumerate}

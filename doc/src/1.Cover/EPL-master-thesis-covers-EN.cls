@@ -20,6 +20,7 @@
 \usepackage[nottoc]{tocbibind}
 \usepackage{graphicx}
 \usepackage{csquotes}
+\usepackage{subcaption}
 \usepackage[
 backend=biber,
 style=numeric,
@@ -27,8 +28,36 @@ sorting=none,
 citestyle=numeric
 ]{biblatex}
 \usepackage{svg}
+\usepackage{listings}
+\usepackage{xcolor}
 % Load the package
 \usepackage[acronym]{glossaries}
+% Listing properties
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{1,1,1}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
  
 % Generate the glossary
 \makenoidxglossaries
