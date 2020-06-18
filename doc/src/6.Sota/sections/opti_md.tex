@@ -1,4 +1,5 @@
 \section{Model Optimizations} \label{sec:mdopti}
+According to \cite{chen_eyeriss_2017}, it is important to reduce the size of a model because the data-movement can often be more energy-consuming than actual computation. In this section we will review different approaches to reduce the size and the computational complexity of a model which can be an issue when implementing on \acrshort{fpga}.
 \subsection{Efficient Model Design}
 The size of the model can be reduced by changing the architectures of the models. As many approaches have been proposed, we focus our interest on architectures that target the embedded space. \newline \newline
 %
@@ -31,5 +32,18 @@ MobileNetV2 \cite{sandler_mobilenetv2_2019} is an improvement of MobileNet in te
     \label{tab:mbv2}
 \end{table}
 \subsection{Pruning}
+
 \subsection{Quantization}
-The approach
+The approach of quantization is to compress (reducing the bit-width) floating point parameters to fixed point low-precision parameters. The benefits of quantization, as enonced by \cite{joos_de_ter_beerst_accelerating_2019}, are a reduction of overfitting and an acceleration of computation because of the weights of smaller bit-size. For example, operations can be four 4 times faster when quantizing to 8 bits due to \acrshort{simd} optimisations. \newline \newline
+%
+There are two forms of quantization:
+\begin{enumerate}
+    \item \textbf{Fixed-point integers}: a number representation using bits is divided into two parts: the first part is dedicated to the integer part and the second one is dedicated to the fractional part of the number. It is easy to implement but it is important to consider the bit size of each part. It can be done by examination after the training. We can also, as for \cite{21,22}, choose a different range for each layer (doing it for every weight is not memory-efficient).
+    \item \textbf{Inteval quantification}: we redefine weights to be between $[-\alpha; \alpha]$. We have to retrain a network before using it but we can achieve good results with a small number of bits.
+\end{enumerate}
+%
+It was only recently that work are published on highly quantized \acrshort{nn} \cite{guo_survey_2018}, and using 16-bits or 8-bits quantization has shown only a small loss in accuracy without retraining \cite{abdelouahab_accelerating_2018}. The quantization of a \acrshort{nn} can be achieved through two different approaches:
+\begin{enumerate}
+    \item \textbf{Quantification of the weight parameters}: the most widely used. It can be done before or after training, but we have a better accuracy if we train during training.
+    \item \textbf{Quantification through the activation layer}: we quantize the the output of the activation function;
+\end{enumerate}
