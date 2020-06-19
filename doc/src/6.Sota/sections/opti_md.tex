@@ -47,3 +47,4 @@ It was only recently that work are published on highly quantized \acrshort{nn} \
     \item \textbf{Quantification of the weight parameters}: the most widely used. It can be done before or after training, but we have a better accuracy if we train during training.
     \item \textbf{Quantification through the activation layer}: we quantize the the output of the activation function;
 \end{enumerate}
+Unfortunately, not all existing network are friendly for quantization, like MobileNetV1. There is a accuracy gap against float point models (70.50\% vs 1.80\% using a 8-bit pipeline). However, works in \cite{sheng_quantization-friendly_2018} have shown that the source of accuracy drap was the design of the separable convolution core layer. They have therefore proposed a new quantization-friendly separable convolution core layer. Works on MobileNetV2 should then be done to verify thr fixed-point inference accuracy.
