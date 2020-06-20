@@ -30,6 +30,7 @@ citestyle=numeric
 \usepackage{svg}
 \usepackage{listings}
 \usepackage{xcolor}
+\usepackage{hyperref}
 % Load the package
 \usepackage[acronym]{glossaries}
 % Listing properties
