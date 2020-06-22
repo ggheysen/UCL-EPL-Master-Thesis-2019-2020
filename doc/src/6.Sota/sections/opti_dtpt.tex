@@ -1,21 +1,21 @@
 \section{Datapath Optimization} \label{sec:dtptopti}
-According to \cite{chen_eyeriss_2017}, the data-movement can often be more energy-consuming than actual computation. Smart memory management is then required to implement a \acrshort{cnn} on low power device such as \acrshort{fpga}.
+According to \textcite{chen_eyeriss_2017}, the data-movement can often be more energy-consuming than actual computation. Smart memory management is then required to implement a \acrshort{cnn} on low power device such as \acrshort{fpga}.
 %
 %
 \subsection{Systolic Arrays}
 %
 %
-Systolic arrays were implemented on the first \acrshort{fpga}-based accelerators. A static systolic array is a static array of \acrshort{pe} doing a part of the computation and communicating with its neighbors. An illustration of its principle can be found on figure \ref{fig:sytar}. The configuration can only support convolution with a kernel size $K_*$ lower than a bound, such that $K_* \leq K_m$. The systolic array allows spatial data reutilisation between rows and columns and temporal data reutilisation.\newline \newline
+Systolic arrays were implemented on the first \acrshort{fpga}-based accelerators \cite{farabet_cnp_2009, gokhale_240_2014}. A static systolic array is a static array of \acrshort{pe}, controlled by the \acrshort{cpu}. Each \acrshort{pe} is involved in a part of the computation and can communicate with adjacent \acrshort{pe}s. An illustration of its principle can be found on figure \ref{fig:sytar}. The configuration can only support convolution with a kernel size $K_*$ lower than a bound, such that $K_* \leq K_m$ (because the number of \acrshort{pe} is static). The systolic array allows spatial data reutilisation between rows and columns, temporal data reutilisation, and high clock frequency \cite{joos_de_ter_beerst_accelerating_2019, mittal_survey_2020}.
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{systArray.pdf}
     \caption{Static Systolic Arrays}
     \label{fig:sytar}
-\end{figure}
-However, Systolic Arrays has also issues. First, when the kernel size is much lesser than the maximal kernel size ($K_* << K_m$), there is an underutilization of the resources. For example, \cite{gokhale_240_2014} notes that for a $3 \times 3$ kernel, only $9\%$ of the \acrfull{dsp} blocks are used. Second,  data caching is not implemented. It means that it has always to fetch input from the external memory. Memory becomes the bottleneck and the performance is bounded by the device memory bandwidth.
+\end{figure} \newline \newline
+However, Systolic Arrays has also issues of ineffiency. First, when the kernel size is much lesser than the maximal kernel size ($K_* << K_m$), there is an underutilization of the resources. For example, \cite{gokhale_240_2014} notes that for a $3 \times 3$ kernel, only $9\%$ of the \acrfull{dsp} blocks are used. Second, data caching is not implemented. It means that it has always to fetch input from the external memory and it increases latency \cite{wei_automated_2017, abdelouahab_accelerating_2018}. The device performance is depending then on the memory bandwidth and it becomes memory-bounded.
 %
 %
-\subsection{Data-flow \acrshort{moc} for \acrshort{cnn}s}
+\subsection{Data-flow \acrshort{moc} for \acrshort{cnn}s (2D mapping)}
 %
 %
 Data-flow \acrfull{moc} can be used to accelerate \acrshort{cnn}s on \acrshort{fpga}. This approach is motivated because the feed-forward aspect of the inference stage of the \acrshort{cnn} is purely data driven.
