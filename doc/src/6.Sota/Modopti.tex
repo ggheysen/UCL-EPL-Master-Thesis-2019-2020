@@ -1,13 +1,13 @@
 \chapter{Accelerating \acrshort{cnn} inference on \acrshort{fpga}}
 \label{chap:inf}
-As said at chapter \ref{chap:intr}, interest has been made on accelerating the inference phase on \acrshort{fpga}. This chapter reviews the acceleration approaches to perform an efficient inference. \newline \newline
-The three main optimization can be categorized according to \cite{abdelouahab_accelerating_2018}:
+As said at chapter \ref{chap:intr}, the focus is on accelerating the inference stage on \acrshort{fpga}. This chapter reviews the acceleration approaches to perform an efficient inference. \newline \newline
+The various optimizations can be grouped into 3 main categories, according to \textcite{abdelouahab_accelerating_2018}:
 \begin{itemize}
-    \item \textbf{Algorithmic Optimizations}: the computational cost of the convolution can be reduced by vectorizing them. More details can be found in section \ref{sec:algopti}.
-    \item \textbf{Datapath Optimization}: because of the limited resources on a \acrshort{fpga}, memory if often the bottleneck and optimizing the memory management can increase the throughput. More details can be found in section \ref{sec:dtptopti}.
-    \item \textbf{\acrshort{cnn} model Optimization}: an important issue of \acrshort{cnn} is their computational complexity and their hardware utilization. A solution is then to use approximate computing and trade accury for acceleration. This work focus on this kind of optimization. More details can be found in section \ref{sec:mdopti}.
+    \item \textbf{Algorithmic Optimizations}: the computational cost of the convolution can be reduced by vectorizing the operation or using faster algorithms. More details can be found in section \ref{sec:algopti}.
+    \item \textbf{Datapath Optimization}: because of the limited resources on an FPGA, memory is often the bottleneck and optimizing the memory management can increase the throughput. More details can be found in section \ref{sec:dtptopti}.
+    \item \textbf{\acrshort{cnn} model Optimization}: an important issue of \acrshort{cnn} is their computational complexity and hardware utilization. A solution is then to use approximate computing to trade accuracy for acceleration. This work focus on this category of optimization. More details can be found in section \ref{sec:mdopti}.
 \end{itemize}
-The following sections introduce and discuss the different optimizations. Then we compare the most relevant approaches on \acrshort{fpga} on section \ref{sec:cclopti}.
+The following sections introduce and discuss the different optimization categories and their various techniques. Afterwards, we compare the most relevant approaches found in section \ref{sec:cclopti} and we discuss why we take our interest in pruning.
 %%%%%%%%%%%%
 \input{src/6.Sota/sections/opti_algo}
 %%%%%%%%%%%%
