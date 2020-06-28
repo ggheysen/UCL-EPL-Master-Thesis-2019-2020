@@ -5,6 +5,8 @@
 \LoadClass[12pt, a4paper, openright]{report}
 
 % Usefull packages
+\usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \RequirePackage{microtype}   % Improves typography
