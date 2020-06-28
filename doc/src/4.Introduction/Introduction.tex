@@ -28,9 +28,9 @@ A type of \acrshort{dl} model, \acrfull{cnn}, has demonstrated its effectiveness
     \label{tab:benchener}
 \end{table}
 
-Still, \acrshort{gpu} is currently the most dominant platform to accelerate \acrshort{cnn}, trends confirm that \acrshort{fpga} will be more suitable to accelerate \acrshort{cnn}. Two reasons can explain that: first, the advance in \acrshort{fpga} technology shows that the performance disparity between \acrshort{fpga} and \acrshort{gpu} has lessened; second, recent trends in \acrshort{cnn} utilize sparsity and extreme compact data types which is in the favor of the \acrshort{fpga}s, because they are designed to handle irregular parallelism and custom data type \cite{nurvitadhi_can_2017}. However, \acrshort{fpga} is resource-constraint (limited memory, I/O bandwidth, and computing resources) and the challenge is to find a mapping between the computational model and the execution model.
+Still, while \acrshort{gpu} is currently the most dominant platform to accelerate \acrshort{cnn}, trends confirm that \acrshort{fpga} will be more suitable to accelerate \acrshort{cnn}. Two reasons can explain that: first, the advance in \acrshort{fpga} technology shows that the performance disparity between \acrshort{fpga} and \acrshort{gpu} has lessened; second, recent trends in \acrshort{cnn} utilize sparsity and extreme compact data types which is in the favor of the \acrshort{fpga}s, because they are designed to handle irregular parallelism and custom data type \cite{nurvitadhi_can_2017}. However, \acrshort{fpga} is resource-constraint (limited memory, I/O bandwidth, and computing resources) and the challenge is to find a mapping between the computational model and the execution model.
 
-\acrshort{cnn} consists of two phases: a training stage where the model learns (back-propagation algorithm \cite{lecun_backpropagation_1989}) and the inference stage where the model makes a prediction on new data samples (feed-forward algorithm \cite{zhang_optimizing_2015}). We can see the process in figure \ref{fig:traininf}. Usually, \acrshort{cnn}s are trained once using \acrshort{gpu} or \acrshort{fpga} and inference is executed every time the \acrshort{cnn} has a new input to process. Most efforts have then been focused on accelerating the inference stage. The core of this work is therefore aimed at proposing a way to accelerate the inference of a model through weights pruning. It is not efficiently usable on a \acrshort{gpu} because of the irregular data access and the custom data type of the non-pruned weights.
+\acrshort{cnn} consists of two phases: a training stage where the model learns (back-propagation algorithm \cite{lecun_backpropagation_1989}) and the inference stage where the model makes a prediction on new data samples (feed-forward algorithm \cite{zhang_optimizing_2015}). We can see the process in figure \ref{fig:traininf}. Usually, \acrshort{cnn}s are trained once using \acrshort{gpu} or \acrshort{fpga} and inference is executed every time the \acrshort{cnn} has a new input to process. Most efforts have then been focused on accelerating the inference stage. The core of this work is therefore aimed at proposing a way to accelerate the inference of a model on \acrshort{fpga}.
 %
 \begin{figure}
     \includegraphics[width=\textwidth]{traininf.pdf}
@@ -38,7 +38,16 @@ Still, \acrshort{gpu} is currently the most dominant platform to accelerate \acr
     \label{fig:traininf}
 \end{figure}
 
-\noindent This work concentrates on building an architecture using pruning on depthwise separable convolution, an alternative way to perform convolution which uses fewer parameters and has a lesser computational complexity. The objective of this work is then to build an efficient architecture on \acrshort{fpga} implementing a sparse \acrshort{cnn} network using depthwise separable convolution. To show the achievability, we have chosen MobileNetV2 because it offers state-of-the-art performance.
+The inference can be accelerated using various optimizations can be grouped into 3 main categories, according to \textcite{abdelouahab_accelerating_2018}:
+\begin{itemize}
+    \item \textbf{Algorithmic Optimizations}: the computational cost of the convolution can be reduced by vectorizing the operation or using faster algorithms.
+    \item \textbf{Datapath Optimization}: because of the limited resources on an FPGA, memory is often the bottleneck and optimizing the memory management can increase the throughput.
+    \item \textbf{\acrshort{cnn} model Optimization}: an important issue of \acrshort{cnn} is their computational complexity and hardware utilization. A solution is then to use approximate computing to trade accuracy for acceleration. This kind of optimization is going to be the key point of this work because the \acrshort{cnn} size and arithmetic complexity are the major issues when implementing an \acrshort{cnn} on \acrshort{fpga}.
+\end{itemize}
+
+This work focus on weights pruning because it is not efficiently exploitable on an \acrshort{gpu}. The irregular data access and the custom data type of the non-pruned weights shows it is more suitable on \acrshort{fpga}. Therefore, this work concentrates on building an architecture using pruning on depthwise separable convolution, an alternative way to perform convolution which uses fewer parameters and has a lesser computational complexity. The objective of this work is then to build an efficient architecture on \acrshort{fpga} implementing a sparse \acrshort{cnn} network using depthwise separable convolution. To show the achievability, we have chosen MobileNetV2 because it offers state-of-the-art performance.
+
+<Insert principal results>
 %
 %
 \section*{Structure of the thesis}
@@ -46,11 +55,11 @@ Still, \acrshort{gpu} is currently the most dominant platform to accelerate \acr
 %
 This master thesis is composed of 8 chapters.
 
-Chapter \ref{chap:cnn} details the theory behind \acrshort{cnn} and goes deeper into its computational background. It develops also model compression optimizations allowing a reduction of the size and the computational complexity of the model.
+Chapter \ref{chap:cnn} details the theory behind \acrshort{cnn} and goes deeper into its computational background. We also explore algorithmic and model optimizations to reduce the cost of the convolution operation and the size of the models..
 
-The concept of \acrshort{fpga} is explained in chapter \ref{chap:fpga}. We detail there the workflow and \acrshort{fpga} designs. Solutions to the issues of mapping a \acrshort{cnn} model on \acrshort{fpga} are described too.
+The concept of \acrshort{fpga} is explained in chapter \ref{chap:fpga}. We detail there the workflow and \acrshort{fpga} designs. The chapter also details datapath optimizations which reduce the inefficiency of the convolution on \acrshort{fpga}
 
-Chapter \ref{chap:inf} discusses the state-of-art \acrshort{fpga} inference optimization techniques. We do a review of the different approaches and see which are the more promising ones.
+Chapter \ref{chap:inf} discusses the state-of-art \acrshort{fpga} inference optimization techniques.
 
 As we have shown in chapter \ref{chap:inf} why we have chosen pruning to be the core of this work, chapter \ref{chap:compress} develops state-of-the-art architecture using pruning to accelerate inference.
 
