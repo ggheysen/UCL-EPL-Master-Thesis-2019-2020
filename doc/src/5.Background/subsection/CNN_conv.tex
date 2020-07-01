@@ -1,0 +1,50 @@
+\subsection{Convolution layer} \label{subs:2dconv}
+A convolutional layer carries out the feature extraction process by applying a set of 3D-convolution filters to a set of input volumes, also called input \acrfull{fm}s. In an \acrshort{cnn}, the first convolutional layers extract low-level features while the deepest one extract more high-level features. The input \acrfull{fm}s are characterized by 3 parameters: \textbf{$N_{ix}$} the width; \textbf{$N_{iy}$} the height; \textbf{$N_{if}$} the depth. An illustration is in figure \ref{fig:notation:ifm}.
+The input \acrshort{fm} are then processed with a kernel (of size $N_{kx} \times N_{ky} \times N_{if} \times N_{of}$), that we can see on figure \ref{fig:notation:k}) to obtain the output \acrshort{fm}s. The output \acrshort{fm}s are also characterized by its width $N_{ox}$, its height $N_{oy}$ and its depth $N_{of}$. We can also see a general output \acrshort{fm}s on figure \ref{fig:notation:ofm}.
+%
+\begin{figure}
+    \centering
+    %
+    \begin{subfigure}{.32\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{notifm.pdf}
+    \caption{kernel-wise pruning}
+    \label{fig:notation:ifm}
+    \end{subfigure}
+    %
+    \begin{subfigure}{.32\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{notk.pdf}
+    \caption{Convolution kernel}
+    \label{fig:notation:k}
+    \end{subfigure}
+    %
+    \begin{subfigure}{.32\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{notofm.pdf}
+    \caption{Output \acrshort{fm}s}
+    \label{fig:notation:ofm}
+    \end{subfigure}
+    %
+    \caption{Volumes involved in the convolution operations}
+    \label{fig:notconv}
+\end{figure}
+
+The convolution operation happens as follow. We have an input \acrshort{fm} and a kernel. The kernel acts as a sliding window on the input \acrshort{fm}s. We extract a chunk of pixels of the same size of the kernel in the input \acrshort{fm}. Therefore, we perform a element-wise multiplication with the chunk of data and the kernel to obtain a pixel ouf output. Sliding this kernel on the input \acrshort{fm}s will produce an ouput \acrshort{fm}, where the output pixel at postion $(x, y)$ corresponds to the movement of the sliding window. Since one kernel produces one output \acrshort{fm}, having $N_{of}$ kernels produces then $N_{of}$ output \acrshort{fm}. An illustration of the convolution operation is in figure \ref{}.
+
+Except for $1 \times 1$ kernels, the sliding window can not cover all input pixels and then there is a spatial reduction between the input and output \acrshort{fm}s, while there is an increase in the number of channel. However, we can keep the same dimensions using \textit{padding} on the boundary (for example adding 0).
+
+Moreover, each time the sliding window performs a convolution, it shifts in the input \acrshort{fm}. The amount by which the filter shifts is called the \textit{stride} and it is initialy set to 1. This way we can even more reduce the width and the height of the output \acrshort{fm}s. For example, if we use padding and a stride of 2, $\frac{N_{ix}}{N_{ox}} = \frac{N_{iy}}{N_{oy}} = \frac{1}{2}$ and we use 4 times less pixels.
+
+Finally, we can express the convolution operations mathemalically as in equation \eqref{eq:conv}.
+    \begin{multline}
+        \forall ox \in \{ 1, ..., N_{ox} \}, oy \in \{ 1, ..., N_{oy} \}, of \in \{ 1, ..., N_{of} \} : \\
+        FM_O[ox, oy, oc] = \sum^{N_{if}}_{if=1}
+        \sum^{N_{kx}}_{kx=1}
+        \sum^{N_{ky}}_{ky=1}
+        FM_I[ox \cdot S + kx - \lfloor \frac{N_{kx}}{2} \rfloor,  oy \cdot S + ky - \lfloor \frac{N_{ky}}{2} \rfloor, if] \cdot
+        W^{of}_{if}[kx, ky]
+        \label{eq:conv}
+    \end{multline}
+
+If we compare the convolutional layer with the fully-connected layer, the convolutional layer allows weight sharing and then it needs less weights. For example in AlexNet \cite{krizhevsky_imagenet_2012}, 94\% of the weights are used in the fully-connected layers. But as said earlier, 90\% of the arithmetic operations are done in the convolutional layer.

@@ -1,0 +1,48 @@
+\subsection{Algorithmic Optimizations} \label{subsec:algopti}
+In this subsection, we will review algorithmic optimization techniques to reduce the computational complexity of convolutions, which are a costly operation. According to \cite{shawahna_fpga-based_2019}, 90\% of computation time in \acrshort{cnn} are consumed by the convolution operation.
+%
+%
+\subsubsection{GEMM}
+%
+%
+It is a common way to process \acrshort{cnn} on \acrshort{cpu} and \acrshort{gpu} \cite{abdelouahab_accelerating_2018}. We convert the convolution as a matrix-vector multiplication. The process of a convolution layer can be observed in figure \ref{fig:gemm}. However, this approach is not suggested for \acrshort{fpga}: \textcite{sze_efficient_2017, zhu_efficient_2020} point out that the \acrshort{fm}s must be copied multiple times when flattened to a vector. It leads to a huge memory footprint and either inefficiency in storage or complex memory management access patterns.
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{Images/gemm.pdf}
+    \caption{\acrshort{gemm} base processing on convolution layer \cite{abdelouahab_accelerating_2018}}
+    \label{fig:gemm}
+\end{figure}
+%
+%
+\subsubsection{Fast algorithms for convolution}
+The \acrshort{gemm} can accelerate the convolution but it does not reduce the number of operations. In this subsection, we explore fast algorithms that aim at reducing the arithmetic complexity of the convolution operation, particularly Winograd and \acrfull{fft}. The fast convolution algorithms produce a tile of output instead of a single pixel. The fast convolutions can also be described by a common formula, that we can observe on equation \ref{eq:comform}, where $\odot$ is the element-wise multiplication, $FM_O, FM_I$ the output and input \acrshort{fm}
+\begin{equation}
+FM_O = \boldsymbol{Inv\_Transf} [ \ \boldsymbol{Transf}(FM_I) \ \odot \ \boldsymbol{Transf}(Kernel) \ ]
+\label{eq:comform}
+\end{equation}
+%
+\paragraph{Winograd-based convolution \newline}
+%
+The Winograd minimal filter algorithm is first introduced by \cite{winograd_arithmetic_1980}. In Winograd filtering, data is processed by blocs referred as \textit{tiles}, as following:
+\begin{itemize}
+    \item An input \acrshort{fm} tile $g$ of size $(N_{ix} \times N_{iy})$ is pre-processed: $$\boldsymbol{Transform}(FM_I) = \boldsymbol{G^{T}} FM_I \boldsymbol{G} $$
+    \item In the same way, $Kernel$, of size $(K_x \times K_y)$ is also transformed: $$\boldsymbol{Transform}(Kernel) = \boldsymbol{B^{T}} Kernel \boldsymbol{B}$$.
+    \item The inverse transformation function is then applied to obtain the output tile: $$\boldsymbol{Inverse\_Transform}(E) = \boldsymbol{A^{T}} E \boldsymbol{G}$$, where $E$ is the result of the element-wise multiplication of the two transformed tiles.
+\end{itemize}
+The output tile $FM_O$ of the Winograd Filtering algorithm denoted $F(N_{ix} \times N_{iy}, K_x \times K_y)$, is computed using equation \ref{eqn:winograd}. The advantage of using the Winograd-based convolution is that the transformation matrix $\boldsymbol{G}, \boldsymbol{B}, \boldsymbol{A}$ can be computed off-line, using the Winograd Algorithm \cite{winograd_arithmetic_1980}, once $(N_{ix}, N_{iy}, K_x, K_y)$ are fixed.
+\begin{equation}
+\label{eqn:winograd}
+FM_O = \boldsymbol{A^{T}} [ \ \boldsymbol{G^{T}} FM_I \boldsymbol{G} \odot \boldsymbol{B^{T}} Kernel \boldsymbol{B} \ ] \boldsymbol{A}
+\end{equation}
+%
+\paragraph{fft-based convolution \newline}
+%
+The \acrshort{fft}, introduced by \textcite{cooley_algorithm_1965}, is an algorithm to transform the tile into the frequency domain. It can be integrated into the convolution to reduce the number of operations, where:
+\begin{itemize}
+    \item $\boldsymbol{Transform} = FFT$
+    \item $\boldsymbol{Inverse\_Transform} = IFFT$
+\end{itemize}
+%
+\paragraph{Comparaison between the two fast convolution \newline}
+Winograd-based convolution seems to be a preferred way to perform fast convolution. This is explained by three reasons: first, \textcite{lavin_fast_2015} demonstrated that Winograd convolution is efficient when the kernel is small ($K_* \leq 3$) and the stride is equal to 1; second, \acrshort{fft}-based convolution are only feasible when the kernel is large \cite{ahmad_towards_2019, chitsaz_acceleration_2020}; third, current \acrshort{cnn} trends prior the utilization of small kernel \cite{liang_evaluating_2020, sandler_mobilenetv2_2019}. \newline \newline
+Moreover, FPGA implementations of Winograd algorithm have produced good results. For example, \cite{aydonat_opencl_2017, liang_evaluating_2020} utilized Winograd transform and have reduced their computational complexity by around 50\% but Winograd algorithm also increases also increases the bandwidth utilization \cite{xiao_exploring_2017}. However, \textcite{zeng_optimizing_nodate, chitsaz_acceleration_2020, liang_evaluating_2020} have made works on optimizing the frequency-domain convolution with small filter by using \acrfull{oad} technique \cite{w_smith_scientist_1997} to lower the number of operations and increase the data parallelism. Still, according to \textcite{liang_evaluating_2020, podili_fast_2017}, \acrshort{fft} requires more memory, bandwidth, and logic resources (more additions and multiplications) than Winograd.

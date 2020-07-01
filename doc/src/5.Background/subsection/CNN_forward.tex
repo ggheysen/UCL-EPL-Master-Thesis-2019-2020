@@ -1,0 +1,7 @@
+\subsection{Forward-propagation} \label{subs:trainforward}
+We use the training data as input for the model and we propagates each input through the network using the current weights. The forward propagation produces a vector of output that we can compare with the label of the input (target). This comparison is made with a loss function (for example the mean-square error, that we can see in equation \eqref{eq:mse}). To improve the accuracy of the model, we have to minimize the loss function by finding the optimal weights. This can be done using the algorithms found in next section. Moreover, once the model is trained, the inference consists only on the forward propagation.
+%
+\begin{equation}
+    L(\boldsymbol{w}, \boldsymbol{w}) = \sum^{N}_{i=1} (label_i - p(x_i, \boldsymbol{w}))
+    \label{eq:mse}
+\end{equation}

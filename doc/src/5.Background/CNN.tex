@@ -1,43 +1,56 @@
-    \chapter{Convolutional Neural Network} \label{chap:cnn}
-A \acrfull{cnn} is a type of \acrlong{nn} that is specialized in analyzing visual imagery. It has shown explemplary performance on serveral competitions related to Computer Vision and Image Processing \cite{khan_survey_2020}. \newline \newline
-The first section introduces the building blocks of a \acrshort{cnn}. We start from the first and most simple element and then show the improvements. \newline \newline
-The second section is concentrated on the training of a \acrshort{cnn}. \newline \newline
-The third section details various models and techniques to perform model compression.
-%%%%%%%%%%%%%%%%
-    \section{Layers}
+\chapter{Convolutional Neural Network} \label{chap:cnn}
+A \acrfull{cnn} is a type of \acrlong{nn} that is specialized in analyzing visual imagery and natural language processing. It has shown explemplary performance on serveral competitions related to Computer Vision and Image Processing \cite{khan_survey_2020}. We explore in this chapter the different aspects of a \acrshort{cnn} and what optimizations can be made to reduce its size and its computational complexity.
+
+The first section introduces the building blocks of a \acrshort{cnn}. We start from the first and most simple element, the perceptron. From this first step, we explore how to use it to make more complex layers that can perform more complex functions. We also detail the other layers required to improve the efficiency of the model, such as pooling and batch-normalization.
+
+The second section is concentrated on the training of a \acrshort{cnn}. We explore briefly the backpropagation algorithm.
+
+The third section details how we can use the layer from section \ref{sec:layer} to build efficient network.
+
+The fourth section details the optimization we can make on the convolution operation to have a faster inference on \acrshort{fpga}. We focus on the algorithmic and model optimizations.
+%
+%
+\section{Layers} \label{sec:layer}
 A layer is a high-level build block in \acrshort{dl}. It is a set of operations, weights and non-linear functions. It transforms an input into an output which will be used as input for another layer. The collections of layer is then used to build a \acrlong{cnn}. We begin our understanding of the layer theory by explaining the perceptron, the simplest element of a neural Network.
-%%%
-    \subsection{Perceptron} \label{subs:perceptron}
-    \input{src/5.Background/subsection/CNN_Perceptron}
-%%%
-    \subsection{Fully Connected} \label{subs:fcl}
-    \input{src/5.Background/subsection/CNN_FCN}
-%%%
-\subsection{2D Convolution} \label{subs:2dconv}
-blabla
-%%%
-\subsection{\acrlong{dsc}}  \label{subs:dsc}
-blabla
-%%%
-\subsection{Bottleneck Convolution}
-blabla
-%%%
-\subsection{Activation} \label{subs:acti}
-blabla
-%%%
-\subsection{Pooling}
-blabla
-%%%%%%%%%%%%%%%%
-\section{Training}
-blabla
-%%%%%%%%%%%%%%%%
+%
+%
+\input{src/5.Background/subsection/CNN_Perceptron}
+%
+\input{src/5.Background/subsection/CNN_FCN}
+%
+\input{src/5.Background/subsection/CNN_acti}
+%
+\input{src/5.Background/subsection/CNN_conv}
+%
+\input{src/5.Background/subsection/CNN_dsc}
+%
+\input{src/5.Background/subsection/CNN_pooling}
+%
+%
+\section{Training} \label{sec:train}
+We have seen in the previous section what are the common building blocks in an \acrshort{cnn}. Now we explore how to make a network improves its performance, prediction, at a task with experience, to make the network learn. Finding the correct methods to find the weights is then an important aspect to have an efficient network.
+
+After disigning the network, we have to assign a value to the weight before the network can learn. The most common form is random initiliazation but the learning if affected by the initial values of the weight. If it is too small the network does not lear or if it is too large it might take a very long time to converge. To solve this, different initializations have been proposed: Xavier initiliazation \cite{glorot_understanding_2010} and He initialization \cite{he_delving_2015}.
+
+Once the weights have been initialized, we can perform the backpropagation algorithm to improve the efficiency of the network. It is composed of two steps: the forward pass and the backward pass.
+%
+%
+\input{src/5.Background/subsection/CNN_forward}
+%
+\input{src/5.Background/subsection/CNN_backward}
+%
+%
 \section{Models}
-blabla
-\subsection{\acrlong{dsc}}  \label{subs:mbv2}
-blabla
-%%%
-\subsection{Pruning}
-blabla
-%%%
-\subsection{Quantification}
-blabla
+Once we have seen how to build and train a \acrshort{cnn}, we can now detail famous networks. 
+%
+\input{src/5.Background/subsection/CNN_models}
+%
+%
+\section{Optimizations}
+%
+%
+In this section, we explore the state-of-the-art approaches to reduce the arithmetic complexity and the hardware utilization of \acrshort{cnn} models. Section \ref{subsec:algopti} details how to efficiently handle and optimize the convolution operation on \acrshort{fpga}. On the other side, section \ref{subsec:mdopti} goes over techniques to reduce the size of the model.
+%
+\input{src/5.Background/subsection/opti_algo}
+%
+\input{src/5.Background/subsection/opti_md}

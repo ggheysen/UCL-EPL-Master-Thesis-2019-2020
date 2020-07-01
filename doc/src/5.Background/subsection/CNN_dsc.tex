@@ -1,0 +1,26 @@
+\subsection{Depthwise Separable Convolution}  \label{subs:dsc}
+\acrfull{dsc} is first introduced by \textcite{sifre_ecole_2014}. According to \textcite{chollet_xception_2017}, "\textit{A depthwise separable convolution consists in a \textbf{depthwise convolution},i.e. a spatial convolution performed independently over each channel of an input, followed by a \textbf{pointwise convolution}, i.e. a 1x1 convolution, projecting the channels output by the
+depthwise convolution onto a new channel space}".
+
+As said above, the \acrshort{dsc} is composed of a depthwise convolution and a pointwise convolution. An illustration is found on figure \ref{fig:dsc}. This alternative form of convolution allows to have fewer parameters and faster inference than standard convolution because there is a reduction of the arithmetic operations, in exchange for a limited loss of accuracy \cite{liu_fpga-based_2019}. The reduction factors on weight and operation are calculated in equation \eqref{eq:descopred} and equation \eqref{eq:descwgred}, where $F_{*}$ are the factors of reduction, $W_{sc}$ and $O_{sc}$ are the weights and operations required for a standard convolution, and $W_{dsc}$ and $O_{dsc}$ are the weights and operations required for a \acrshort{dsc}.
+%
+\begin{equation}
+    F_w = \frac{W_{dsc}}{W_{sc}} =
+    \frac{N_{kx} \times N_{ky} \times N_{if} + N_{if} \times N_{of}}{N_{kx} \times N_{ky} \times N_{if} \times N_{of}} =
+    \frac{1}{N_{of}} + \frac{1}{N_{kx} \times N_{ky}}
+    \label{eq:descopred}
+\end{equation}
+\begin{equation}
+    \begin{split}
+        F_o &= \frac{O_{dsc}}{O_{sc}} \\
+        &= \frac{N_{kx} \times N_{ky} \times N_{if} \times N_{ox} \times N_{oy} + N_{if} \times N_{of} \times N_{ox} \times N_{oy}}{N_{kx} \times N_{ky} \times N_{if} \times N_{of} \times N_{ox} \times N_{oy}} \\
+        &= \frac{1}{N_{of}} + \frac{1}{N_{kx} \times N_{ky}}
+    \end{split}
+    \label{eq:descwgred}
+\end{equation}
+%
+\begin{figure}
+    \includegraphics[width=\textwidth]{dsc.pdf}
+    \caption{Depthwise Separable Convolution}
+    \label{fig:dsc}
+\end{figure}
