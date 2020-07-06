@@ -1,6 +1,8 @@
 \subsection{Convolution layer} \label{subs:2dconv}
-A convolutional layer carries out the feature extraction process by applying a set of 3D-convolution filters to a set of input volumes, also called input \acrfull{fm}s. In an \acrshort{cnn}, the first convolutional layers extract low-level features while the deepest one extract more high-level features. The input \acrfull{fm}s are characterized by 3 parameters: \textbf{$N_{ix}$} the width; \textbf{$N_{iy}$} the height; \textbf{$N_{if}$} the depth. An illustration is in figure \ref{fig:notation:ifm}.
-The input \acrshort{fm} are then processed with a kernel (of size $N_{kx} \times N_{ky} \times N_{if} \times N_{of}$), that we can see on figure \ref{fig:notation:k}) to obtain the output \acrshort{fm}s. The output \acrshort{fm}s are also characterized by its width $N_{ox}$, its height $N_{oy}$ and its depth $N_{of}$. We can also see a general output \acrshort{fm}s on figure \ref{fig:notation:ofm}.
+In an \acrshort{cnn}, a \textbf{convolutional layer} carries out the feature extraction process of the input image, also called the input \acrfull{fm}. It is the main operation in a \acrshort{cnn} and it the layer that gives the network its name. The first layer extracts low-level features of the input \acrshort{fm} and the deepest layers use the low-level features to build an more high level one \cite{goodfellow_deep_2016}.
+
+An input image is characterized by 3 parameters: \textbf{$N_{ix}$} the width, \textbf{$N_{iy}$} the height, and \textbf{$N_{if}$} the depth. We can illustrate then the image as a cuboid composed of layers of pixels. An illustration is presented in figure \ref{fig:notation:ifm}.
+The convolution layer correlates therefore input \acrshort{fm}s and a 4D filter, to produce output \acrshort{fm}s, which contain the high-level features. The output \acrshort{fm}s are also characterized by its width $N_{ox}$, its height $N_{oy}$ and its depth $N_{of}$. We can also see a general output \acrshort{fm}s on figure \ref{fig:notation:ofm}. As a result, the filter consists of $N_{of}$ kernels, where each kernel has size $N_{kx} \times N_{ky} \times N_{if}$, that we can see in figure \ref{fig:notation:k}).
 %
 \begin{figure}
     \centering
@@ -30,7 +32,14 @@ The input \acrshort{fm} are then processed with a kernel (of size $N_{kx} \times
     \label{fig:notconv}
 \end{figure}
 
-The convolution operation happens as follow. We have an input \acrshort{fm} and a kernel. The kernel acts as a sliding window on the input \acrshort{fm}s. We extract a chunk of pixels of the same size of the kernel in the input \acrshort{fm}. Therefore, we perform a element-wise multiplication with the chunk of data and the kernel to obtain a pixel ouf output. Sliding this kernel on the input \acrshort{fm}s will produce an ouput \acrshort{fm}, where the output pixel at postion $(x, y)$ corresponds to the movement of the sliding window. Since one kernel produces one output \acrshort{fm}, having $N_{of}$ kernels produces then $N_{of}$ output \acrshort{fm}. An illustration of the convolution operation is in figure \ref{}.
+Convolution is a specialized kind of linear operation. The convolution operation happens as follow. Each kernel acts as a sliding window on the input \acrshort{fm}. We extract a chunk of pixels of the same size of the kernel in the input \acrshort{fm} and perform a element-wise multiplication with the chunk of data and the kernel. We perform a sum of the computed pixels to obtain a pixel of output. Sliding this kernel on the input \acrshort{fm}s will produce a channel of the ouput \acrshort{fm}., where the output pixel at postion $(x, y)$ corresponds to the movement of the sliding window. Since one kernel produces one output \acrshort{fm}, having $N_{of}$ kernels produces then $N_{of}$ output \acrshort{fm}. An illustration of the convolution operation is in figure \ref{fig:convolution}.
+%
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{conv.pdf}
+    \caption{Convolution operation}
+    \label{fig:convolution}
+\end{figure}
 
 Except for $1 \times 1$ kernels, the sliding window can not cover all input pixels and then there is a spatial reduction between the input and output \acrshort{fm}s, while there is an increase in the number of channel. However, we can keep the same dimensions using \textit{padding} on the boundary (for example adding 0).
 
