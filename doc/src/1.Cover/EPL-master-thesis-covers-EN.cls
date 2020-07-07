@@ -1,6 +1,6 @@
 % http://ctan.mirrors.hoobly.com/macros/latex/doc/clsguide.pdf
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{eplmastersthesis}[2018/12/04 EPL Master''s Thesis class]
+\ProvidesClass{src/1.Cover/EPL-master-thesis-covers-EN}[2018/12/04 EPL Master''s Thesis class]
 
 \LoadClass[12pt, a4paper, openright]{report}
 

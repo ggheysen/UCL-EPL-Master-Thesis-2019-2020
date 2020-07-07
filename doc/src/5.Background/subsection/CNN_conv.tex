@@ -52,8 +52,8 @@ Finally, we can express the convolution operations mathematically as in equation
         \forall ox &\in \{ 1, ..., N_{ox} \}, oy \in \{ 1, ..., N_{oy} \}, of \in \{ 1, ..., N_{of} \} : \\
         FM_O[ox, oy, oc] &= \sum^{N_{if}}_{if=1}
         \sum^{N_{kx}}_{kx=1}
-        \sum^{N_{ky}}_{ky=1}
-        FM_I[ox \cdot S + kx - \lfloor \frac{N_{kx}}{2} \rfloor,  oy \cdot S + ky - \lfloor \frac{N_{ky}}{2} \rfloor, if] \cdot
+        \sum^{N_{ky}}_{ky=1} \\
+        &FM_I[ox \cdot S + kx - \lfloor \frac{N_{kx}}{2} \rfloor,  oy \cdot S + ky - \lfloor \frac{N_{ky}}{2} \rfloor, if] \cdot
         W^{of}_{if}[kx, ky]
     \end{split}
     \label{eq:conv}
