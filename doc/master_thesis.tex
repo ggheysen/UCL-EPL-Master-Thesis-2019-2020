@@ -2,10 +2,7 @@
 \documentclass{src/1.Cover/EPL-master-thesis-covers-EN}
 
 % Title of the thesis
-\title{Accelerating Convolutional Neural Network for FPGA}
-% Subtitle - remove this line if not applicable
-\subtitle{using Depthwise Separable Convolution and Pruning}
-
+\title{Accelerating Convolutional Neural Network for FPGA using Depthwise Separable Convolution and Pruning}
 % Name of the student author(s)
 \author{Guillaume \textsc{Gheysen}}
 
@@ -59,6 +56,9 @@
   	% Front cover page
 	\maketitle
 	\pagenumbering{gobble}
+	\afterpage{\blankpage}
+    \cleardoublepage
+    \newpage
 	
 	%% Abstract
 	\input{src/2.Abstract/Abstract}

@@ -7,7 +7,7 @@ The second section is concentrated on the training of a \acrshort{cnn}. We expla
 
 The third section details how we can use the layer from section \ref{sec:layer} to build efficient network. We discuss about state-of-art networks like AlexNet, VGG16, ResNet and MobileNetV2.
 
-The fourth section details the optimization we can make on the convolution operation to have a faster inference on \acrshort{fpga}. We focus on the algorithmic and model optimizations.
+In the fourth section, we explore the state-of-the-art approaches to reduce the arithmetic complexity and the hardware utilization of \acrshort{cnn} models. Section \ref{subsec:algopti} details how to efficiently handle and optimize the convolution operation on \acrshort{fpga}. On the other side, section \ref{subsec:mdopti} goes over techniques to reduce the size of the model.
 %
 %
 \section{Layers} \label{sec:layer}
@@ -40,16 +40,16 @@ Once the weights have been initialized, we can perform the backpropagation algor
 \input{src/5.Background/subsection/CNN_backward}
 %
 %
-\section{Models}
+\section{CNN Models}
 Once we have seen how to build and train a \acrshort{cnn}, we can now detail some of the well-known \acrshort{dl} networks.
 %
 \input{src/5.Background/subsection/CNN_models}
 %
 %
-\section{Optimizations}
+\section{CNN optimizations}
 %
 %
-In this section, we explore the state-of-the-art approaches to reduce the arithmetic complexity and the hardware utilization of \acrshort{cnn} models. Section \ref{subsec:algopti} details how to efficiently handle and optimize the convolution operation on \acrshort{fpga}. On the other side, section \ref{subsec:mdopti} goes over techniques to reduce the size of the model.
+We have seen in the previous sections how a \acrshort{cnn} works and state-of-the-art models. But as said in section \ref{subs:mbv2}, the huge arithmetic complexity and hardware utilization is a problem when implementing the inference on mobile devices such as \acrshort{fpga}. In the following sections, we detail approaches to handle those two issues on an \acrshort{fpga}. Section \ref{subsec:algopti} concentrate on techniques to faster the convolution operations and section \ref{subsec:mdopti} review techniques to reduce the size of the \acrshort{cnn}.
 %
 \input{src/5.Background/subsection/opti_algo}
 %
