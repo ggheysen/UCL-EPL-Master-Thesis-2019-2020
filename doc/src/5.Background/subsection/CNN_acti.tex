@@ -21,7 +21,7 @@ $Sigmoid$ and $Thanh$ functions are both smooth function that can be described b
     \label{eq:tanh}
 \end{equation}
 %
-The two activation functions can be seen on figure \ref{fig:acti}. They both 'squeeze' the domain $\mathbb{R}$ into a smaller range, $[0, 1]$ for $Sigmoid$ and $[-1, 1]$ for the $Tanh$. However, they also saturate, which means their gradient is close to 0. As the backpropagation algorithm requires gradient multiplication, gradient far away from the output vanishes and deep models do not learn (\textbf{vanishing gradient problem}) \cite{goodfellow_deep_2016}.
+The two activation functions can be seen in figure \ref{fig:acti}. They both 'squeeze' the domain $\mathbb{R}$ into a smaller range, $[0, 1]$ for $Sigmoid$ and $[-1, 1]$ for the $Tanh$. However, they also saturate, which means their gradient is close to 0. As the backpropagation algorithm requires gradient multiplication, gradient far away from the output vanishes and deep models do not learn (\textbf{vanishing gradient problem}) \cite{goodfellow_deep_2016}.
 %
 \subsubsection{ReLU}
 To solve the problem of saturation, the Rectified Linear Unit (ReLU) has been introduced by \textcite{krizhevsky_imagenet_2012}. Equation \eqref{eq:relu} describes its behavior.
@@ -30,9 +30,9 @@ To solve the problem of saturation, the Rectified Linear Unit (ReLU) has been in
     \label{eq:relu}
 \end{equation}
 %
-This activation function allows a faster learning, efficient gradient propagation (no vanishing or exploding gradient), and a faster computation than $thanh$ or $sigmoid$. However, it suffers from the \textbf{dying neurons problems} which decrease the model capacity. Some neurons become inactive (outputs only 0) for essentially all inputs and each of them 'dies'. A solution would be to modify the ReLU: leaky ReLU \cite{maas_rectier_2014}, ...
+This activation function allows faster learning, efficient gradient propagation (no vanishing or exploding gradient), and a faster computation than $Thanh$ or $Sigmoid$. However, it suffers from the \textbf{dying neuron problem} which decreases the model capacity. Some neurons become inactive (output only 0) for essentially all inputs and each of them 'dies'. A solution would be to modify the ReLU: leaky ReLU \cite{maas_rectier_2014}, ...
 
-Other works try to modify the ReLU for implementation on embedded platforms. For example, \cite{howard_mobilenets_2017} uses ReLU6 (equation \ref{eq:relu6}), that we can see in figure \ref{fig:acti}. It is designed for fixed-point operation and quantization approaches, instead of floating-point operations which are less efficient in terms of hardware utilization and power consumption (especially on \acrshort{fpga}) \cite{david_hardware_2007}. More information about quantification can be found in section \ref{subsec:mdopti}. Therefore, if the output $\in [ 0, 6 ]$, the number of bits for the integer part can be limited to 3 bits. We can thus increase the accuracy of the model by assigning more bits to the decimal part.
+Other works try to modify the ReLU for implementation on embedded platforms. For example, \cite{howard_mobilenets_2017} uses ReLU6 (equation \ref{eq:relu6}), which we can see in figure \ref{fig:acti}. It is designed for fixed-point operation and quantization approaches, instead of floating-point operations which are less efficient in terms of hardware utilization and power consumption (especially on \acrshort{fpga}) \cite{david_hardware_2007}. More information about quantification can be found in section \ref{subsec:mdopti}. Therefore, if the output $\in [ 0, 6 ]$, the number of bits for the integer part can be limited to 3 bits. We can thus increase the accuracy of the model by assigning the other bits to the decimal part.
 %
 \begin{equation}
     h(x) = max(0, x, 6)
