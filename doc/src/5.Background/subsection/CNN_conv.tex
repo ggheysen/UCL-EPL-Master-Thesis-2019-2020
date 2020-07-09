@@ -2,7 +2,7 @@
 In a \acrshort{cnn}, the \textbf{convolutional layer} carries out the feature extraction process of the input image, also called the input \acrfull{fm}. It is the main operation in a \acrshort{cnn}, and it is the layer that gives the network its name. The first layer extracts low-level features of the input \acrshort{fm} and the deepest layers use the low-level features to build high-level ones \cite{goodfellow_deep_2016}.
 
 An input image is characterized by 3 parameters: \textbf{$N_{ix}$} the width, \textbf{$N_{iy}$} the height, and \textbf{$N_{if}$} the depth. We can illustrate then the input \acrshort{fm} as a cuboid composed of layers of pixels. An illustration is presented in figure \ref{fig:notation:ifm}.
-The convolution layer correlates therefore input \acrshort{fm} and a 4D filter, to produce output \acrshort{fm}, which contains the high-level features \cite{zhao_towards_2018}. The output \acrshort{fm} is also characterized by its width $N_{ox}$, its height $N_{oy}$ and its depth $N_{of}$. We can also see a general output \acrshort{fm} in figure \ref{fig:notation:ofm}. As a result, the filter consists of $N_{of}$ kernels, where each kernel has size $N_{kx} \times N_{ky} \times N_{if}$, that we can see in figure \ref{fig:notation:k}).
+The convolution layer correlates therefore input \acrshort{fm} and a 4D filter, to produce output \acrshort{fm}, which contains the high-level features \cite{zhao_towards_2018}. The output \acrshort{fm} is also characterized by its width $N_{ox}$, its height $N_{oy}$ and its depth $N_{of}$. We can see a general output \acrshort{fm} in figure \ref{fig:notation:ofm}. As a result, the filter consists of $N_{of}$ kernels, where each kernel has size $N_{kx} \times N_{ky} \times N_{if}$, that we can observe in figure \ref{fig:notation:k}.
 %
 \begin{figure}
     \centering
@@ -10,21 +10,21 @@ The convolution layer correlates therefore input \acrshort{fm} and a 4D filter, 
     \begin{subfigure}{.32\textwidth}
     \centering
     \includegraphics[width=\linewidth]{notifm.pdf}
-    \caption{kernel-wise pruning}
+    \caption{Input \acrshort{fm}}
     \label{fig:notation:ifm}
     \end{subfigure}
     %
     \begin{subfigure}{.32\textwidth}
     \centering
     \includegraphics[width=\linewidth]{notk.pdf}
-    \caption{Convolution kernel}
+    \caption{A convolution kernel}
     \label{fig:notation:k}
     \end{subfigure}
     %
     \begin{subfigure}{.32\textwidth}
     \centering
     \includegraphics[width=\linewidth]{notofm.pdf}
-    \caption{Output \acrshort{fm}s}
+    \caption{Output \acrshort{fm}}
     \label{fig:notation:ofm}
     \end{subfigure}
     %
@@ -41,7 +41,7 @@ Convolution is a specialized kind of linear operation. The convolution operation
     \label{fig:convolution}
 \end{figure}
 
-Except for $1 \times 1$ kernel, the sliding window can not cover all input pixels, and then there is a spatial reduction between the input and output \acrshort{fm}s, while there is an increase in the number of channel. However, we can keep the same dimensions using \textit{padding} on the boundary. It means that we pad the edges with extra pixels (usually of value 0).
+Except for $1 \times 1$ kernel, there is a spatial reduction between the input and output \acrshort{fm}s, while there is an increase in the number of channel. It is explain by the fact that the sliding window movements can not go beyond the size of the input \acrshort{fm} ($N_{o\{x,y\}} = N_{i\{x,y\}} - N_{k\{x,y\}} + 1$). However, we can keep the same dimensions using \textit{padding} on the boundary. It means that we pad the edges with extra pixels (usually of value 0).
 
 Moreover, each time the sliding window performs a convolution, it shifts in the input \acrshort{fm}. The amount, by which the filter shifts, is called the \textit{stride} and it is initially set to 1. If we increase the stride, we can reduce the spatial dimensions of the output \acrshort{fm}. For example, if we use padding and a stride of 2, $\frac{N_{ix}}{N_{ox}} = \frac{N_{iy}}{N_{oy}} = \frac{1}{2}$, and the output \acrshort{fm} has 4 times fewer pixels. In section \ref{subs:pooling}, we introduce a new layer than can also reduce the spatial dimensions of the output \acrshort{fm}.
 

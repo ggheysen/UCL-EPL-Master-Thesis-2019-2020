@@ -1,9 +1,9 @@
 \chapter{Convolutional Neural Network} \label{chap:cnn}
-\acrfull{cnn} is a type of \acrlong{nn} that is specialized in analyzing visual imagery and natural language processing. \acrshort{cnn}s are feedforward, sparsely connected \acrshort{nn} structured as a pipeline of layers \cite{abdelouahab_accelerating_2018}. It has shown explemplary performance on serveral competitions related to Computer Vision and Image Processing \cite{khan_survey_2020}. We explore in this chapter the different aspects of a \acrshort{cnn} and what optimizations can be made to reduce its size and its computational complexity.
+\acrfull{cnn} is a type of \acrlong{nn} that is specialized in analyzing visual imagery and natural language processing. \acrshort{cnn}s are feedforward, sparsely connected \acrshort{nn} structured as a pipeline of layers \cite{abdelouahab_accelerating_2018}. It has shown explemplary performance on serveral competitions related to Computer Vision and Image Processing \cite{khan_survey_2020}. We explore, in this chapter, the different aspects of a \acrshort{cnn} and what optimizations can be made to reduce its size and its computational complexity.
 
 Section \ref{sec:layer} introduces the building blocks of a \acrshort{cnn}. We start from the first and most simple element, the perceptron. From this first step, we explore how to use it to make more complex layers that can perform more complex functions. We also detail the other layers required to improve the efficiency of the model, such as pooling.
 
-The second section is concentrated on the training of a \acrshort{cnn}. We explain briefly the backpropagation algorithm, which consists of a forward propagation (section \ref{subs:trainforward}) and a back propagation (section \ref{subs:trainbackward}).
+The second section is concentrated on the training of a \acrshort{cnn}. We explain briefly the backpropagation algorithm, which consists of a forward-propagation (section \ref{subs:trainforward}) and a back-ropagation (section \ref{subs:trainbackward}).
 
 The third section details how we can use the layer from section \ref{sec:layer} to build efficient network. We discuss about state-of-art networks like AlexNet, VGG16, ResNet and MobileNetV2.
 
