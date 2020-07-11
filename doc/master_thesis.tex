@@ -2,20 +2,20 @@
 \documentclass{src/1.Cover/EPL-master-thesis-covers-EN}
 
 % Title of the thesis
-\title{Accelerating Convolutional Neural Network for FPGA using Depthwise Separable Convolution and Pruning}
+\title{Accelerating Convolutional Neural Networks for FPGA using Depthwise Separable Convolution and Pruning}
 % Name of the student author(s)
 \author{Guillaume \textsc{Gheysen}}
 
 \degreetitle{Master [120] in Computer Science and Engineering}
 
 % Name of the supervisor(s)
-\supervisor{Jean-Didier \textsc{Legat}}
+\supervisor{Prof. Jean-Didier \textsc{Legat}}
 
-\secondsupervisor{Christophe \textsc{de Vleeschouwer}}
+\secondsupervisor{Prof. Christophe \textsc{de Vleeschouwer}}
 
 % Name of the reader(s)
 \readerone{Victor \textsc{Joos de Ter Beerst}}
-\readertwo{Martin \textsc{Lefèvre}}	 
+\readertwo{Martin \textsc{Lefèvre}}
 
 % Academic year (update if necessary)
 \years{2019--2020}
@@ -23,7 +23,7 @@
 % Acronym
 \newacronym{ml}{ML}{Machine Learning}
 \newacronym{ai}{AI}{Artificial Intelligence}
-\newacronym{nn}{NN}{Neural Networks}
+\newacronym{nn}{NN}{Neural Network}
 \newacronym{dl}{DL}{Deep Learning}
 \newacronym{cnn}{CNN}{Convolutional Neural Network}
 \newacronym{cpu}{CPU}{Central Processing Unit}
@@ -48,6 +48,7 @@
 \newacronym{le}{LE}{logic element}
 \newacronym{clb}{CLB}{configurable logic block}
 \newacronym{ioe}{IOE}{input/output elements}
+\newacronym{rnn}{RNN}{Recurrent Neural Network}
 % Graphic path
 \graphicspath{{Images/}}
 
@@ -59,13 +60,13 @@
 	\afterpage{\blankpage}
     \cleardoublepage
     \newpage
-	
+
 	%% Abstract
 	\input{src/2.Abstract/Abstract}
-	
+
 	%% Acknowledgments
 	\input{src/3.Acknowledgments/Acknowledgments}
-	
+
 	%% table of contents & figures
 	\tableofcontents
 	\newpage
@@ -75,24 +76,24 @@
 	\printnoidxglossary[type=\acronymtype, title=List of Abrevation, nonumberlist=true, toctitle=List of terms]
 	\afterpage{\blankpage}
 	\newpage
-	
-	\pagenumbering{arabic} 
-	
+
+	\pagenumbering{arabic}
+
 	%% Introduction
 	\input{src/4.Introduction/Introduction}
-	
+
 	%% Part 1
 	\input{src/5.Background/Background}
-	
+
 	%% Part 2
 	\input{src/6.Sota/Sota}
-	
+
 	%% Part 3
 	\input{src/7.Thesis/Thesis}
-	
+
 	%% Conclusion
 	\input{src/8.Conclusion/Conclusion}
-  	
+
   	%% Bibliography
 	\input{src/0.Bibliography/Bibliography}
   	% Back cover page

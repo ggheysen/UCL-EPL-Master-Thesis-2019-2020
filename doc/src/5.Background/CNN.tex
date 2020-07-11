@@ -1,17 +1,17 @@
 \chapter{Convolutional Neural Network} \label{chap:cnn}
-\acrfull{cnn} is a type of \acrlong{nn} that is specialized in analyzing visual imagery and natural language processing. \acrshort{cnn}s are feedforward, sparsely connected \acrshort{nn} structured as a pipeline of layers \cite{abdelouahab_accelerating_2018}. It has shown explemplary performance on serveral competitions related to Computer Vision and Image Processing \cite{khan_survey_2020}. We explore, in this chapter, the different aspects of a \acrshort{cnn} and what optimizations can be made to reduce its size and its computational complexity.
+\acrshort{cnn} is a type of \acrshort{nn} that is specialized in analyzing visual imagery and natural language processing. \acrshort{cnn}s are feedforward, sparsely connected \acrshort{nn}, structured as a pipeline of layers \cite{abdelouahab_accelerating_2018}. It has shown superior performance on serveral competitions related to Computer Vision and Image Processing \cite{khan_survey_2020}. We explore, in this chapter, the different aspects of a \acrshort{cnn} and what optimizations can be made to reduce its size and its computational complexity.
 
-Section \ref{sec:layer} introduces the building blocks of a \acrshort{cnn}. We start from the first and most simple element, the perceptron. From this first step, we explore how to use it to make more complex layers that can perform more complex functions. We also detail the other layers required to improve the efficiency of the model, such as pooling.
+The first section \ref{sec:layer} introduces the building blocks of a \acrshort{cnn}. We start from the first and most simple element, the perceptron. From this first step, we explore how to use it to make layers that can perform more complex functions. We also detail the other layers required to improve the efficiency of the model, such as pooling.
 
-The second section is concentrated on the training of a \acrshort{cnn}. We explain briefly the backpropagation algorithm, which consists of a forward-propagation (section \ref{subs:trainforward}) and a back-ropagation (section \ref{subs:trainbackward}).
+The second section \ref{sec:models} details how we can use the layer from Section \ref{sec:layer} to build efficient network. We discuss about state-of-art networks like AlexNet, VGG16, ResNet, and MobileNetV2.
 
-The third section details how we can use the layer from section \ref{sec:layer} to build efficient network. We discuss about state-of-art networks like AlexNet, VGG16, ResNet and MobileNetV2.
+The third section \ref{sec:train} focuses on the training of a \acrshort{cnn}. We explain briefly the backpropagation algorithm, which consists of a forward-propagation (Section \ref{subs:trainforward}) and a back-ropagation (Section \ref{subs:trainbackward}).
 
-In the fourth section, we explore the state-of-the-art approaches to reduce the arithmetic complexity and the hardware utilization of \acrshort{cnn} models. Section \ref{subsec:algopti} details how to efficiently handle and optimize the convolution operation on \acrshort{fpga}. On the other side, section \ref{subsec:mdopti} goes over techniques to reduce the size of the model.
+In the fourth section, we explore the state-of-the-art approaches to reduce the arithmetic complexity and the hardware utilization of \acrshort{cnn} models. Section \ref{subsec:algopti} details how to efficiently handle and optimize the convolution operation on \acrshort{fpga}. On the other side, Section \ref{subsec:mdopti} goes over techniques to reduce the size of the model.
 %
 %
 \section{Layers} \label{sec:layer}
-A layer is a high-level building block in a \acrshort{dl} network. It is a set of operations, weights, and non-linear functions. The result of the layer can be either used as input for the following layer or either as the final output of the network. We can, therefore, define a \acrshort{cnn} as a pipeline of layers, and a network is built by stacking layers. We begin our understanding of the layer theory in section \ref{subs:perceptron} by explaining the perceptron, the simplest element of a neural network.
+A layer is a high-level building block in a \acrshort{dl} network. It is a set of operations, weights, and non-linear functions. A \acrshort{cnn} is defined as a pipeline of layers and we can build a network by stacking layers. The output of one layer can, therefore, be used as input for the following layer or as the final output of the network. We begin our understanding of the layer theory in Section \ref{subs:perceptron} by explaining the perceptron, the simplest element in a \acrshort{nn}.
 %
 %
 \input{src/5.Background/subsection/CNN_Perceptron}
@@ -27,6 +27,13 @@ A layer is a high-level building block in a \acrshort{dl} network. It is a set o
 \input{src/5.Background/subsection/CNN_pooling}
 %
 %
+\section{CNN Models} \label{sec:models}
+Once we have seen how to build a \acrshort{cnn}, we can now detail some of the well-known \acrshort{cnn} networks. They are an example of how to construct an efficient \acrshort{cnn}.
+
+%
+\input{src/5.Background/subsection/CNN_models}
+%
+%
 \section{Training} \label{sec:train}
 We have seen in the previous section what are the common building blocks in a \acrshort{cnn}. Now we explore how a network improves its performance at a task automatically. This process is called "learning". Finding the correct methods to find the weights is then an important aspect to have an efficient network.
 
@@ -34,22 +41,15 @@ The learning phase starts after designing the network. However, before the model
 
 Once the weights have been initialized, we can perform the backpropagation algorithm to improve the efficiency of the network. It is composed of two steps: the forward pass (section \ref{subs:trainforward}) and the backward pass (section \ref{subs:trainbackward}).
 %
-%
 \input{src/5.Background/subsection/CNN_forward}
 %
 \input{src/5.Background/subsection/CNN_backward}
 %
 %
-\section{CNN Models}
-Once we have seen how to build and train a \acrshort{cnn}, we can now detail some of the well-known \acrshort{dl} networks.
-%
-\input{src/5.Background/subsection/CNN_models}
+\section{CNN optimizations for FPGA}
 %
 %
-\section{CNN optimizations}
-%
-%
-We have seen in the previous sections how a \acrshort{cnn} works and state-of-the-art models. But as said in section \ref{subs:mbv2}, the huge arithmetic complexity and hardware utilization is a problem when implementing the inference on mobile devices such as \acrshort{fpga}. In the following sections, we detail approaches to handle those two issues on an \acrshort{fpga}. Section \ref{subsec:algopti} concentrate on techniques to faster the convolution operations and section \ref{subsec:mdopti} review techniques to reduce the size of the \acrshort{cnn}.
+We have seen in the previous sections how a \acrshort{cnn} works and state-of-the-art models. But as said in section \ref{subs:mbv2}, the huge arithmetic complexity and hardware utilization is a problem when implementing the inference on mobile devices such as \acrshort{fpga}. In the following sections, we detail approaches to handle those two issues on an \acrshort{fpga}. Section \ref{subsec:algopti} concentrates on techniques to speed up the convolution operations and Section \ref{subsec:mdopti} reviews techniques to reduce the size of the \acrshort{cnn}.
 %
 \input{src/5.Background/subsection/opti_algo}
 %

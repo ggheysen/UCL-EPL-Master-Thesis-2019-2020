@@ -1,54 +1,54 @@
 \subsection{Model Optimizations} \label{subsec:mdopti}
-The major issues, when implementing a \acrshort{cnn} on a \acrshort{fpga}, are the \acrshort{cnn} size and computational complexity. Research has been made to propose techniques to reduce those two elements by modifying directly the \acrshort{cnn}. Moreover, \textcite{nurvitadhi_can_2017} believe that sparsity exploitation and extremely compact data types will become the norm in the next-generation \acrshort{cnn}. 
+The major issues, when implementing a \acrshort{cnn} on a \acrshort{fpga}, are the \acrshort{cnn} size and its computational complexity. Research has been made to propose techniques to reduce those two elements by directly modifying the \acrshort{cnn} architecture. Moreover, \textcite{nurvitadhi_can_2017} believe that sparsity exploitation and extremely compact data types will become the norm in next-generation \acrshort{cnn}s.
 %
 %
 \subsubsection{Efficient Model Design}
-The size of the model can be reduced by changing the architectures of the models. It allows a reduction of the weight and the number of operations. As many approaches have been proposed, we focus our interest on architectures that target the embedded space.
+The size of a model can be reduced by changing its architecture. A clever choice of design can reduce the number of parameters and computations. As many approaches have been proposed, we focus our interest on architectures that target the embedded space.
 
-SqueezeNet \cite{iandola_squeezenet_2016} uses an architecture similar to AlexNet and replaces all layers (except the first and last one) by \textbf{Fire Modules}. The \textbf{Fire Module}, observed in figure \ref{fig:archi_building_block:sqn}, is a building blocks where the convolution filter is built of two layers. The first one (squeeze block) is composed only of $1 \times 1$ filters, which squeezes the number of channel to reduce the number of computation in the next block. The second one (expand block) is composed of $1 \times 1$ and $3 \times 3$ convolutions. We can reduce with this method the number of parameters of AlexNet from $240$MB to $4.8$MB. The number of parameters can even be reduced to $0.47$MB with no loss of accuracy from the baseline AlexNet method by applying Deep Compression \cite{han_deep_2016}. However, it has a big memory footprint, is slower in runtime and consumes more energy than AlexNet \cite{sze_efficient_2017}.
+SqueezeNet \cite{iandola_squeezenet_2016} uses an architecture like AlexNet and replaces all layers (except the first and last one) by \textbf{Fire Modules}. The \textbf{Fire Module}, observed in Figure \ref{fig:archi_building_block:sqn}, is a building block where the convolution filter is built of two layers. The first one (squeeze block) is composed only of $1 \times 1$ kernels, which squeeze the number of channels to reduce the computational complexity of the next block. The second one (expand block) is composed of $1 \times 1$ and $3 \times 3$ convolutions. We can reduce, with this architecture, the number of parameters of AlexNet from $240$MB to $4.8$MB. The number of parameters can even be reduced to $0.47$MB with no loss of accuracy from the baseline AlexNet method by applying Deep Compression \cite{han_deep_2016}. However, it has a big memory footprint, is slower in runtime, and consumes more energy than AlexNet \cite{sze_efficient_2017}.
 
-NasNet \cite{zoph_learning_2018} uses a search method, \acrfull{nas}, to find good convolutional architectures on a dataset of interest. A controller recurrent neural network samples child networks with different architecture. The child networks are trained to convergence and the accuracies are used by the controler to generate better architectures over time. A convolution layer can be seen in figure\ref{fig:archi_building_block:nasn}. The learned architecture is flexible as it may be scaled in terms of computational cost. However the resulting network ends up very complex \cite{sandler_mobilenetv2_2019}.
+NasNet \cite{zoph_learning_2018} uses a search method, \acrfull{nas}, to find good convolutional architectures on a dataset of interest. NasNet uses a \acrfull{rnn} to generate efficient architectures. The \acrshort{rnn} generates samples child networks with different architecture, which are trained to convergence. The accuracies of the child networks are used to train the \acrshort{rnn}, which will generate better architectures over time. A convolution layer can be seen in Figure \ref{fig:archi_building_block:nasn}. The learned architecture is flexible as it may be scaled in terms of computational cost. However, the resulting network ends up very complex \cite{sandler_mobilenetv2_2019}.
 
-MobileNet \cite{howard_mobilenets_2017} uses \acrshort{dsc}, described in section \ref{subs:dsc}, to build small and low latency models that can be matched to the design requirements. The layer used is illustrated at figure \ref{fig:archi_building_block:mbn}. It sets also 2 hyper-parameters to set the model size and throughput: width multiplier $\alpha \in [1; 0[$, which reduces the number of input and output channel at each layer, and resolution multiplier $\rho \in [1; 0[$,  which reduces spatially the input and output \acrshort{fm} at each layer.
+MobileNet \cite{howard_mobilenets_2017} uses \acrshort{dsc}, described in section \ref{subs:dsc}, to build small and low latency models that can be matched to the design requirements. The layer used is illustrated in Figure \ref{fig:archi_building_block:mbn}. It sets also 2 hyper-parameters to set the model size and throughput: width multiplier $\alpha \in [1; 0[$, which reduces the number of input and output channel at each layer, and resolution multiplier $\rho \in [1; 0[$,  which reduces spatially the input and output \acrshort{fm} at each layer.
 
-ShuffleNet \cite{zhang_shufflenet_2018} is a computation-efficient architecture designed for mobile devices with very limited computing power. It reduces computation cost while maintaining accuracy by using \textbf{pointwise group convolution} which reduces computation complexity of $1 \times 1$ convolution. It uses also \textbf{channel shufﬂe} on the channels such that \textbf{group convolutions} obtain information from different groups. Then more powerful structures can be build with multiple group convolutional layer. However, the group convolutions and the bottleneck structures add \acrshort{mac} which is a non-negligible cost \cite{ma_shufflenet_2018}. The group convolution contributes to network fragmentation and reduce parallelism. Moreover, the "Add" operation is non-negligible too.
+ShuffleNet \cite{zhang_shufflenet_2018} is a computation-efficient architecture designed for mobile devices with very limited computing power. It reduces computation cost while maintaining accuracy by using \textbf{pointwise group convolution} which reduces the computation complexity of $1 \times 1$ convolutions. It uses also \textbf{channel shufﬂe} on the channels such that \textbf{group convolutions} obtain information from different groups. Then more powerful structures can be built with multiple group convolutional layers. However, the group convolutions and the bottleneck structures add \acrshort{mac} which is a non-negligible cost \cite{ma_shufflenet_2018}. The group convolution contributes to network fragmentation and reduces parallelism. Moreover, the "Add" operation is non-negligible too.
 
-MobileNetV2 \cite{sandler_mobilenetv2_2019} is an improvement of MobileNet in terms of accuracy and does not require special operators. It has a smaller memory footprint, it is also faster and smaller. MobileNetV2 has already been developed at section \ref{subs:mbv2}. The architecture developed by this work has been developed on MobileNetV2 because of its simplicity and its state-of-the-art performance (see table \ref{tab:mbv2}).
+MobileNetV2 \cite{sandler_mobilenetv2_2019} is an improvement of MobileNet in terms of accuracy and does not require special operators. It has also a smaller memory footprint. Furthemore, MobileNetV2 has a faster inference and less parameters with respect to MobileNet. MobileNetV2 has already been explained in Section \ref{subs:mbv2}. The architecture developed by this work has been developed on MobileNetV2 because of its simplicity and its state-of-the-art performance (see Table \ref{tab:mbv2}).
 %
 \begin{figure}
     \centering
     %
-    \begin{subfigure}{.2\textwidth}
+    \begin{subfigure}{0.49\linewidth}
         \centering
-        \includegraphics[width=\linewidth]{squeeze.pdf}
+        \includegraphics[width=\textwidth, height=0.3\textheight, keepaspectratio]{squeeze.pdf}
         \caption{Squeezenet Fire Module\cite{iandola_squeezenet_2016}}
         \label{fig:archi_building_block:sqn}
     \end{subfigure}
     %
-    \begin{subfigure}{.33\textwidth}
+    \begin{subfigure}{0.49\linewidth}
         \centering
-        \includegraphics[width=\linewidth]{nasnet.pdf}
+        \includegraphics[width=\textwidth, height=0.3\textheight, keepaspectratio]{nasnet.pdf}
         \caption{NasNet convolutional blocks \cite{zoph_learning_2018}}
         \label{fig:archi_building_block:nasn}
     \end{subfigure}
     %
-    \begin{subfigure}{.33\textwidth}
+    \begin{subfigure}{0.49\linewidth}
         \centering
-        \includegraphics[width=\linewidth]{mobilenet.pdf}
+        \includegraphics[width=\textwidth, height=0.3\textheight, keepaspectratio]{mobilenet.pdf}
         \caption{MobileNet convolutional block \cite{howard_mobilenets_2017}}
         \label{fig:archi_building_block:mbn}
     \end{subfigure}
     %
-    \begin{subfigure}{.33\textwidth}
+    \begin{subfigure}{0.49\linewidth}
         \centering
-        \includegraphics[width=\linewidth]{shufflenet.pdf}
+        \includegraphics[width=\textwidth, height=0.3\textheight, keepaspectratio]{shufflenet.pdf}
         \caption{ShuffleNet convolutional block \cite{zhang_shufflenet_2018}}
         \label{fig:archi_building_block:shn}
     \end{subfigure}
     %
-    \begin{subfigure}{.33\textwidth}
+    \begin{subfigure}{0.49\linewidth}
         \centering
-        \includegraphics[width=\linewidth]{mobilenet2.pdf}
+        \includegraphics[width=\textwidth, height=0.3\textheight, keepaspectratio]{mobilenet2.pdf}
         \caption{MobileNetv2 convolutional blocks \cite{sandler_mobilenetv2_2019}}
         \label{fig:archi_building_block:mb2n}
     \end{subfigure}
@@ -56,7 +56,7 @@ MobileNetV2 \cite{sandler_mobilenetv2_2019} is an improvement of MobileNet in te
     \label{fig:archi_building_block}
 \end{figure}
 
-Furthemore, a comparison between different architectures is seen on figure \ref{fig:archi}. We can observe that MobileNetV2 has a better accuracy, lower complexity than the previously cited models and fewer parameters than bigger models.
+Furthermore, a comparison between different architectures is seen in Figure \ref{fig:archi}. We can observe that MobileNetV2 has better accuracy, lower complexity than the previously cited models, and fewer parameters than bigger models.
 %
 \begin{table}
     \center
@@ -79,24 +79,26 @@ Furthemore, a comparison between different architectures is seen on figure \ref{
 %
 \begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{archi.pdf}
-    \caption{Ball chart reporting the Top-1 accuracy vs. computational complexity \cite{canziani_analysis_2017}}
+    \includegraphics[width=0.9\textwidth]{archi.pdf}
+    \caption{Ball chart reporting the Top-1 accuracy of various architectures vs. their computational complexity \cite{canziani_analysis_2017}}
     \label{fig:archi}
 \end{figure}
 %
 \subsubsection{Pruning} \label{subs:pruning}
-Network pruning is an effective technique to improve the efficiency of deep networks for applications with limited computational budget \cite{liu_rethinking_2019}. According to \textcite{denton_exploiting_2014, liu_rethinking_2019}, the huge number of parameters in a network creates a problem of \textbf{overparametrization} and it means that a lot of weights are unimportant or unnecessary \cite{cheng_recent_2018}. For example, \textcite{baoyuan_liu_sparse_2015} achieves more than 90\% sparsity of convolutional layers in AlexNet with 2\% accuracy loss. We can explain this by the \textbf{The Lottery Ticket Hypothesis} \cite{frankle_lottery_2019, frankle_early_2020}: "\textit{A randomly-initialized, dense neural network contains a subnetwork that is initialized such that—when trained in isolation—it can match the test accuracy of the original network after training for at most the same number of iterations.}" From this postulate, we can set to zero (to prune) those unimportant weights. 
+Network pruning is an effective technique to improve the efficiency of deep networks for applications with limited computational budget \cite{liu_rethinking_2019}. According to \textcite{denton_exploiting_2014, liu_rethinking_2019}, the huge number of parameters in a network creates a problem of \textbf{over-parametrization}. Over-parametrization means that there are redundancies in \acrshort{nn} parameters and we could achieve the same performance with only a subset of them. In consequence, a lot of parameters are unimportant or unnecessary \cite{cheng_recent_2018}. Pruning is defined as removing the parameters considered as not important. For example, \textcite{baoyuan_liu_sparse_2015} achieve more than 90\% sparsity of parameters in convolutional layers in AlexNet with less than 1\% accuracy loss.
 
-According to \textcite{cheng_recent_2018}, it has two major benefits for the inference. First, less storage are required because we can store the non-pruned weights into a compressed format. Second, we can reduce the arithmetic complexity of the network we can avoid \acrshort{mac} operation with a zero, which are meaningless. Moreover, \textcite{han_learning_2015, mao_exploring_2017, kang_accelerator-aware_2020} pointed that some pruning ratios can also improve the accuracy of the network which can be explained by a form of regularization.
+We can explain why pruning works by the \textbf{The Lottery Ticket Hypothesis} \cite{frankle_lottery_2019, frankle_early_2020}: "\textit{A randomly-initialized, dense neural network contains a subnetwork that is initialized such that—when trained in isolation—it can match the test accuracy of the original network after training for at most the same number of iterations.}" From this postulate, we can set to zero (to prune) those unimportant weights because it does not affect the accuracy of the model.
 
-Various pruning scheme are focused on increasing de sparsity of the network without a drop of accuracy \cite{han_learning_2015, han_deep_2016}. However, it is challenging to exploit the performance and the high parallelism of \acrshort{fpga} with pruned network. It is because this kind of pruning scheme creates irregularity in the data access pattern \cite{zhu_efficient_2020}. It means that the number of pruned weights is different in each kernel, and we should adapt the circuitry to the worst case. But all filters conduct wasteful operations except the worst case \cite{shimoda_filter-wise_2019}. Therefore, we should find pruning patterns that would be more hardware-friendly. We call this pruning scheme without constraint \textbf{unstructured pruning}. 
+According to \textcite{cheng_recent_2018}, pruning has two major benefits for the inference. First, less storage are required. The non-pruned weights are sparsely distributed among the kernels. Thus, we can store those weights into a compressed format and reduce the memory utilization. Second, we can reduce the arithmetic complexity of the network. As convolutions perform a weighted sum with the input \acrshort{fm}, each \acrfull{mac} operation with a pruned weight can be discared. Moreover, \textcite{han_learning_2015, mao_exploring_2017, kang_accelerator-aware_2020} pointed that some pruning ratios can also improve the accuracy of the network, which can be explained by a form of regularization.
 
-In contrast to the unstructured pruning, we have \textbf{structured pruning} schemes. It combines a structure regularization for accuracy, and locality optimisation for computation efficiency. We can we can categorize the various schemes into different groups \cite{wen_learning_2016, cheng_recent_2018}:
+Various pruning scheme are focused on increasing de sparsity of the network without a drop of accuracy \cite{han_learning_2015, han_deep_2016}.  We call this pruning scheme without constraint \textbf{unstructured pruning}. However, it is challenging to exploit the performance and the high parallelism of \acrshort{fpga} with this kind of pruned network. It is because this kind of pruning scheme creates irregularity in the data access pattern \cite{zhu_efficient_2020}. It means that the number of pruned weights is different in each kernel, and we should adapt the circuitry to the worst case. As a consequence, all filters conduct wasteful operations except the worst case \cite{shimoda_filter-wise_2019}. Furthermore, \textcite{anwar_structured_2017} pointed that unstructured pruning requires a overhead for computing addresses of the sparse non-pruned elements. Therefore, we should find pruning patterns that would be more hardware-friendly.
+
+In contrast to the unstructured pruning, we have \textbf{structured pruning} schemes. It combines a structure regularization for accuracy, and locality optimisation for computation efficiency. Structured pruning has no or little extra costs. We can we can categorize the various schemes into different groups \cite{wen_learning_2016, anwar_structured_2017, cheng_recent_2018, kang_accelerator-aware_2020}:
 \begin{itemize}
     \item \textbf{Depth-wise} : we prune all the weights of a layer. The layer is then removed.
-    \item \textbf{Kernel-wise} : instead of pruning all the weights, we keep a ratio of filters, which mean a reduction of the number of output channel. We can observe the pruning scheme at figure \ref{fig:struct_pruning:fw}.
-    \item \textbf{Channel-wise} : it is one of the most popular method because it still can fit in the convolutional deep learning frameworks \cite{liu_rethinking_2019}. We prune a layer of the input \acrshort{fm}, which means that layer is also pruned in all the kernels. We can observe the pruning scheme at figure \ref{fig:struct_pruning:chw}.
-    \item \textbf{Shape-wise} : we prune the same weight in each kernel, or group of kernels. For example, this pruning scheme has been used in \textcite{zhu_efficient_2020}. It is illustrated in figure \ref{fig:struct_pruning:sw}
+    \item \textbf{Kernel-wise} : instead of pruning all the weights, we keep a ratio of kernels, which mean a reduction of the number of output channel. We can observe the pruning scheme in Figure \ref{fig:struct_pruning:fw}.
+    \item \textbf{Channel-wise} : it is one of the most popular method because it still can fit in the convolutional deep learning frameworks \cite{liu_rethinking_2019}. We prune a layer of the input \acrshort{fm}, which means that layer is also pruned in all the kernels. We can observe the pruning scheme in Figure \ref{fig:struct_pruning:chw}.
+    \item \textbf{Shape-wise} : we prune the same weight in each kernel, or group of kernels. For example, this pruning scheme has been used in \textcite{zhu_efficient_2020}. It is illustrated in Figure \ref{fig:struct_pruning:sw}
 \end{itemize}
 %
 \begin{figure}
@@ -123,11 +125,12 @@ In contrast to the unstructured pruning, we have \textbf{structured pruning} sch
     \label{fig:struct_pruning:sw}
     \end{subfigure}
     %
-    \caption{Structured pruning schemes, where the yellow weights are the pruned one}
+    \caption{Structured pruning schemes, where the yellow weights are the pruned ones}
     \label{fig:struct_pruning}
 \end{figure}
 %
-Some works have focused on improving the speed of lightweight models with pruning. \textcite{zhang_channel_2019, tu_pruning_2019} have combined depthwise separable convolution and pruning. They both have chosen \textbf{Channel-wise} pruning because it does not create sparse connection and improves greatly the speed. It reduces also the computational complexity of the pointwise convolution (where the main arithmetic complexity is concentrated) and allows to avoid the depthwise convolution of the pruned channels too. Moreover, we can prune the pointwise kernel producting that channel in the previous block. We can see the process on figure \ref{fig:pruning_dsc}. 
+Some works have focused on improving the inference of lightweight models with pruning. \textcite{zhang_channel_2019, tu_pruning_2019} have applied pruning on depthwise separable convolution kernels. They both have chosen \textbf{Channel-wise} pruning because it does not create sparse connection and improves greatly the speed. It also reduces the computational cost of the $1 \times 1$ (pointwise) convolutions, where the majority of the parameters and the \acrshort{mac} comes from. In MobileNet, it is about 95\%. By discarding one channel, we also avoid the associated depthwise convolution.
+Moreover, we can prune the pointwise kernel producting that channel in the previous block. We can see the process in Figure \ref{fig:pruning_dsc}.
 %
 \begin{figure}
     \centering
@@ -136,11 +139,11 @@ Some works have focused on improving the speed of lightweight models with prunin
     \label{fig:pruning_dsc}
 \end{figure}
 
-In this work we focus on a structured pruning scheme for depthwise separable convolution. More precisely, we develop an architecture on \acrshort{fpga} than combine both advantages of pruning and depthwise separable convolution.0
+In this work we focus on a structured pruning scheme for depthwise separable convolution. More precisely, we develop an architecture on \acrshort{fpga} than combines both advantages of pruning and depthwise separable convolution.
 %
 %
 \subsubsection{Quantization} \label{subs:quantization}
-The approach of quantization is to compress (reducing the bit-width) of floating point parameters to fixed point low-precision parameters. The benefits of quantization, as enonced by \cite{joos_de_ter_beerst_accelerating_2019}, are a reduction of overfitting and an acceleration of computation because the weights have a smaller bit-size. For example, operations can be four 4 times faster when quantizing to 8 bits due to \acrshort{simd} optimisations.
+The approach of quantization is to compress (reducing the bit-width) of floating point parameters to fixed point low-precision parameters. The benefits of quantization, as enonced by \cite{joos_de_ter_beerst_accelerating_2019}, are a reduction of overfitting and an acceleration of computation, since the weights have a smaller bit-size. For example, operations can be four 4 times faster when quantizing to 8 bits due to \acrshort{simd} optimisations.
 
 There are two forms of quantization:
 \begin{enumerate}
@@ -150,7 +153,7 @@ There are two forms of quantization:
 %
 It was only recently that work are published on highly quantized \acrshort{nn} \cite{guo_survey_2018}, and using 16-bits or 8-bits quantization has shown only a small loss in accuracy without retraining \cite{abdelouahab_accelerating_2018}. The quantization of a \acrshort{nn} can be achieved through two different approaches:
 \begin{enumerate}
-    \item \textbf{Quantification of the weight parameters}: the most widely used. It can be done before or after training, but we have a better accuracy if we train during training.
+    \item \textbf{Quantification of the weight parameters}: the most widely used. It can be done before or after training, but we have a better accuracy if we quantize during training.
     \item \textbf{Quantification through the activation layer}: we quantize the the output of the activation function;
 \end{enumerate}
 As pointed by \textcite{han_deep_2016}, quantization techniques and pruning are orthogonal and can be combined to compress further the network. Unfortunately, not all existing network are friendly for quantization, like MobileNetV1. There is a accuracy gap against float point models (70.50\% vs 1.80\% using a 8-bit pipeline). However, works of \textcite{sheng_quantization-friendly_2018} have shown that the source of accuracy drap was the design of the separable convolution core layer. They have therefore proposed a new quantization-friendly separable convolution core layer. Works on MobileNetV2 should then be done to verify the fixed-point inference accuracy. Still, MobileNet had a problem with 8-bit pipeline, increasing the bitwidth to 16-bit could boost accuracy \cite{cheng_recent_2018} and this bitwidth is widely used \cite{huimin_li_high_2016, bai_cnn_2018}. Therefore, 16-bit fixed point is adopted for input data, weight and intermediate data.

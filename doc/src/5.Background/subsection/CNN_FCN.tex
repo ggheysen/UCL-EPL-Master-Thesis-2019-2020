@@ -1,12 +1,12 @@
 \subsection{Fully Connected layer} \label{subs:fcl}
-The perceptron of section \ref{subs:perceptron} can be considered as a linear classifier for which the decision boundary is the hyperplane, as seen in equation \eqref{eq:linearclassifer}.
+The perceptron of Section \ref{subs:perceptron} can be considered as a linear classifier for which the decision boundary is the hyperplane, as seen in Equation \eqref{eq:linearclassifer}.
 %
 \begin{equation}
     b + w_1 \cdot x_1 + ... + w_{n_{in}} \cdot x_{n_{in}} = 0
     \label{eq:linearclassifer}
 \end{equation}
 %
-We can understand why the perceptron is limited because it has only a linear decision boundary. For example, we can implement the AND and OR Boolean functions using a perceptron, but it is impossible to learn the XOR function. To have a non-linear model, we must use a topology of perceptrons. The topology is composed of layers of perceptrons, where each layer, in the case of a \acrshort{cnn}, is called a \textbf{fully-connected layer}. We can see an example in figure \ref{fig:fcn}.
+We can understand why the perceptron is limited because it has only a linear decision boundary. For example, we can implement the AND and OR Boolean functions using a perceptron, but it is impossible to learn the XOR function. To have a non-linear model, we must use a topology of perceptrons. This topology is composed of layers of perceptrons, where each layer, in the case of a \acrshort{cnn}, is called a \textbf{fully-connected layer}. We can see an example in Figure \ref{fig:fcn}.
 %
 \begin{figure}
     \centering
@@ -15,7 +15,7 @@ We can understand why the perceptron is limited because it has only a linear dec
     \label{fig:fcn}
 \end{figure}
 
-In the fully-connected layer, each neuron is connected to all the inputs or neurons of previous layers (as the name suggests). Usually, the fully-connected layers are placed at the end of \acrshort{cnn}s. It takes the extracted features from the previous layers as input, which are converted as a one-dimension output \acrshort{fm}. Afterward, it makes a non-linear classification of them \cite{khan_survey_2020}.
+In the fully-connected layer, each neuron is connected to all the inputs or neurons of previous layers (as the name suggests). As the fully-connected layers are best to make a non-linear classification, we can feed those layers with extracted features, converted as a one-dimension vector \cite{khan_survey_2020}. As a result, usually, the fully-connected layers are placed at the end of \acrshort{cnn}s, where the first layers extract features from the input.
 
 A fully-connected layer is characterized by the number of neurons, activation functions, and the values of weights. The output vector $\boldsymbol{y}$ can be expressed using equation \eqref{eq:fcn}, where $\boldsymbol{x}$ is the vector of the input of the layer and $x_0 = 1$ is the bias;   $\boldsymbol{w}$ is the vector of all the weights of the layer ($w^i_*$ are the weights of the ith perceptron and $w^*_0$ are the biases); $h$ is the activation function of the layer.
 %
