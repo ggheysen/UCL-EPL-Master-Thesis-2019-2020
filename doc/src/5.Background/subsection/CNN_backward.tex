@@ -1,19 +1,19 @@
 \subsection{Back-propagation} \label{subs:trainbackward}
-According to \textcite{ruder_overview_2017}, gradient descent optimization algorithms are the most popular to perform optimizations on \acrshort{nn}. These algorithms derive from the idea of gradient descent. As said in the previous section, gradient descent is a way to minimize the loss function, parametrized by the model's parameters (weight). We can, therefore, describe gradient descent algorithm using equation \eqref{eq:gd}, where $\eta$ is the learning rate, a positive scalar determining the size of the step in the direction minimizing the gradient \cite{goodfellow_deep_2016}. If we update the weight in the opposite direction of the gradient, we can reach a local minimum.
+According to \textcite{ruder_overview_2017}, gradient descent optimization algorithms are the most popular to perform optimizations on \acrshort{nn}. These algorithms derive from the idea of gradient descent. As said in the previous section, gradient descent is a way to minimize the loss function, parametrized by the model's parameters (weight). We can, therefore, describe the gradient descent algorithm using equation \eqref{eq:gd}, where $\eta$ is the learning rate, a positive scalar determining the size of the step in the direction minimizing the gradient \cite{goodfellow_deep_2016}. If we update the weight in the opposite direction of the gradient, we can reach a local minimum.
 %
 \begin{equation}
     \boldsymbol{w} = \boldsymbol{w} - \eta \frac{ \partial L( \boldsymbol{x}, \boldsymbol{w} ) }{\partial \boldsymbol{w}}
     \label{eq:gd}
 \end{equation}
 
-\textbf{The original gradient descent} or \textbf{batch gradient descent }computes the gradient using the whole dataset (the batch). We see how to compute the gradient on equation \eqref{eq:gd-grad}. This might be impossible to do in practice if the dataset is too large. Variations have then be proposed to make the gradient descent to be practical.
+\textbf{The original gradient descent} or \textbf{batch gradient descent }computes the gradient using the whole dataset (the batch). We see how to compute the gradient in equation \eqref{eq:gd-grad}. This might be impossible to do in practice if the dataset is too large. Variations have then been proposed to make the gradient descent practical.
 %
 \begin{equation}
-    \frac{ \partial L( \boldsymbol{x}, \boldsymbol{w} ) }{\partial \boldsymbol{w}} = \frac{1}{Nin} \sum^{Nin}_{i = 0} \frac{ \partial L( x_i, \boldsymbol{w} ) }{\partial \boldsymbol{w}}
+    \frac{ \partial L( \boldsymbol{x}, \boldsymbol{w} ) }{\partial \boldsymbol{w}} = \frac{1}{N_{in}} \sum^{Nin}_{i = 0} \frac{ \partial L( x_i, \boldsymbol{w} ) }{\partial \boldsymbol{w}}
     \label{eq:gd-grad}
 \end{equation}
 
-\textbf{Stochastic gradient descent}, instead of using the entire dataset, performs the gradient descent algorithm on one sample at a time. We see how to compute the gradient on equation \eqref{eq:sgd-grad}. It avoids the redundant computation of the batch gradient descent. It learns faster and can reach better local minima, however, it is complicated to find the global minimum.
+\textbf{Stochastic gradient descent}, instead of using the entire dataset, performs the gradient descent algorithm on one sample at a time. We see how to compute the gradient in equation \eqref{eq:sgd-grad}. It avoids the redundant computation of the batch gradient descent. It learns faster and can reach better local minima, however, it is complicated to find the global minimum.
 %
 \begin{equation}
     \frac{ \partial L( \boldsymbol{x}, \boldsymbol{w} ) }{\partial \boldsymbol{w}} = \frac{ \partial L( x_i, \boldsymbol{w} ) }{\partial \boldsymbol{w}}
@@ -23,6 +23,6 @@ According to \textcite{ruder_overview_2017}, gradient descent optimization algor
 \textbf{Mini-batch gradient descent} is a trade-off between the two approaches. It performs an update of the weight for every mini-batch of $N$ training examples. It has better convergence  by reducing the variance and has less computation than batch gradient descent.
 %
 \begin{equation}
-    \frac{ \partial L( \boldsymbol{x}, \boldsymbol{w} ) }{\partial \boldsymbol{w}} = \frac{1}{N} \sum^{N < Nin}_{i = 0} \frac{ \partial L( x_i, \boldsymbol{w} ) }{\partial \boldsymbol{w}}
+    \frac{ \partial L( \boldsymbol{x}, \boldsymbol{w} ) }{\partial \boldsymbol{w}} = \frac{1}{N} \sum^{N < N_{in}}_{i = 0} \frac{ \partial L( x_i, \boldsymbol{w} ) }{\partial \boldsymbol{w}}
     \label{eq:bgd-grad}
 \end{equation}
