@@ -1,0 +1,2 @@
+Info (10281): Verilog HDL Declaration information at inverted_residual_block.sv(8): object "ffill" differs only in case from object "FFILL" in the same scope File: D:/GitRepo/Memoire/src/Simulation_code/inverted_residual_block.sv Line: 8
+Info (10281): Verilog HDL Declaration information at inverted_residual_block.sv(8): object "fwrite" differs only in case from object "FWRITE" in the same scope File: D:/GitRepo/Memoire/src/Simulation_code/inverted_residual_block.sv Line: 8
