@@ -10,50 +10,62 @@
 # Copying D:/Quartus/modelsim_ase/win32aloem/../modelsim.ini to modelsim.ini
 # Modifying modelsim.ini
 # 
-# vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/inverted_residual_block.sv}
+# vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/dma_pkg.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 22:37:07 on Jul 15,2020
-# vlog -reportprogress 300 -sv -work work "+incdir+D:/GitRepo/Memoire/src/Simulation_code" D:/GitRepo/Memoire/src/Simulation_code/inverted_residual_block.sv 
-# -- Compiling module inverted_residual_block
+# Start time: 11:01:29 on Jul 19,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+D:/GitRepo/Memoire/src/Simulation_code" D:/GitRepo/Memoire/src/Simulation_code/dma_pkg.sv 
+# -- Compiling package dma_pkg
 # 
 # Top level modules:
-# 	inverted_residual_block
-# End time: 22:37:07 on Jul 15,2020, Elapsed time: 0:00:00
+# 	--none--
+# End time: 11:01:29 on Jul 19,2020, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
-# vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/RAM.sv}
+# vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/DMA.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 22:37:07 on Jul 15,2020
-# vlog -reportprogress 300 -sv -work work "+incdir+D:/GitRepo/Memoire/src/Simulation_code" D:/GitRepo/Memoire/src/Simulation_code/RAM.sv 
-# -- Compiling module RAM
+# Start time: 11:01:29 on Jul 19,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+D:/GitRepo/Memoire/src/Simulation_code" D:/GitRepo/Memoire/src/Simulation_code/DMA.sv 
+# -- Compiling package dma_pkg
+# -- Compiling package DMA_sv_unit
+# -- Importing package dma_pkg
+# -- Compiling module DMA
+# ** Warning: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv(143): (vlog-2182) 'mem_offset[0]' might be read before written in always_comb or always @* block.
+# ** Warning: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv(152): (vlog-2182) 'mem_offset[2]' might be read before written in always_comb or always @* block.
 # 
 # Top level modules:
-# 	RAM
-# End time: 22:37:07 on Jul 15,2020, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
+# 	DMA
+# End time: 11:01:29 on Jul 19,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 2
 # 
-# vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/testbench.sv}
+# vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/testbench_dma.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 22:37:08 on Jul 15,2020
-# vlog -reportprogress 300 -sv -work work "+incdir+D:/GitRepo/Memoire/src/Simulation_code" D:/GitRepo/Memoire/src/Simulation_code/testbench.sv 
+# Start time: 11:01:29 on Jul 19,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+D:/GitRepo/Memoire/src/Simulation_code" D:/GitRepo/Memoire/src/Simulation_code/testbench_dma.sv 
 # -- Compiling package tb_pkg
-# -- Compiling package testbench_sv_unit
+# -- Compiling package testbench_dma_sv_unit
 # -- Importing package tb_pkg
-# -- Compiling module testbench
+# -- Compiling module testbench_dma
 # 
 # Top level modules:
-# 	testbench
-# End time: 22:37:08 on Jul 15,2020, Elapsed time: 0:00:00
+# 	testbench_dma
+# End time: 11:01:30 on Jul 19,2020, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 # 
-# vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -voptargs="+acc"  testbench
-# vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -voptargs=""+acc"" testbench 
-# Start time: 22:37:08 on Jul 15,2020
+# vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -voptargs="+acc"  testbench_dma
+# vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -voptargs=""+acc"" testbench_dma 
+# Start time: 11:01:30 on Jul 19,2020
 # Loading sv_std.std
 # Loading work.tb_pkg
-# Loading work.testbench_sv_unit
-# Loading work.testbench
-# Loading work.inverted_residual_block
-# Loading work.RAM
+# Loading work.testbench_dma_sv_unit
+# Loading work.testbench_dma
+# Loading work.dma_pkg
+# Loading work.DMA_sv_unit
+# Loading work.DMA
+# ** Warning: (vsim-PLI-3691) D:/GitRepo/Memoire/src/Simulation_code/testbench_dma.sv(65): Expected a system task, not a system function '$fscanf'.
+#    Time: 0 ps  Iteration: 0  Region: /testbench_dma/#anonblk#240710625#64#4# File: D:/GitRepo/Memoire/src/Simulation_code/testbench_dma.sv
+# ** Warning: (vsim-PLI-3691) D:/GitRepo/Memoire/src/Simulation_code/testbench_dma.sv(74): Expected a system task, not a system function '$fscanf'.
+#    Time: 0 ps  Iteration: 0  Region: /testbench_dma/#anonblk#240710625#73#4# File: D:/GitRepo/Memoire/src/Simulation_code/testbench_dma.sv
+# ** Warning: (vsim-PLI-3691) D:/GitRepo/Memoire/src/Simulation_code/testbench_dma.sv(83): Expected a system task, not a system function '$fscanf'.
+#    Time: 0 ps  Iteration: 0  Region: /testbench_dma/#anonblk#240710625#82#4# File: D:/GitRepo/Memoire/src/Simulation_code/testbench_dma.sv
 # 
 # add wave *
 # view structure
@@ -61,9 +73,8 @@
 # view signals
 # .main_pane.objects.interior.cs.body.tree
 # run -all
-# ** Note: $finish    : D:/GitRepo/Memoire/src/Simulation_code/testbench.sv(61)
-#    Time: 505 ns  Iteration: 2  Instance: /testbench
-# 1
-# Break in Module testbench at D:/GitRepo/Memoire/src/Simulation_code/testbench.sv line 61
-# End time: 22:40:49 on Jul 15,2020, Elapsed time: 0:03:41
-# Errors: 0, Warnings: 0
+# ** Note: $stop    : D:/GitRepo/Memoire/src/Simulation_code/testbench_dma.sv(96)
+#    Time: 845 ns  Iteration: 0  Instance: /testbench_dma
+# Break in Module testbench_dma at D:/GitRepo/Memoire/src/Simulation_code/testbench_dma.sv line 96
+# End time: 11:03:47 on Jul 19,2020, Elapsed time: 0:02:17
+# Errors: 0, Warnings: 3

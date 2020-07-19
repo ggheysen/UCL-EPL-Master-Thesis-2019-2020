@@ -1,0 +1,15 @@
+`ifndef DMAPACKAGE_DONE
+    `define DMAPACKAGE_DONE
+    
+
+    package dma_pkg;
+		parameter Tix = 3;
+		parameter Tiy = 3;
+		parameter Tif = 16;
+		parameter Tof = 16;
+	endpackage
+
+    // import package in the design
+    import tb_pkg::*;
+
+`endif

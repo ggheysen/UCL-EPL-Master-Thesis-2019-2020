@@ -1,5 +1,6 @@
 \subsection{Forward-propagation} \label{subs:trainforward}
-We use the training data as input for the model and we propagate each input through the network using the current weights. The forward propagation produces a vector of output that we can compare with the label $\boldsymbol{t}$ of the input (target). This comparison is made with a loss function (for example the mean-square error, that we can see in equation \eqref{eq:mse}). To improve the accuracy of the model, we have to minimize the loss function by finding the optimal weights. This can be done using the algorithms found in the next section \ref{subs:trainbackward}. Moreover, once the model is trained, the inference consists only of the forward propagation.
+%
+The first step of the backpropagation algorithm is the forward propagation. During this step, the training data are used as input of the model and each input is propagated through the network using the initialized weights. A vector of outputs is produced and is compared using a loss function (for example mean-square error defined by Equation \eqref{eq:mse}) with the label of the input (target $\boldsymbol{t}$) \cite{matteucci_artificial_2019}. The weights are then adjusted in order minimize the loss function. This can be done using the algorithms found in the next section \ref{subs:trainbackward}. When the model is trained, the inference consists only of the forward propagation \cite{abdelouahab_accelerating_2018}. 
 %
 \begin{equation}
     L(\boldsymbol{x}, \boldsymbol{w}) = \sum^{N}_{i=1} (t_i - p(x_i, \boldsymbol{w}))^2
