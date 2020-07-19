@@ -12,33 +12,34 @@
 # 
 # vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/dma_pkg.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 11:01:29 on Jul 19,2020
+# Start time: 16:29:24 on Jul 19,2020
 # vlog -reportprogress 300 -sv -work work "+incdir+D:/GitRepo/Memoire/src/Simulation_code" D:/GitRepo/Memoire/src/Simulation_code/dma_pkg.sv 
 # -- Compiling package dma_pkg
 # 
 # Top level modules:
 # 	--none--
-# End time: 11:01:29 on Jul 19,2020, Elapsed time: 0:00:00
+# End time: 16:29:24 on Jul 19,2020, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/DMA.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 11:01:29 on Jul 19,2020
+# Start time: 16:29:24 on Jul 19,2020
 # vlog -reportprogress 300 -sv -work work "+incdir+D:/GitRepo/Memoire/src/Simulation_code" D:/GitRepo/Memoire/src/Simulation_code/DMA.sv 
 # -- Compiling package dma_pkg
 # -- Compiling package DMA_sv_unit
 # -- Importing package dma_pkg
 # -- Compiling module DMA
-# ** Warning: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv(143): (vlog-2182) 'mem_offset[0]' might be read before written in always_comb or always @* block.
-# ** Warning: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv(152): (vlog-2182) 'mem_offset[2]' might be read before written in always_comb or always @* block.
+# ** Warning: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv(155): (vlog-2182) 'mem_offset[0]' might be read before written in always_comb or always @* block.
+# ** Warning: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv(173): (vlog-2182) 'mem_offset[2]' might be read before written in always_comb or always @* block.
+# ** Warning: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv(173): (vlog-2182) 'mem_offset[3]' might be read before written in always_comb or always @* block.
 # 
 # Top level modules:
 # 	DMA
-# End time: 11:01:29 on Jul 19,2020, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 2
+# End time: 16:29:24 on Jul 19,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 3
 # 
 # vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/testbench_dma.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 11:01:29 on Jul 19,2020
+# Start time: 16:29:24 on Jul 19,2020
 # vlog -reportprogress 300 -sv -work work "+incdir+D:/GitRepo/Memoire/src/Simulation_code" D:/GitRepo/Memoire/src/Simulation_code/testbench_dma.sv 
 # -- Compiling package tb_pkg
 # -- Compiling package testbench_dma_sv_unit
@@ -47,12 +48,12 @@
 # 
 # Top level modules:
 # 	testbench_dma
-# End time: 11:01:30 on Jul 19,2020, Elapsed time: 0:00:01
+# End time: 16:29:25 on Jul 19,2020, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 # 
 # vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -voptargs="+acc"  testbench_dma
 # vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -voptargs=""+acc"" testbench_dma 
-# Start time: 11:01:30 on Jul 19,2020
+# Start time: 16:29:25 on Jul 19,2020
 # Loading sv_std.std
 # Loading work.tb_pkg
 # Loading work.testbench_dma_sv_unit
@@ -66,6 +67,8 @@
 #    Time: 0 ps  Iteration: 0  Region: /testbench_dma/#anonblk#240710625#73#4# File: D:/GitRepo/Memoire/src/Simulation_code/testbench_dma.sv
 # ** Warning: (vsim-PLI-3691) D:/GitRepo/Memoire/src/Simulation_code/testbench_dma.sv(83): Expected a system task, not a system function '$fscanf'.
 #    Time: 0 ps  Iteration: 0  Region: /testbench_dma/#anonblk#240710625#82#4# File: D:/GitRepo/Memoire/src/Simulation_code/testbench_dma.sv
+# ** Warning: (vsim-PLI-3691) D:/GitRepo/Memoire/src/Simulation_code/testbench_dma.sv(91): Expected a system task, not a system function '$fscanf'.
+#    Time: 0 ps  Iteration: 0  Region: /testbench_dma/#anonblk#240710625#90#4# File: D:/GitRepo/Memoire/src/Simulation_code/testbench_dma.sv
 # 
 # add wave *
 # view structure
@@ -73,8 +76,24 @@
 # view signals
 # .main_pane.objects.interior.cs.body.tree
 # run -all
-# ** Note: $stop    : D:/GitRepo/Memoire/src/Simulation_code/testbench_dma.sv(96)
-#    Time: 845 ns  Iteration: 0  Instance: /testbench_dma
-# Break in Module testbench_dma at D:/GitRepo/Memoire/src/Simulation_code/testbench_dma.sv line 96
-# End time: 11:03:47 on Jul 19,2020, Elapsed time: 0:02:17
-# Errors: 0, Warnings: 3
+#     0
+#     1
+#     2
+#     3
+#     4
+#     5
+#     6
+#     7
+#     8
+#     9
+#    10
+#    11
+#    12
+#    13
+#    14
+#    15
+# ** Note: $stop    : D:/GitRepo/Memoire/src/Simulation_code/testbench_dma.sv(104)
+#    Time: 1025 ns  Iteration: 0  Instance: /testbench_dma
+# Break in Module testbench_dma at D:/GitRepo/Memoire/src/Simulation_code/testbench_dma.sv line 104
+# End time: 16:29:51 on Jul 19,2020, Elapsed time: 0:00:26
+# Errors: 0, Warnings: 4

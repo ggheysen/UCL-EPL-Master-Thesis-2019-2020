@@ -12,7 +12,7 @@
 		parameter Npar = 4;
 		parameter Nnp 	= 2;
 		parameter Size_Par = Npar * Nnp;
-		parameter init_words = 7;
+		parameter init_words = 8;
 		// Bitwidth
 		parameter POS_W = 3; // Log2(Npar)
 		// RAM FMI param

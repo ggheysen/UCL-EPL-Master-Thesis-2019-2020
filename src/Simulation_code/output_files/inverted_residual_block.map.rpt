@@ -1,5 +1,5 @@
 Analysis & Elaboration report for inverted_residual_block
-Sun Jul 19 11:01:07 2020
+Sun Jul 19 16:29:09 2020
 Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 
 
@@ -37,7 +37,7 @@ refer to the applicable agreement for further details.
 +-----------------------------------------------------------------------------+
 ; Analysis & Elaboration Summary                                              ;
 +-------------------------------+---------------------------------------------+
-; Analysis & Elaboration Status ; Successful - Sun Jul 19 11:01:07 2020       ;
+; Analysis & Elaboration Status ; Successful - Sun Jul 19 16:29:09 2020       ;
 ; Quartus Prime Version         ; 18.1.0 Build 625 09/12/2018 SJ Lite Edition ;
 ; Revision Name                 ; inverted_residual_block                     ;
 ; Top-level Entity Name         ; DMA                                         ;
@@ -161,7 +161,7 @@ refer to the applicable agreement for further details.
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Elaboration
     Info: Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
-    Info: Processing started: Sun Jul 19 11:00:55 2020
+    Info: Processing started: Sun Jul 19 16:28:56 2020
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off master_thesis_layer -c inverted_residual_block --analysis_and_elaboration
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 8 of the 8 processors detected
@@ -182,98 +182,135 @@ Info (12021): Found 1 design units, including 1 entities, in source file testben
 Info (12021): Found 1 design units, including 1 entities, in source file ram_fmi.sv
     Info (12023): Found entity 1: RAM_FMI File: D:/GitRepo/Memoire/src/Simulation_code/RAM_FMI.sv Line: 3
 Info (12127): Elaborating entity "DMA" for the top level hierarchy
-Warning (10230): Verilog HDL assignment warning at DMA.sv(189): truncated value with size 32 to match size of target (16) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 189
-Warning (10230): Verilog HDL assignment warning at DMA.sv(200): truncated value with size 32 to match size of target (11) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 200
-Warning (10230): Verilog HDL assignment warning at DMA.sv(205): truncated value with size 32 to match size of target (8) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 205
-Warning (10230): Verilog HDL assignment warning at DMA.sv(210): truncated value with size 32 to match size of target (8) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 210
-Warning (10230): Verilog HDL assignment warning at DMA.sv(211): truncated value with size 32 to match size of target (8) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 211
-Warning (10230): Verilog HDL assignment warning at DMA.sv(212): truncated value with size 32 to match size of target (8) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 212
-Warning (10230): Verilog HDL assignment warning at DMA.sv(217): truncated value with size 32 to match size of target (8) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 217
-Warning (10230): Verilog HDL assignment warning at DMA.sv(218): truncated value with size 32 to match size of target (8) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 218
-Warning (10230): Verilog HDL assignment warning at DMA.sv(219): truncated value with size 32 to match size of target (8) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 219
-Warning (10230): Verilog HDL assignment warning at DMA.sv(225): truncated value with size 32 to match size of target (16) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 225
-Warning (10230): Verilog HDL assignment warning at DMA.sv(236): truncated value with size 32 to match size of target (11) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 236
-Warning (10230): Verilog HDL assignment warning at DMA.sv(241): truncated value with size 32 to match size of target (8) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 241
-Warning (10230): Verilog HDL assignment warning at DMA.sv(246): truncated value with size 32 to match size of target (8) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 246
-Warning (10230): Verilog HDL assignment warning at DMA.sv(247): truncated value with size 32 to match size of target (8) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 247
-Warning (10230): Verilog HDL assignment warning at DMA.sv(248): truncated value with size 32 to match size of target (8) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 248
-Warning (10230): Verilog HDL assignment warning at DMA.sv(253): truncated value with size 32 to match size of target (8) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 253
-Warning (10230): Verilog HDL assignment warning at DMA.sv(254): truncated value with size 32 to match size of target (8) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 254
-Warning (10230): Verilog HDL assignment warning at DMA.sv(255): truncated value with size 32 to match size of target (8) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 255
-Warning (10230): Verilog HDL assignment warning at DMA.sv(276): truncated value with size 32 to match size of target (16) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 276
-Warning (10230): Verilog HDL assignment warning at DMA.sv(286): truncated value with size 32 to match size of target (8) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 286
-Warning (10230): Verilog HDL assignment warning at DMA.sv(287): truncated value with size 32 to match size of target (8) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 287
-Warning (10230): Verilog HDL assignment warning at DMA.sv(292): truncated value with size 32 to match size of target (11) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 292
-Warning (10762): Verilog HDL Case Statement warning at DMA.sv(316): can't check case statement for completeness because the case expression has too many possible states File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 316
-Info (10041): Inferred latch for "mem_offset[0][0]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[0][1]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[0][2]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[0][3]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[0][4]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[0][5]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[0][6]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[0][7]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[0][8]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[0][9]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[0][10]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[0][11]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[0][12]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[0][13]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[0][14]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[0][15]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[0][16]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[0][17]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[0][18]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[0][19]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[0][20]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[0][21]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[0][22]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[0][23]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[0][24]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[0][25]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[0][26]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[0][27]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[0][28]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[0][29]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[0][30]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[0][31]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[2][0]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[2][1]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[2][2]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[2][3]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[2][4]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[2][5]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[2][6]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[2][7]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[2][8]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[2][9]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[2][10]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[2][11]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[2][12]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[2][13]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[2][14]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[2][15]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[2][16]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[2][17]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[2][18]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[2][19]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[2][20]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[2][21]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[2][22]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[2][23]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[2][24]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[2][25]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[2][26]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[2][27]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[2][28]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[2][29]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[2][30]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
-Info (10041): Inferred latch for "mem_offset[2][31]" at DMA.sv(106) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 106
+Warning (10230): Verilog HDL assignment warning at DMA.sv(204): truncated value with size 32 to match size of target (16) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 204
+Warning (10230): Verilog HDL assignment warning at DMA.sv(215): truncated value with size 32 to match size of target (11) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 215
+Warning (10230): Verilog HDL assignment warning at DMA.sv(220): truncated value with size 32 to match size of target (8) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 220
+Warning (10230): Verilog HDL assignment warning at DMA.sv(225): truncated value with size 32 to match size of target (8) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 225
+Warning (10230): Verilog HDL assignment warning at DMA.sv(226): truncated value with size 32 to match size of target (8) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 226
+Warning (10230): Verilog HDL assignment warning at DMA.sv(227): truncated value with size 32 to match size of target (8) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 227
+Warning (10230): Verilog HDL assignment warning at DMA.sv(232): truncated value with size 32 to match size of target (8) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 232
+Warning (10230): Verilog HDL assignment warning at DMA.sv(233): truncated value with size 32 to match size of target (8) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 233
+Warning (10230): Verilog HDL assignment warning at DMA.sv(234): truncated value with size 32 to match size of target (8) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 234
+Warning (10230): Verilog HDL assignment warning at DMA.sv(240): truncated value with size 32 to match size of target (16) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 240
+Warning (10230): Verilog HDL assignment warning at DMA.sv(251): truncated value with size 32 to match size of target (11) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 251
+Warning (10230): Verilog HDL assignment warning at DMA.sv(256): truncated value with size 32 to match size of target (8) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 256
+Warning (10230): Verilog HDL assignment warning at DMA.sv(261): truncated value with size 32 to match size of target (8) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 261
+Warning (10230): Verilog HDL assignment warning at DMA.sv(262): truncated value with size 32 to match size of target (8) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 262
+Warning (10230): Verilog HDL assignment warning at DMA.sv(263): truncated value with size 32 to match size of target (8) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 263
+Warning (10230): Verilog HDL assignment warning at DMA.sv(268): truncated value with size 32 to match size of target (8) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 268
+Warning (10230): Verilog HDL assignment warning at DMA.sv(269): truncated value with size 32 to match size of target (8) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 269
+Warning (10230): Verilog HDL assignment warning at DMA.sv(270): truncated value with size 32 to match size of target (8) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 270
+Warning (10230): Verilog HDL assignment warning at DMA.sv(291): truncated value with size 32 to match size of target (16) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 291
+Warning (10230): Verilog HDL assignment warning at DMA.sv(301): truncated value with size 32 to match size of target (8) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 301
+Warning (10230): Verilog HDL assignment warning at DMA.sv(302): truncated value with size 32 to match size of target (8) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 302
+Warning (10230): Verilog HDL assignment warning at DMA.sv(307): truncated value with size 32 to match size of target (11) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 307
+Warning (10230): Verilog HDL assignment warning at DMA.sv(321): truncated value with size 32 to match size of target (16) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 321
+Warning (10230): Verilog HDL assignment warning at DMA.sv(328): truncated value with size 32 to match size of target (8) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 328
+Warning (10230): Verilog HDL assignment warning at DMA.sv(333): truncated value with size 32 to match size of target (11) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 333
+Warning (10230): Verilog HDL assignment warning at DMA.sv(334): truncated value with size 32 to match size of target (11) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 334
+Warning (10230): Verilog HDL assignment warning at DMA.sv(335): truncated value with size 32 to match size of target (8) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 335
+Warning (10762): Verilog HDL Case Statement warning at DMA.sv(362): can't check case statement for completeness because the case expression has too many possible states File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 362
+Info (10041): Inferred latch for "mem_offset[0][0]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[0][1]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[0][2]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[0][3]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[0][4]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[0][5]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[0][6]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[0][7]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[0][8]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[0][9]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[0][10]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[0][11]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[0][12]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[0][13]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[0][14]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[0][15]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[0][16]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[0][17]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[0][18]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[0][19]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[0][20]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[0][21]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[0][22]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[0][23]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[0][24]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[0][25]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[0][26]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[0][27]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[0][28]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[0][29]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[0][30]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[0][31]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[2][0]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[2][1]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[2][2]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[2][3]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[2][4]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[2][5]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[2][6]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[2][7]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[2][8]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[2][9]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[2][10]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[2][11]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[2][12]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[2][13]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[2][14]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[2][15]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[2][16]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[2][17]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[2][18]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[2][19]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[2][20]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[2][21]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[2][22]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[2][23]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[2][24]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[2][25]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[2][26]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[2][27]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[2][28]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[2][29]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[2][30]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[2][31]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[3][0]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[3][1]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[3][2]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[3][3]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[3][4]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[3][5]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[3][6]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[3][7]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[3][8]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[3][9]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[3][10]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[3][11]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[3][12]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[3][13]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[3][14]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[3][15]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[3][16]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[3][17]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[3][18]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[3][19]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[3][20]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[3][21]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[3][22]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[3][23]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[3][24]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[3][25]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[3][26]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[3][27]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[3][28]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[3][29]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[3][30]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
+Info (10041): Inferred latch for "mem_offset[3][31]" at DMA.sv(118) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 118
 Info (144001): Generated suppressed messages file D:/GitRepo/Memoire/src/Simulation_code/output_files/inverted_residual_block.map.smsg
-Info: Quartus Prime Analysis & Elaboration was successful. 0 errors, 24 warnings
-    Info: Peak virtual memory: 4758 megabytes
-    Info: Processing ended: Sun Jul 19 11:01:07 2020
-    Info: Elapsed time: 00:00:12
+Info: Quartus Prime Analysis & Elaboration was successful. 0 errors, 29 warnings
+    Info: Peak virtual memory: 4760 megabytes
+    Info: Processing ended: Sun Jul 19 16:29:09 2020
+    Info: Elapsed time: 00:00:13
     Info: Total CPU time (on all processors): 00:00:29
 
 

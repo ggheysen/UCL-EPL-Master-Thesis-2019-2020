@@ -5,7 +5,7 @@
 
 //testbench
 module testbench_dma();
-	int fd_inf, fd_fmi, fd_kexp, fd_res; // File descriptor
+	int fd_inf, fd_fmi, fd_kexp, fd_kpw, fd_res; // File descriptor
 	int cnt;
 	logic clk, rst;
 	logic s_op;
@@ -86,10 +86,10 @@ module testbench_dma();
 				end
 			end
 			else if (addr_extmem >= offset_kpw &&  addr_extmem < offset_kdw) begin
-				fd_kexp = $fopen("simulation_file/kpw.txt", "r");
+				fd_kpw = $fopen("simulation_file/kpw.txt", "r");
 				for (int i=0; i<= addr_extmem - offset_kpw; i=i+1) begin
-					$fscanf(fd_kexp,"%h\n", data_extmem_n);
-					if (i == addr_extmem - offset_kex)
+					$fscanf(fd_kpw,"%h\n", data_extmem_n);
+					if (i == addr_extmem - offset_kpw)
 						r_valid_extmem_n = 1;
 				end
 			end
@@ -109,7 +109,7 @@ module testbench_dma();
 			op = 3;
 			#full_clk;
 			#full_clk;
-			tx_i = 5; x_mem_i = 16;
+			tx_i = 23; x_mem_i = 22;
 			s_op = 1;
 			#full_clk;
 			#full_clk;
@@ -121,7 +121,7 @@ module testbench_dma();
 	always @(posedge clk) begin
 		if (write_fmi) begin
 			$fwrite(fd_res, "%d\n", ram_data[15:0]);
-			$display("%d", ram_addr)
+			$display("%d", ram_addr);
 		end
 	end
 endmodule

@@ -27,7 +27,8 @@ module DMA( input  logic clk, rst, 										// Clock and reset signals
 	
 	// Register
 	logic [7:0]		Nix, Niy; 			  // Spatial Dimensions
-	logic [10:0]	Nif, Nof, Ngr;		  // channel dimensions & number of kernel groups of size Npar
+	logic [10:0]	Nif, Nof;			  // channel dimensions & number of kernel groups of size Npar
+	logic [10:0]	Ngr, Ngrint;			  // Number of groups
 	logic [2:0]		t;						  // Expansion factor
 	logic 			S;						  // Stride
 	logic [31:0] 	data;					  // Data request from a memory bank
@@ -37,7 +38,7 @@ module DMA( input  logic clk, rst, 										// Clock and reset signals
 	
 	// Next value for registers
 	logic [7:0]		Nix_n, Niy_n;
-	logic [10:0]	Nif_n, Nof_n, Ngr_n;
+	logic [10:0]	Nif_n, Nof_n, Ngr_n, Ngrint_n;
 	logic [2:0]		t_n;
 	logic 			S_n;
 	logic [31:0] 	addr_extmem_n;
@@ -47,16 +48,16 @@ module DMA( input  logic clk, rst, 										// Clock and reset signals
 	logic [10:0]	f_n, f_mem_n;
 	
 	// Memory (offset & multiplication)
-	logic [31:0] mem_offset [7:0];
+	logic [31:0] mem_offset [8:0];
 	
 	// SEQ LOGIQE
 	always_ff @(posedge clk, posedge rst)
 		if(rst) begin // If reset enabled, set to initial values
 			state <= IDLE;
-			Nix 	<= '0; Niy 	<= '0;
-			Nif 	<= '0; Nof 	<= '0; 
-			Ngr 	<= '0;
-			t 		<= '0; S 	<=  0;
+			Nix 	<= '0; Niy 		<= '0;
+			Nif 	<= '0; Nof 		<= '0; 
+			Ngr 	<= '0; Ngrint	<= '0;
+			t 		<= '0; S 		<=  0;
 			addr_extmem	  <= '0;
 			ram_addr		  <= '0;
 			data			  <= '0;
@@ -69,9 +70,9 @@ module DMA( input  logic clk, rst, 										// Clock and reset signals
 		end
 		else begin // Else, take next values
 			state <= state_n;
-			Nix 	<= Nix_n; Niy 	<= Niy_n;
-			Nif 	<= Nif_n; Nof 	<= Nof_n;
-			Ngr 	<= Ngr_n;
+			Nix 	<= Nix_n; Niy 		<= Niy_n;
+			Nif 	<= Nif_n; Nof 		<= Nof_n;
+			Ngr 	<= Ngr_n; Ngrint	<= Ngrint_n;
 			t 		<= t_n; 	 S 	<= S_n;
 			ram_addr <= ram_addr_n;
 			addr_extmem <= addr_extmem_n;
@@ -93,25 +94,31 @@ module DMA( input  logic clk, rst, 										// Clock and reset signals
 	assign inf_conv[37:27] = Nof;
 	assign inf_conv[40:38] = t;
 	assign inf_conv[41]    = S;
+	
 	// DMA finished transfer when in final states
 	assign e_op = (state == FINISHED);
+	
 	// When the DMA asks access to external memory
-	assign r_request_extmem = (state == R_INIT || state == R_FMI || state == R_KEXP);
+	assign r_request_extmem = (state == R_INIT || state == R_FMI || state == R_KEXP || state == R_KPW);
+	
 	// Data to write the RAM
 	assign ram_data = data;
+	
 	// Write to RAM (depending on state)
-	assign write = (state == W0_FMI || state == W1_FMI || state == W_KEXP);
+	assign write = (state == W0_FMI || state == W1_FMI || state == W_KEXP || state == W_KPW);
+	
 	// Store constant depending on the layer parameters
 	assign mem_offset[5] = (Nix + Nix[0]) * Niy;
 	assign mem_offset[6] = Ngr * Nnp;
 	assign mem_offset[7] = Nif * t;
+	assign mem_offset[8] = Ngrint * Nnp;
 	
 	always_comb begin
 		// If no values has changed
 		state_n = state;
 		Nix_n   = Nix; Niy_n   = Niy;
 		Nif_n   = Nif; Nof_n   = Nof;
-		Ngr_n = Ngr;
+		Ngr_n = Ngr; Ngrint_n = Ngrint;
 		t_n 	  = t; 	 S_n 	  = S;
 		addr_extmem_n	 = addr_extmem;
 		data_n = data;
@@ -159,9 +166,10 @@ module DMA( input  logic clk, rst, 										// Clock and reset signals
 						
 						3: begin // Fill KPW buffer
 							state_n 			 = R_KPW;
-							x_n = 1; f_n = tx_i; // Tx_i represents which group to select, we load every weight from 1 to Nof corresponding to that group in the kernel
+							x_n = 1; f_n = 1; // we load every weight from 1 to Nof corresponding to that group in the kernel
+							tx_n = tx_i; // Tx_i represents which group to select,
 							x_mem_n = 0 ; f_mem_n = x_mem_i;
-							x_ref_n = x_mem_i;
+							x_ref_n = x_mem_i; tx_mem_n = tx_i;
 							addr_extmem_n 	 = mem_offset[3] + x_mem_i; // x_mem_i contains the adress of the par channel
 						end
 						default: state_n = IDLE;
@@ -302,16 +310,39 @@ module DMA( input  logic clk, rst, 										// Clock and reset signals
 			
 			/* ############################################### */
 			// KPW States
+			
 			R_KPW: begin
 				if(r_valid_extmem) begin
 						state_n = W_KPW;
 						data_n = data_extmem;
 				end
 			end
+			
 			W_KPW: begin
+				ram_addr_n = ram_addr + 1;
+				if(f == Nnp || tx == mem_offset[8]) begin
+					f_n = 1; f_mem_n = x_ref; tx_n = tx_mem;
+				   if (x == Nof) begin
+						state_n = FINISHED;
+					end
+					else begin
+						state_n = A_KPW; x_n = x + 1; x_mem_n = x_mem + mem_offset[8];
+					end
+				end
+				else begin
+					state_n = A_KPW;
+					f_n = f + 1;
+					f_mem_n = f_mem + 1;
+					tx_n = tx + 1;
+				end
 			end
 			A_KPW: begin
+				addr_extmem_n 	 = mem_offset[3] + x_mem + f_mem;
+				state_n = R_KPW;
 			end
+			/* ############################################### */
+			// KDW States
+			
 			/* ############################################### */
 			//Init states
 			
@@ -341,22 +372,25 @@ module DMA( input  logic clk, rst, 										// Clock and reset signals
 				end
 				1:begin
 					Nif_n   = data[10:0]; 
-					Nof_n   = data[21:11];
-					Ngr_n	  = data[31:22];
+					Nof_n   = data[22:12];
 				end
-				2:begin // IFM
+				2: begin
+					Ngr_n	  = data[10:0];
+					Ngrint_n	  = data[22:12];
+				end
+				3:begin // IFM
 					mem_offset[0] = data;
 				end
-				3:begin // OFM
+				4:begin // OFM
 					mem_offset[1] = data;
 				end
-				4:begin // KEXP
+				5:begin // KEXP
 					mem_offset[2] = data;
 				end
-				5:begin; // KPW
+				6:begin; // KPW
 					mem_offset[3] = data;
 				end
-				6:begin // KDW
+				7:begin // KDW
 					mem_offset[4] = data;
 				end
 				default: state_n = FINISHED;

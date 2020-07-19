@@ -1,4 +1,4 @@
-with open("res_kexp.txt", "r") as file1:
+with open("res_kpw.txt", "r") as file1:
     with open("result.txt", "r") as file2:
         for line in file1:
             int1 = int(line)
