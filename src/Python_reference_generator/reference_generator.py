@@ -173,7 +173,7 @@ def Filter_dw_generator():
         for y in range(0, Nky):
             row = []
             for x in range(0, Nkx):
-                row.append(Fxp(random.gauss(0, 1), True, BW_px, fr_px, overflow = 'wrap'))
+                row.append(Fxp(random.gauss(0, 1), True, BW_wg, fr_wg, overflow = 'wrap'))
             kernel.append(row)
         filter.append(kernel)
     return filter
@@ -188,7 +188,7 @@ def Filter_11_generator(nif, nof):
             max = Npar - Nnp
             for np in range(0, Nnp):
                 #
-                val = Fxp(random.gauss(0, 1), True, BW_px, fr_px, overflow = 'wrap')
+                val = Fxp(random.gauss(0, 1), True, BW_wg, fr_wg, overflow = 'wrap')
                 pos = Fxp(random.randint(min, max), False, BW_pos, 0)
                 min = pos() + 1
                 max = max + 1

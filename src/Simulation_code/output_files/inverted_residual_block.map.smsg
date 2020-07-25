@@ -1,2 +1,8 @@
-Info (10281): Verilog HDL Declaration information at inverted_residual_block.sv(8): object "ffill" differs only in case from object "FFILL" in the same scope File: D:/GitRepo/Memoire/src/Simulation_code/inverted_residual_block.sv Line: 8
-Info (10281): Verilog HDL Declaration information at inverted_residual_block.sv(8): object "fwrite" differs only in case from object "FWRITE" in the same scope File: D:/GitRepo/Memoire/src/Simulation_code/inverted_residual_block.sv Line: 8
+Info (10281): Verilog HDL Declaration information at Main_Controller.sv(22): object "finish" differs only in case from object "FINISH" in the same scope File: D:/GitRepo/Memoire/src/Simulation_code/Main_Controller.sv Line: 22
+Info (10281): Verilog HDL Declaration information at Main_Controller.sv(46): object "tox" differs only in case from object "Tox" in the same scope File: D:/GitRepo/Memoire/src/Simulation_code/Main_Controller.sv Line: 46
+Info (10281): Verilog HDL Declaration information at Main_Controller.sv(46): object "toy" differs only in case from object "Toy" in the same scope File: D:/GitRepo/Memoire/src/Simulation_code/Main_Controller.sv Line: 46
+Info (10281): Verilog HDL Declaration information at DMA.sv(26): object "w_fmi" differs only in case from object "W_FMI" in the same scope File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 26
+Info (10281): Verilog HDL Declaration information at DMA.sv(26): object "w_kpw" differs only in case from object "W_KPW" in the same scope File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 26
+Info (10281): Verilog HDL Declaration information at DMA.sv(26): object "w_kdw" differs only in case from object "W_KDW" in the same scope File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 26
+Warning (10268): Verilog HDL information at testbench.sv(206): always construct contains both blocking and non-blocking assignments File: D:/GitRepo/Memoire/src/Simulation_code/testbench.sv Line: 206
+Info (10281): Verilog HDL Declaration information at Convolution_1_1.sv(26): object "write" differs only in case from object "WRITE" in the same scope File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_1_1.sv Line: 26

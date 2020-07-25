@@ -1,0 +1,19 @@
+`include "dma_pkg.sv"
+
+module RAM_FMO(
+	input logic clk,
+	input logic [FMO_ADDR_W-1:0] addr,
+	input logic [PX_BW-1:0] data,
+	input logic write,
+	output logic [PX_BW-1:0] res);
+	
+	logic [PX_BW-1:0] mem [FMO_N_ELEM-1:0];
+
+	always_ff @(posedge clk) begin
+	if (write) begin
+		mem[addr] <= data;
+		res <= data;
+	end 
+	else res <= mem[addr];
+	end
+endmodule

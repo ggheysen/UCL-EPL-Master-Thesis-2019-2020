@@ -8,183 +8,570 @@ z2
 !i10f 100
 cModel Technology
 Z0 dD:/GitRepo/Memoire/src/Simulation_code/simulation/modelsim
-vDMA
+vConvolution_1_1
 Z1 DXx6 sv_std 3 std 0 22 AD7iAPLo6nTIKk<N0eo=D3
-Z2 DXx4 work 7 dma_pkg 0 22 g3NbJ2hWbKL>9G;2A[Ge43
-DXx4 work 11 DMA_sv_unit 0 22 7=oYNU:gaM4hXj2QWB1UX3
-Z3 VDg1SIo80bB@j0V0VzS_@n1
+Z2 DXx4 work 7 dma_pkg 0 22 =Xbn4@P3Aba3HQBC_HO7P1
+Z3 DXx4 work 7 ram_pkg 0 22 W3]ELG]l@n[D@iAm7I2DB3
+Z4 DXx4 work 23 Convolution_1_1_sv_unit 0 22 zCenf0]7b=ciB3Pnj=>]`3
+Z5 VDg1SIo80bB@j0V0VzS_@n1
 r1
 !s85 0
 31
 !i10b 1
-!s100 ACD0zNmY;Y6g_m8U7z3cd2
-Id@b?;O;Gh9Fb633Bk?@_12
-!s105 DMA_sv_unit
+!s100 YiDlmPzEZi3PRI1VgmC:T0
+I6l84n9RRa3DdNPOj^5[[k3
+Z6 !s105 Convolution_1_1_sv_unit
 S1
 R0
-Z4 w1595167835
-Z5 8D:/GitRepo/Memoire/src/Simulation_code/DMA.sv
-Z6 FD:/GitRepo/Memoire/src/Simulation_code/DMA.sv
-L0 4
-Z7 OV;L;10.5b;63
-Z8 !s108 1595168964.000000
-Z9 !s107 D:/GitRepo/Memoire/src/Simulation_code/dma_pkg.sv|D:/GitRepo/Memoire/src/Simulation_code/DMA.sv|
-Z10 !s90 -reportprogress|300|-sv|-work|work|+incdir+D:/GitRepo/Memoire/src/Simulation_code|D:/GitRepo/Memoire/src/Simulation_code/DMA.sv|
+Z7 w1595687897
+Z8 8D:/GitRepo/Memoire/src/Simulation_code/Convolution_1_1.sv
+Z9 FD:/GitRepo/Memoire/src/Simulation_code/Convolution_1_1.sv
+Z10 L0 18
+Z11 OV;L;10.5b;63
+Z12 !s108 1595692593.000000
+Z13 !s107 D:/GitRepo/Memoire/src/Simulation_code/Convolution_1_1.sv|
+Z14 !s90 -reportprogress|300|-sv|-work|work|+incdir+D:/GitRepo/Memoire/src/Simulation_code|D:/GitRepo/Memoire/src/Simulation_code/Convolution_1_1.sv|
 !i113 1
-Z11 o-sv -work work
-Z12 !s92 -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code
-Z13 tCvgOpt 0
-n@d@m@a
-Xdma_pkg
-R1
-Z14 !s110 1595168964
-!i10b 1
-!s100 <Db=RO]bV[V5?Q^AmGDlR3
-Ig3NbJ2hWbKL>9G;2A[Ge43
-Vg3NbJ2hWbKL>9G;2A[Ge43
-S1
-R0
-Z15 w1595165755
-Z16 8D:/GitRepo/Memoire/src/Simulation_code/dma_pkg.sv
-Z17 FD:/GitRepo/Memoire/src/Simulation_code/dma_pkg.sv
-L0 5
-R7
-r1
-!s85 0
-31
-R8
-R9
-R10
-!i113 1
-R11
-R12
-R13
-Xdma_pkg_sv_unit
+Z15 o-sv -work work
+Z16 !s92 -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code
+Z17 tCvgOpt 0
+n@convolution_1_1
+XConvolution_1_1_sv_unit
 R1
 R2
-R14
+R3
+VzCenf0]7b=ciB3Pnj=>]`3
+r1
+!s85 0
+31
 !i10b 1
-!s100 8KXn`5Xg=;lj`:OJlLLMj3
-ILVEQWRYkfaN?oFnf0MXkm2
-VLVEQWRYkfaN?oFnf0MXkm2
+!s100 O0YQ==fQ1Z4h2_?Cc]UoH1
+IzCenf0]7b=ciB3Pnj=>]`3
 !i103 1
 S1
 R0
+R7
+R8
+R9
+Z18 L0 11
+R11
+R12
+R13
+R14
+!i113 1
 R15
 R16
 R17
-Z18 L0 24
-R7
+n@convolution_1_1_sv_unit
+vDMA
+R1
+R2
+R3
+DXx4 work 11 DMA_sv_unit 0 22 =Ic@ED0>?Pe39mACD^n703
+R5
 r1
 !s85 0
 31
-R8
+!i10b 1
+!s100 [Y?6OgL``5;7PiXRk6?_<1
+IZe08WMigR9SLG_U2o?YL?1
+!s105 DMA_sv_unit
+S1
+R0
+Z19 w1595692340
+Z20 8D:/GitRepo/Memoire/src/Simulation_code/DMA.sv
+Z21 FD:/GitRepo/Memoire/src/Simulation_code/DMA.sv
+L0 20
+R11
+R12
+Z22 !s107 D:/GitRepo/Memoire/src/Simulation_code/DMA.sv|
+Z23 !s90 -reportprogress|300|-sv|-work|work|+incdir+D:/GitRepo/Memoire/src/Simulation_code|D:/GitRepo/Memoire/src/Simulation_code/DMA.sv|
+!i113 1
+R15
+R16
+R17
+n@d@m@a
+Xdma_pkg
+R1
+!s110 1595692592
+!i10b 1
+!s100 P_6`nRElk@fhL;En2?YEW0
+I=Xbn4@P3Aba3HQBC_HO7P1
+V=Xbn4@P3Aba3HQBC_HO7P1
+S1
+R0
+w1595612889
+8D:/GitRepo/Memoire/src/Simulation_code/dma_pkg.sv
+FD:/GitRepo/Memoire/src/Simulation_code/dma_pkg.sv
+L0 2
+R11
+r1
+!s85 0
+31
+Z24 !s108 1595692592.000000
 !s107 D:/GitRepo/Memoire/src/Simulation_code/dma_pkg.sv|
 !s90 -reportprogress|300|-sv|-work|work|+incdir+D:/GitRepo/Memoire/src/Simulation_code|D:/GitRepo/Memoire/src/Simulation_code/dma_pkg.sv|
 !i113 1
-R11
-R12
-R13
+R15
+R16
+R17
 XDMA_sv_unit
 R1
 R2
-V7=oYNU:gaM4hXj2QWB1UX3
+R3
+V=Ic@ED0>?Pe39mACD^n703
 r1
 !s85 0
 31
 !i10b 1
-!s100 48@gH=V];ina[MV2UeAQJ2
-I7=oYNU:gaM4hXj2QWB1UX3
+!s100 l5c?m=AE344laX<?e>VOE1
+I=Ic@ED0>?Pe39mACD^n703
 !i103 1
 S1
 R0
+R19
+R20
+R21
+R18
+R11
+R12
+R22
+R23
+!i113 1
+R15
+R16
+R17
+n@d@m@a_sv_unit
+vinverted_residual_block
+R1
+R2
+R3
+DXx4 work 31 inverted_residual_block_sv_unit 0 22 [_LLfEdP`o?WRmmfaQ:Wg3
+R5
+r1
+!s85 0
+31
+!i10b 1
+!s100 Hc1K0GFKm]52G8]onNR6E1
+IV:deJb0oJFBY<>9i3XLR30
+!s105 inverted_residual_block_sv_unit
+S1
+R0
+Z25 w1595601956
+Z26 8D:/GitRepo/Memoire/src/Simulation_code/inverted_residual_block.sv
+Z27 FD:/GitRepo/Memoire/src/Simulation_code/inverted_residual_block.sv
+L0 19
+R11
+R12
+Z28 !s107 D:/GitRepo/Memoire/src/Simulation_code/inverted_residual_block.sv|
+Z29 !s90 -reportprogress|300|-sv|-work|work|+incdir+D:/GitRepo/Memoire/src/Simulation_code|D:/GitRepo/Memoire/src/Simulation_code/inverted_residual_block.sv|
+!i113 1
+R15
+R16
+R17
+Xinverted_residual_block_sv_unit
+R1
+R2
+R3
+V[_LLfEdP`o?WRmmfaQ:Wg3
+r1
+!s85 0
+31
+!i10b 1
+!s100 M_`Kf<]e_<ogfZ<ScQlV?1
+I[_LLfEdP`o?WRmmfaQ:Wg3
+!i103 1
+S1
+R0
+R25
+R26
+R27
+L0 12
+R11
+R12
+R28
+R29
+!i113 1
+R15
+R16
+R17
+vMain_controller
+R1
+R2
+DXx4 work 23 Main_Controller_sv_unit 0 22 0z3<BP^R4ES^=NoDEAXOL0
+R5
+r1
+!s85 0
+31
+!i10b 1
+!s100 Zo6Gahe7QIGoZOf;Pj3Y13
+IRX^4l3NY9Vo3PW1cN4f;e1
+!s105 Main_Controller_sv_unit
+S1
+R0
+Z30 w1595584220
+Z31 8D:/GitRepo/Memoire/src/Simulation_code/Main_Controller.sv
+Z32 FD:/GitRepo/Memoire/src/Simulation_code/Main_Controller.sv
+R10
+R11
+R24
+Z33 !s107 D:/GitRepo/Memoire/src/Simulation_code/Main_Controller.sv|
+Z34 !s90 -reportprogress|300|-sv|-work|work|+incdir+D:/GitRepo/Memoire/src/Simulation_code|D:/GitRepo/Memoire/src/Simulation_code/Main_Controller.sv|
+!i113 1
+R15
+R16
+R17
+n@main_controller
+XMain_Controller_sv_unit
+R1
+R2
+V0z3<BP^R4ES^=NoDEAXOL0
+r1
+!s85 0
+31
+!i10b 1
+!s100 Q4>k9hZ@d2_lBOmdf>02Q3
+I0z3<BP^R4ES^=NoDEAXOL0
+!i103 1
+S1
+R0
+R30
+R31
+R32
+R18
+R11
+R24
+R33
+R34
+!i113 1
+R15
+R16
+R17
+n@main_@controller_sv_unit
+vRAM_FMI
+R1
+R2
+R3
+DXx4 work 15 RAM_FMI_sv_unit 0 22 <TO3RYTc8M3fM0RYBJW>`1
+R5
+r1
+!s85 0
+31
+!i10b 1
+!s100 bImKaLY@Hi2L?NG:Fd:260
+IkX_FgWP1izDzlHgV>OA6h3
+!s105 RAM_FMI_sv_unit
+S1
+R0
+Z35 w1595509047
+Z36 8D:/GitRepo/Memoire/src/Simulation_code/RAM_FMI.sv
+Z37 FD:/GitRepo/Memoire/src/Simulation_code/RAM_FMI.sv
+Z38 L0 17
+R11
+R12
+Z39 !s107 D:/GitRepo/Memoire/src/Simulation_code/RAM_FMI.sv|
+Z40 !s90 -reportprogress|300|-sv|-work|work|+incdir+D:/GitRepo/Memoire/src/Simulation_code|D:/GitRepo/Memoire/src/Simulation_code/RAM_FMI.sv|
+!i113 1
+R15
+R16
+R17
+n@r@a@m_@f@m@i
+XRAM_FMI_sv_unit
+R1
+R2
+R3
+V<TO3RYTc8M3fM0RYBJW>`1
+r1
+!s85 0
+31
+!i10b 1
+!s100 `0M`d;16Q5Z:j`QN2k4kf0
+I<TO3RYTc8M3fM0RYBJW>`1
+!i103 1
+S1
+R0
+R35
+R36
+R37
+R18
+R11
+R12
+R39
+R40
+!i113 1
+R15
+R16
+R17
+n@r@a@m_@f@m@i_sv_unit
+vRAM_FMINT
+R1
+R2
+R3
+DXx4 work 17 RAM_FMINT_sv_unit 0 22 hiRXJJRN[lWlW0bO`COif3
+R5
+r1
+!s85 0
+31
+!i10b 1
+!s100 3LbDUImQJiX:dH]a392b;0
+IZ=[J5D>J2a>l01b`FNn=T3
+!s105 RAM_FMINT_sv_unit
+S1
+R0
+Z41 w1595511996
+Z42 8D:/GitRepo/Memoire/src/Simulation_code/RAM_FMINT.sv
+Z43 FD:/GitRepo/Memoire/src/Simulation_code/RAM_FMINT.sv
+R38
+R11
+R12
+Z44 !s107 D:/GitRepo/Memoire/src/Simulation_code/RAM_FMINT.sv|
+Z45 !s90 -reportprogress|300|-sv|-work|work|+incdir+D:/GitRepo/Memoire/src/Simulation_code|D:/GitRepo/Memoire/src/Simulation_code/RAM_FMINT.sv|
+!i113 1
+R15
+R16
+R17
+n@r@a@m_@f@m@i@n@t
+XRAM_FMINT_sv_unit
+R1
+R2
+R3
+VhiRXJJRN[lWlW0bO`COif3
+r1
+!s85 0
+31
+!i10b 1
+!s100 jQcfXQ;NfhUElG93>=A`z2
+IhiRXJJRN[lWlW0bO`COif3
+!i103 1
+S1
+R0
+R41
+R42
+R43
+R18
+R11
+R12
+R44
+R45
+!i113 1
+R15
+R16
+R17
+n@r@a@m_@f@m@i@n@t_sv_unit
+vRAM_KEX
+R1
+R2
+R3
+DXx4 work 15 RAM_KEX_sv_unit 0 22 5em<I85z>:eBTA4MbHEYa3
+R5
+r1
+!s85 0
+31
+!i10b 1
+!s100 mnI72dX<MiXo4ndjW3]OH2
+IX_W9cOOBdhP=Yj2TVAKQZ2
+!s105 RAM_KEX_sv_unit
+S1
+R0
+Z46 w1595597444
+Z47 8D:/GitRepo/Memoire/src/Simulation_code/RAM_KEX.sv
+Z48 FD:/GitRepo/Memoire/src/Simulation_code/RAM_KEX.sv
+R10
+R11
+R12
+Z49 !s107 D:/GitRepo/Memoire/src/Simulation_code/RAM_KEX.sv|
+Z50 !s90 -reportprogress|300|-sv|-work|work|+incdir+D:/GitRepo/Memoire/src/Simulation_code|D:/GitRepo/Memoire/src/Simulation_code/RAM_KEX.sv|
+!i113 1
+R15
+R16
+R17
+n@r@a@m_@k@e@x
+XRAM_KEX_sv_unit
+R1
+R2
+R3
+V5em<I85z>:eBTA4MbHEYa3
+r1
+!s85 0
+31
+!i10b 1
+!s100 BL[`3RFUeU2ReV;MKW@?^2
+I5em<I85z>:eBTA4MbHEYa3
+!i103 1
+S1
+R0
+R46
+R47
+R48
+R18
+R11
+R12
+R49
+R50
+!i113 1
+R15
+R16
+R17
+n@r@a@m_@k@e@x_sv_unit
+Xram_pkg
+R1
+R2
+Z51 !s110 1595692593
+!i10b 1
+!s100 HSaEoVHO@YF@Qh7;4_S2K3
+IW3]ELG]l@n[D@iAm7I2DB3
+VW3]ELG]l@n[D@iAm7I2DB3
+S1
+R0
+w1595583127
+8D:/GitRepo/Memoire/src/Simulation_code/ram_pkg.sv
+FD:/GitRepo/Memoire/src/Simulation_code/ram_pkg.sv
+L0 2
+R11
+r1
+!s85 0
+31
+R12
+!s107 D:/GitRepo/Memoire/src/Simulation_code/ram_pkg.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+D:/GitRepo/Memoire/src/Simulation_code|D:/GitRepo/Memoire/src/Simulation_code/ram_pkg.sv|
+!i113 1
+R15
+R16
+R17
+vRELU6
+R1
+R2
+R3
 R4
 R5
+r1
+!s85 0
+31
+!i10b 1
+!s100 Z6]OoVQ1Y]e4;GjH?0D[Y3
+Iflc82<fXHRz:IAeJA^kaV0
 R6
-R17
-R18
+S1
+R0
 R7
 R8
 R9
-R10
-!i113 1
+L0 311
 R11
 R12
 R13
-n@d@m@a_sv_unit
-Xtb_pkg
-R1
 R14
-!i10b 1
-!s100 ^mRRYMlAMl;m:o<NJ34HX1
-I`07n@ReeDJSSLa58PcdLB1
-V`07n@ReeDJSSLa58PcdLB1
-S1
-R0
-w1594996118
-8D:/GitRepo/Memoire/src/Simulation_code/tb_pkg.sv
-Z19 FD:/GitRepo/Memoire/src/Simulation_code/tb_pkg.sv
-L0 5
-R7
-r1
-!s85 0
-31
-R8
-Z20 !s107 D:/GitRepo/Memoire/src/Simulation_code/tb_pkg.sv|D:/GitRepo/Memoire/src/Simulation_code/testbench_dma.sv|
-Z21 !s90 -reportprogress|300|-sv|-work|work|+incdir+D:/GitRepo/Memoire/src/Simulation_code|D:/GitRepo/Memoire/src/Simulation_code/testbench_dma.sv|
 !i113 1
-R11
-R12
-R13
-vtestbench_dma
+R15
+R16
+R17
+n@r@e@l@u6
+vSHIFT_REGISTER_POS
 R1
-Z22 DXx4 work 6 tb_pkg 0 22 `07n@ReeDJSSLa58PcdLB1
-DXx4 work 21 testbench_dma_sv_unit 0 22 CjKe3HG3e?U4MMkCD]11P0
+R2
 R3
+R4
+R5
 r1
 !s85 0
 31
 !i10b 1
-!s100 iLO8X>fJ3IFVM9eFWgfc@3
-I@bEZ10EnmGiI=Y5a7dJe]0
-!s105 testbench_dma_sv_unit
+!s100 YC;1bN><YDzC]FDeDihNK2
+I2Q`8:E7[h7fgJ2@iACV=V0
+R6
 S1
 R0
-Z23 w1595168933
-Z24 8D:/GitRepo/Memoire/src/Simulation_code/testbench_dma.sv
-Z25 FD:/GitRepo/Memoire/src/Simulation_code/testbench_dma.sv
-L0 7
 R7
 R8
-R20
-R21
-!i113 1
+R9
+L0 296
 R11
 R12
 R13
-Xtestbench_dma_sv_unit
+R14
+!i113 1
+R15
+R16
+R17
+n@s@h@i@f@t_@r@e@g@i@s@t@e@r_@p@o@s
+vSHIFT_REGISTER_PX
 R1
-R22
-VCjKe3HG3e?U4MMkCD]11P0
+R2
+R3
+R4
+R5
 r1
 !s85 0
 31
 !i10b 1
-!s100 XBV7IL6jZ`R_a=K_QK5Gz3
-ICjKe3HG3e?U4MMkCD]11P0
-!i103 1
+!s100 =oF>ja8a=6f9;l;VXZ7hC3
+IA0_kTMj1F_ROg90aG`M[71
+R6
 S1
 R0
-R23
-R24
-R25
-R19
-L0 20
 R7
 R8
-R20
-R21
-!i113 1
+R9
+L0 266
 R11
 R12
 R13
+R14
+!i113 1
+R15
+R16
+R17
+n@s@h@i@f@t_@r@e@g@i@s@t@e@r_@p@x
+vSHIFT_REGISTER_WG
+R1
+R2
+R3
+R4
+R5
+r1
+!s85 0
+31
+!i10b 1
+!s100 W;O0MB;^[1_2P=`oEnbZX0
+IfA`OJYE2HYeQVcnID1:EI2
+R6
+S1
+R0
+R7
+R8
+R9
+L0 281
+R11
+R12
+R13
+R14
+!i113 1
+R15
+R16
+R17
+n@s@h@i@f@t_@r@e@g@i@s@t@e@r_@w@g
+vtestbench
+R1
+R51
+!i10b 1
+!s100 NV?CiAj:_3kEzZCPGdASR1
+ICz3Wk2fk`<cA@zdcAR2==3
+R5
+!s105 testbench_sv_unit
+S1
+R0
+w1595690359
+8D:/GitRepo/Memoire/src/Simulation_code/testbench.sv
+FD:/GitRepo/Memoire/src/Simulation_code/testbench.sv
+L0 4
+R11
+r1
+!s85 0
+31
+R12
+!s107 D:/GitRepo/Memoire/src/Simulation_code/testbench.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+D:/GitRepo/Memoire/src/Simulation_code|D:/GitRepo/Memoire/src/Simulation_code/testbench.sv|
+!i113 1
+R15
+R16
+R17

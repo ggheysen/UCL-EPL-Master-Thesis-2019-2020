@@ -27,7 +27,8 @@
 backend=biber,
 style=numeric,
 sorting=none,
-citestyle=numeric
+citestyle=numeric,
+maxcitenames=1
 ]{biblatex}
 \usepackage{svg}
 \usepackage{listings}
@@ -44,26 +45,26 @@ citestyle=numeric
 \setlength{\parskip}{\baselineskip}
 
 \lstdefinestyle{mystyle}{
-    backgroundcolor=\color{backcolour},   
+    backgroundcolor=\color{backcolour},
     commentstyle=\color{codegreen},
     keywordstyle=\color{magenta},
     numberstyle=\tiny\color{codegray},
     stringstyle=\color{codepurple},
     basicstyle=\ttfamily\footnotesize,
-    breakatwhitespace=false,         
-    breaklines=true,                 
-    captionpos=b,                    
-    keepspaces=true,                 
-    numbers=left,                    
-    numbersep=5pt,                  
-    showspaces=false,                
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
     showstringspaces=false,
-    showtabs=false,                  
+    showtabs=false,
     tabsize=2
 }
 
 \lstset{style=mystyle}
- 
+
 % Generate the glossary
 \makenoidxglossaries
 
@@ -112,15 +113,15 @@ citestyle=numeric
   \begin{titlepage}
     \thispagestyle{empty}
     \newgeometry{top=0cm,bottom=0cm,left=3cm,right=2.5cm}
-    
+
     % background
-    \noindent \hspace{-3cm} 
+    \noindent \hspace{-3cm}
     \includegraphics{src/1.Cover/_frontbanner_EPL-master-thesis.pdf}\\
     \vspace*{-\textheight}
-    
+
     % Font
     \color{white} \fontfamily{phv} \selectfont
-    
+
     % Define lengths
     \setlength{\tabAuthor}{
 		\ifdef{\@secondauthor}{1.7cm}{1.6cm}
@@ -130,10 +131,10 @@ citestyle=numeric
 	}
     \setlength{\tabReader}{
 		\ifdef{\@readertwo}{1.9cm}{1.8cm}
-	}    
-	
+	}
+
 	\vspace*{9cm}
-    
+
     % Title and subtitle
     \noindent
     \begin{minipage}[t][10cm][c]{1\textwidth}
@@ -141,14 +142,14 @@ citestyle=numeric
     %\vspace*{2cm}
     {
       \fontsize{26}{36}\selectfont \textbf{\@title}
-      
+
       \vspace*{12pt}
-      
+
       \ifdef{\@subtitle}{\fontsize{20}{30} \selectfont \@subtitle}{$ $} \\
-    } 
+    }
     \end{minipage}
-    
-    
+
+
     % Metadata
     \vspace*{4cm}
     \noindent \hspace{1.7cm}
@@ -173,7 +174,7 @@ citestyle=numeric
 	  Academic year \@years
 	  \\
       % degree title
-      \@degreetitle      
+      \@degreetitle
     \end{minipage}
   \end{titlepage}
 }

@@ -1,0 +1,11 @@
+/* 
+	Description : Component convolution_1_1 which perform the 1*1 convolution needed for inverted residual block and 1*1 convolution layer
+	Author : 	  Guillaume Gheysen
+*/ 
+
+/* 
+	###################################################################################################################################
+	# import 																																								 #
+   ###################################################################################################################################
+*/
+import dma_pkg::*;

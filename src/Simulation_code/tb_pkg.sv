@@ -2,7 +2,7 @@
     `define TBPACKAGE_DONE
     
 
-    package tb_pkg;
+   package tb_pkg;
 		parameter hlf_clk  = 5;
 		parameter full_clk = 2*hlf_clk;
 		parameter lng_wait = 10*hlf_clk;

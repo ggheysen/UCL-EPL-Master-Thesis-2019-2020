@@ -1,26 +1,24 @@
-`ifndef DMAPACKAGE_DONE
-    `define DMAPACKAGE_DONE
-    
 
     package dma_pkg;
-		parameter Tix 	= 4;
+		parameter Tox_I = 7;
+		parameter Tix 	= 2*Tox_I;
 		parameter Tox 	= Tix;
-		parameter Tiy 	= 4;
+		
+		parameter Toy_I = 7;
+		parameter Tiy 	= 2*Toy_I;
 		parameter Toy 	= Tiy;
+		
+		parameter Nkx 	= 3;
+		parameter Nky  = 3;
+		
 		parameter Tif 	= 8;
 		parameter Tof 	= Tif;
-		parameter Npar = 4;
+		
+		parameter Npar = 8;
+		
 		parameter Nnp 	= 2;
+		
 		parameter Size_Par = Npar * Nnp;
+		parameter KDWSize = Nkx * Nky; // 16 bits each weight
 		parameter init_words = 8;
-		// Bitwidth
-		parameter POS_W = 3; // Log2(Npar)
-		// RAM FMI param
-		parameter FMI_N_ELEM = Tix * Tiy * Tif;
-		parameter FMI_ADDR_W = 8; // Log 2 FMI_N_elem
 	endpackage
-
-    // import package in the design
-    import dma_pkg::*;
-
-`endif

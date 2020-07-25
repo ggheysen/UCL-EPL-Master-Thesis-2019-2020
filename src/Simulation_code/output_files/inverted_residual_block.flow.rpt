@@ -1,5 +1,5 @@
 Flow report for inverted_residual_block
-Sun Jul 19 16:29:09 2020
+Sat Jul 25 17:52:34 2020
 Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 
 
@@ -40,10 +40,10 @@ refer to the applicable agreement for further details.
 +---------------------------------------------------------------------------+
 ; Flow Summary                                                              ;
 +-----------------------------+---------------------------------------------+
-; Flow Status                 ; Successful - Sun Jul 19 16:29:09 2020       ;
+; Flow Status                 ; Successful - Sat Jul 25 17:52:34 2020       ;
 ; Quartus Prime Version       ; 18.1.0 Build 625 09/12/2018 SJ Lite Edition ;
 ; Revision Name               ; inverted_residual_block                     ;
-; Top-level Entity Name       ; DMA                                         ;
+; Top-level Entity Name       ; inverted_residual_block                     ;
 ; Family                      ; Cyclone V                                   ;
 ; Device                      ; 5CSEBA5U23I7S                               ;
 ; Timing Models               ; Final                                       ;
@@ -62,41 +62,44 @@ refer to the applicable agreement for further details.
 +-------------------+-------------------------+
 ; Option            ; Setting                 ;
 +-------------------+-------------------------+
-; Start date & time ; 07/19/2020 16:28:57     ;
+; Start date & time ; 07/25/2020 17:52:22     ;
 ; Main task         ; Compilation             ;
 ; Revision Name     ; inverted_residual_block ;
 +-------------------+-------------------------+
 
 
-+----------------------------------------------------------------------------------------------------------------------------------------+
-; Flow Non-Default Global Settings                                                                                                       ;
-+--------------------------------------+----------------------------------------+-------------------------+-------------+----------------+
-; Assignment Name                      ; Value                                  ; Default Value           ; Entity Name ; Section Id     ;
-+--------------------------------------+----------------------------------------+-------------------------+-------------+----------------+
-; COMPILER_SIGNATURE_ID                ; 132098954571254.159516893721032        ; --                      ; --          ; --             ;
-; EDA_DESIGN_INSTANCE_NAME             ; NA                                     ; --                      ; --          ; testbench_dma  ;
-; EDA_DESIGN_INSTANCE_NAME             ; NA                                     ; --                      ; --          ; testbench      ;
-; EDA_NATIVELINK_SIMULATION_TEST_BENCH ; testbench_dma                          ; --                      ; --          ; eda_simulation ;
-; EDA_OUTPUT_DATA_FORMAT               ; Systemverilog Hdl                      ; --                      ; --          ; eda_simulation ;
-; EDA_SIMULATION_TOOL                  ; ModelSim-Altera (SystemVerilog)        ; <None>                  ; --          ; --             ;
-; EDA_TEST_BENCH_ENABLE_STATUS         ; TEST_BENCH_MODE                        ; --                      ; --          ; eda_simulation ;
-; EDA_TEST_BENCH_FILE                  ; testbench_dma.sv                       ; --                      ; --          ; testbench_dma  ;
-; EDA_TEST_BENCH_FILE                  ; testbench.sv                           ; --                      ; --          ; testbench      ;
-; EDA_TEST_BENCH_MODULE_NAME           ; testbench_dma                          ; --                      ; --          ; testbench_dma  ;
-; EDA_TEST_BENCH_MODULE_NAME           ; testbench                              ; --                      ; --          ; testbench      ;
-; EDA_TEST_BENCH_NAME                  ; testbench                              ; --                      ; --          ; eda_simulation ;
-; EDA_TEST_BENCH_NAME                  ; testbench_dma                          ; --                      ; --          ; eda_simulation ;
-; EDA_TIME_SCALE                       ; 100 ps                                 ; --                      ; --          ; eda_simulation ;
-; MAX_CORE_JUNCTION_TEMP               ; 100                                    ; --                      ; --          ; --             ;
-; MIN_CORE_JUNCTION_TEMP               ; -40                                    ; --                      ; --          ; --             ;
-; PARTITION_COLOR                      ; -- (Not supported for targeted family) ; --                      ; DMA         ; Top            ;
-; PARTITION_FITTER_PRESERVATION_LEVEL  ; -- (Not supported for targeted family) ; --                      ; DMA         ; Top            ;
-; PARTITION_NETLIST_TYPE               ; -- (Not supported for targeted family) ; --                      ; DMA         ; Top            ;
-; POWER_BOARD_THERMAL_MODEL            ; None (CONSERVATIVE)                    ; --                      ; --          ; --             ;
-; POWER_PRESET_COOLING_SOLUTION        ; 23 MM HEAT SINK WITH 200 LFPM AIRFLOW  ; --                      ; --          ; --             ;
-; PROJECT_OUTPUT_DIRECTORY             ; output_files                           ; --                      ; --          ; --             ;
-; TOP_LEVEL_ENTITY                     ; DMA                                    ; inverted_residual_block ; --          ; --             ;
-+--------------------------------------+----------------------------------------+-------------------------+-------------+----------------+
++------------------------------------------------------------------------------------------------------------------------------+
+; Flow Non-Default Global Settings                                                                                             ;
++--------------------------------------+----------------------------------------+---------------+-------------+----------------+
+; Assignment Name                      ; Value                                  ; Default Value ; Entity Name ; Section Id     ;
++--------------------------------------+----------------------------------------+---------------+-------------+----------------+
+; COMPILER_SIGNATURE_ID                ; 132098954571254.159569234225268        ; --            ; --          ; --             ;
+; EDA_DESIGN_INSTANCE_NAME             ; NA                                     ; --            ; --          ; testbench_dma  ;
+; EDA_DESIGN_INSTANCE_NAME             ; NA                                     ; --            ; --          ; testbench      ;
+; EDA_NATIVELINK_SIMULATION_TEST_BENCH ; testbench                              ; --            ; --          ; eda_simulation ;
+; EDA_OUTPUT_DATA_FORMAT               ; Systemverilog Hdl                      ; --            ; --          ; eda_simulation ;
+; EDA_SIMULATION_TOOL                  ; ModelSim-Altera (SystemVerilog)        ; <None>        ; --          ; --             ;
+; EDA_TEST_BENCH_ENABLE_STATUS         ; TEST_BENCH_MODE                        ; --            ; --          ; eda_simulation ;
+; EDA_TEST_BENCH_FILE                  ; testbench_dma.sv                       ; --            ; --          ; testbench_dma  ;
+; EDA_TEST_BENCH_FILE                  ; testbench.sv                           ; --            ; --          ; testbench      ;
+; EDA_TEST_BENCH_MODULE_NAME           ; testbench_dma                          ; --            ; --          ; testbench_dma  ;
+; EDA_TEST_BENCH_MODULE_NAME           ; testbench                              ; --            ; --          ; testbench      ;
+; EDA_TEST_BENCH_NAME                  ; testbench                              ; --            ; --          ; eda_simulation ;
+; EDA_TEST_BENCH_NAME                  ; testbench_dma                          ; --            ; --          ; eda_simulation ;
+; EDA_TIME_SCALE                       ; 1 ns                                   ; --            ; --          ; eda_simulation ;
+; MAX_CORE_JUNCTION_TEMP               ; 100                                    ; --            ; --          ; --             ;
+; MIN_CORE_JUNCTION_TEMP               ; -40                                    ; --            ; --          ; --             ;
+; PARTITION_COLOR                      ; -- (Not supported for targeted family) ; --            ; --          ; Top            ;
+; PARTITION_FITTER_PRESERVATION_LEVEL  ; -- (Not supported for targeted family) ; --            ; --          ; Top            ;
+; PARTITION_NETLIST_TYPE               ; -- (Not supported for targeted family) ; --            ; --          ; Top            ;
+; POWER_BOARD_THERMAL_MODEL            ; None (CONSERVATIVE)                    ; --            ; --          ; --             ;
+; POWER_PRESET_COOLING_SOLUTION        ; 23 MM HEAT SINK WITH 200 LFPM AIRFLOW  ; --            ; --          ; --             ;
+; PROJECT_OUTPUT_DIRECTORY             ; output_files                           ; --            ; --          ; --             ;
+; VERILOG_INPUT_VERSION                ; SystemVerilog_2005                     ; Verilog_2001  ; --          ; --             ;
+; VERILOG_SHOW_LMF_MAPPING_MESSAGES    ; Off                                    ; --            ; --          ; --             ;
+; VHDL_INPUT_VERSION                   ; VHDL_2008                              ; VHDL_1993     ; --          ; --             ;
+; VHDL_SHOW_LMF_MAPPING_MESSAGES       ; Off                                    ; --            ; --          ; --             ;
++--------------------------------------+----------------------------------------+---------------+-------------+----------------+
 
 
 +----------------------------------------------------------------------------------------------------------------------------+
@@ -104,8 +107,8 @@ refer to the applicable agreement for further details.
 +------------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name            ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +------------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Elaboration ; 00:00:13     ; 1.0                     ; 4760 MB             ; 00:00:29                           ;
-; Total                  ; 00:00:13     ; --                      ; --                  ; 00:00:29                           ;
+; Analysis & Elaboration ; 00:00:13     ; 1.0                     ; 4769 MB             ; 00:00:28                           ;
+; Total                  ; 00:00:13     ; --                      ; --                  ; 00:00:28                           ;
 +------------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 

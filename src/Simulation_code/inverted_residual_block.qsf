@@ -38,7 +38,7 @@
 
 set_global_assignment -name FAMILY "Cyclone V"
 set_global_assignment -name DEVICE 5CSEBA5U23I7S
-set_global_assignment -name TOP_LEVEL_ENTITY DMA
+set_global_assignment -name TOP_LEVEL_ENTITY inverted_residual_block
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 18.1.0
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "14:40:33  JULY 15, 2020"
 set_global_assignment -name LAST_QUARTUS_VERSION "18.1.0 Lite Edition"
@@ -47,20 +47,27 @@ set_global_assignment -name MIN_CORE_JUNCTION_TEMP "-40"
 set_global_assignment -name MAX_CORE_JUNCTION_TEMP 100
 set_global_assignment -name ERROR_CHECK_FREQUENCY_DIVISOR 256
 set_global_assignment -name EDA_SIMULATION_TOOL "ModelSim-Altera (SystemVerilog)"
-set_global_assignment -name EDA_TIME_SCALE "100 ps" -section_id eda_simulation
+set_global_assignment -name EDA_TIME_SCALE "1 ns" -section_id eda_simulation
 set_global_assignment -name EDA_OUTPUT_DATA_FORMAT "SYSTEMVERILOG HDL" -section_id eda_simulation
 set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
 set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
 set_global_assignment -name EDA_TEST_BENCH_ENABLE_STATUS TEST_BENCH_MODE -section_id eda_simulation
-set_global_assignment -name EDA_NATIVELINK_SIMULATION_TEST_BENCH testbench_dma -section_id eda_simulation
+set_global_assignment -name EDA_NATIVELINK_SIMULATION_TEST_BENCH testbench -section_id eda_simulation
 set_global_assignment -name EDA_TEST_BENCH_NAME testbench -section_id eda_simulation
 set_global_assignment -name EDA_DESIGN_INSTANCE_NAME NA -section_id testbench
 set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME testbench -section_id testbench
-set_global_assignment -name EDA_TEST_BENCH_FILE testbench.sv -section_id testbench -hdl_version SystemVerilog_2005
 set_global_assignment -name EDA_TEST_BENCH_NAME testbench_dma -section_id eda_simulation
 set_global_assignment -name EDA_DESIGN_INSTANCE_NAME NA -section_id testbench_dma
 set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME testbench_dma -section_id testbench_dma
-set_global_assignment -name EDA_TEST_BENCH_FILE testbench_dma.sv -section_id testbench_dma -hdl_version SystemVerilog_2005
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_global_assignment -name SYSTEMVERILOG_FILE RAM_KPW.sv
+set_global_assignment -name SYSTEMVERILOG_FILE RAM_KEX.sv
+set_global_assignment -name SYSTEMVERILOG_FILE RAM_KDW.sv
+set_global_assignment -name SYSTEMVERILOG_FILE RAM_FMO.sv
+set_global_assignment -name SYSTEMVERILOG_FILE RAM_FMI.sv
+set_global_assignment -name SYSTEMVERILOG_FILE Main_Controller.sv
 set_global_assignment -name SYSTEMVERILOG_FILE DMA.sv
 set_global_assignment -name SYSTEMVERILOG_FILE testbench.sv
 set_global_assignment -name SYSTEMVERILOG_FILE tb_pkg.sv
@@ -68,8 +75,13 @@ set_global_assignment -name SYSTEMVERILOG_FILE inverted_residual_block.sv
 set_global_assignment -name SYSTEMVERILOG_FILE RAM.sv
 set_global_assignment -name SYSTEMVERILOG_FILE dma_pkg.sv
 set_global_assignment -name SYSTEMVERILOG_FILE testbench_dma.sv
-set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
-set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
-set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
-set_global_assignment -name SYSTEMVERILOG_FILE RAM_FMI.sv
+set_global_assignment -name SYSTEMVERILOG_FILE Convolution_1_1.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ram_pkg.sv
+set_global_assignment -name SYSTEMVERILOG_FILE RAM_FMINT.sv
+set_global_assignment -name VHDL_INPUT_VERSION VHDL_2008
+set_global_assignment -name VHDL_SHOW_LMF_MAPPING_MESSAGES OFF
+set_global_assignment -name VERILOG_INPUT_VERSION SYSTEMVERILOG_2005
+set_global_assignment -name VERILOG_SHOW_LMF_MAPPING_MESSAGES OFF
+set_global_assignment -name EDA_TEST_BENCH_FILE testbench.sv -section_id testbench -hdl_version SystemVerilog_2005
+set_global_assignment -name EDA_TEST_BENCH_FILE testbench_dma.sv -section_id testbench_dma -hdl_version SystemVerilog_2005
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

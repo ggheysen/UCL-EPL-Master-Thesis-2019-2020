@@ -62,7 +62,7 @@ Section \ref{sec:models} has described the common building blocks present in \ac
 
 The learning phase starts after designing the network. However, before the model can learn, we have to assign a value to the weight. The most common form is random initialization drawn from Gaussian distribution \cite{he_delving_2015}. The learning is affected by the initial values of the weight. If it is too small the network does not learn or if it is too large it might take a very long time to converge. To solve this, different initializations have been suggested: Xavier initialization \cite{glorot_understanding_2010} and He initialization \cite{he_delving_2015}.
 
-When values have been assigned to the weights, the backpropagation algorithm can be performed in order to improve the efficiency of the network. This section will first describe its first step: the forward pass and then its second step: the back-propagation. 
+When values have been assigned to the weights, the backpropagation algorithm can be performed in order to improve the efficiency of the network. This section will first describe its first step: the forward pass and then its second step: the back-propagation.
 %
 \input{src/5.Background/subsection/CNN_forward}
 %
@@ -72,7 +72,7 @@ When values have been assigned to the weights, the backpropagation algorithm can
 \section{CNN optimizations for FPGA} \label{sec:opti_cnn}
 %
 %
-We have seen in the previous sections how \acrshort{cnn} works and state-of-the-art models. But as said in section \ref{subs:mbv2}, the huge arithmetic complexity and hardware utilization is a problem when implementing the inference on mobile devices such as an \acrshort{fpga}. In the following sections, we detail approaches to handle those two issues on an \acrshort{fpga}. Section \ref{subsec:algopti} focuses on techniques to speed up the convolution operations and Section \ref{subsec:mdopti} reviews techniques to reduce the size of the \acrshort{cnn}.
+The previous chapter has described the way \acrshort{cnn} work and the different state-of-the-art models. Section \ref{subs:mbv2} evidenced the issue to implement the inference phase on mobile devices such as \acrshort{fpga}. Indeed, the computational complexity and the storage requirements are way beyond their capabilities. This chapter will detail different approaches to handle this problem on a \acrshort{fpga}. First, it will focus on techniques to reduce the compuational cost of the convolution operations and then, it will review the methods to reduce the size of a \acrshort{cnn}.
 %
 \input{src/5.Background/subsection/opti_algo}
 %
