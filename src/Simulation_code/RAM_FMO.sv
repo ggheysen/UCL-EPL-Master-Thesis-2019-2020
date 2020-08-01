@@ -1,5 +1,5 @@
 /* 
-	Description : Component DMA which handles the transactions between the external and the on-chip memory
+	Description : RAM component, containing the tile of FM output
 	Author : 	  Guillaume Gheysen
 */
  
@@ -8,26 +8,35 @@
 	# import 																																								 #
    ###################################################################################################################################
 */
-import ram_pkg::*;
+import irb_pkg::*;
 /* 
 	###################################################################################################################################
 	# module definition 																																					 #
    ###################################################################################################################################
 */
 module RAM_FMO(
-	input logic clk,
-	input logic [$clog2(FMO_N_ELEM)-1:0] addr,
-	input logic [PX_W-1:0] data,
-	input logic write,
-	output logic [PX_W-1:0] res);
-	
+						input logic  clk, 								  // Clock
+						input logic  [$clog2(FMO_N_ELEM)-1:0] addr, // Ram address to read/write data
+						input logic  [PX_W-1:0] data,					  // if write is enabled, data to write at address addr
+						input logic  write,								  // if enabled, write data
+						output logic [PX_W-1:0] res					  // Data
+					);
+	/* 
+		################################################################################################################################
+		# RAM 																																			            	 #
+		################################################################################################################################
+	*/
 	logic [PX_W-1:0] mem [FMO_N_ELEM-1:0];
-
+	/* 
+		################################################################################################################################
+		# Sequential logic																																				 #
+		################################################################################################################################
+	*/
 	always_ff @(posedge clk) begin
-	if (write) begin
-		mem[addr] <= data;
-		res <= data;
-	end 
-	else res <= addr;//res <= mem[addr];
+		if (write) begin
+			mem[addr] <= data;
+			res <= data;
+		end 
+		else res <= mem[addr];
 	end
 endmodule

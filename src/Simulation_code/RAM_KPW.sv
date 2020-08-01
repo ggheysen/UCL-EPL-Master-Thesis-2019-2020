@@ -1,5 +1,5 @@
 /* 
-	Description : Component DMA which handles the transactions between the external and the on-chip memory
+	Description : RAM component, containing the tile of the kernels of PW convolution
 	Author : 	  Guillaume Gheysen
 */
  
@@ -8,27 +8,37 @@
 	# import 																																								 #
    ###################################################################################################################################
 */
-import ram_pkg::*;
-import dma_pkg::*;
+
+import irb_pkg::*;
+
 /* 
 	###################################################################################################################################
 	# module definition 																																					 #
    ###################################################################################################################################
 */
-module RAM_KPW(
-	input logic clk,
-	input logic [$clog2(KPW_N_ELEM)-1:0] addr,
-	input logic [WG_W + $clog2(Npar) -1:0] data,
-	input logic write,
-	output logic [WG_W + $clog2(Npar) -1:0] res);
-	
+module RAM_KPW(	
+						input logic  clk,										 // Clock
+						input logic  [$clog2(KPW_N_ELEM)-1:0] addr,	 // Ram address to read/write data
+						input logic  [WG_W + $clog2(Npar) -1:0] data, // if write is enabled, data to write at address addr
+						input logic  write,									 // if enabled, write data
+						output logic [WG_W + $clog2(Npar) -1:0] res	 // Data
+					);
+	/* 
+		################################################################################################################################
+		# RAM 																																			            	 #
+		################################################################################################################################
+	*/	
 	logic [WG_W + $clog2(Npar) -1:0] mem [KPW_N_ELEM-1:0];
-
+	/* 
+		################################################################################################################################
+		# Sequential logic																																				 #
+		################################################################################################################################
+	*/
 	always_ff @(posedge clk) begin
-	if (write) begin
-		mem[addr] <= data;
-		res <= data;
-	end 
-	else res <= mem[addr];
+		if (write) begin
+			mem[addr] <= data;
+			res <= data;
+		end 
+		else res <= mem[addr];
 	end
 endmodule

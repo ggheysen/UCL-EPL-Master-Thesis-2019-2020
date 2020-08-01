@@ -1,5 +1,5 @@
 Analysis & Elaboration report for inverted_residual_block
-Sat Jul 25 17:52:34 2020
+Sat Aug 01 18:00:26 2020
 Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 
 
@@ -10,9 +10,12 @@ Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
   2. Analysis & Elaboration Summary
   3. Parallel Compilation
   4. Analysis & Elaboration Settings
-  5. Port Connectivity Checks: "Main_controller:mc"
-  6. Analysis & Elaboration Messages
-  7. Analysis & Elaboration Suppressed Messages
+  5. Port Connectivity Checks: "Convolution_dsc:conv_dsc|SHIFT_REGISTER_DW_WG:reg_dw_wg"
+  6. Port Connectivity Checks: "Convolution_dsc:conv_dsc|SHIFT_REGISTER_FMINT:reg_fmint"
+  7. Port Connectivity Checks: "Convolution_1_1:conv_11"
+  8. Port Connectivity Checks: "DMA:dma"
+  9. Analysis & Elaboration Messages
+ 10. Analysis & Elaboration Suppressed Messages
 
 
 
@@ -38,7 +41,7 @@ refer to the applicable agreement for further details.
 +-----------------------------------------------------------------------------+
 ; Analysis & Elaboration Summary                                              ;
 +-------------------------------+---------------------------------------------+
-; Analysis & Elaboration Status ; Successful - Sat Jul 25 17:52:34 2020       ;
+; Analysis & Elaboration Status ; Successful - Sat Aug 01 18:00:26 2020       ;
 ; Quartus Prime Version         ; 18.1.0 Build 625 09/12/2018 SJ Lite Edition ;
 ; Revision Name                 ; inverted_residual_block                     ;
 ; Top-level Entity Name         ; inverted_residual_block                     ;
@@ -158,13 +161,41 @@ refer to the applicable agreement for further details.
 +---------------------------------------------------------------------------------+-------------------------+-------------------------+
 
 
-+-------------------------------------------------------------------------------------------------------------------------+
-; Port Connectivity Checks: "Main_controller:mc"                                                                          ;
-+---------------+--------+----------+-------------------------------------------------------------------------------------+
-; Port          ; Type   ; Severity ; Details                                                                             ;
-+---------------+--------+----------+-------------------------------------------------------------------------------------+
-; dma_mem_info2 ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
-+---------------+--------+----------+-------------------------------------------------------------------------------------+
++---------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "Convolution_dsc:conv_dsc|SHIFT_REGISTER_DW_WG:reg_dw_wg"                                       ;
++-----------------+--------+----------+-------------------------------------------------------------------------------------+
+; Port            ; Type   ; Severity ; Details                                                                             ;
++-----------------+--------+----------+-------------------------------------------------------------------------------------+
+; weights[18..71] ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++-----------------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "Convolution_dsc:conv_dsc|SHIFT_REGISTER_FMINT:reg_fmint"                                      ;
++----------------+--------+----------+-------------------------------------------------------------------------------------+
+; Port           ; Type   ; Severity ; Details                                                                             ;
++----------------+--------+----------+-------------------------------------------------------------------------------------+
+; pixels[18..71] ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++----------------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "Convolution_1_1:conv_11"                                                                                                                                                                 ;
++-------------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port        ; Type  ; Severity ; Details                                                                                                                                                                            ;
++-------------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Size_KEX    ; Input ; Warning  ; Input port expression (32 bits) is wider than the input port (4 bits) it drives.  The 28 most-significant bit(s) in the expression will be dangling if they have no other fanouts. ;
+; Size_KEX[0] ; Input ; Info     ; Stuck at GND                                                                                                                                                                       ;
++-------------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++----------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "DMA:dma"                                                                                        ;
++------------------+--------+----------+-------------------------------------------------------------------------------------+
+; Port             ; Type   ; Severity ; Details                                                                             ;
++------------------+--------+----------+-------------------------------------------------------------------------------------+
+; addr_ram[31..11] ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++------------------+--------+----------+-------------------------------------------------------------------------------------+
 
 
 +---------------------------------+
@@ -173,223 +204,74 @@ refer to the applicable agreement for further details.
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Elaboration
     Info: Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
-    Info: Processing started: Sat Jul 25 17:52:21 2020
+    Info: Processing started: Sat Aug 01 18:00:13 2020
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off master_thesis_layer -c inverted_residual_block --analysis_and_elaboration
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 8 of the 8 processors detected
-Info (12021): Found 1 design units, including 1 entities, in source file ram_kpw.sv
-    Info (12023): Found entity 1: RAM_KPW File: D:/GitRepo/Memoire/src/Simulation_code/RAM_KPW.sv Line: 18
-Info (12021): Found 1 design units, including 1 entities, in source file ram_kex.sv
-    Info (12023): Found entity 1: RAM_KEX File: D:/GitRepo/Memoire/src/Simulation_code/RAM_KEX.sv Line: 18
-Info (12021): Found 1 design units, including 1 entities, in source file ram_kdw.sv
-    Info (12023): Found entity 1: RAM_KDW File: D:/GitRepo/Memoire/src/Simulation_code/RAM_KDW.sv Line: 17
-Info (12021): Found 1 design units, including 1 entities, in source file ram_fmo.sv
-    Info (12023): Found entity 1: RAM_FMO File: D:/GitRepo/Memoire/src/Simulation_code/RAM_FMO.sv Line: 17
-Info (12021): Found 1 design units, including 1 entities, in source file ram_fmi.sv
-    Info (12023): Found entity 1: RAM_FMI File: D:/GitRepo/Memoire/src/Simulation_code/RAM_FMI.sv Line: 17
+Info (12021): Found 1 design units, including 1 entities, in source file inverted_residual_block.sv
+    Info (12023): Found entity 1: inverted_residual_block File: D:/GitRepo/Memoire/src/Simulation_code/inverted_residual_block.sv Line: 18
 Info (12021): Found 1 design units, including 1 entities, in source file main_controller.sv
     Info (12023): Found entity 1: Main_controller File: D:/GitRepo/Memoire/src/Simulation_code/Main_Controller.sv Line: 18
 Info (12021): Found 1 design units, including 1 entities, in source file dma.sv
-    Info (12023): Found entity 1: DMA File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 20
+    Info (12023): Found entity 1: DMA File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 19
+Info (12021): Found 5 design units, including 5 entities, in source file convolution_1_1.sv
+    Info (12023): Found entity 1: Convolution_1_1 File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_1_1.sv Line: 18
+    Info (12023): Found entity 2: SHIFT_REGISTER_PX File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_1_1.sv Line: 300
+    Info (12023): Found entity 3: SHIFT_REGISTER_WG File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_1_1.sv Line: 315
+    Info (12023): Found entity 4: SHIFT_REGISTER_POS File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_1_1.sv Line: 330
+    Info (12023): Found entity 5: RELU6 File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_1_1.sv Line: 345
+Info (12021): Found 6 design units, including 6 entities, in source file convolution_dsc.sv
+    Info (12023): Found entity 1: Convolution_dsc File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_dsc.sv Line: 17
+    Info (12023): Found entity 2: SHIFT_REGISTER_FMINT File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_dsc.sv Line: 426
+    Info (12023): Found entity 3: SHIFT_REGISTER_DW_WG File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_dsc.sv Line: 441
+    Info (12023): Found entity 4: SHIFT_REGISTER_PW_PS File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_dsc.sv Line: 456
+    Info (12023): Found entity 5: SHIFT_REGISTER_PW_WG File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_dsc.sv Line: 471
+    Info (12023): Found entity 6: RELU6_DSC File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_dsc.sv Line: 486
+Info (12021): Found 1 design units, including 1 entities, in source file ram_fmi.sv
+    Info (12023): Found entity 1: RAM_FMI File: D:/GitRepo/Memoire/src/Simulation_code/RAM_FMI.sv Line: 17
+Info (12021): Found 1 design units, including 1 entities, in source file ram_fmint.sv
+    Info (12023): Found entity 1: RAM_FMINT File: D:/GitRepo/Memoire/src/Simulation_code/RAM_FMINT.sv Line: 18
+Info (12021): Found 1 design units, including 1 entities, in source file ram_fmo.sv
+    Info (12023): Found entity 1: RAM_FMO File: D:/GitRepo/Memoire/src/Simulation_code/RAM_FMO.sv Line: 17
+Info (12021): Found 1 design units, including 1 entities, in source file ram_kex.sv
+    Info (12023): Found entity 1: RAM_KEX File: D:/GitRepo/Memoire/src/Simulation_code/RAM_KEX.sv Line: 17
+Info (12021): Found 1 design units, including 1 entities, in source file ram_kdw.sv
+    Info (12023): Found entity 1: RAM_KDW File: D:/GitRepo/Memoire/src/Simulation_code/RAM_KDW.sv Line: 17
+Info (12021): Found 1 design units, including 1 entities, in source file ram_kpw.sv
+    Info (12023): Found entity 1: RAM_KPW File: D:/GitRepo/Memoire/src/Simulation_code/RAM_KPW.sv Line: 19
+Info (12021): Found 1 design units, including 0 entities, in source file irb_pkg.sv
+    Info (12022): Found design unit 1: irb_pkg (SystemVerilog) File: D:/GitRepo/Memoire/src/Simulation_code/irb_pkg.sv Line: 1
 Info (12021): Found 1 design units, including 1 entities, in source file testbench.sv
     Info (12023): Found entity 1: testbench File: D:/GitRepo/Memoire/src/Simulation_code/testbench.sv Line: 4
 Info (12021): Found 1 design units, including 0 entities, in source file tb_pkg.sv
     Info (12022): Found design unit 1: tb_pkg (SystemVerilog) File: D:/GitRepo/Memoire/src/Simulation_code/tb_pkg.sv Line: 5
-Info (12021): Found 1 design units, including 1 entities, in source file inverted_residual_block.sv
-    Info (12023): Found entity 1: inverted_residual_block File: D:/GitRepo/Memoire/src/Simulation_code/inverted_residual_block.sv Line: 19
-Info (12021): Found 1 design units, including 1 entities, in source file ram.sv
-    Info (12023): Found entity 1: RAM File: D:/GitRepo/Memoire/src/Simulation_code/RAM.sv Line: 2
-Info (12021): Found 1 design units, including 0 entities, in source file dma_pkg.sv
-    Info (12022): Found design unit 1: dma_pkg (SystemVerilog) File: D:/GitRepo/Memoire/src/Simulation_code/dma_pkg.sv Line: 2
-Info (12021): Found 1 design units, including 1 entities, in source file testbench_dma.sv
-    Info (12023): Found entity 1: testbench_dma File: D:/GitRepo/Memoire/src/Simulation_code/testbench_dma.sv Line: 8
-Info (12021): Found 5 design units, including 5 entities, in source file convolution_1_1.sv
-    Info (12023): Found entity 1: Convolution_1_1 File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_1_1.sv Line: 18
-    Info (12023): Found entity 2: SHIFT_REGISTER_PX File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_1_1.sv Line: 266
-    Info (12023): Found entity 3: SHIFT_REGISTER_WG File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_1_1.sv Line: 281
-    Info (12023): Found entity 4: SHIFT_REGISTER_POS File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_1_1.sv Line: 296
-    Info (12023): Found entity 5: RELU6 File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_1_1.sv Line: 311
-Info (12021): Found 1 design units, including 0 entities, in source file ram_pkg.sv
-    Info (12022): Found design unit 1: ram_pkg (SystemVerilog) File: D:/GitRepo/Memoire/src/Simulation_code/ram_pkg.sv Line: 2
-Info (12021): Found 1 design units, including 1 entities, in source file ram_fmint.sv
-    Info (12023): Found entity 1: RAM_FMINT File: D:/GitRepo/Memoire/src/Simulation_code/RAM_FMINT.sv Line: 17
 Info (12127): Elaborating entity "inverted_residual_block" for the top level hierarchy
-Info (12128): Elaborating entity "Main_controller" for hierarchy "Main_controller:mc" File: D:/GitRepo/Memoire/src/Simulation_code/inverted_residual_block.sv Line: 64
-Info (12128): Elaborating entity "DMA" for hierarchy "DMA:dma" File: D:/GitRepo/Memoire/src/Simulation_code/inverted_residual_block.sv Line: 81
-Info (10041): Inferred latch for "mem_offset[0][0]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[0][1]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[0][2]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[0][3]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[0][4]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[0][5]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[0][6]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[0][7]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[0][8]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[0][9]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[0][10]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[0][11]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[0][12]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[0][13]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[0][14]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[0][15]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[0][16]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[0][17]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[0][18]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[0][19]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[0][20]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[0][21]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[0][22]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[0][23]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[0][24]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[0][25]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[0][26]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[0][27]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[0][28]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[0][29]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[0][30]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[0][31]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[1][0]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[1][1]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[1][2]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[1][3]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[1][4]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[1][5]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[1][6]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[1][7]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[1][8]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[1][9]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[1][10]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[1][11]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[1][12]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[1][13]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[1][14]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[1][15]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[1][16]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[1][17]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[1][18]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[1][19]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[1][20]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[1][21]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[1][22]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[1][23]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[1][24]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[1][25]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[1][26]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[1][27]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[1][28]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[1][29]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[1][30]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[1][31]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[2][0]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[2][1]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[2][2]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[2][3]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[2][4]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[2][5]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[2][6]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[2][7]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[2][8]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[2][9]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[2][10]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[2][11]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[2][12]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[2][13]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[2][14]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[2][15]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[2][16]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[2][17]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[2][18]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[2][19]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[2][20]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[2][21]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[2][22]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[2][23]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[2][24]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[2][25]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[2][26]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[2][27]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[2][28]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[2][29]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[2][30]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[2][31]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[3][0]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[3][1]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[3][2]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[3][3]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[3][4]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[3][5]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[3][6]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[3][7]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[3][8]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[3][9]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[3][10]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[3][11]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[3][12]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[3][13]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[3][14]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[3][15]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[3][16]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[3][17]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[3][18]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[3][19]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[3][20]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[3][21]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[3][22]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[3][23]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[3][24]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[3][25]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[3][26]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[3][27]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[3][28]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[3][29]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[3][30]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[3][31]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[4][0]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[4][1]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[4][2]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[4][3]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[4][4]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[4][5]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[4][6]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[4][7]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[4][8]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[4][9]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[4][10]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[4][11]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[4][12]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[4][13]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[4][14]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[4][15]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[4][16]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[4][17]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[4][18]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[4][19]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[4][20]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[4][21]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[4][22]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[4][23]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[4][24]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[4][25]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[4][26]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[4][27]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[4][28]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[4][29]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[4][30]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (10041): Inferred latch for "mem_offset[4][31]" at DMA.sv(164) File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 164
-Info (12128): Elaborating entity "Convolution_1_1" for hierarchy "Convolution_1_1:conv_11" File: D:/GitRepo/Memoire/src/Simulation_code/inverted_residual_block.sv Line: 94
-Info (12128): Elaborating entity "SHIFT_REGISTER_PX" for hierarchy "Convolution_1_1:conv_11|SHIFT_REGISTER_PX:reg_px" File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_1_1.sv Line: 71
-Info (12128): Elaborating entity "SHIFT_REGISTER_WG" for hierarchy "Convolution_1_1:conv_11|SHIFT_REGISTER_WG:reg_wg" File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_1_1.sv Line: 72
-Info (12128): Elaborating entity "SHIFT_REGISTER_POS" for hierarchy "Convolution_1_1:conv_11|SHIFT_REGISTER_POS:reg_pos" File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_1_1.sv Line: 73
-Info (12128): Elaborating entity "RELU6" for hierarchy "Convolution_1_1:conv_11|RELU6:activation" File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_1_1.sv Line: 75
-Info (12128): Elaborating entity "RAM_FMI" for hierarchy "RAM_FMI:ram_fmi" File: D:/GitRepo/Memoire/src/Simulation_code/inverted_residual_block.sv Line: 102
-Info (12128): Elaborating entity "RAM_KEX" for hierarchy "RAM_KEX:ram_kex" File: D:/GitRepo/Memoire/src/Simulation_code/inverted_residual_block.sv Line: 110
-Info (12128): Elaborating entity "RAM_FMINT" for hierarchy "RAM_FMINT:ram_fmint" File: D:/GitRepo/Memoire/src/Simulation_code/inverted_residual_block.sv Line: 118
+Info (12128): Elaborating entity "Main_controller" for hierarchy "Main_controller:mc" File: D:/GitRepo/Memoire/src/Simulation_code/inverted_residual_block.sv Line: 69
+Info (12128): Elaborating entity "DMA" for hierarchy "DMA:dma" File: D:/GitRepo/Memoire/src/Simulation_code/inverted_residual_block.sv Line: 87
+Info (12128): Elaborating entity "Convolution_1_1" for hierarchy "Convolution_1_1:conv_11" File: D:/GitRepo/Memoire/src/Simulation_code/inverted_residual_block.sv Line: 101
+Info (12128): Elaborating entity "SHIFT_REGISTER_PX" for hierarchy "Convolution_1_1:conv_11|SHIFT_REGISTER_PX:reg_px" File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_1_1.sv Line: 74
+Info (12128): Elaborating entity "SHIFT_REGISTER_WG" for hierarchy "Convolution_1_1:conv_11|SHIFT_REGISTER_WG:reg_wg" File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_1_1.sv Line: 75
+Info (12128): Elaborating entity "SHIFT_REGISTER_POS" for hierarchy "Convolution_1_1:conv_11|SHIFT_REGISTER_POS:reg_pos" File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_1_1.sv Line: 76
+Info (12128): Elaborating entity "RELU6" for hierarchy "Convolution_1_1:conv_11|RELU6:activation" File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_1_1.sv Line: 78
+Info (12128): Elaborating entity "Convolution_dsc" for hierarchy "Convolution_dsc:conv_dsc" File: D:/GitRepo/Memoire/src/Simulation_code/inverted_residual_block.sv Line: 121
+Info (12128): Elaborating entity "SHIFT_REGISTER_FMINT" for hierarchy "Convolution_dsc:conv_dsc|SHIFT_REGISTER_FMINT:reg_fmint" File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_dsc.sv Line: 92
+Info (12128): Elaborating entity "SHIFT_REGISTER_DW_WG" for hierarchy "Convolution_dsc:conv_dsc|SHIFT_REGISTER_DW_WG:reg_dw_wg" File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_dsc.sv Line: 93
+Info (12128): Elaborating entity "SHIFT_REGISTER_PW_PS" for hierarchy "Convolution_dsc:conv_dsc|SHIFT_REGISTER_PW_PS:reg_pw_ps" File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_dsc.sv Line: 94
+Info (12128): Elaborating entity "SHIFT_REGISTER_PW_WG" for hierarchy "Convolution_dsc:conv_dsc|SHIFT_REGISTER_PW_WG:reg_pw_wg" File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_dsc.sv Line: 95
+Info (12128): Elaborating entity "RELU6_DSC" for hierarchy "Convolution_dsc:conv_dsc|RELU6_DSC:activation_for[0].activation" File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_dsc.sv Line: 100
+Info (12128): Elaborating entity "RAM_FMI" for hierarchy "RAM_FMI:ram_fmi" File: D:/GitRepo/Memoire/src/Simulation_code/inverted_residual_block.sv Line: 128
+Info (12128): Elaborating entity "RAM_KEX" for hierarchy "RAM_KEX:ram_kex" File: D:/GitRepo/Memoire/src/Simulation_code/inverted_residual_block.sv Line: 136
+Info (12128): Elaborating entity "RAM_FMINT" for hierarchy "RAM_FMINT:ram_fmint" File: D:/GitRepo/Memoire/src/Simulation_code/inverted_residual_block.sv Line: 144
+Info (12128): Elaborating entity "RAM_FMO" for hierarchy "RAM_FMO:ram_fmo" File: D:/GitRepo/Memoire/src/Simulation_code/inverted_residual_block.sv Line: 151
+Info (12128): Elaborating entity "RAM_KDW" for hierarchy "RAM_KDW:ram_kdw" File: D:/GitRepo/Memoire/src/Simulation_code/inverted_residual_block.sv Line: 158
+Info (12128): Elaborating entity "RAM_KPW" for hierarchy "RAM_KPW:ram_kpw" File: D:/GitRepo/Memoire/src/Simulation_code/inverted_residual_block.sv Line: 165
+Warning (12241): 1 hierarchies have connectivity warnings - see the Connectivity Checks report folder
 Info (144001): Generated suppressed messages file D:/GitRepo/Memoire/src/Simulation_code/output_files/inverted_residual_block.map.smsg
-Info: Quartus Prime Analysis & Elaboration was successful. 0 errors, 1 warning
-    Info: Peak virtual memory: 4769 megabytes
-    Info: Processing ended: Sat Jul 25 17:52:34 2020
+Info: Quartus Prime Analysis & Elaboration was successful. 0 errors, 2 warnings
+    Info: Peak virtual memory: 4787 megabytes
+    Info: Processing ended: Sat Aug 01 18:00:26 2020
     Info: Elapsed time: 00:00:13
-    Info: Total CPU time (on all processors): 00:00:28
+    Info: Total CPU time (on all processors): 00:00:29
 
 
 +--------------------------------------------+

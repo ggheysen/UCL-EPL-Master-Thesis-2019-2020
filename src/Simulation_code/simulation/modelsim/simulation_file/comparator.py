@@ -2,8 +2,8 @@ from fxpmath import Fxp
 import random
 import math
 
-Nix = 14
-Niy = 14
+Nix = 28
+Niy = 28
 Nif = 8
 Nof = 8
 Nkx = 3
@@ -15,6 +15,8 @@ Tix = 14
 Tiy = 14
 Tox = Tix
 Toy = Tiy
+Tix = Tox + Nkx - 1
+Tiy = Toy + Nky - 1
 # Calculated volume
 Nox = Nix // S
 Noy = Niy // S
@@ -72,7 +74,7 @@ with open("result_fmi.txt", "r") as file2:
 for f in range(0, Nif):
     for y in range(0, Niy):
         for x in range(0, Nix):
-            if (not fmi[f][y][x] == fmi_obtained[f][y][x]):
+            if (not fmi[f][y][x] == fmi_obtained[f][y+1][x+1]):
                 input("Error: expected " + str(fmi[f][y][x]) + ", obtained " + str(fmi_obtained[f][y][x]))
 
 # B : Fill KEX

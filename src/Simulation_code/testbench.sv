@@ -134,12 +134,6 @@ module testbench();
 			#lng_wait;
 			rst <= '0;
 			start <= 1;
-			//test1 = 16'h0eee;
-			//test2 = 16'h0ce0;
-			//test3 = test1 * test2;
-			//test4 = test3[32-4-1:32-4-16] + test3[32-4-1];
-			//$display("%h \n", test4);
-			//$stop; 
 	end
 	
 	/*
@@ -221,9 +215,10 @@ module testbench();
 		ram_addr <= ram_addr_dut;
 	end
 	
-	/*always @(posedge f1) begin
+	always @(posedge f1) begin
 		$stop;
 	end
+	/*
 	always @(posedge f2) begin
 		$stop;
 	end

@@ -1,0 +1,51 @@
+package irb_pkg;
+		/* CNN parameters */
+		// Kernel
+		parameter Nkx 	= 3; // Width of a DW kernel
+		parameter Nky  = 3; // Height of a DW kernel
+		
+		// FM
+		parameter Tox_I = 7; // Tox parameter
+		parameter Tix_T 	= 2*Tox_I + Nkx - 1; // Corresponding Tix
+		parameter Tox_T 	= 2*Tox_I; // To have Tix and Tox have the same value
+		parameter Toy_I = 7; // Tox parameter
+		parameter Tiy_T = 2*Toy_I + Nky - 1; // Corresponding Tix
+		parameter Toy_T = 2*Toy_I; // To have Tix and Tox have the same value
+		parameter Tif 	= 8; // Maximum number of input channel
+		parameter Tof 	= Tif; // Maximum number of output channel
+		
+		/* Pruning parameters */
+		parameter Npar = 8;
+		parameter Nnp 	= 2;
+		
+		/* Tiles Size */
+		parameter Size_Par = Npar * Nnp;
+		parameter Size_FMINT_T = Tix_T * Tiy_T;
+		parameter Size_FMO_T = Tox_T * Toy_T;
+		parameter SIZE_DW_T = Nkx * Nky; // 16 bits each weight
+		parameter init_words = 8;
+		
+		/* Pruning parameters */
+		parameter PX_W = 16;
+		parameter WG_W = 16;
+		
+		/* RAM parameters */
+		// RAM FMI
+		parameter FMI_N_ELEM = Tix * Tiy * Tif;
+		parameter FMI_N_CHAN = Tix * Tiy;
+		
+		// RAM FMO 
+		parameter FMO_N_ELEM = Tox * Toy * Tof;
+		
+		// RAM KEX
+		parameter KEX_N_ELEM = Nnp * Tif; // Normally, Nnp * maximum possible Ngr * Npar, but as max Ngr = (max Nif)/Npar => Nnp * Nif
+		
+		// RAM KPW
+		parameter KPW_N_ELEM = Nnp * Tof;
+		
+		// RAM FDW
+		parameter KDW_N_ELEM = Nkx * Nky * Npar;
+		
+		// RAM FMINT
+		parameter FMINT_N_ELEM = Tix * Tiy * Npar;
+endpackage

@@ -12,17 +12,17 @@
 # 
 # vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/dma_pkg.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 17:56:32 on Jul 25,2020
+# Start time: 18:57:36 on Jul 29,2020
 # vlog -reportprogress 300 -sv -work work "+incdir+D:/GitRepo/Memoire/src/Simulation_code" D:/GitRepo/Memoire/src/Simulation_code/dma_pkg.sv 
 # -- Compiling package dma_pkg
 # 
 # Top level modules:
 # 	--none--
-# End time: 17:56:32 on Jul 25,2020, Elapsed time: 0:00:00
+# End time: 18:57:36 on Jul 29,2020, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/Main_Controller.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 17:56:32 on Jul 25,2020
+# Start time: 18:57:36 on Jul 29,2020
 # vlog -reportprogress 300 -sv -work work "+incdir+D:/GitRepo/Memoire/src/Simulation_code" D:/GitRepo/Memoire/src/Simulation_code/Main_Controller.sv 
 # -- Compiling package Main_Controller_sv_unit
 # -- Importing package dma_pkg
@@ -30,22 +30,22 @@
 # 
 # Top level modules:
 # 	Main_controller
-# End time: 17:56:33 on Jul 25,2020, Elapsed time: 0:00:01
+# End time: 18:57:36 on Jul 29,2020, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/ram_pkg.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 17:56:33 on Jul 25,2020
+# Start time: 18:57:36 on Jul 29,2020
 # vlog -reportprogress 300 -sv -work work "+incdir+D:/GitRepo/Memoire/src/Simulation_code" D:/GitRepo/Memoire/src/Simulation_code/ram_pkg.sv 
 # -- Compiling package ram_pkg
 # -- Importing package dma_pkg
 # 
 # Top level modules:
 # 	--none--
-# End time: 17:56:33 on Jul 25,2020, Elapsed time: 0:00:00
+# End time: 18:57:36 on Jul 29,2020, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/RAM_KEX.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 17:56:33 on Jul 25,2020
+# Start time: 18:57:36 on Jul 29,2020
 # vlog -reportprogress 300 -sv -work work "+incdir+D:/GitRepo/Memoire/src/Simulation_code" D:/GitRepo/Memoire/src/Simulation_code/RAM_KEX.sv 
 # -- Compiling package RAM_KEX_sv_unit
 # -- Importing package ram_pkg
@@ -54,11 +54,11 @@
 # 
 # Top level modules:
 # 	RAM_KEX
-# End time: 17:56:33 on Jul 25,2020, Elapsed time: 0:00:00
+# End time: 18:57:36 on Jul 29,2020, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/RAM_FMI.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 17:56:33 on Jul 25,2020
+# Start time: 18:57:36 on Jul 29,2020
 # vlog -reportprogress 300 -sv -work work "+incdir+D:/GitRepo/Memoire/src/Simulation_code" D:/GitRepo/Memoire/src/Simulation_code/RAM_FMI.sv 
 # -- Compiling package RAM_FMI_sv_unit
 # -- Importing package ram_pkg
@@ -67,29 +67,29 @@
 # 
 # Top level modules:
 # 	RAM_FMI
-# End time: 17:56:33 on Jul 25,2020, Elapsed time: 0:00:00
+# End time: 18:57:36 on Jul 29,2020, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/DMA.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 17:56:33 on Jul 25,2020
+# Start time: 18:57:36 on Jul 29,2020
 # vlog -reportprogress 300 -sv -work work "+incdir+D:/GitRepo/Memoire/src/Simulation_code" D:/GitRepo/Memoire/src/Simulation_code/DMA.sv 
 # -- Compiling package DMA_sv_unit
 # -- Importing package dma_pkg
 # -- Importing package ram_pkg
 # -- Compiling module DMA
-# ** Warning: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv(421): (vlog-2182) 'mem_offset[0]' might be read before written in always_comb or always @* block.
-# ** Warning: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv(421): (vlog-2182) 'mem_offset[1]' might be read before written in always_comb or always @* block.
-# ** Warning: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv(421): (vlog-2182) 'mem_offset[2]' might be read before written in always_comb or always @* block.
-# ** Warning: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv(242): (vlog-2182) 'mem_offset[3]' might be read before written in always_comb or always @* block.
-# ** Warning: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv(283): (vlog-2182) 'mem_offset[4]' might be read before written in always_comb or always @* block.
+# ** Warning: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv(436): (vlog-2182) 'mem_offset[0]' might be read before written in always_comb or always @* block.
+# ** Warning: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv(436): (vlog-2182) 'mem_offset[1]' might be read before written in always_comb or always @* block.
+# ** Warning: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv(436): (vlog-2182) 'mem_offset[2]' might be read before written in always_comb or always @* block.
+# ** Warning: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv(250): (vlog-2182) 'mem_offset[3]' might be read before written in always_comb or always @* block.
+# ** Warning: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv(295): (vlog-2182) 'mem_offset[4]' might be read before written in always_comb or always @* block.
 # 
 # Top level modules:
 # 	DMA
-# End time: 17:56:33 on Jul 25,2020, Elapsed time: 0:00:00
+# End time: 18:57:36 on Jul 29,2020, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 5
 # vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/inverted_residual_block.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 17:56:33 on Jul 25,2020
+# Start time: 18:57:36 on Jul 29,2020
 # vlog -reportprogress 300 -sv -work work "+incdir+D:/GitRepo/Memoire/src/Simulation_code" D:/GitRepo/Memoire/src/Simulation_code/inverted_residual_block.sv 
 # -- Compiling package inverted_residual_block_sv_unit
 # -- Importing package ram_pkg
@@ -98,11 +98,11 @@
 # 
 # Top level modules:
 # 	inverted_residual_block
-# End time: 17:56:33 on Jul 25,2020, Elapsed time: 0:00:00
+# End time: 18:57:37 on Jul 29,2020, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 # vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/Convolution_1_1.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 17:56:33 on Jul 25,2020
+# Start time: 18:57:37 on Jul 29,2020
 # vlog -reportprogress 300 -sv -work work "+incdir+D:/GitRepo/Memoire/src/Simulation_code" D:/GitRepo/Memoire/src/Simulation_code/Convolution_1_1.sv 
 # -- Compiling package Convolution_1_1_sv_unit
 # -- Importing package dma_pkg
@@ -115,11 +115,11 @@
 # 
 # Top level modules:
 # 	Convolution_1_1
-# End time: 17:56:33 on Jul 25,2020, Elapsed time: 0:00:00
+# End time: 18:57:37 on Jul 29,2020, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/RAM_FMINT.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 17:56:33 on Jul 25,2020
+# Start time: 18:57:37 on Jul 29,2020
 # vlog -reportprogress 300 -sv -work work "+incdir+D:/GitRepo/Memoire/src/Simulation_code" D:/GitRepo/Memoire/src/Simulation_code/RAM_FMINT.sv 
 # -- Compiling package RAM_FMINT_sv_unit
 # -- Importing package ram_pkg
@@ -128,23 +128,23 @@
 # 
 # Top level modules:
 # 	RAM_FMINT
-# End time: 17:56:33 on Jul 25,2020, Elapsed time: 0:00:00
+# End time: 18:57:37 on Jul 29,2020, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # 
 # vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/testbench.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 17:56:33 on Jul 25,2020
+# Start time: 18:57:37 on Jul 29,2020
 # vlog -reportprogress 300 -sv -work work "+incdir+D:/GitRepo/Memoire/src/Simulation_code" D:/GitRepo/Memoire/src/Simulation_code/testbench.sv 
 # -- Compiling module testbench
 # 
 # Top level modules:
 # 	testbench
-# End time: 17:56:33 on Jul 25,2020, Elapsed time: 0:00:00
+# End time: 18:57:37 on Jul 29,2020, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # 
 # vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -voptargs="+acc"  testbench
 # vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -voptargs=""+acc"" testbench 
-# Start time: 17:56:33 on Jul 25,2020
+# Start time: 18:57:37 on Jul 29,2020
 # Loading sv_std.std
 # Loading work.testbench
 # Loading work.dma_pkg
@@ -167,12 +167,12 @@
 # Loading work.RAM_KEX
 # Loading work.RAM_FMINT_sv_unit
 # Loading work.RAM_FMINT
-# ** Warning: (vsim-PLI-3691) D:/GitRepo/Memoire/src/Simulation_code/testbench.sv(175): Expected a system task, not a system function '$fscanf'.
-#    Time: 0 ps  Iteration: 0  Region: /testbench/#anonblk#178839128#174#4# File: D:/GitRepo/Memoire/src/Simulation_code/testbench.sv
-# ** Warning: (vsim-PLI-3691) D:/GitRepo/Memoire/src/Simulation_code/testbench.sv(184): Expected a system task, not a system function '$fscanf'.
-#    Time: 0 ps  Iteration: 0  Region: /testbench/#anonblk#178839128#183#4# File: D:/GitRepo/Memoire/src/Simulation_code/testbench.sv
-# ** Warning: (vsim-PLI-3691) D:/GitRepo/Memoire/src/Simulation_code/testbench.sv(193): Expected a system task, not a system function '$fscanf'.
-#    Time: 0 ps  Iteration: 0  Region: /testbench/#anonblk#178839128#192#4# File: D:/GitRepo/Memoire/src/Simulation_code/testbench.sv
+# ** Warning: (vsim-PLI-3691) D:/GitRepo/Memoire/src/Simulation_code/testbench.sv(169): Expected a system task, not a system function '$fscanf'.
+#    Time: 0 ps  Iteration: 0  Region: /testbench/#anonblk#178839128#168#4# File: D:/GitRepo/Memoire/src/Simulation_code/testbench.sv
+# ** Warning: (vsim-PLI-3691) D:/GitRepo/Memoire/src/Simulation_code/testbench.sv(178): Expected a system task, not a system function '$fscanf'.
+#    Time: 0 ps  Iteration: 0  Region: /testbench/#anonblk#178839128#177#4# File: D:/GitRepo/Memoire/src/Simulation_code/testbench.sv
+# ** Warning: (vsim-PLI-3691) D:/GitRepo/Memoire/src/Simulation_code/testbench.sv(187): Expected a system task, not a system function '$fscanf'.
+#    Time: 0 ps  Iteration: 0  Region: /testbench/#anonblk#178839128#186#4# File: D:/GitRepo/Memoire/src/Simulation_code/testbench.sv
 # 
 # add wave *
 # view structure
@@ -180,8 +180,14 @@
 # view signals
 # .main_pane.objects.interior.cs.body.tree
 # run -all
-# ** Note: $stop    : D:/GitRepo/Memoire/src/Simulation_code/testbench.sv(242)
-#    Time: 283405 ns  Iteration: 0  Instance: /testbench
-# Break in Module testbench at D:/GitRepo/Memoire/src/Simulation_code/testbench.sv line 242
-# End time: 18:26:35 on Jul 25,2020, Elapsed time: 0:30:02
+# ** Note: $stop    : D:/GitRepo/Memoire/src/Simulation_code/testbench.sv(219)
+#    Time: 395 ns  Iteration: 2  Instance: /testbench
+# Break in Module testbench at D:/GitRepo/Memoire/src/Simulation_code/testbench.sv line 219
+run -a
+# ** Note: $stop    : D:/GitRepo/Memoire/src/Simulation_code/testbench.sv(219)
+#    Time: 97845 ns  Iteration: 2  Instance: /testbench
+# Break in Module testbench at D:/GitRepo/Memoire/src/Simulation_code/testbench.sv line 219
+add wave -position insertpoint  \
+sim:/testbench/dut/ram_fmi/mem
+# End time: 19:07:14 on Jul 29,2020, Elapsed time: 0:09:37
 # Errors: 0, Warnings: 3
