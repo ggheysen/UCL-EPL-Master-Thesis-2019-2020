@@ -60,8 +60,8 @@ module testbench();
 		#############################
 	*/
 	// File descriptors
-	int fd_inf    , fd_fmi      , fd_kex;
-	int fd_res_fmi, fd_res_fmint, fd_res_kex, fd_res_fmo;
+	int fd_inf    , fd_fmi, fd_kex, fd_kdw, fd_kpw;
+	int fd_res_fmo;
 	// DUT input
 	logic clk, rst, start;
 	logic valid_data;
@@ -70,9 +70,7 @@ module testbench();
 	logic finish_dut;
 	logic request_dut, write_dut;
 	logic [31:0] addr_dut, data_dut;
-	logic w_fmi_dut, w_kex_dut, w_kpw_dut, w_kdw_dut, w_fmint_dut;
-	logic [31:0] ram_addr_dut;
-	logic f1, f2;
+	logic f1, f2, f3;
 	// Control signals
 	//Valid data
 	logic valid_data_n;
@@ -85,15 +83,9 @@ module testbench();
 	//Write
 	logic write;
 	//write_
-	logic w_fmi, w_kex, w_kpw, w_kdw, w_fmint;
 	logic [31:0] addr;
 	logic [31:0] data;
-	// ram_addr_dut
-	logic [31:0] ram_addr;
-	
-	//
-	logic signed [15:0] test1, test2, test4;
-	logic signed [31:0] test3;
+
 	//Clock
 	always 
 		begin
@@ -112,10 +104,7 @@ module testbench();
 									.request_extmem(request_dut), . write_extmem(write_dut),
 									.addr_extmem(addr_dut),
 									.w_data(data_dut),
-									.w_fmi(w_fmi_dut), .w_kex(w_kex_dut), .w_kpw(w_kpw_dut),
-									.w_kdw(w_kdw_dut), .w_fmint(w_fmint_dut),
-									.ram_addr_dma(ram_addr_dut),
-									.finish_dma(f1), .finish_conv11(f2)
+									.finish_dma(f1), .finish_conv11(f2), .finish_dsc(f3)
 									 );
 	/*
 		#############################
@@ -126,9 +115,6 @@ module testbench();
 	initial 
 		begin
 			clk <= 0; rst <= 1; start = 0; valid_data = 0;
-			fd_res_fmi = $fopen("simulation_file/result_fmi.txt", "w");
-			fd_res_fmint = $fopen("simulation_file/result_fmint.txt", "w");
-			fd_res_kex = $fopen("simulation_file/result_kexp.txt", "w");
 			fd_res_fmo = $fopen("simulation_file/result_fmo.txt", "w");
 			#ini_wait;
 			#lng_wait;
@@ -144,17 +130,8 @@ module testbench();
 	
 	// Write results	
 	always @(posedge clk) begin
-		if (w_fmi) begin
-			$fwrite(fd_res_fmi, "%h : %d\n", data[PX_W - 1:0], ram_addr);
-		end
-		else if (write) begin
-			$fwrite(fd_res_fmo, "%h : %d\n", data[PX_W - 1:0], addr - offset_fmo);
-		end
-		else if (w_fmint) begin
-			$fwrite(fd_res_fmint, "%h : %d\n", data[PX_W - 1:0], ram_addr);
-		end
-		else if (w_kex) begin
-			$fwrite(fd_res_kex, "%h : %h : %d\n", data[WG_W - 1:0], data[WG_W + $clog2(Npar) - 1:WG_W], ram_addr);
+		if (write) begin
+			$fwrite(fd_res_fmo, "%h : %d\n", data[PX_W - 1:0], ram_addr);
 		end
 	end
 	
@@ -182,13 +159,29 @@ module testbench();
 			 $fclose(fd_fmi);
 			 end 
 			 else if (addr >= offset_kex &&  addr < offset_kpw) begin
-				fd_kex = $fopen("simulation_file/kex.txt", "r"); 
-				for (int i=0; i<= addr - offset_kex; i=i+1) begin
-					$fscanf(fd_kex,"%h\n", data_2_l_n);
-					if (i == addr - offset_kex)
-						valid_data_n = 1;
-				end
-			end
+				 fd_kex = $fopen("simulation_file/kex.txt", "r"); 
+				 for (int i=0; i<= addr - offset_kex; i=i+1) begin
+					 $fscanf(fd_kex,"%h\n", data_2_l_n);
+					 if (i == addr - offset_kex)
+						 valid_data_n = 1;
+				 end
+			 end
+			 else if (addr >= offset_kpw &&  addr < offset_kdw) begin
+				 fd_kex = $fopen("simulation_file/kpw.txt", "r"); 
+				 for (int i=0; i<= addr - offset_kpw; i=i+1) begin
+					 $fscanf(fd_kex,"%h\n", data_2_l_n);
+					 if (i == addr - offset_kpw)
+						 valid_data_n = 1;
+				 end
+			 end
+			 else if (addr >= offset_kdw) begin
+				 fd_kex = $fopen("simulation_file/kdw.txt", "r"); 
+				 for (int i=0; i<= addr - offset_kdw; i=i+1) begin
+					 $fscanf(fd_kex,"%h\n", data_2_l_n);
+					 if (i == addr - offset_kdw)
+						 valid_data_n = 1;
+				 end
+			 end
 		end
 	end
 	
@@ -204,25 +197,23 @@ module testbench();
 		// Read from DUT
 		request <= request_dut;
 		write <= write_dut;
-		w_fmi <= w_fmi_dut;
-		w_kex <= w_kex_dut;
-		w_kpw <= w_kpw_dut;
-		w_kdw <= w_kdw_dut;
-		w_fmint <= w_fmint_dut;
 		finish <= finish_dut;
 		addr <= addr_dut;
 		data <= data_dut;
-		ram_addr <= ram_addr_dut;
 	end
 	
 	always @(posedge f1) begin
 		$stop;
 	end
-	/*
+	
 	always @(posedge f2) begin
 		$stop;
 	end
-	*/
+	
+	always @(posedge f3) begin
+		$stop;
+	end
+	
 	/*
 		#############################
 		#  	  End simulation      #

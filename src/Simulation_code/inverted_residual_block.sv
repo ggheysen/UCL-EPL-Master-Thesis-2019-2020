@@ -39,7 +39,7 @@ module inverted_residual_block(input 	logic clk, rst, start,
 	logic [2:0] op;
 	
 	// Addr
-	logic [31:0] ram_addr_dma;
+	logic [$clog2(FMINT_N_ELEM) - 1:0] ram_addr_dma;
 	logic [$clog2(KEX_N_ELEM)-1:0] ram_addr_kex_conv11, ram_addr_kex;
 	logic [$clog2(FMI_N_ELEM)-1:0] ram_addr_fmi, ram_addr_fmi_conv11;
 	logic [$clog2(FMINT_N_ELEM)-1:0] ram_addr_fmint, ram_addr_fmint_conv11, ram_addr_fmint_dsc;
@@ -54,6 +54,8 @@ module inverted_residual_block(input 	logic clk, rst, start,
 	logic [63:0] inf_conv;
 	logic [31:0] dma_info1, dma_mem_info1, dma_info2, dma_mem_info2;
 	logic [(2*$clog2(KEX_N_ELEM))-1:0] size_kex;
+	logic [$clog2(KEX_N_ELEM)-1:0] size_KEX;
+	
 	/* 
 		###################################################################################################################################
 		# Modules instatiation																																					 #
@@ -92,7 +94,7 @@ module inverted_residual_block(input 	logic clk, rst, start,
 							  .fmi_data(res_fmi),
 							  .kex_data(res_kex[WG_W-1:0]),
 							  .kex_pos(res_kex[WG_W + $clog2(Npar) -1:WG_W ]),
-							  .Size_KEX(size_kex[$clog2(KEX_N_ELEM)-1:0]),
+							  .Size_KEX(size_KEX),
 							  .Nif(inf_conv[26:16]),
 							  .fmi_addr(ram_addr_fmi_conv11),
 							  .kex_addr(ram_addr_kex_conv11),
@@ -176,5 +178,6 @@ module inverted_residual_block(input 	logic clk, rst, start,
 	assign ram_addr_kpw = w_kpw ? ram_addr_dma[$clog2(KPW_N_ELEM)-1:0] : ram_addr_kpw_dsc ;
 	assign ram_addr_kdw = w_kdw ? ram_addr_dma[$clog2(KDW_N_ELEM)-1:0] : ram_addr_kdw_dsc ;
 	assign size_kex = Nnp[$clog2(KEX_N_ELEM)-1:0] * inf_conv[42 + $clog2(KEX_N_ELEM)-1:42];
+	assign size_KEX = size_kex[$clog2(KEX_N_ELEM)-1:0];
 	
 endmodule

@@ -49,7 +49,7 @@ module Convolution_dsc(input logic clk, rst, start, S,
 	statetype state, state_n; // Variables containing the state
 	
 	//Banked registers
-	logic signed [PX_W-1 : 0] fmint_px 				[0 :(Nkx * Nky * Npar) - 1];
+	logic signed [PX_W-1 : 0] fmint_px 				[0 : (Nkx * Nky * Npar) - 1];
 	logic signed [WG_W-1 : 0] dw_wg    				[0 : (Nkx * Nky * Npar) - 1];
 	logic signed [PX_W-1 : 0] res_dw   				[0 : Npar - 1];
 	logic signed [PX_W-1 : 0] res_dw_n 				[0 : Npar - 1];
@@ -122,7 +122,7 @@ module Convolution_dsc(input logic clk, rst, start, S,
 			addr_fmint_x_ref <= '0; addr_fmint_y_ref <= '0;
 			addr_k_pw <= '0;
 			tkpw <= '0;
-			for(int i =0; i < Nnp ; i=i+1 ) begin
+			for(int i =0; i < Npar ; i=i+1 ) begin
 				res_dw[i] <= '0;
 			end
 		end
@@ -140,7 +140,7 @@ module Convolution_dsc(input logic clk, rst, start, S,
 			addr_fmint_x_ref <= addr_fmint_x_ref_n; addr_fmint_y_ref <= addr_fmint_y_ref_n;
 			addr_k_pw <= addr_k_pw_n;
 			tkpw <= tkpw_n;
-			for(int i =0; i < Nnp ; i=i+1 ) begin
+			for(int i =0; i < Npar ; i=i+1 ) begin
 				res_dw[i] <= res_dw_n[i];
 			end
 		end
@@ -191,7 +191,7 @@ module Convolution_dsc(input logic clk, rst, start, S,
 		addr_fmo_y_n = addr_fmo_y;
 		addr_fmo_f_n = addr_fmo_f;
 		// Intermediate result
-		for(int i =0; i < Nnp ; i=i+1 ) begin
+		for(int i =0; i < Npar ; i=i+1 ) begin
 				res_dw_n[i] = res_dw[i];
 		end
 		case(state) 
@@ -314,8 +314,8 @@ module Convolution_dsc(input logic clk, rst, start, S,
 							logic signed [PX_W - 1 : 0] trunc_res;
 							logic signed [PX_W - 1 : 0] round_res;
 							// COmputation
-							cur_val = fmint_px[(f*Nkx*Nky) + (y * Nkx) + x][PX_W - 1 : 0];
-							cur_wg  = dw_wg   [(f*Nkx*Nky) + (y * Nkx) + x][WG_W - 1 : 0];
+							cur_val = fmint_px[(f*Nkx*Nky) + (y * Nkx) + x];
+							cur_wg  = dw_wg   [(f*Nkx*Nky) + (y * Nkx) + x];
 							int_res = cur_val * cur_wg;
 							trunc_res = int_res[PX_W + WG_W - 4 - 1: PX_W - 4];
 							round_res = int_res[PX_W + WG_W - 4 - 1];
@@ -440,8 +440,8 @@ endmodule
 
 module SHIFT_REGISTER_DW_WG(
 								 input logic clk, load,
-								 input logic signed[PX_W - 1:0] data,
-								 output logic signed [PX_W - 1:0] weights [0 : (Nkx * Nky * Npar) - 1]
+								 input logic signed[WG_W - 1:0] data,
+								 output logic signed [WG_W - 1:0] weights [0 : (Nkx * Nky * Npar) - 1]
 								);
 	always_ff @(posedge clk) begin
 		if (load) begin
@@ -456,7 +456,7 @@ endmodule
 module SHIFT_REGISTER_PW_PS(
 								 input logic clk, load,
 								 input logic signed [$clog2(Npar) - 1:0] data,
-								 output logic signed [$clog2(Npar) - 1:0] pos [Nnp-1 : 0]
+								 output logic signed [$clog2(Npar) - 1:0] pos [0 : Nnp-1 ]
 								);
 	always_ff @(posedge clk) begin
 		if (load) begin
@@ -471,7 +471,7 @@ endmodule
 module SHIFT_REGISTER_PW_WG(
 								 input logic clk, load,
 								 input logic signed [WG_W  - 1:0] data,
-								 output logic signed [WG_W  - 1:0] weights [Nnp-1 : 0]
+								 output logic signed [WG_W  - 1:0] weights [0 : Nnp-1 ]
 								);
 	always_ff @(posedge clk) begin
 		if (load) begin

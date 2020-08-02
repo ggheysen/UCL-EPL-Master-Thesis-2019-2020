@@ -1,6 +1,6 @@
 Flow report for inverted_residual_block
-Sat Aug 01 18:00:26 2020
-Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
+Sun Aug 02 00:17:17 2020
+Quartus Prime Version 18.0.0 Build 614 04/24/2018 SJ Lite Edition
 
 
 ---------------------
@@ -40,8 +40,8 @@ refer to the applicable agreement for further details.
 +---------------------------------------------------------------------------+
 ; Flow Summary                                                              ;
 +-----------------------------+---------------------------------------------+
-; Flow Status                 ; Successful - Sat Aug 01 18:00:26 2020       ;
-; Quartus Prime Version       ; 18.1.0 Build 625 09/12/2018 SJ Lite Edition ;
+; Flow Status                 ; Successful - Sun Aug 02 00:17:17 2020       ;
+; Quartus Prime Version       ; 18.0.0 Build 614 04/24/2018 SJ Lite Edition ;
 ; Revision Name               ; inverted_residual_block                     ;
 ; Top-level Entity Name       ; inverted_residual_block                     ;
 ; Family                      ; Cyclone V                                   ;
@@ -62,7 +62,7 @@ refer to the applicable agreement for further details.
 +-------------------+-------------------------+
 ; Option            ; Setting                 ;
 +-------------------+-------------------------+
-; Start date & time ; 08/01/2020 18:00:14     ;
+; Start date & time ; 08/02/2020 00:17:02     ;
 ; Main task         ; Compilation             ;
 ; Revision Name     ; inverted_residual_block ;
 +-------------------+-------------------------+
@@ -73,7 +73,7 @@ refer to the applicable agreement for further details.
 +--------------------------------------+----------------------------------------+---------------+-------------+----------------+
 ; Assignment Name                      ; Value                                  ; Default Value ; Entity Name ; Section Id     ;
 +--------------------------------------+----------------------------------------+---------------+-------------+----------------+
-; COMPILER_SIGNATURE_ID                ; 132098954571254.159629761415612        ; --            ; --          ; --             ;
+; COMPILER_SIGNATURE_ID                ; 60431453884360.159632022113580         ; --            ; --          ; --             ;
 ; EDA_DESIGN_INSTANCE_NAME             ; NA                                     ; --            ; --          ; testbench_dma  ;
 ; EDA_DESIGN_INSTANCE_NAME             ; NA                                     ; --            ; --          ; testbench      ;
 ; EDA_NATIVELINK_SIMULATION_TEST_BENCH ; testbench                              ; --            ; --          ; eda_simulation ;
@@ -89,6 +89,7 @@ refer to the applicable agreement for further details.
 ; EDA_TIME_SCALE                       ; 1 ns                                   ; --            ; --          ; eda_simulation ;
 ; MAX_CORE_JUNCTION_TEMP               ; 100                                    ; --            ; --          ; --             ;
 ; MIN_CORE_JUNCTION_TEMP               ; -40                                    ; --            ; --          ; --             ;
+; NUM_PARALLEL_PROCESSORS              ; 2                                      ; --            ; --          ; --             ;
 ; PARTITION_COLOR                      ; -- (Not supported for targeted family) ; --            ; --          ; Top            ;
 ; PARTITION_FITTER_PRESERVATION_LEVEL  ; -- (Not supported for targeted family) ; --            ; --          ; Top            ;
 ; PARTITION_NETLIST_TYPE               ; -- (Not supported for targeted family) ; --            ; --          ; Top            ;
@@ -107,8 +108,8 @@ refer to the applicable agreement for further details.
 +------------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name            ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +------------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Elaboration ; 00:00:13     ; 1.0                     ; 4787 MB             ; 00:00:29                           ;
-; Total                  ; 00:00:13     ; --                      ; --                  ; 00:00:29                           ;
+; Analysis & Elaboration ; 00:00:16     ; 1.0                     ; 4785 MB             ; 00:00:36                           ;
+; Total                  ; 00:00:16     ; --                      ; --                  ; 00:00:36                           ;
 +------------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 
@@ -117,7 +118,7 @@ refer to the applicable agreement for further details.
 +------------------------+------------------+------------+------------+----------------+
 ; Module Name            ; Machine Hostname ; OS Name    ; OS Version ; Processor type ;
 +------------------------+------------------+------------+------------+----------------+
-; Analysis & Elaboration ; DESKTOP-AF2HN80  ; Windows 10 ; 10.0       ; x86_64         ;
+; Analysis & Elaboration ; LAPTOP-F751NSNP  ; Windows 10 ; 10.0       ; x86_64         ;
 +------------------------+------------------+------------+------------+----------------+
 
 
