@@ -60,7 +60,8 @@ module testbench();
 		#############################
 	*/
 	// File descriptors
-	int fd_inf    , fd_fmi, fd_kex, fd_kdw, fd_kpw;
+//	int fd_inf    , fd_fmi, fd_kex, fd_kdw, fd_kpw;
+	int fd;
 	int fd_res_fmo;
 	// DUT input
 	logic clk, rst, start;
@@ -131,7 +132,7 @@ module testbench();
 	// Write results	
 	always @(posedge clk) begin
 		if (write) begin
-			$fwrite(fd_res_fmo, "%h : %d\n", data[PX_W - 1:0], ram_addr);
+			$fwrite(fd_res_fmo, "%h : %d\n", data[PX_W - 1:0], addr - offset_fmo); 
 		end
 	end
 	
@@ -141,46 +142,49 @@ module testbench();
 		data_2_l_n = '0;
 		if (request) begin
 			if (addr >= offset_inf_conv &&  addr < offset_fmi) begin
-				fd_inf = $fopen("simulation_file/inf_conv.txt", "r");
+				fd = $fopen("simulation_file/inf_conv.txt", "r");
 				for (int i=0; i<=addr - offset_inf_conv; i=i+1) begin
-					$fscanf(fd_inf,"%h\n", data_2_l_n); 
+					$fscanf(fd,"%h\n", data_2_l_n); 
 					if (i == addr - offset_inf_conv)
 						valid_data_n = 1;
 			 end
-			 $fclose(fd_inf);
+			 $fclose(fd);
 			 end
 			 else if (addr >= offset_fmi &&  addr < offset_fmo) begin
-				fd_fmi = $fopen("simulation_file/fmi.txt", "r");
+				fd = $fopen("simulation_file/fmi.txt", "r");
 				for (int i=0; i<= addr - offset_fmi; i=i+1) begin
-					$fscanf(fd_fmi,"%h\n", data_2_l_n);
+					$fscanf(fd,"%h\n", data_2_l_n);
 					if (i == addr - offset_fmi)
 						valid_data_n = 1;
-			 end
-			 $fclose(fd_fmi);
+				end
+				$fclose(fd);
 			 end 
 			 else if (addr >= offset_kex &&  addr < offset_kpw) begin
-				 fd_kex = $fopen("simulation_file/kex.txt", "r"); 
+				 fd = $fopen("simulation_file/kex.txt", "r"); 
 				 for (int i=0; i<= addr - offset_kex; i=i+1) begin
-					 $fscanf(fd_kex,"%h\n", data_2_l_n);
+					 $fscanf(fd,"%h\n", data_2_l_n);
 					 if (i == addr - offset_kex)
 						 valid_data_n = 1;
 				 end
+				 $fclose(fd);
 			 end
 			 else if (addr >= offset_kpw &&  addr < offset_kdw) begin
-				 fd_kex = $fopen("simulation_file/kpw.txt", "r"); 
+				 fd = $fopen("simulation_file/kpw.txt", "r"); 
 				 for (int i=0; i<= addr - offset_kpw; i=i+1) begin
-					 $fscanf(fd_kex,"%h\n", data_2_l_n);
+					 $fscanf(fd,"%h\n", data_2_l_n);
 					 if (i == addr - offset_kpw)
-						 valid_data_n = 1;
+						 valid_data_n = 1; 
 				 end
+				 $fclose(fd);
 			 end
 			 else if (addr >= offset_kdw) begin
-				 fd_kex = $fopen("simulation_file/kdw.txt", "r"); 
+				 fd = $fopen("simulation_file/kdw.txt", "r"); 
 				 for (int i=0; i<= addr - offset_kdw; i=i+1) begin
-					 $fscanf(fd_kex,"%h\n", data_2_l_n);
+					 $fscanf(fd,"%h\n", data_2_l_n);
 					 if (i == addr - offset_kdw)
 						 valid_data_n = 1;
 				 end
+				 $fclose(fd);
 			 end
 		end
 	end
@@ -202,7 +206,7 @@ module testbench();
 		data <= data_dut;
 	end
 	
-	always @(posedge f1) begin
+	/*always @(posedge f1) begin
 		$stop;
 	end
 	
@@ -213,6 +217,7 @@ module testbench();
 	always @(posedge f3) begin
 		$stop;
 	end
+	*/
 	
 	/*
 		#############################
@@ -221,9 +226,6 @@ module testbench();
 	*/
 	always @(posedge finish) begin
 		#full_clk;
-		$fclose(fd_res_kex);
-		$fclose(fd_res_fmi);
-		$fclose(fd_res_fmint);
 		$fclose(fd_res_fmo);
 		$stop;
 	end

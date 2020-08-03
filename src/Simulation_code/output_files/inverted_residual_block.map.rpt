@@ -1,6 +1,6 @@
 Analysis & Elaboration report for inverted_residual_block
-Sun Aug 02 00:17:17 2020
-Quartus Prime Version 18.0.0 Build 614 04/24/2018 SJ Lite Edition
+Mon Aug 03 15:24:48 2020
+Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 
 
 ---------------------
@@ -10,9 +10,11 @@ Quartus Prime Version 18.0.0 Build 614 04/24/2018 SJ Lite Edition
   2. Analysis & Elaboration Summary
   3. Parallel Compilation
   4. Analysis & Elaboration Settings
-  5. Port Connectivity Checks: "Convolution_1_1:conv_11"
-  6. Analysis & Elaboration Messages
-  7. Analysis & Elaboration Suppressed Messages
+  5. Port Connectivity Checks: "Convolution_dsc:conv_dsc|SHIFT_REGISTER_PW_PS:reg_pw_ps"
+  6. Port Connectivity Checks: "Convolution_1_1:conv_11|SHIFT_REGISTER_POS:reg_pos"
+  7. Port Connectivity Checks: "Convolution_1_1:conv_11"
+  8. Analysis & Elaboration Messages
+  9. Analysis & Elaboration Suppressed Messages
 
 
 
@@ -38,8 +40,8 @@ refer to the applicable agreement for further details.
 +-----------------------------------------------------------------------------+
 ; Analysis & Elaboration Summary                                              ;
 +-------------------------------+---------------------------------------------+
-; Analysis & Elaboration Status ; Successful - Sun Aug 02 00:17:17 2020       ;
-; Quartus Prime Version         ; 18.0.0 Build 614 04/24/2018 SJ Lite Edition ;
+; Analysis & Elaboration Status ; Successful - Mon Aug 03 15:24:48 2020       ;
+; Quartus Prime Version         ; 18.1.0 Build 625 09/12/2018 SJ Lite Edition ;
 ; Revision Name                 ; inverted_residual_block                     ;
 ; Top-level Entity Name         ; inverted_residual_block                     ;
 ; Family                        ; Cyclone V                                   ;
@@ -58,7 +60,7 @@ refer to the applicable agreement for further details.
 +----------------------------+-------------+
 ; Processors                 ; Number      ;
 +----------------------------+-------------+
-; Number detected on machine ; 4           ;
+; Number detected on machine ; 8           ;
 ; Maximum allowed            ; 2           ;
 ;                            ;             ;
 ; Average used               ; 1.00        ;
@@ -159,6 +161,26 @@ refer to the applicable agreement for further details.
 +---------------------------------------------------------------------------------+-------------------------+-------------------------+
 
 
++---------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "Convolution_dsc:conv_dsc|SHIFT_REGISTER_PW_PS:reg_pw_ps"                                 ;
++-----------+--------+----------+-------------------------------------------------------------------------------------+
+; Port      ; Type   ; Severity ; Details                                                                             ;
++-----------+--------+----------+-------------------------------------------------------------------------------------+
+; pos[0][2] ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
+; pos[1][2] ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++-----------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++---------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "Convolution_1_1:conv_11|SHIFT_REGISTER_POS:reg_pos"                                      ;
++-----------+--------+----------+-------------------------------------------------------------------------------------+
+; Port      ; Type   ; Severity ; Details                                                                             ;
++-----------+--------+----------+-------------------------------------------------------------------------------------+
+; pos[0][2] ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
+; pos[1][2] ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++-----------+--------+----------+-------------------------------------------------------------------------------------+
+
+
 +-----------------------------------------------------+
 ; Port Connectivity Checks: "Convolution_1_1:conv_11" ;
 +-------------+-------+----------+--------------------+
@@ -173,78 +195,78 @@ refer to the applicable agreement for further details.
 +---------------------------------+
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Elaboration
-    Info: Version 18.0.0 Build 614 04/24/2018 SJ Lite Edition
-    Info: Processing started: Sun Aug 02 00:17:01 2020
+    Info: Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
+    Info: Processing started: Mon Aug 03 15:24:36 2020
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off master_thesis_layer -c inverted_residual_block --analysis_and_elaboration
 Info (20032): Parallel compilation is enabled and will use up to 2 processors
 Info (12021): Found 1 design units, including 1 entities, in source file inverted_residual_block.sv
-    Info (12023): Found entity 1: inverted_residual_block File: E:/Fichier/Etude/LFSA-Master_Info/MA2/Q2/Mémoire/Git/UCL-EPL-Master-Thesis-2019-2020/src/Simulation_code/inverted_residual_block.sv Line: 18
+    Info (12023): Found entity 1: inverted_residual_block File: D:/GitRepo/Memoire/src/Simulation_code/inverted_residual_block.sv Line: 18
 Info (12021): Found 1 design units, including 1 entities, in source file main_controller.sv
-    Info (12023): Found entity 1: Main_controller File: E:/Fichier/Etude/LFSA-Master_Info/MA2/Q2/Mémoire/Git/UCL-EPL-Master-Thesis-2019-2020/src/Simulation_code/Main_Controller.sv Line: 18
+    Info (12023): Found entity 1: Main_controller File: D:/GitRepo/Memoire/src/Simulation_code/Main_Controller.sv Line: 18
 Info (12021): Found 1 design units, including 1 entities, in source file dma.sv
-    Info (12023): Found entity 1: DMA File: E:/Fichier/Etude/LFSA-Master_Info/MA2/Q2/Mémoire/Git/UCL-EPL-Master-Thesis-2019-2020/src/Simulation_code/DMA.sv Line: 19
+    Info (12023): Found entity 1: DMA File: D:/GitRepo/Memoire/src/Simulation_code/DMA.sv Line: 19
 Info (12021): Found 5 design units, including 5 entities, in source file convolution_1_1.sv
-    Info (12023): Found entity 1: Convolution_1_1 File: E:/Fichier/Etude/LFSA-Master_Info/MA2/Q2/Mémoire/Git/UCL-EPL-Master-Thesis-2019-2020/src/Simulation_code/Convolution_1_1.sv Line: 18
-    Info (12023): Found entity 2: SHIFT_REGISTER_PX File: E:/Fichier/Etude/LFSA-Master_Info/MA2/Q2/Mémoire/Git/UCL-EPL-Master-Thesis-2019-2020/src/Simulation_code/Convolution_1_1.sv Line: 300
-    Info (12023): Found entity 3: SHIFT_REGISTER_WG File: E:/Fichier/Etude/LFSA-Master_Info/MA2/Q2/Mémoire/Git/UCL-EPL-Master-Thesis-2019-2020/src/Simulation_code/Convolution_1_1.sv Line: 315
-    Info (12023): Found entity 4: SHIFT_REGISTER_POS File: E:/Fichier/Etude/LFSA-Master_Info/MA2/Q2/Mémoire/Git/UCL-EPL-Master-Thesis-2019-2020/src/Simulation_code/Convolution_1_1.sv Line: 330
-    Info (12023): Found entity 5: RELU6 File: E:/Fichier/Etude/LFSA-Master_Info/MA2/Q2/Mémoire/Git/UCL-EPL-Master-Thesis-2019-2020/src/Simulation_code/Convolution_1_1.sv Line: 345
+    Info (12023): Found entity 1: Convolution_1_1 File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_1_1.sv Line: 18
+    Info (12023): Found entity 2: SHIFT_REGISTER_PX File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_1_1.sv Line: 300
+    Info (12023): Found entity 3: SHIFT_REGISTER_WG File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_1_1.sv Line: 315
+    Info (12023): Found entity 4: SHIFT_REGISTER_POS File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_1_1.sv Line: 330
+    Info (12023): Found entity 5: RELU6 File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_1_1.sv Line: 345
 Info (12021): Found 6 design units, including 6 entities, in source file convolution_dsc.sv
-    Info (12023): Found entity 1: Convolution_dsc File: E:/Fichier/Etude/LFSA-Master_Info/MA2/Q2/Mémoire/Git/UCL-EPL-Master-Thesis-2019-2020/src/Simulation_code/Convolution_dsc.sv Line: 17
-    Info (12023): Found entity 2: SHIFT_REGISTER_FMINT File: E:/Fichier/Etude/LFSA-Master_Info/MA2/Q2/Mémoire/Git/UCL-EPL-Master-Thesis-2019-2020/src/Simulation_code/Convolution_dsc.sv Line: 426
-    Info (12023): Found entity 3: SHIFT_REGISTER_DW_WG File: E:/Fichier/Etude/LFSA-Master_Info/MA2/Q2/Mémoire/Git/UCL-EPL-Master-Thesis-2019-2020/src/Simulation_code/Convolution_dsc.sv Line: 441
-    Info (12023): Found entity 4: SHIFT_REGISTER_PW_PS File: E:/Fichier/Etude/LFSA-Master_Info/MA2/Q2/Mémoire/Git/UCL-EPL-Master-Thesis-2019-2020/src/Simulation_code/Convolution_dsc.sv Line: 456
-    Info (12023): Found entity 5: SHIFT_REGISTER_PW_WG File: E:/Fichier/Etude/LFSA-Master_Info/MA2/Q2/Mémoire/Git/UCL-EPL-Master-Thesis-2019-2020/src/Simulation_code/Convolution_dsc.sv Line: 471
-    Info (12023): Found entity 6: RELU6_DSC File: E:/Fichier/Etude/LFSA-Master_Info/MA2/Q2/Mémoire/Git/UCL-EPL-Master-Thesis-2019-2020/src/Simulation_code/Convolution_dsc.sv Line: 486
+    Info (12023): Found entity 1: Convolution_dsc File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_dsc.sv Line: 17
+    Info (12023): Found entity 2: SHIFT_REGISTER_FMINT File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_dsc.sv Line: 450
+    Info (12023): Found entity 3: SHIFT_REGISTER_DW_WG File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_dsc.sv Line: 465
+    Info (12023): Found entity 4: SHIFT_REGISTER_PW_PS File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_dsc.sv Line: 480
+    Info (12023): Found entity 5: SHIFT_REGISTER_PW_WG File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_dsc.sv Line: 495
+    Info (12023): Found entity 6: RELU6_DSC File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_dsc.sv Line: 510
 Info (12021): Found 1 design units, including 1 entities, in source file ram_fmi.sv
-    Info (12023): Found entity 1: RAM_FMI File: E:/Fichier/Etude/LFSA-Master_Info/MA2/Q2/Mémoire/Git/UCL-EPL-Master-Thesis-2019-2020/src/Simulation_code/RAM_FMI.sv Line: 17
+    Info (12023): Found entity 1: RAM_FMI File: D:/GitRepo/Memoire/src/Simulation_code/RAM_FMI.sv Line: 17
 Info (12021): Found 1 design units, including 1 entities, in source file ram_fmint.sv
-    Info (12023): Found entity 1: RAM_FMINT File: E:/Fichier/Etude/LFSA-Master_Info/MA2/Q2/Mémoire/Git/UCL-EPL-Master-Thesis-2019-2020/src/Simulation_code/RAM_FMINT.sv Line: 18
+    Info (12023): Found entity 1: RAM_FMINT File: D:/GitRepo/Memoire/src/Simulation_code/RAM_FMINT.sv Line: 18
 Info (12021): Found 1 design units, including 1 entities, in source file ram_fmo.sv
-    Info (12023): Found entity 1: RAM_FMO File: E:/Fichier/Etude/LFSA-Master_Info/MA2/Q2/Mémoire/Git/UCL-EPL-Master-Thesis-2019-2020/src/Simulation_code/RAM_FMO.sv Line: 17
+    Info (12023): Found entity 1: RAM_FMO File: D:/GitRepo/Memoire/src/Simulation_code/RAM_FMO.sv Line: 17
 Info (12021): Found 1 design units, including 1 entities, in source file ram_kex.sv
-    Info (12023): Found entity 1: RAM_KEX File: E:/Fichier/Etude/LFSA-Master_Info/MA2/Q2/Mémoire/Git/UCL-EPL-Master-Thesis-2019-2020/src/Simulation_code/RAM_KEX.sv Line: 17
+    Info (12023): Found entity 1: RAM_KEX File: D:/GitRepo/Memoire/src/Simulation_code/RAM_KEX.sv Line: 17
 Info (12021): Found 1 design units, including 1 entities, in source file ram_kdw.sv
-    Info (12023): Found entity 1: RAM_KDW File: E:/Fichier/Etude/LFSA-Master_Info/MA2/Q2/Mémoire/Git/UCL-EPL-Master-Thesis-2019-2020/src/Simulation_code/RAM_KDW.sv Line: 17
+    Info (12023): Found entity 1: RAM_KDW File: D:/GitRepo/Memoire/src/Simulation_code/RAM_KDW.sv Line: 17
 Info (12021): Found 1 design units, including 1 entities, in source file ram_kpw.sv
-    Info (12023): Found entity 1: RAM_KPW File: E:/Fichier/Etude/LFSA-Master_Info/MA2/Q2/Mémoire/Git/UCL-EPL-Master-Thesis-2019-2020/src/Simulation_code/RAM_KPW.sv Line: 19
+    Info (12023): Found entity 1: RAM_KPW File: D:/GitRepo/Memoire/src/Simulation_code/RAM_KPW.sv Line: 19
 Info (12021): Found 1 design units, including 0 entities, in source file irb_pkg.sv
-    Info (12022): Found design unit 1: irb_pkg (SystemVerilog) File: E:/Fichier/Etude/LFSA-Master_Info/MA2/Q2/Mémoire/Git/UCL-EPL-Master-Thesis-2019-2020/src/Simulation_code/irb_pkg.sv Line: 1
+    Info (12022): Found design unit 1: irb_pkg (SystemVerilog) File: D:/GitRepo/Memoire/src/Simulation_code/irb_pkg.sv Line: 1
 Info (12021): Found 1 design units, including 1 entities, in source file testbench.sv
-    Info (12023): Found entity 1: testbench File: E:/Fichier/Etude/LFSA-Master_Info/MA2/Q2/Mémoire/Git/UCL-EPL-Master-Thesis-2019-2020/src/Simulation_code/testbench.sv Line: 4
+    Info (12023): Found entity 1: testbench File: D:/GitRepo/Memoire/src/Simulation_code/testbench.sv Line: 4
 Info (12021): Found 1 design units, including 0 entities, in source file tb_pkg.sv
-    Info (12022): Found design unit 1: tb_pkg (SystemVerilog) File: E:/Fichier/Etude/LFSA-Master_Info/MA2/Q2/Mémoire/Git/UCL-EPL-Master-Thesis-2019-2020/src/Simulation_code/tb_pkg.sv Line: 5
+    Info (12022): Found design unit 1: tb_pkg (SystemVerilog) File: D:/GitRepo/Memoire/src/Simulation_code/tb_pkg.sv Line: 5
 Info (12127): Elaborating entity "inverted_residual_block" for the top level hierarchy
-Info (12128): Elaborating entity "Main_controller" for hierarchy "Main_controller:mc" File: E:/Fichier/Etude/LFSA-Master_Info/MA2/Q2/Mémoire/Git/UCL-EPL-Master-Thesis-2019-2020/src/Simulation_code/inverted_residual_block.sv Line: 72
-Info (12128): Elaborating entity "DMA" for hierarchy "DMA:dma" File: E:/Fichier/Etude/LFSA-Master_Info/MA2/Q2/Mémoire/Git/UCL-EPL-Master-Thesis-2019-2020/src/Simulation_code/inverted_residual_block.sv Line: 90
-Info (12128): Elaborating entity "Convolution_1_1" for hierarchy "Convolution_1_1:conv_11" File: E:/Fichier/Etude/LFSA-Master_Info/MA2/Q2/Mémoire/Git/UCL-EPL-Master-Thesis-2019-2020/src/Simulation_code/inverted_residual_block.sv Line: 104
-Info (12128): Elaborating entity "SHIFT_REGISTER_PX" for hierarchy "Convolution_1_1:conv_11|SHIFT_REGISTER_PX:reg_px" File: E:/Fichier/Etude/LFSA-Master_Info/MA2/Q2/Mémoire/Git/UCL-EPL-Master-Thesis-2019-2020/src/Simulation_code/Convolution_1_1.sv Line: 74
-Info (12128): Elaborating entity "SHIFT_REGISTER_WG" for hierarchy "Convolution_1_1:conv_11|SHIFT_REGISTER_WG:reg_wg" File: E:/Fichier/Etude/LFSA-Master_Info/MA2/Q2/Mémoire/Git/UCL-EPL-Master-Thesis-2019-2020/src/Simulation_code/Convolution_1_1.sv Line: 75
-Info (12128): Elaborating entity "SHIFT_REGISTER_POS" for hierarchy "Convolution_1_1:conv_11|SHIFT_REGISTER_POS:reg_pos" File: E:/Fichier/Etude/LFSA-Master_Info/MA2/Q2/Mémoire/Git/UCL-EPL-Master-Thesis-2019-2020/src/Simulation_code/Convolution_1_1.sv Line: 76
-Info (12128): Elaborating entity "RELU6" for hierarchy "Convolution_1_1:conv_11|RELU6:activation" File: E:/Fichier/Etude/LFSA-Master_Info/MA2/Q2/Mémoire/Git/UCL-EPL-Master-Thesis-2019-2020/src/Simulation_code/Convolution_1_1.sv Line: 78
-Info (12128): Elaborating entity "Convolution_dsc" for hierarchy "Convolution_dsc:conv_dsc" File: E:/Fichier/Etude/LFSA-Master_Info/MA2/Q2/Mémoire/Git/UCL-EPL-Master-Thesis-2019-2020/src/Simulation_code/inverted_residual_block.sv Line: 124
-Info (12128): Elaborating entity "SHIFT_REGISTER_FMINT" for hierarchy "Convolution_dsc:conv_dsc|SHIFT_REGISTER_FMINT:reg_fmint" File: E:/Fichier/Etude/LFSA-Master_Info/MA2/Q2/Mémoire/Git/UCL-EPL-Master-Thesis-2019-2020/src/Simulation_code/Convolution_dsc.sv Line: 92
-Info (12128): Elaborating entity "SHIFT_REGISTER_DW_WG" for hierarchy "Convolution_dsc:conv_dsc|SHIFT_REGISTER_DW_WG:reg_dw_wg" File: E:/Fichier/Etude/LFSA-Master_Info/MA2/Q2/Mémoire/Git/UCL-EPL-Master-Thesis-2019-2020/src/Simulation_code/Convolution_dsc.sv Line: 93
-Info (12128): Elaborating entity "SHIFT_REGISTER_PW_PS" for hierarchy "Convolution_dsc:conv_dsc|SHIFT_REGISTER_PW_PS:reg_pw_ps" File: E:/Fichier/Etude/LFSA-Master_Info/MA2/Q2/Mémoire/Git/UCL-EPL-Master-Thesis-2019-2020/src/Simulation_code/Convolution_dsc.sv Line: 94
-Info (12128): Elaborating entity "SHIFT_REGISTER_PW_WG" for hierarchy "Convolution_dsc:conv_dsc|SHIFT_REGISTER_PW_WG:reg_pw_wg" File: E:/Fichier/Etude/LFSA-Master_Info/MA2/Q2/Mémoire/Git/UCL-EPL-Master-Thesis-2019-2020/src/Simulation_code/Convolution_dsc.sv Line: 95
-Info (12128): Elaborating entity "RELU6_DSC" for hierarchy "Convolution_dsc:conv_dsc|RELU6_DSC:activation_for[0].activation" File: E:/Fichier/Etude/LFSA-Master_Info/MA2/Q2/Mémoire/Git/UCL-EPL-Master-Thesis-2019-2020/src/Simulation_code/Convolution_dsc.sv Line: 100
-Info (12128): Elaborating entity "RAM_FMI" for hierarchy "RAM_FMI:ram_fmi" File: E:/Fichier/Etude/LFSA-Master_Info/MA2/Q2/Mémoire/Git/UCL-EPL-Master-Thesis-2019-2020/src/Simulation_code/inverted_residual_block.sv Line: 131
-Info (12128): Elaborating entity "RAM_KEX" for hierarchy "RAM_KEX:ram_kex" File: E:/Fichier/Etude/LFSA-Master_Info/MA2/Q2/Mémoire/Git/UCL-EPL-Master-Thesis-2019-2020/src/Simulation_code/inverted_residual_block.sv Line: 139
-Info (12128): Elaborating entity "RAM_FMINT" for hierarchy "RAM_FMINT:ram_fmint" File: E:/Fichier/Etude/LFSA-Master_Info/MA2/Q2/Mémoire/Git/UCL-EPL-Master-Thesis-2019-2020/src/Simulation_code/inverted_residual_block.sv Line: 147
-Info (12128): Elaborating entity "RAM_FMO" for hierarchy "RAM_FMO:ram_fmo" File: E:/Fichier/Etude/LFSA-Master_Info/MA2/Q2/Mémoire/Git/UCL-EPL-Master-Thesis-2019-2020/src/Simulation_code/inverted_residual_block.sv Line: 154
-Info (12128): Elaborating entity "RAM_KDW" for hierarchy "RAM_KDW:ram_kdw" File: E:/Fichier/Etude/LFSA-Master_Info/MA2/Q2/Mémoire/Git/UCL-EPL-Master-Thesis-2019-2020/src/Simulation_code/inverted_residual_block.sv Line: 161
-Info (12128): Elaborating entity "RAM_KPW" for hierarchy "RAM_KPW:ram_kpw" File: E:/Fichier/Etude/LFSA-Master_Info/MA2/Q2/Mémoire/Git/UCL-EPL-Master-Thesis-2019-2020/src/Simulation_code/inverted_residual_block.sv Line: 168
-Info (144001): Generated suppressed messages file E:/Fichier/Etude/LFSA-Master_Info/MA2/Q2/Mémoire/Git/UCL-EPL-Master-Thesis-2019-2020/src/Simulation_code/output_files/inverted_residual_block.map.smsg
+Info (12128): Elaborating entity "Main_controller" for hierarchy "Main_controller:mc" File: D:/GitRepo/Memoire/src/Simulation_code/inverted_residual_block.sv Line: 74
+Info (12128): Elaborating entity "DMA" for hierarchy "DMA:dma" File: D:/GitRepo/Memoire/src/Simulation_code/inverted_residual_block.sv Line: 92
+Info (12128): Elaborating entity "Convolution_1_1" for hierarchy "Convolution_1_1:conv_11" File: D:/GitRepo/Memoire/src/Simulation_code/inverted_residual_block.sv Line: 106
+Info (12128): Elaborating entity "SHIFT_REGISTER_PX" for hierarchy "Convolution_1_1:conv_11|SHIFT_REGISTER_PX:reg_px" File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_1_1.sv Line: 74
+Info (12128): Elaborating entity "SHIFT_REGISTER_WG" for hierarchy "Convolution_1_1:conv_11|SHIFT_REGISTER_WG:reg_wg" File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_1_1.sv Line: 75
+Info (12128): Elaborating entity "SHIFT_REGISTER_POS" for hierarchy "Convolution_1_1:conv_11|SHIFT_REGISTER_POS:reg_pos" File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_1_1.sv Line: 76
+Info (12128): Elaborating entity "RELU6" for hierarchy "Convolution_1_1:conv_11|RELU6:activation" File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_1_1.sv Line: 78
+Info (12128): Elaborating entity "Convolution_dsc" for hierarchy "Convolution_dsc:conv_dsc" File: D:/GitRepo/Memoire/src/Simulation_code/inverted_residual_block.sv Line: 127
+Info (12128): Elaborating entity "SHIFT_REGISTER_FMINT" for hierarchy "Convolution_dsc:conv_dsc|SHIFT_REGISTER_FMINT:reg_fmint" File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_dsc.sv Line: 95
+Info (12128): Elaborating entity "SHIFT_REGISTER_DW_WG" for hierarchy "Convolution_dsc:conv_dsc|SHIFT_REGISTER_DW_WG:reg_dw_wg" File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_dsc.sv Line: 96
+Info (12128): Elaborating entity "SHIFT_REGISTER_PW_PS" for hierarchy "Convolution_dsc:conv_dsc|SHIFT_REGISTER_PW_PS:reg_pw_ps" File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_dsc.sv Line: 97
+Info (12128): Elaborating entity "SHIFT_REGISTER_PW_WG" for hierarchy "Convolution_dsc:conv_dsc|SHIFT_REGISTER_PW_WG:reg_pw_wg" File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_dsc.sv Line: 98
+Info (12128): Elaborating entity "RELU6_DSC" for hierarchy "Convolution_dsc:conv_dsc|RELU6_DSC:activation_for[0].activation" File: D:/GitRepo/Memoire/src/Simulation_code/Convolution_dsc.sv Line: 103
+Info (12128): Elaborating entity "RAM_FMI" for hierarchy "RAM_FMI:ram_fmi" File: D:/GitRepo/Memoire/src/Simulation_code/inverted_residual_block.sv Line: 134
+Info (12128): Elaborating entity "RAM_KEX" for hierarchy "RAM_KEX:ram_kex" File: D:/GitRepo/Memoire/src/Simulation_code/inverted_residual_block.sv Line: 142
+Info (12128): Elaborating entity "RAM_FMINT" for hierarchy "RAM_FMINT:ram_fmint" File: D:/GitRepo/Memoire/src/Simulation_code/inverted_residual_block.sv Line: 150
+Info (12128): Elaborating entity "RAM_FMO" for hierarchy "RAM_FMO:ram_fmo" File: D:/GitRepo/Memoire/src/Simulation_code/inverted_residual_block.sv Line: 157
+Info (12128): Elaborating entity "RAM_KDW" for hierarchy "RAM_KDW:ram_kdw" File: D:/GitRepo/Memoire/src/Simulation_code/inverted_residual_block.sv Line: 164
+Info (12128): Elaborating entity "RAM_KPW" for hierarchy "RAM_KPW:ram_kpw" File: D:/GitRepo/Memoire/src/Simulation_code/inverted_residual_block.sv Line: 171
+Info (144001): Generated suppressed messages file D:/GitRepo/Memoire/src/Simulation_code/output_files/inverted_residual_block.map.smsg
 Info: Quartus Prime Analysis & Elaboration was successful. 0 errors, 0 warnings
-    Info: Peak virtual memory: 4785 megabytes
-    Info: Processing ended: Sun Aug 02 00:17:17 2020
-    Info: Elapsed time: 00:00:16
-    Info: Total CPU time (on all processors): 00:00:36
+    Info: Peak virtual memory: 4778 megabytes
+    Info: Processing ended: Mon Aug 03 15:24:48 2020
+    Info: Elapsed time: 00:00:12
+    Info: Total CPU time (on all processors): 00:00:30
 
 
 +--------------------------------------------+
 ; Analysis & Elaboration Suppressed Messages ;
 +--------------------------------------------+
-The suppressed messages can be found in E:/Fichier/Etude/LFSA-Master_Info/MA2/Q2/Mémoire/Git/UCL-EPL-Master-Thesis-2019-2020/src/Simulation_code/output_files/inverted_residual_block.map.smsg.
+The suppressed messages can be found in D:/GitRepo/Memoire/src/Simulation_code/output_files/inverted_residual_block.map.smsg.
 
 

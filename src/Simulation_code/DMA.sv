@@ -28,7 +28,7 @@ module DMA( input  logic clk, rst, 										// Clock and reset signals
 				input	 logic [31:0] data_extmem,							// Data sent by external memory
 				input  logic [PX_W-1:0] ram_data_i,
 				output logic [31:0] addr_extmem,							// Address to read/write from external memory
-				output logic [$clog2(FMINT_N_ELEM)-1:0] addr_ram,	// Address to write to a RAM, FMI buffer is the largest buffer
+				output logic [$clog2(FMI_N_ELEM+1)-1:0] addr_ram,	// Address to write to a RAM, FMI buffer is the largest buffer
 				output logic [31:0] w_data,						 		// Data to write to a RAM & Extmem
 				output logic [63:0] inf_conv								// Information of the convolution (for main controller)
 			  );
@@ -62,7 +62,7 @@ module DMA( input  logic clk, rst, 										// Clock and reset signals
 	logic [31:0] 	x, y, x_mem, y_mem, tx, ty, tx_mem, ty_mem, x_ref, y_ref; // Information needed to construct the right address
 	logic [31:0]	f, f_mem; 																 // Information needed to construct the right address
 	logic [31:0]	offset;
-	logic [$clog2(FMINT_N_ELEM)-1:0]   x_ram, y_ram, f_ram;
+	logic [$clog2(FMI_N_ELEM+1)-1:0]   x_ram, y_ram, f_ram;
 	logic 			r_req_extmem;
 	
 	
@@ -76,7 +76,7 @@ module DMA( input  logic clk, rst, 										// Clock and reset signals
 	logic [31:0]	f_n, f_mem_n;
 	logic 			r_request_extmem_n;
 	logic [31:0]	offset_n;
-	logic [$clog2(FMINT_N_ELEM)-1:0]   x_ram_n, y_ram_n, f_ram_n;
+	logic [$clog2(FMI_N_ELEM+1)-1:0]   x_ram_n, y_ram_n, f_ram_n;
 	
 	// Memory (offset & multiplication)
 	logic [31:0] mem_offset [4:0];
@@ -206,7 +206,7 @@ module DMA( input  logic clk, rst, 										// Clock and reset signals
 		offset_n = offset;
 		x_ram_n = x_ram; y_ram_n = y_ram; f_ram_n = f_ram;
 		for (int i = 0; i<5 ; i=i+1) begin
-			mem_offset_n[i] <= mem_offset[i];
+			mem_offset_n[i] = mem_offset[i]; 
 		end
 		// FSM
 		case(state)
@@ -242,7 +242,8 @@ module DMA( input  logic clk, rst, 										// Clock and reset signals
 							// Ram addresses
 							x_ram_n = '0; y_ram_n = '0; f_ram_n = '0;
 							// External memory address of the first element to extract
-							x_mem_n = x_mem_i; y_mem_n = y_mem_i; f_mem_n = 0; offset_n = mem_offset[0];
+							x_mem_n = x_mem_i; y_mem_n = y_mem_i; f_mem_n = 0; 
+							offset_n = mem_offset[0];
 							x_ref_n =  x_mem_i; y_ref_n = y_mem_i;
 						end
 						
@@ -290,12 +291,12 @@ module DMA( input  logic clk, rst, 										// Clock and reset signals
 							r_request_extmem_n = 1;
 							// Loop Variables
 							x_n = 1; y_n = 1; f_n = 1; tx_n = tx_i; // tx represent the first channel (to tx + Npar) to load the weights
-							x_ref_n = x_mem_i; tx_mem_n = tx_i;
+							tx_mem_n = tx_i;
 							// Ram addresses
 							x_ram_n = '0; y_ram_n = '0; f_ram_n = '0;
 							// External memory address of the first element to extract
-							offset_n 	 = mem_offset[4];
-							x_mem_n = x_mem_i ; y_mem_n = '0; f_mem_n = '0; // X_mem_i the address of the first weight corresponding to channel tx
+							offset_n 	 = mem_offset[4]; 
+							x_mem_n = '0 ; y_mem_n = '0; f_mem_n = x_mem_i; // X_mem_i the address of the first weight corresponding to channel tx
 						end
 						
 						// Flush FMO buffer & write its content to external memory
@@ -415,7 +416,7 @@ module DMA( input  logic clk, rst, 										// Clock and reset signals
 							// Update Loop variables
 							f_n = f + 1;
 							// Update RAM variables
-							f_ram_n = Size_FMI_T[$clog2(FMINT_N_ELEM)-1:0];
+							f_ram_n = f_ram + Size_FMI_T[$clog2(FMINT_N_ELEM+1)-1:0];
 							// Update memory variables
 							f_mem_n  = f_mem + Size_FMI;
 						end
@@ -426,7 +427,7 @@ module DMA( input  logic clk, rst, 										// Clock and reset signals
 						// Update Loop variables
 						y_n = y + 1; ty_n = ty + 1;
 						// Update RAM variables
-						y_ram_n = y_ram + Tiy_T[$clog2(FMINT_N_ELEM)-1:0];
+						y_ram_n = y_ram + Tiy_T[$clog2(FMINT_N_ELEM+1)-1:0];
 						// Update Memory variables
 						if (~(ty == 0)) begin // First line is a padding line, we do not 
 							 y_mem_n = y_mem + Nix;
@@ -439,7 +440,7 @@ module DMA( input  logic clk, rst, 										// Clock and reset signals
 					// Update Loop variables
 					x_n = x + 1; tx_n = tx + 1;
 					// Update RAM variables
-					x_ram_n = x_ram + {{$clog2(FMINT_N_ELEM)-1{1'b0}}, 1'b1};
+					x_ram_n = x_ram + {{$clog2(FMINT_N_ELEM+1)-1{1'b0}}, 1'b1};
 					// No memory update since it depends on padding
 				end
 			end
@@ -469,7 +470,7 @@ module DMA( input  logic clk, rst, 										// Clock and reset signals
 						// Update Loop variables
 						tx_n = tx + 1; x_n = x + 1;
 						// Update RAM variables
-						x_ram_n = x_ram + Size_KEX[$clog2(FMINT_N_ELEM)-1:0];
+						x_ram_n = x_ram + Size_KEX[$clog2(FMINT_N_ELEM+1)-1:0];
 						// Update Memory variables
 						x_mem_n = x_mem + Size_KEX;
 					end
@@ -480,7 +481,7 @@ module DMA( input  logic clk, rst, 										// Clock and reset signals
 					// Update Loop variables
 					f_n = f + 1;
 					// Update RAM variables
-					f_ram_n = f_ram + {{$clog2(FMINT_N_ELEM)-1{1'b0}}, 1'b1};
+					f_ram_n = f_ram + {{$clog2(FMINT_N_ELEM+1)-1{1'b0}}, 1'b1};
 					// Update Memory variables
 					f_mem_n = f_mem + 1;
 				end
@@ -508,7 +509,7 @@ module DMA( input  logic clk, rst, 										// Clock and reset signals
 						// Update Loop variables
 						f_n = f + 1;
 						// Update RAM variables
-						f_ram_n = f_ram + Nnp[$clog2(FMINT_N_ELEM)-1:0];
+						f_ram_n = f_ram + Nnp[$clog2(FMINT_N_ELEM+1)-1:0];
 						// Update Memory variables
 						f_mem_n = f_mem + Size_KPW;
 					end
@@ -519,7 +520,7 @@ module DMA( input  logic clk, rst, 										// Clock and reset signals
 					// Update Loop variables
 					x_n = x + 1; tx_n = tx + 1;
 					// Update RAM variables
-					x_ram_n = x_ram + {{$clog2(FMINT_N_ELEM)-1{1'b0}}, 1'b1};
+					x_ram_n = x_ram + {{$clog2(FMINT_N_ELEM+1)-1{1'b0}}, 1'b1};
 					// Update Memory variables
 					x_mem_n = x_mem + 1;
 				end
@@ -548,7 +549,7 @@ module DMA( input  logic clk, rst, 										// Clock and reset signals
 							// Loop variable	
 							f_n = f + 1; tx_n = tx + 1;
 							// ram variable
-							f_ram_n = f_ram + SIZE_DW_T[$clog2(FMINT_N_ELEM)-1: 0];
+							f_ram_n = f_ram + SIZE_DW_T[$clog2(FMINT_N_ELEM+1)-1: 0];
 						// memory variable	
 							f_mem_n  = f_mem + SIZE_DW_T;
 						end
@@ -559,7 +560,7 @@ module DMA( input  logic clk, rst, 										// Clock and reset signals
 						// Loop variable
 						y_n = y + 1;
 						// ram variable
-						y_ram_n = y_ram + Nky[$clog2(FMINT_N_ELEM)-1: 0];
+						y_ram_n = y_ram + Nky[$clog2(FMINT_N_ELEM+1)-1: 0];
 						// memory variable
 						y_mem_n = y_mem + Nky;
 						
@@ -571,7 +572,7 @@ module DMA( input  logic clk, rst, 										// Clock and reset signals
 					// Loop variable
 					x_n = x + 1;
 					// ram variable
-					x_ram_n = x_ram + {{$clog2(FMINT_N_ELEM)-1{1'b0}}, 1'b1};
+					x_ram_n = x_ram + {{$clog2(FMINT_N_ELEM+1)-1{1'b0}}, 1'b1};
 					// memory variable
 					x_mem_n = x_mem + 1;
 				end
@@ -593,15 +594,15 @@ module DMA( input  logic clk, rst, 										// Clock and reset signals
 					if(y == Toy || ty == Noy) begin
 						y_ram_n = '0;
 						if (~(f == Nof)) begin
-							f_ram_n  = f_ram + Size_FMO_T[$clog2(FMINT_N_ELEM)-1:0];
+							f_ram_n  = f_ram + Size_FMO_T[$clog2(FMINT_N_ELEM+1)-1:0];
 						end
 					end
 					else begin
-						y_ram_n = y_ram + Tox_T[$clog2(FMINT_N_ELEM)-1:0];
+						y_ram_n = y_ram + Tox_T[$clog2(FMINT_N_ELEM+1)-1:0];
 					end
 				end
 				else begin
-					x_ram_n = x_ram + {{$clog2(FMINT_N_ELEM)-1{1'b0}}, 1'b1};
+					x_ram_n = x_ram + {{$clog2(FMINT_N_ELEM+1)-1{1'b0}}, 1'b1};
 				end
 			end
 			

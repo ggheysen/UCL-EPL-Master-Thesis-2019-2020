@@ -5,15 +5,18 @@ if {[file exists rtl_work]} {
 vlib rtl_work
 vmap work rtl_work
 
-vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/dma_pkg.sv}
-vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/Main_Controller.sv}
-vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/ram_pkg.sv}
-vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/RAM_KEX.sv}
-vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/RAM_FMI.sv}
-vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/DMA.sv}
+vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/irb_pkg.sv}
 vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/inverted_residual_block.sv}
+vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/Main_Controller.sv}
+vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/DMA.sv}
 vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/Convolution_1_1.sv}
+vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/Convolution_dsc.sv}
+vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/RAM_FMI.sv}
 vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/RAM_FMINT.sv}
+vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/RAM_FMO.sv}
+vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/RAM_KEX.sv}
+vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/RAM_KDW.sv}
+vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/RAM_KPW.sv}
 
 vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/testbench.sv}
 

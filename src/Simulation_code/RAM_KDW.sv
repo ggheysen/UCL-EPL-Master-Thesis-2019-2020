@@ -16,7 +16,7 @@ import irb_pkg::*;
 */
 module RAM_KDW(
 						input logic  clk,									  // Clock
-						input logic  [$clog2(KDW_N_ELEM)-1:0] addr, // Ram address to read/write data
+						input logic  [$clog2(KDW_N_ELEM+1)-1:0] addr, // Ram address to read/write data
 						input logic  [WG_W -1:0] data,				  // if write is enabled, data to write at address addr
 						input logic  write,								  // if enabled, write data
 						output logic [WG_W-1:0] res					  // Data
@@ -26,7 +26,7 @@ module RAM_KDW(
 		# RAM 																																			            	 #
 		################################################################################################################################
 	*/
-	logic [WG_W-1:0] mem [KDW_N_ELEM-1:0];
+	logic [WG_W-1:0] mem [0:KDW_N_ELEM-1];
 	/* 
 		################################################################################################################################
 		# Sequential logic																																				 #

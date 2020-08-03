@@ -21,7 +21,8 @@ module Main_controller(input logic clk, rst, start,
 							  output logic s_dma, s_c11, s_dsc,
 							  output logic finish,
 							  output logic [2:0] dma_op,
-							  output logic [31:0] dma_info1, dma_mem_info1, dma_info2, dma_mem_info2
+							  output logic [31:0] dma_info1, dma_mem_info1, dma_info2, dma_mem_info2,
+							  output logic 		first_par
 							 );
 	
 	/* 
@@ -62,6 +63,7 @@ module Main_controller(input logic clk, rst, start,
 	logic [31:0] par_mem_n, dma_info1_n, dma_info2_n, dma_mem_info1_n, dma_mem_info2_n;
 	logic [31:0] grint_mem_n, par_dw_mem_n;
 	logic [31:0] grint_n;
+	logic first_par_n;
 	
 	// Intermediate values
 	logic [10:0] Nintf_inter;
@@ -83,7 +85,8 @@ module Main_controller(input logic clk, rst, start,
 			dma_mem_info1 <= '0; dma_mem_info2 <= '0;
 			par <= '0;
 			par_dw_mem <= '0;
-			grint <= '0; grint_mem <= '0; 
+			grint <= '0; grint_mem <= '0;
+			first_par <= '0;	
 		end
 		else begin
 			state  <= state_n  ;
@@ -97,7 +100,8 @@ module Main_controller(input logic clk, rst, start,
 			dma_mem_info1 <= dma_mem_info1_n; dma_mem_info2 <= dma_mem_info2_n;
 			par <= par_n;
 			par_dw_mem <= par_dw_mem_n;
-			grint <= grint_n; grint_mem <= grint_mem_n; 
+			grint <= grint_n; grint_mem <= grint_mem_n;
+			first_par <= first_par_n;	
 		end
 	end
 	
@@ -139,6 +143,7 @@ module Main_controller(input logic clk, rst, start,
 		par_n = par; par_mem_n = par_mem;
 		par_dw_mem_n = par_dw_mem;
 		grint_n = grint; grint_mem_n = grint_mem; 
+		first_par_n = '0;
 		case (state)
 			IDLE: begin
 				if(start) begin
@@ -223,9 +228,6 @@ module Main_controller(input logic clk, rst, start,
 					// Assign varialbes
 					dma_info1_n = par + 1;
 					dma_mem_info1_n = par_dw_mem;
-					// Update variables
-					par_n = par + Npar[10:0];
-					par_dw_mem_n = par_dw_mem + SIZE_PAR_DW;
 				end
 			end
 			
@@ -233,6 +235,10 @@ module Main_controller(input logic clk, rst, start,
 				if (f_dma) begin
 					state_n = CONV_DSC;
 					s_dsc_n = 1;
+					// Update Variable
+					par_n = par + Npar[10:0];
+					par_dw_mem_n = par_dw_mem + SIZE_PAR_DW;
+					first_par_n = (par == '0);
 				end
 			end
 			
@@ -253,10 +259,10 @@ module Main_controller(input logic clk, rst, start,
 						grint_n = '0;
 						par_mem_n = '0;
 						par_dw_mem_n = '0;
-						if (tox == Nox) begin
+						if (tox == (Nox-Tox)) begin
 							// Loop variable
 							tix_n = '0;
-							tiy_n = tiy + NTiy + 8'b1;
+							tiy_n = tiy + NTiy + 8'b1; 
 							// Addr variable
 							ix_mem_n = '0;
 							iy_mem_n = iy_mem + Size_Ti;
@@ -264,18 +270,19 @@ module Main_controller(input logic clk, rst, start,
 					end
 					else begin
 						state_n = LOAD_KEX;
+						s_dma_n = 1;
+						op_n = 2;
 						dma_info1_n = par + 1;
 						dma_mem_info1_n = par_mem;
-						// Update variables
 						par_mem_n = par_mem + Size_par_kex; //Par updated after DSC
-					end
+					end 
 				end
 			end
 			
 			WRITE_FMO: begin
 				if (f_dma) begin
-					if (tox == Nox) begin
-						tox_n = 1; ox_mem_n = '0;
+					if (tox == (Nox-Tox)) begin
+						tox_n = '0; ox_mem_n = '0;
 						if (toy == Noy) begin
 							state_n = FINISH;
 						end

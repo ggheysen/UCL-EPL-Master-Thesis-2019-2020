@@ -37,24 +37,25 @@ module inverted_residual_block(input 	logic clk, rst, start,
 	logic dma_r_fmo;
 	logic w_fmi, w_kex, w_kpw, w_kdw, w_fmint, w_fmo;
 	logic [2:0] op;
+	logic first_par_mc;
 	
 	// Addr
-	logic [$clog2(FMINT_N_ELEM) - 1:0] ram_addr_dma;
-	logic [$clog2(KEX_N_ELEM)-1:0] ram_addr_kex_conv11, ram_addr_kex;
-	logic [$clog2(FMI_N_ELEM)-1:0] ram_addr_fmi, ram_addr_fmi_conv11;
-	logic [$clog2(FMINT_N_ELEM)-1:0] ram_addr_fmint, ram_addr_fmint_conv11, ram_addr_fmint_dsc;
-	logic [$clog2(KDW_N_ELEM)-1:0] ram_addr_kdw, ram_addr_kdw_dsc;
-	logic [$clog2(KPW_N_ELEM)-1:0] ram_addr_kpw, ram_addr_kpw_dsc; 	
-	logic [$clog2(FMO_N_ELEM)-1:0] ram_addr_fmo, ram_addr_fmo_dsc;
+	logic [$clog2(FMI_N_ELEM+1) - 1:0] ram_addr_dma;
+	logic [$clog2(KEX_N_ELEM+1)-1:0] ram_addr_kex_conv11, ram_addr_kex;
+	logic [$clog2(FMI_N_ELEM+1)-1:0] ram_addr_fmi, ram_addr_fmi_conv11;
+	logic [$clog2(FMINT_N_ELEM+1)-1:0] ram_addr_fmint, ram_addr_fmint_conv11, ram_addr_fmint_dsc;
+	logic [$clog2(KDW_N_ELEM+1)-1:0] ram_addr_kdw, ram_addr_kdw_dsc;
+	logic [$clog2(KPW_N_ELEM+1)-1:0] ram_addr_kpw, ram_addr_kpw_dsc; 	
+	logic [$clog2(FMO_N_ELEM+1)-1:0] ram_addr_fmo, ram_addr_fmo_dsc;
 	
 	// Data
 	logic [PX_W-1:0] res_fmi, res_fmint, px_fmint, res_kdw;
 	logic [PX_W-1:0] res_fmo, px_fmo;
-	logic [WG_W + $clog2(Npar) -1:0] res_kex, res_kpw;
+	logic [WG_W + $clog2(Npar+1) -1:0] res_kex, res_kpw;
 	logic [63:0] inf_conv;
 	logic [31:0] dma_info1, dma_mem_info1, dma_info2, dma_mem_info2;
-	logic [(2*$clog2(KEX_N_ELEM))-1:0] size_kex;
-	logic [$clog2(KEX_N_ELEM)-1:0] size_KEX;
+	logic [(2*$clog2(KEX_N_ELEM+1))-1:0] size_kex;
+	logic [$clog2(KEX_N_ELEM+1)-1:0] size_KEX;
 	
 	/* 
 		###################################################################################################################################
@@ -68,7 +69,8 @@ module inverted_residual_block(input 	logic clk, rst, start,
 							 .finish(finish),
 							 .dma_op(op),
 							 .dma_info1(dma_info1), .dma_mem_info1(dma_mem_info1), 
-							 .dma_info2(dma_info2), .dma_mem_info2(dma_mem_info2) 
+							 .dma_info2(dma_info2), .dma_mem_info2(dma_mem_info2),
+							 .first_par(first_par_mc)
 							);
 	
 	// DMA
@@ -93,7 +95,7 @@ module inverted_residual_block(input 	logic clk, rst, start,
 	Convolution_1_1 conv_11(.clk(clk), .rst(rst), .start(start_conv11),
 							  .fmi_data(res_fmi),
 							  .kex_data(res_kex[WG_W-1:0]),
-							  .kex_pos(res_kex[WG_W + $clog2(Npar) -1:WG_W ]),
+							  .kex_pos(res_kex[WG_W + $clog2(Npar+1) -1:WG_W ]),
 							  .Size_KEX(size_KEX),
 							  .Nif(inf_conv[26:16]),
 							  .fmi_addr(ram_addr_fmi_conv11),
@@ -105,11 +107,12 @@ module inverted_residual_block(input 	logic clk, rst, start,
 	
 	// DSC Convolution
 	Convolution_dsc conv_dsc(	.clk(clk), .rst(rst), .start(start_dsc), .S(inf_conv[41]),
+										.first_par_i(first_par_mc),
 										.fmint_data(res_fmint),
 										.fmo_data(res_fmo),
 										.kdw_data(res_kdw),
 										.kpw_data(res_kpw[WG_W-1:0]),
-										.kpw_pos(res_kpw[WG_W + $clog2(Npar) -1:WG_W ]),
+										.kpw_pos(res_kpw[WG_W + $clog2(Npar+1) -1:WG_W ]),
 										.Nif(inf_conv[26:16]),
 										.Nof(inf_conv[37:27]), 
 										.Nox(inf_conv[7:0] >> inf_conv[41]), .Noy(inf_conv[15:8] >> inf_conv[41]),
@@ -133,7 +136,7 @@ module inverted_residual_block(input 	logic clk, rst, start,
 	// RAM_KEX				
 	RAM_KEX ram_kex( .clk(clk),
 						  .addr(ram_addr_kex),
-						  .data(w_data[WG_W + $clog2(Npar) -1:0]),
+						  .data(w_data[WG_W + $clog2(Npar+1) -1:0]),
 						  .write(w_kex),
 						  .res(res_kex)
 						);
@@ -162,7 +165,7 @@ module inverted_residual_block(input 	logic clk, rst, start,
 	// RAM_KPW
 	RAM_KPW ram_kpw( .clk(clk),
 						  .addr(ram_addr_kpw),
-						  .data(w_data[WG_W + $clog2(Npar) -1:0]),
+						  .data(w_data[WG_W + $clog2(Npar+1) -1:0]),
 						  .write(w_kpw),
 						  .res(res_kpw)
 						);
@@ -171,13 +174,13 @@ module inverted_residual_block(input 	logic clk, rst, start,
 		# Combinational logic																																				 #
 		###################################################################################################################################
 	*/
-	assign ram_addr_fmi 	 = w_fmi   ? ram_addr_dma[$clog2(FMI_N_ELEM)-1:0] : ram_addr_fmi_conv11 ;
+	assign ram_addr_fmi 	 = w_fmi   ? ram_addr_dma[$clog2(FMI_N_ELEM+1)-1:0] : ram_addr_fmi_conv11 ;
 	assign ram_addr_fmint = w_fmint ? ram_addr_fmint_conv11 					  : ram_addr_fmint_dsc;
-	assign ram_addr_kex 	 = w_kex   ? ram_addr_dma[$clog2(KEX_N_ELEM)-1:0] : ram_addr_kex_conv11 ;
-	assign ram_addr_fmo = dma_r_fmo ? ram_addr_dma[$clog2(FMO_N_ELEM)-1:0] : ram_addr_fmo_dsc;
-	assign ram_addr_kpw = w_kpw ? ram_addr_dma[$clog2(KPW_N_ELEM)-1:0] : ram_addr_kpw_dsc ;
-	assign ram_addr_kdw = w_kdw ? ram_addr_dma[$clog2(KDW_N_ELEM)-1:0] : ram_addr_kdw_dsc ;
-	assign size_kex = Nnp[$clog2(KEX_N_ELEM)-1:0] * inf_conv[42 + $clog2(KEX_N_ELEM)-1:42];
-	assign size_KEX = size_kex[$clog2(KEX_N_ELEM)-1:0];
+	assign ram_addr_kex 	 = w_kex   ? ram_addr_dma[$clog2(KEX_N_ELEM+1)-1:0] : ram_addr_kex_conv11 ;
+	assign ram_addr_fmo = dma_r_fmo ? ram_addr_dma[$clog2(FMO_N_ELEM+1)-1:0] : ram_addr_fmo_dsc;
+	assign ram_addr_kpw = w_kpw ? ram_addr_dma[$clog2(KPW_N_ELEM+1)-1:0] : ram_addr_kpw_dsc ;
+	assign ram_addr_kdw = w_kdw ? ram_addr_dma[$clog2(KDW_N_ELEM+1)-1:0] : ram_addr_kdw_dsc ;
+	assign size_kex = Nnp[$clog2(KEX_N_ELEM+1)-1:0] * inf_conv[41 + $clog2(KEX_N_ELEM+1) :42];
+	assign size_KEX = size_kex[$clog2(KEX_N_ELEM+1)-1:0];
 	
 endmodule

@@ -16,7 +16,7 @@ import irb_pkg::*;
 */
 module RAM_FMI(
 						input logic  clk, 								  // Clock
-						input logic  [$clog2(FMI_N_ELEM)-1:0] addr, // Ram address to read/write data
+						input logic  [$clog2(FMI_N_ELEM+1)-1:0] addr, // Ram address to read/write data
 						input logic  [PX_W-1:0] data,					  // if write is enabled, data to write at address addr
 						input logic  write,								  // if enabled, write data
 						output logic [PX_W-1:0] res					  // Data
@@ -26,7 +26,7 @@ module RAM_FMI(
 		# RAM 																																			            	 #
 		################################################################################################################################
 	*/
-	logic [PX_W-1:0] mem [FMI_N_ELEM-1:0];
+	logic [PX_W-1:0] mem [0:FMI_N_ELEM-1];
 	/* 
 		################################################################################################################################
 		# Sequential logic																																				 #

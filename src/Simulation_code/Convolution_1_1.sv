@@ -18,12 +18,12 @@ import irb_pkg::*;
 module Convolution_1_1(input logic clk, rst, start,								// clock, reset and start the module signals
 							  input logic signed [PX_W - 1:0] fmi_data,				//	Data sent from the FMI buffer
 							  input logic signed [WG_W -1:0] kex_data,				//	Data sent from the KEX buffer (the weight)
-							  input logic [$clog2(Npar) - 1:0] kex_pos,				// Data sent from the FMI buffer (the position of the weight)
+							  input logic [$clog2(Npar+1) - 1:0] kex_pos,				// Data sent from the FMI buffer (the position of the weight)
 							  input logic [10:0] Nif,										//	Number of input channels
-							  input logic [$clog2(KEX_N_ELEM)-1:0]	Size_KEX,		// Size of one expasion kernel (number of element)
-							  output logic [$clog2(FMI_N_ELEM)-1:0] fmi_addr,		// Address of the fmi buffer to read the pixels
-							  output logic [$clog2(KEX_N_ELEM)-1:0] kex_addr,		// Address of the fmi buffer to read the weights
-							  output logic [$clog2(FMINT_N_ELEM)-1:0] fmint_addr,	// Address of the fmint buffer to write resutls
+							  input logic [$clog2(KEX_N_ELEM+1)-1:0]	Size_KEX,		// Size of one expasion kernel (number of element)
+							  output logic [$clog2(FMI_N_ELEM+1)-1:0] fmi_addr,		// Address of the fmi buffer to read the pixels
+							  output logic [$clog2(KEX_N_ELEM+1)-1:0] kex_addr,		// Address of the fmi buffer to read the weights
+							  output logic [$clog2(FMINT_N_ELEM+1)-1:0] fmint_addr,	// Address of the fmint buffer to write resutls
 							  output logic finish, write,									// Finish enabled when the module has finished its computation and write enabled if intermediate results can be written to main memory
 							  output logic signed [PX_W - 1:0] res						// output pixel to be written to fmint buffer
 							 );
@@ -44,15 +44,15 @@ module Convolution_1_1(input logic clk, rst, start,								// clock, reset and s
 	statetype state, state_n; // Variables containing the state
 	
 	// Registers
-	logic signed [PX_W - 1:0]  px  [Npar-1 : 0]; 					// Registers containing the value of the pixels needed for computation
-	logic signed [WG_W - 1:0]  wg  [Nnp-1 : 0];						// Registers containing the value of the weights needed for computation
-	logic [$clog2(Npar) - 1:0] pos [Nnp-1 : 0];						// Registers containing the value of the position needed for computation
+	logic signed [PX_W - 1:0]  px  [0 : Npar-1]; 					// Registers containing the value of the pixels needed for computation
+	logic signed [WG_W - 1:0]  wg  [0 : Nnp-1];						// Registers containing the value of the weights needed for computation
+	logic [$clog2(Npar+1) - 1:0] pos [0 : Nnp-1];						// Registers containing the value of the position needed for computation
 	logic [7:0] x_fmi, y_fmi;												// Position of the pixels where the convolution happen
 	logic [10:0] f_fmi, f_fmint, tf_fmi;								// input and intermediate channel
 	logic [10:0] np_kex;														// position of the weight in the kernel
-	logic [$clog2(FMI_N_ELEM)-1:0] x_addr, y_addr, f_fmi_addr;	// address of the FMI pixels
-	logic [$clog2(FMI_N_ELEM)-1:0] f_fmint_addr;						// address of the FMINT pixels (same x and y than FMI)
-	logic [$clog2(KEX_N_ELEM)-1:0] f_kex_mem, x_kex_mem;			// RAM address of the 1*1 expansion kernel
+	logic [$clog2(FMI_N_ELEM+1)-1:0] x_addr, y_addr, f_fmi_addr;	// address of the FMI pixels
+	logic [$clog2(FMINT_N_ELEM+1)-1:0] f_fmint_addr;						// address of the FMINT pixels (same x and y than FMI)
+	logic [$clog2(KEX_N_ELEM+1)-1:0] f_kex_mem, x_kex_mem;			// RAM address of the 1*1 expansion kernel
 	logic load_px, load_wg;													// when enabled, we fill the corresponding shift registers
 	logic signed [PX_W - 1:0] sum;										// Intermediate sum
 	
@@ -60,9 +60,9 @@ module Convolution_1_1(input logic clk, rst, start,								// clock, reset and s
 	logic [7:0] x_fmi_n, y_fmi_n;
 	logic [10:0] f_fmi_n, f_fmint_n, tf_fmi_n;
 	logic [10:0] np_kex_n;
-	logic [$clog2(FMI_N_ELEM)-1:0] x_addr_n, y_addr_n, f_fmi_addr_n; 
-	logic [$clog2(FMINT_N_ELEM)-1:0] f_fmint_addr_n;					
-	logic [$clog2(KEX_N_ELEM)-1:0] f_kex_mem_n, x_kex_mem_n;
+	logic [$clog2(FMI_N_ELEM+1)-1:0] x_addr_n, y_addr_n, f_fmi_addr_n;  
+	logic [$clog2(FMINT_N_ELEM+1)-1:0] f_fmint_addr_n;					
+	logic [$clog2(KEX_N_ELEM+1)-1:0] f_kex_mem_n, x_kex_mem_n; 
 	logic load_px_n, load_wg_n;
 	logic signed [PX_W - 1:0] sum_n; 
 	 
@@ -120,7 +120,7 @@ module Convolution_1_1(input logic clk, rst, start,								// clock, reset and s
 	
 	//Addresses
 	assign fmi_addr = x_addr + y_addr + f_fmi_addr;
-	assign fmint_addr = x_addr + y_addr + f_fmint_addr;
+	assign fmint_addr = x_addr[$clog2(FMINT_N_ELEM+1)-1:0] + y_addr[$clog2(FMINT_N_ELEM+1)-1:0] + f_fmint_addr;
 	assign kex_addr = f_kex_mem + x_kex_mem;
 	
 	always_comb begin
@@ -178,7 +178,7 @@ module Convolution_1_1(input logic clk, rst, start,								// clock, reset and s
 					// Loop variables
 					f_fmi_n = f_fmi + load_px; tf_fmi_n = tf_fmi + load_px;
 					// Update address
-					f_fmi_addr_n = f_fmi_addr + Size_FMI_T[$clog2(FMI_N_ELEM)-1:0];
+					f_fmi_addr_n = f_fmi_addr + Size_FMI_T[$clog2(FMI_N_ELEM+1)-1:0];
 				end
 				
 				// Load the corresponding weights
@@ -193,7 +193,7 @@ module Convolution_1_1(input logic clk, rst, start,								// clock, reset and s
 					// Loop variables
 					np_kex_n = np_kex + load_wg;
 					// Update address
-					x_kex_mem_n = x_kex_mem + {{$clog2(KEX_N_ELEM) - 1{1'b0}}, ~load_wg}; 
+					x_kex_mem_n = x_kex_mem + {{$clog2(KEX_N_ELEM+1) - 1{1'b0}}, ~load_wg}; 
 				end
 				else begin
 					// enabled load
@@ -201,7 +201,7 @@ module Convolution_1_1(input logic clk, rst, start,								// clock, reset and s
 					// Loop variables
 					np_kex_n = np_kex + load_wg;
 					// Update address
-					x_kex_mem_n = x_kex_mem + {{$clog2(KEX_N_ELEM) - 1{1'b0}}, 1'b1};
+					x_kex_mem_n = x_kex_mem + {{$clog2(KEX_N_ELEM+1) - 1{1'b0}}, 1'b1};
 				end
 			end
 			
@@ -212,13 +212,13 @@ module Convolution_1_1(input logic clk, rst, start,								// clock, reset and s
 					// Intermediate values
 					logic signed [PX_W - 1 : 0] cur_val;
 					logic signed [WG_W - 1 : 0] cur_wg;
-					logic signed [$clog2(Npar):0] cur_pos;
+					logic signed [$clog2(Npar+1):0] cur_pos;
 					logic signed [(2*PX_W) - 1 : 0] int_res;
 					logic signed [PX_W - 1 : 0] trunc_res;
 					logic signed [PX_W - 1 : 0] round_res;
 					// Computation
-					cur_pos[$clog2(Npar)-1:0] = pos[i][$clog2(Npar) -1 :0];
-					cur_val = px[cur_pos[$clog2(Npar)-1:0]][PX_W - 1 : 0];
+					cur_pos[$clog2(Npar+1)-1:0] = pos[i][$clog2(Npar+1) -1 :0];
+					cur_val = px[cur_pos[$clog2(Npar+1) - 1:0]][PX_W - 1 : 0];
 					cur_wg = wg[i][WG_W - 1:0];
 					int_res = cur_val * cur_wg;
 					trunc_res = int_res[(2*PX_W) - 4 - 1: PX_W - 4];
@@ -238,8 +238,8 @@ module Convolution_1_1(input logic clk, rst, start,								// clock, reset and s
 					f_fmi_n = f_fmi + 11'b1; tf_fmi_n = 1;
 					np_kex_n = 1;	
 					// Update address
-					f_fmi_addr_n = f_fmi_addr + Size_FMI_T[$clog2(FMI_N_ELEM)-1:0]; // We change the Par (next channel)
-					x_kex_mem_n = x_kex_mem + '1; // We change the group (next weight)
+					f_fmi_addr_n = f_fmi_addr + Size_FMI_T[$clog2(FMI_N_ELEM+1)-1:0]; // We change the Par (next channel)
+					x_kex_mem_n = x_kex_mem + {{$clog2(KEX_N_ELEM+1) - 1{1'b0}}, 1'b1}; // We change the group (next weight) 
 				end
 			end
 			
@@ -268,7 +268,7 @@ module Convolution_1_1(input logic clk, rst, start,								// clock, reset and s
 							f_fmint_n = f_fmint + 11'b1;
 							// Update Memory variables
 							f_kex_mem_n = f_kex_mem + Size_KEX;
-							f_fmint_addr_n = f_fmint_addr + Size_FMI_T[$clog2(FMI_N_ELEM)-1:0];
+							f_fmint_addr_n = f_fmint_addr + Size_FMI_T[$clog2(FMINT_N_ELEM+1)-1:0];
 						end
 					end
 					else begin // Spatial change
@@ -277,7 +277,7 @@ module Convolution_1_1(input logic clk, rst, start,								// clock, reset and s
 						// Update Loop variables
 						y_fmi_n = y_fmi + 8'b1;
 						// Update Memory variables
-						y_addr_n = y_addr + Tix_T[$clog2(FMI_N_ELEM)-1:0];
+						y_addr_n = y_addr + Tix_T[$clog2(FMI_N_ELEM+1)-1:0];
 					end
 				end
 				else begin // Spatial change
@@ -286,7 +286,7 @@ module Convolution_1_1(input logic clk, rst, start,								// clock, reset and s
 					// Update Loop variables
 					x_fmi_n = x_fmi + 8'b1;
 					// Update Memory variables
-					x_addr_n = x_addr + {{$clog2(FMI_N_ELEM)-1 {1'b0}}, 1'b1};
+					x_addr_n = x_addr + {{$clog2(FMI_N_ELEM+1)-1 {1'b0}}, 1'b1};
 				end
 			end
 		endcase
@@ -300,7 +300,7 @@ endmodule
 module SHIFT_REGISTER_PX(
 								 input logic clk, load,
 								 input logic signed[PX_W - 1:0] data,
-								 output logic signed [PX_W - 1:0] pixels [Npar-1 : 0]
+								 output logic signed [PX_W - 1:0] pixels [0 : Npar-1]
 								);
 	always_ff @(posedge clk) begin
 		if (load) begin
@@ -315,7 +315,7 @@ endmodule
 module SHIFT_REGISTER_WG(
 								 input logic clk, load,
 								 input logic signed [WG_W  - 1:0] data,
-								 output logic signed [WG_W  - 1:0] weights [Nnp-1 : 0]
+								 output logic signed [WG_W  - 1:0] weights [0 : Nnp-1]
 								);
 	always_ff @(posedge clk) begin
 		if (load) begin
@@ -329,8 +329,8 @@ endmodule
 
 module SHIFT_REGISTER_POS(
 								 input logic clk, load,
-								 input logic [$clog2(Npar) - 1:0] data,
-								 output logic [$clog2(Npar) - 1:0] pos [Nnp-1 : 0]
+								 input logic [$clog2(Npar+1) - 1:0] data,
+								 output logic [$clog2(Npar+1) - 1:0] pos [0 : Nnp-1]
 								);
 	always_ff @(posedge clk) begin
 		if (load) begin

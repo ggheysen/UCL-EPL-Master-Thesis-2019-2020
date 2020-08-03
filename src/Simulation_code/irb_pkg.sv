@@ -5,17 +5,17 @@ package irb_pkg;
 		parameter Nky  = 3; // Height of a DW kernel
 		
 		// FM
-		parameter Tox_I = 7; // Tox parameter
-		parameter Tix_T 	= 2*Tox_I + Nkx - 1; // Corresponding Tix
-		parameter Tox_T 	= 2*Tox_I; // To have Tix and Tox have the same value
-		parameter Toy_I = 7; // Tox parameter
-		parameter Tiy_T = 2*Toy_I + Nky - 1; // Corresponding Tix
-		parameter Toy_T = 2*Toy_I; // To have Tix and Tox have the same value
-		parameter Tif 	= 8; // Maximum number of input channel
+		parameter Tox_I = 3; // Tox parameter
+		parameter Tix_T 	= Tox_I + Nkx - 1; // Corresponding Tix
+		parameter Tox_T 	= Tox_I; // To have Tix and Tox have the same value
+		parameter Toy_I = 3; // Tox parameter
+		parameter Tiy_T = Toy_I + Nky - 1; // Corresponding Tix
+		parameter Toy_T = Toy_I; // To have Tix and Tox have the same value
+		parameter Tif 	= 16; // Maximum number of input channel
 		parameter Tof 	= Tif; // Maximum number of output channel
 		
 		/* Pruning parameters */
-		parameter Npar = 8;
+		parameter Npar = 4;
 		parameter Nnp 	= 2;
 		
 		/* Layer information paramters */
