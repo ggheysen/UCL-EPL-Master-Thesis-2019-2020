@@ -330,14 +330,14 @@ module Convolution_dsc(input logic clk, rst, start, S,
 							logic signed [WG_W - 1 : 0] cur_wg;
 							logic signed [PX_W + WG_W - 1 : 0] int_res;
 							logic signed [PX_W - 1 : 0] trunc_res;
-							logic signed [PX_W - 1 : 0] round_res;
+							//logic signed [PX_W - 1 : 0] round_res;
 							// COmputation
 							cur_val = fmint_px[(f*Nkx*Nky) + (y * Nkx) + x];
 							cur_wg  = dw_wg   [(f*Nkx*Nky) + (y * Nkx) + x];
 							int_res = cur_val * cur_wg;
 							trunc_res = int_res[PX_W + WG_W - 4 - 1: PX_W - 4];
-							round_res = int_res[PX_W + WG_W - 4 - 1];
-							res_dw_n[f] = res_dw_n[f] + trunc_res + round_res; 
+							//round_res = int_res[PX_W + WG_W - 4 - 1];
+							res_dw_n[f] = res_dw_n[f] + trunc_res; //+ round_res; 
 						end
 					end
 				end
@@ -345,8 +345,14 @@ module Convolution_dsc(input logic clk, rst, start, S,
 			
 			// Load the PW weights
 			LOAD_K_PW: begin
-				if (tkpw == Nnp) begin
-					state_n = PW_CONV;
+				if (tkpw >= Nnp) begin
+					if (tkpw == 1) begin
+						load_pw_n = 1;
+						tkpw_n = tkpw + {{$clog2(KPW_N_ELEM+1) - 1{1'b0}}, 1'b1};
+					end
+					else begin
+						state_n = PW_CONV;
+					end
 				end
 				else if (tkpw +1 == Nnp) begin
 					state_n = LOAD_K_PW;
@@ -376,15 +382,15 @@ module Convolution_dsc(input logic clk, rst, start, S,
 					logic signed [$clog2(Npar+1)-1:0] cur_pos;
 					logic signed [PX_W + WG_W - 1 : 0] int_res;
 					logic signed [PX_W - 1 : 0] trunc_res;
-					logic signed [PX_W - 1 : 0] round_res;
+					//logic signed [PX_W - 1 : 0] round_res;
 					// COmputation
 					cur_pos[$clog2(Npar+1)-1:0] = pw_pos[np][$clog2(Npar+1) -1 :0];
 					cur_val = res_dw_rel[cur_pos[$clog2(Npar+1)-1:0]][PX_W - 1 : 0];
 					cur_wg = pw_wg[np][WG_W - 1:0];
 					int_res = cur_val * cur_wg;
 					trunc_res = int_res[PX_W + WG_W - 4 - 1: PX_W - 4];
-					round_res = int_res[PX_W + WG_W - 4 - 1];
-					sum_n = sum_n + trunc_res + round_res; 
+					//round_res = int_res[PX_W + WG_W - 4 - 1];
+					sum_n = sum_n + trunc_res;// + round_res; 
 				end
 			end
 			// Write Result to FMO buffer

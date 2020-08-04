@@ -1,0 +1,433 @@
+{
+	"partitions" : [
+		{
+			"name" : "Top",
+			"pins" : [
+				{
+					"name" : "finish",
+					"strict" : false
+				},
+				{
+					"name" : "request_extmem",
+					"strict" : false
+				},
+				{
+					"name" : "write_extmem",
+					"strict" : false
+				},
+				{
+					"name" : "addr_extmem[0]",
+					"strict" : false
+				},
+				{
+					"name" : "addr_extmem[1]",
+					"strict" : false
+				},
+				{
+					"name" : "addr_extmem[2]",
+					"strict" : false
+				},
+				{
+					"name" : "addr_extmem[3]",
+					"strict" : false
+				},
+				{
+					"name" : "addr_extmem[4]",
+					"strict" : false
+				},
+				{
+					"name" : "addr_extmem[5]",
+					"strict" : false
+				},
+				{
+					"name" : "addr_extmem[6]",
+					"strict" : false
+				},
+				{
+					"name" : "addr_extmem[7]",
+					"strict" : false
+				},
+				{
+					"name" : "addr_extmem[8]",
+					"strict" : false
+				},
+				{
+					"name" : "addr_extmem[9]",
+					"strict" : false
+				},
+				{
+					"name" : "addr_extmem[10]",
+					"strict" : false
+				},
+				{
+					"name" : "addr_extmem[11]",
+					"strict" : false
+				},
+				{
+					"name" : "addr_extmem[12]",
+					"strict" : false
+				},
+				{
+					"name" : "addr_extmem[13]",
+					"strict" : false
+				},
+				{
+					"name" : "addr_extmem[14]",
+					"strict" : false
+				},
+				{
+					"name" : "addr_extmem[15]",
+					"strict" : false
+				},
+				{
+					"name" : "addr_extmem[16]",
+					"strict" : false
+				},
+				{
+					"name" : "addr_extmem[17]",
+					"strict" : false
+				},
+				{
+					"name" : "addr_extmem[18]",
+					"strict" : false
+				},
+				{
+					"name" : "addr_extmem[19]",
+					"strict" : false
+				},
+				{
+					"name" : "addr_extmem[20]",
+					"strict" : false
+				},
+				{
+					"name" : "addr_extmem[21]",
+					"strict" : false
+				},
+				{
+					"name" : "addr_extmem[22]",
+					"strict" : false
+				},
+				{
+					"name" : "addr_extmem[23]",
+					"strict" : false
+				},
+				{
+					"name" : "addr_extmem[24]",
+					"strict" : false
+				},
+				{
+					"name" : "addr_extmem[25]",
+					"strict" : false
+				},
+				{
+					"name" : "addr_extmem[26]",
+					"strict" : false
+				},
+				{
+					"name" : "addr_extmem[27]",
+					"strict" : false
+				},
+				{
+					"name" : "addr_extmem[28]",
+					"strict" : false
+				},
+				{
+					"name" : "addr_extmem[29]",
+					"strict" : false
+				},
+				{
+					"name" : "addr_extmem[30]",
+					"strict" : false
+				},
+				{
+					"name" : "addr_extmem[31]",
+					"strict" : false
+				},
+				{
+					"name" : "w_data[0]",
+					"strict" : false
+				},
+				{
+					"name" : "w_data[1]",
+					"strict" : false
+				},
+				{
+					"name" : "w_data[2]",
+					"strict" : false
+				},
+				{
+					"name" : "w_data[3]",
+					"strict" : false
+				},
+				{
+					"name" : "w_data[4]",
+					"strict" : false
+				},
+				{
+					"name" : "w_data[5]",
+					"strict" : false
+				},
+				{
+					"name" : "w_data[6]",
+					"strict" : false
+				},
+				{
+					"name" : "w_data[7]",
+					"strict" : false
+				},
+				{
+					"name" : "w_data[8]",
+					"strict" : false
+				},
+				{
+					"name" : "w_data[9]",
+					"strict" : false
+				},
+				{
+					"name" : "w_data[10]",
+					"strict" : false
+				},
+				{
+					"name" : "w_data[11]",
+					"strict" : false
+				},
+				{
+					"name" : "w_data[12]",
+					"strict" : false
+				},
+				{
+					"name" : "w_data[13]",
+					"strict" : false
+				},
+				{
+					"name" : "w_data[14]",
+					"strict" : false
+				},
+				{
+					"name" : "w_data[15]",
+					"strict" : false
+				},
+				{
+					"name" : "w_data[16]",
+					"strict" : false
+				},
+				{
+					"name" : "w_data[17]",
+					"strict" : false
+				},
+				{
+					"name" : "w_data[18]",
+					"strict" : false
+				},
+				{
+					"name" : "w_data[19]",
+					"strict" : false
+				},
+				{
+					"name" : "w_data[20]",
+					"strict" : false
+				},
+				{
+					"name" : "w_data[21]",
+					"strict" : false
+				},
+				{
+					"name" : "w_data[22]",
+					"strict" : false
+				},
+				{
+					"name" : "w_data[23]",
+					"strict" : false
+				},
+				{
+					"name" : "w_data[24]",
+					"strict" : false
+				},
+				{
+					"name" : "w_data[25]",
+					"strict" : false
+				},
+				{
+					"name" : "w_data[26]",
+					"strict" : false
+				},
+				{
+					"name" : "w_data[27]",
+					"strict" : false
+				},
+				{
+					"name" : "w_data[28]",
+					"strict" : false
+				},
+				{
+					"name" : "w_data[29]",
+					"strict" : false
+				},
+				{
+					"name" : "w_data[30]",
+					"strict" : false
+				},
+				{
+					"name" : "w_data[31]",
+					"strict" : false
+				},
+				{
+					"name" : "finish_dma",
+					"strict" : false
+				},
+				{
+					"name" : "finish_dsc",
+					"strict" : false
+				},
+				{
+					"name" : "finish_conv11",
+					"strict" : false
+				},
+				{
+					"name" : "clk",
+					"strict" : false
+				},
+				{
+					"name" : "rst",
+					"strict" : false
+				},
+				{
+					"name" : "valid_extmem",
+					"strict" : false
+				},
+				{
+					"name" : "data_extmem[0]",
+					"strict" : false
+				},
+				{
+					"name" : "data_extmem[1]",
+					"strict" : false
+				},
+				{
+					"name" : "data_extmem[2]",
+					"strict" : false
+				},
+				{
+					"name" : "data_extmem[3]",
+					"strict" : false
+				},
+				{
+					"name" : "data_extmem[4]",
+					"strict" : false
+				},
+				{
+					"name" : "data_extmem[5]",
+					"strict" : false
+				},
+				{
+					"name" : "data_extmem[6]",
+					"strict" : false
+				},
+				{
+					"name" : "data_extmem[7]",
+					"strict" : false
+				},
+				{
+					"name" : "data_extmem[8]",
+					"strict" : false
+				},
+				{
+					"name" : "data_extmem[9]",
+					"strict" : false
+				},
+				{
+					"name" : "data_extmem[10]",
+					"strict" : false
+				},
+				{
+					"name" : "data_extmem[11]",
+					"strict" : false
+				},
+				{
+					"name" : "data_extmem[12]",
+					"strict" : false
+				},
+				{
+					"name" : "data_extmem[13]",
+					"strict" : false
+				},
+				{
+					"name" : "data_extmem[14]",
+					"strict" : false
+				},
+				{
+					"name" : "data_extmem[15]",
+					"strict" : false
+				},
+				{
+					"name" : "data_extmem[16]",
+					"strict" : false
+				},
+				{
+					"name" : "data_extmem[17]",
+					"strict" : false
+				},
+				{
+					"name" : "data_extmem[18]",
+					"strict" : false
+				},
+				{
+					"name" : "data_extmem[19]",
+					"strict" : false
+				},
+				{
+					"name" : "data_extmem[20]",
+					"strict" : false
+				},
+				{
+					"name" : "data_extmem[21]",
+					"strict" : false
+				},
+				{
+					"name" : "data_extmem[22]",
+					"strict" : false
+				},
+				{
+					"name" : "data_extmem[23]",
+					"strict" : false
+				},
+				{
+					"name" : "data_extmem[24]",
+					"strict" : false
+				},
+				{
+					"name" : "data_extmem[25]",
+					"strict" : false
+				},
+				{
+					"name" : "data_extmem[26]",
+					"strict" : false
+				},
+				{
+					"name" : "data_extmem[27]",
+					"strict" : false
+				},
+				{
+					"name" : "data_extmem[28]",
+					"strict" : false
+				},
+				{
+					"name" : "data_extmem[29]",
+					"strict" : false
+				},
+				{
+					"name" : "data_extmem[30]",
+					"strict" : false
+				},
+				{
+					"name" : "data_extmem[31]",
+					"strict" : false
+				},
+				{
+					"name" : "start",
+					"strict" : false
+				}
+			]
+		}
+	]
+}

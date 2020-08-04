@@ -1,0 +1,50 @@
+
+State Machine - |inverted_residual_block|DMA:dma|state
+Name state.W_FMO state.R_FMO state.W_KDW state.R_KDW state.W_KPW state.R_KPW state.W_KEXP state.R_KEXP state.W_FMI state.R_FMI state.W_INIT state.R_INIT state.RAM_LOADING state.FINISHED state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+state.FINISHED 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 
+state.RAM_LOADING 0 0 0 0 0 0 0 0 0 0 0 0 1 0 1 
+state.R_INIT 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1 
+state.W_INIT 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 
+state.R_FMI 0 0 0 0 0 0 0 0 0 1 0 0 0 0 1 
+state.W_FMI 0 0 0 0 0 0 0 0 1 0 0 0 0 0 1 
+state.R_KEXP 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1 
+state.W_KEXP 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 
+state.R_KPW 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 
+state.W_KPW 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1 
+state.R_KDW 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 
+state.W_KDW 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 
+state.R_FMO 0 1 0 0 0 0 0 0 0 0 0 0 0 0 1 
+state.W_FMO 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+
+State Machine - |inverted_residual_block|Main_controller:mc|state
+Name state.WRITE_FMO state.CONV_DSC state.LOAD_KDW state.LOAD_KPW state.CONV_11 state.LOAD_KEX state.LOAD_FMI state.LOAD_INF state.FINISH state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 0 0 
+state.FINISH 0 0 0 0 0 0 0 0 1 1 
+state.LOAD_INF 0 0 0 0 0 0 0 1 0 1 
+state.LOAD_FMI 0 0 0 0 0 0 1 0 0 1 
+state.LOAD_KEX 0 0 0 0 0 1 0 0 0 1 
+state.CONV_11 0 0 0 0 1 0 0 0 0 1 
+state.LOAD_KPW 0 0 0 1 0 0 0 0 0 1 
+state.LOAD_KDW 0 0 1 0 0 0 0 0 0 1 
+state.CONV_DSC 0 1 0 0 0 0 0 0 0 1 
+state.WRITE_FMO 1 0 0 0 0 0 0 0 0 1 
+
+State Machine - |inverted_residual_block|Convolution_dsc:conv_dsc|state
+Name state.WRITE state.PW_CONV state.LOAD_K_PW state.DW_CONV state.LOAD_FMINT state.LOAD_K_DW state.FINISHED state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.FINISHED 0 0 0 0 0 0 1 1 
+state.LOAD_K_DW 0 0 0 0 0 1 0 1 
+state.LOAD_FMINT 0 0 0 0 1 0 0 1 
+state.DW_CONV 0 0 0 1 0 0 0 1 
+state.LOAD_K_PW 0 0 1 0 0 0 0 1 
+state.PW_CONV 0 1 0 0 0 0 0 1 
+state.WRITE 1 0 0 0 0 0 0 1 
+
+State Machine - |inverted_residual_block|Convolution_1_1:conv_11|state
+Name state.WRITE state.COMPUTATION state.FINISHED state.IDLE state.LOAD_DATA 
+state.IDLE 0 0 0 0 0 
+state.FINISHED 0 0 1 1 0 
+state.LOAD_DATA 0 0 0 1 1 
+state.COMPUTATION 0 1 0 1 0 
+state.WRITE 1 0 0 1 0 

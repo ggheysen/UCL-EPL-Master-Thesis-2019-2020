@@ -38,6 +38,7 @@ module inverted_residual_block(input 	logic clk, rst, start,
 	logic w_fmi, w_kex, w_kpw, w_kdw, w_fmint, w_fmo;
 	logic [2:0] op;
 	logic first_par_mc;
+	logic [63:0] measure_cnt_dma, measure_cnt_c11, measure_cnt_dsc;
 	
 	// Addr
 	logic [$clog2(FMI_N_ELEM+1) - 1:0] ram_addr_dma;
@@ -70,7 +71,10 @@ module inverted_residual_block(input 	logic clk, rst, start,
 							 .dma_op(op),
 							 .dma_info1(dma_info1), .dma_mem_info1(dma_mem_info1), 
 							 .dma_info2(dma_info2), .dma_mem_info2(dma_mem_info2),
-							 .first_par(first_par_mc)
+							 .first_par(first_par_mc),
+							 .measure_cnt_dma(measure_cnt_dma),
+							 .measure_cnt_c11(measure_cnt_c11),
+							 .measure_cnt_dsc(measure_cnt_dsc)
 							);
 	
 	// DMA

@@ -215,15 +215,15 @@ module Convolution_1_1(input logic clk, rst, start,								// clock, reset and s
 					logic signed [$clog2(Npar+1):0] cur_pos;
 					logic signed [(2*PX_W) - 1 : 0] int_res;
 					logic signed [PX_W - 1 : 0] trunc_res;
-					logic signed [PX_W - 1 : 0] round_res;
+					//logic signed [PX_W - 1 : 0] round_res;
 					// Computation
 					cur_pos[$clog2(Npar+1)-1:0] = pos[i][$clog2(Npar+1) -1 :0];
 					cur_val = px[cur_pos[$clog2(Npar+1) - 1:0]][PX_W - 1 : 0];
-					cur_wg = wg[i][WG_W - 1:0];
+					cur_wg = wg[i][WG_W - 1:0]; 
 					int_res = cur_val * cur_wg;
 					trunc_res = int_res[(2*PX_W) - 4 - 1: PX_W - 4];
-					round_res = int_res[(2*PX_W) - 4 - 1];
-					sum_n = sum_n + trunc_res + round_res; 
+					//round_res = int_res[(2*PX_W) - 4 - 1];
+					sum_n = sum_n + trunc_res;// + round_res; 
 				end
 				
 				if(f_fmi == Nif) begin

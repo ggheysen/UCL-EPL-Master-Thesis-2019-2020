@@ -1,0 +1,20 @@
+Fitter Status : Successful - Tue Aug 04 12:55:16 2020
+Quartus Prime Version : 18.1.0 Build 625 09/12/2018 SJ Lite Edition
+Revision Name : inverted_residual_block
+Top-level Entity Name : inverted_residual_block
+Family : Cyclone V
+Device : 5CSEBA5U23I7S
+Timing Models : Final
+Logic utilization (in ALMs) : 17,119 / 32,070 ( 53 % )
+Total registers : 14692
+Total pins : 106 / 314 ( 34 % )
+Total virtual pins : 0
+Total block memory bits : 184,576 / 4,065,280 ( 5 % )
+Total RAM Blocks : 35 / 397 ( 9 % )
+Total DSP Blocks : 87 / 87 ( 100 % )
+Total HSSI RX PCSs : 0
+Total HSSI PMA RX Deserializers : 0
+Total HSSI TX PCSs : 0
+Total HSSI PMA TX Serializers : 0
+Total PLLs : 0 / 6 ( 0 % )
+Total DLLs : 0 / 4 ( 0 % )

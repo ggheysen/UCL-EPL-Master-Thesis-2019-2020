@@ -33,9 +33,9 @@ module testbench();
 	parameter Tif 	= 8;
 	parameter Tof 	= Tif;
 	
-	parameter Npar = 8;
-	
+	parameter Npar = 32;
 	parameter Nnp 	= 2;
+	
 	parameter Size_Par = Npar * Nnp;
 	parameter KDWSize = Nkx * Nky; // 16 bits each weight
 	parameter init_words = 8;
@@ -62,7 +62,8 @@ module testbench();
 	// File descriptors
 //	int fd_inf    , fd_fmi, fd_kex, fd_kdw, fd_kpw;
 	int fd;
-	int fd_res_fmo;
+	int fd_res_fmo, fd_measure;
+	longint latency;
 	// DUT input
 	logic clk, rst, start;
 	logic valid_data;
@@ -86,7 +87,7 @@ module testbench();
 	//write_
 	logic [31:0] addr;
 	logic [31:0] data;
-
+	logic [63:0] measure_cnt_dma, measure_cnt_c11, measure_cnt_dsc;
 	//Clock
 	always 
 		begin
@@ -105,7 +106,10 @@ module testbench();
 									.request_extmem(request_dut), . write_extmem(write_dut),
 									.addr_extmem(addr_dut),
 									.w_data(data_dut),
-									.finish_dma(f1), .finish_conv11(f2), .finish_dsc(f3)
+									.finish_dma(f1), .finish_conv11(f2), .finish_dsc(f3),
+									.measure_cnt_dma(measure_cnt_dma), 
+									.measure_cnt_c11(measure_cnt_c11), 
+									.measure_cnt_dsc(measure_cnt_dsc)
 									 );
 	/*
 		#############################
@@ -117,10 +121,12 @@ module testbench();
 		begin
 			clk <= 0; rst <= 1; start = 0; valid_data = 0;
 			fd_res_fmo = $fopen("simulation_file/result_fmo.txt", "w");
+			fd_measure = $fopen({"simulation_file/measure_", $sformatf("%d", Npar), "_", $sformatf("%d", Nnp),".txt"}, "w");
 			#ini_wait;
 			#lng_wait;
 			rst <= '0;
 			start <= 1;
+			latency = 0;
 	end
 	
 	/*
@@ -189,6 +195,9 @@ module testbench();
 		end
 	end
 	
+	always @(posedge clk) begin
+		latency = latency + 1;
+	end
 	/*
 		#############################
 		#  	  Seq logic	          #
@@ -227,6 +236,12 @@ module testbench();
 	always @(posedge finish) begin
 		#full_clk;
 		$fclose(fd_res_fmo);
+		// Write measure
+		$fwrite(fd_measure, "Overal latency : %d\n", latency);
+		$fwrite(fd_measure, "dma latency : %d\n", measure_cnt_dma);
+		$fwrite(fd_measure, "c11 : %d\n", measure_cnt_c11); 
+		$fwrite(fd_measure, "dsc : %d\n", measure_cnt_dsc); 
+		$fclose(fd_measure);
 		$stop;
 	end
 	

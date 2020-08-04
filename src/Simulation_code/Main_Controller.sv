@@ -22,7 +22,8 @@ module Main_controller(input logic clk, rst, start,
 							  output logic finish,
 							  output logic [2:0] dma_op,
 							  output logic [31:0] dma_info1, dma_mem_info1, dma_info2, dma_mem_info2,
-							  output logic 		first_par
+							  output logic 		first_par,
+							  output logic [63:0] measure_cnt_dma, measure_cnt_c11, measure_cnt_dsc 
 							 );
 	
 	/* 
@@ -64,6 +65,7 @@ module Main_controller(input logic clk, rst, start,
 	logic [31:0] grint_mem_n, par_dw_mem_n;
 	logic [31:0] grint_n;
 	logic first_par_n;
+	logic [63:0] measure_cnt_dma_n, measure_cnt_c11_n, measure_cnt_dsc_n;
 	
 	// Intermediate values
 	logic [10:0] Nintf_inter;
@@ -86,7 +88,10 @@ module Main_controller(input logic clk, rst, start,
 			par <= '0;
 			par_dw_mem <= '0;
 			grint <= '0; grint_mem <= '0;
-			first_par <= '0;	
+			first_par <= '0;
+			measure_cnt_dma <= '0; 
+			measure_cnt_c11 <= '0; 
+			measure_cnt_dsc <= '0;		
 		end
 		else begin
 			state  <= state_n  ;
@@ -101,7 +106,10 @@ module Main_controller(input logic clk, rst, start,
 			par <= par_n;
 			par_dw_mem <= par_dw_mem_n;
 			grint <= grint_n; grint_mem <= grint_mem_n;
-			first_par <= first_par_n;	
+			first_par <= first_par_n;
+			measure_cnt_dma <= measure_cnt_dma_n; 
+			measure_cnt_c11 <= measure_cnt_c11_n; 
+			measure_cnt_dsc <= measure_cnt_dsc_n;	
 		end
 	end
 	
@@ -144,6 +152,9 @@ module Main_controller(input logic clk, rst, start,
 		par_dw_mem_n = par_dw_mem;
 		grint_n = grint; grint_mem_n = grint_mem; 
 		first_par_n = '0;
+		measure_cnt_dma_n = measure_cnt_dma; 
+		measure_cnt_c11_n = measure_cnt_c11; 
+		measure_cnt_dsc_n = measure_cnt_dsc;
 		case (state)
 			IDLE: begin
 				if(start) begin
@@ -183,6 +194,7 @@ module Main_controller(input logic clk, rst, start,
 					// Assign op
 					op_n = 1;
 				end
+				measure_cnt_dma_n = measure_cnt_dma + 1;
 			end
 			
 			LOAD_FMI: begin
@@ -196,6 +208,7 @@ module Main_controller(input logic clk, rst, start,
 					// Update variables
 					par_mem_n = par_mem + Size_par_kex; //Par updated after DSC
 				end
+				measure_cnt_dma_n = measure_cnt_dma + 1;
 			end
 			
 			LOAD_KEX: begin
@@ -203,9 +216,11 @@ module Main_controller(input logic clk, rst, start,
 					state_n = CONV_11;
 					s_c11_n = 1;
 				end
+				measure_cnt_dma_n = measure_cnt_dma + 1;
 			end
 			
 			CONV_11: begin
+				measure_cnt_c11_n = measure_cnt_c11 + 1;
 				if (f_c11) begin
 					state_n = LOAD_KPW;
 					s_dma_n = 1;
@@ -229,6 +244,7 @@ module Main_controller(input logic clk, rst, start,
 					dma_info1_n = par + 1;
 					dma_mem_info1_n = par_dw_mem;
 				end
+				measure_cnt_dma_n = measure_cnt_dma + 1;
 			end
 			
 			LOAD_KDW: begin
@@ -240,9 +256,11 @@ module Main_controller(input logic clk, rst, start,
 					par_dw_mem_n = par_dw_mem + SIZE_PAR_DW;
 					first_par_n = (par == '0);
 				end
+				measure_cnt_dma_n = measure_cnt_dma + 1;
 			end
 			
 			CONV_DSC: begin
+				measure_cnt_dsc_n = measure_cnt_dsc + 1;
 				if (f_dsc) begin
 					if (par == Nintf) begin
 						state_n = WRITE_FMO;
@@ -280,10 +298,11 @@ module Main_controller(input logic clk, rst, start,
 			end
 			
 			WRITE_FMO: begin
+				measure_cnt_dma_n = measure_cnt_dma + 1;
 				if (f_dma) begin
 					if (tox == (Nox-Tox)) begin
 						tox_n = '0; ox_mem_n = '0;
-						if (toy == Noy) begin
+						if (toy == (Noy-Toy)) begin
 							state_n = FINISH;
 						end
 						else begin
