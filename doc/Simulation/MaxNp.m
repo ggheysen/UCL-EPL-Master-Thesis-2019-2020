@@ -1,12 +1,8 @@
-Npar = 1:1280;
+Npar = 2:1280;
 Nnp = zeros(1, length(Npar));
 BS = 16;
 for i = 1:length(Npar)
-    if (Npar(i) * BS)/(log2(Npar(i)) +  BS) - floor((Npar(i) * BS)/(log2(Npar(i)) +  BS)) == 0
-         Nnp(i) = ((Npar(i) * BS)/(log2(Npar(i)) +  BS)) - 1;
-    else
-         Nnp(i) = floor((Npar(i) * BS)/(log2(Npar(i)) +  BS));
-    end
+    Nnp(i) = (Npar(i) * BS)/(log2(Npar(i)) +  BS);
 end
 f = figure('visible','off');
 hold on;
