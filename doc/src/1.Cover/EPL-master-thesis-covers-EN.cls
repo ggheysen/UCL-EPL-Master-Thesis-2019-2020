@@ -36,6 +36,7 @@ maxcitenames=1
 \usepackage{hyperref}
 % Load the package
 \usepackage[acronym]{glossaries}
+\usepackage{algorithm,algpseudocode}
 % Listing properties
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
@@ -68,9 +69,8 @@ maxcitenames=1
 % Generate the glossary
 \makenoidxglossaries
 
-
 % Bibliography
-\addbibresource{src/0.Bibliography/build/thesis.bib}
+\addbibresource{src/0.Bibliography/thesis.bib}
 
 % Commands for title, readers, authors, dates, specialities,...
 \RequirePackage{etoolbox}

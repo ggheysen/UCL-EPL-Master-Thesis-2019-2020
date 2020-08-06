@@ -1,0 +1,38 @@
+\chapter{Weight and operation reduction factor} \label{appendix:factor}
+The following is the development to find the expression of the weight and operation reduction factors when applying the proposed pruning scheme on \acrshort{dsc}, inspired by \textcite{bai_cnn_2018, liu_fpga-based_2019}.
+
+The amount of weights $W_{DSC}$ and operations $O_{DSC}$ of the \acrshort{dsc} can be determined as follow:
+%
+\begin{align*}
+    W_{DSC} &= N_{kx} \times N_{ky} \times N_{if} + N_{if} + \times N_{of} \\
+    O_{DSC} &= N_{ix} \times N_{iy} \times N_{kx} \times N_{ky} \times N_{if} + N_{ix} \times N_{iy} \times N_{if} \times N_{of}
+\end{align*}
+%
+The same way, the amount of weights $W_{PR_DSC}$ and operations $O_{PR_DSC}$ of the \acrshort{dsc} with pruning can be determined as follow:
+%
+\begin{align*}
+    W_{PR_DSC} &= N_{kx} \times N_{ky} \times N_{if} + \times N_{if} + \times N_{np} \times N_{gr} \times N_{of}\\
+    O_{PR_DSC} &= N_{ix} \times N_{iy} \times N_{kx} \times N_{ky} \times N_{if} + N_{ix} \times N_{iy} \times N_{gr} \times N_{np} \times N_{of} 
+\end{align*}
+%
+The weight reduction factor can be expressed as the ratio between the number of weights in the \acrshort{dsc} and the pruned number of weights:
+
+\begin{align*}
+    F_{Wg} &= \frac{W_{DSC}}{W_{PR_DSC}} \\
+           &= \frac{N_{kx} \times N_{ky} \times N_{if} + N_{if} \times N_{of}}{N_{kx} \times N_{ky} \times N_{if} + N_{np} \times N_{gr} \times N_{of}}\\
+           &= \frac{N_{kx} \times N_{ky} \times N_{if} + N_{if} \times N_{of}}{N_{kx} \times N_{ky} \times N_{if} + N_{np} \times \frac{N_{if}}{N_{par}} \times N_{of}}\\
+           &= \frac{N_{kx} \times N_{ky} \times N_{if} + N_{if} \times N_{of}}{N_{kx} \times N_{ky} \times N_{if} + \alpha \times N_{if} \times N_{of}}\\
+           &= \frac{N_{kx} \times N_{ky} + N_{of}}{N_{kx} \times N_{ky} + \alpha \times N_{of}}\\
+           &= \frac{1 + \frac{N_{kx} \times N_{ky}} {N_{of}}} {\alpha + \frac{N_{kx} \times N_{ky}} {N_{of}}}
+\end{align*}
+%
+We can use the same method to find the operation reduction factor.
+%
+\begin{align*}
+    F_{Wg} &= \frac{O_{DSC}}{O_{PR_DSC}} \\
+           &= \frac{N_{ix} \times N_{iy} \times N_{kx} \times N_{ky} \times N_{if} + N_{ix} \times N_{iy} \times N_{if} \times N_{of}}{N_{ix} \times N_{iy} \times N_{kx} \times N_{ky} \times N_{if} + N_{ix} \times N_{iy} \times N_{gr} \times N_{np} \times N_{of}}\\
+           &= \frac{N_{kx} \times N_{ky} \times N_{if} + N_{if} \times N_{of}}{N_{kx} \times N_{ky} \times N_{if} + N_{gr} \times N_{np} \times N_{of}}\\
+           &= \frac{1 + \frac{N_{kx} \times N_{ky}} {N_{of}}} {\alpha + \frac{N_{kx} \times N_{ky}} {N_{of}}}
+\end{align*}
+%
+\newpage
