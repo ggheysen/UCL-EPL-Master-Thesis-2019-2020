@@ -1,8 +1,8 @@
 <sld_project_info>
   <project>
-    <hash md5_digest_80b="c3bf9c4e606dffafdd46"/>
+    <hash md5_digest_80b="ae6fd8c11d5beb3cdc29"/>
   </project>
   <file_info>
-    <file device="5CSEBA5U23I7S" path="inverted_residual_block.sof" usercode="0xFFFFFFFF"/>
+    <file device="5CSEBA6U23I7" path="inverted_residual_block.sof" usercode="0xFFFFFFFF"/>
   </file_info>
 </sld_project_info>

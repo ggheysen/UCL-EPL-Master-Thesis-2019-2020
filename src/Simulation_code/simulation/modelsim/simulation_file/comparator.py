@@ -75,7 +75,7 @@ for f in range(0, Nof):
     for y in range(0, Noy):
         for x in range(0, Nox):
             diff = abs(fmo[f][y][x]() - fmo_obtained[f][y][x]())
-            if (diff > 2):
+            if (diff > 1):
                 cnt_error = cnt_error + 1
             else:
                 cnt_nerror = cnt_nerror + 1

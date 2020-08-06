@@ -1,4 +1,24 @@
 
+State Machine - |inverted_residual_block|Convolution_dsc:conv_dsc|state
+Name state.PW_CONV state.LOAD_K_PW state.DW_CONV_ADD state.DW_CONV_MUL state.LOAD_FMINT state.LOAD_K_DW state.FINISHED state.IDLE state.WRITE 
+state.IDLE 0 0 0 0 0 0 0 0 0 
+state.FINISHED 0 0 0 0 0 0 1 1 0 
+state.LOAD_K_DW 0 0 0 0 0 1 0 1 0 
+state.LOAD_FMINT 0 0 0 0 1 0 0 1 0 
+state.DW_CONV_MUL 0 0 0 1 0 0 0 1 0 
+state.DW_CONV_ADD 0 0 1 0 0 0 0 1 0 
+state.LOAD_K_PW 0 1 0 0 0 0 0 1 0 
+state.PW_CONV 1 0 0 0 0 0 0 1 0 
+state.WRITE 0 0 0 0 0 0 0 1 1 
+
+State Machine - |inverted_residual_block|Convolution_1_1:conv_11|state
+Name state.WRITE state.COMPUTATION state.FINISHED state.IDLE state.LOAD_DATA 
+state.IDLE 0 0 0 0 0 
+state.FINISHED 0 0 1 1 0 
+state.LOAD_DATA 0 0 0 1 1 
+state.COMPUTATION 0 1 0 1 0 
+state.WRITE 1 0 0 1 0 
+
 State Machine - |inverted_residual_block|DMA:dma|state
 Name state.W_FMO state.R_FMO state.W_KDW state.R_KDW state.W_KPW state.R_KPW state.W_KEXP state.R_KEXP state.W_FMI state.R_FMI state.W_INIT state.R_INIT state.RAM_LOADING state.FINISHED state.IDLE 
 state.IDLE 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
@@ -29,22 +49,3 @@ state.LOAD_KPW 0 0 0 1 0 0 0 0 0 1
 state.LOAD_KDW 0 0 1 0 0 0 0 0 0 1 
 state.CONV_DSC 0 1 0 0 0 0 0 0 0 1 
 state.WRITE_FMO 1 0 0 0 0 0 0 0 0 1 
-
-State Machine - |inverted_residual_block|Convolution_dsc:conv_dsc|state
-Name state.WRITE state.PW_CONV state.LOAD_K_PW state.DW_CONV state.LOAD_FMINT state.LOAD_K_DW state.FINISHED state.IDLE 
-state.IDLE 0 0 0 0 0 0 0 0 
-state.FINISHED 0 0 0 0 0 0 1 1 
-state.LOAD_K_DW 0 0 0 0 0 1 0 1 
-state.LOAD_FMINT 0 0 0 0 1 0 0 1 
-state.DW_CONV 0 0 0 1 0 0 0 1 
-state.LOAD_K_PW 0 0 1 0 0 0 0 1 
-state.PW_CONV 0 1 0 0 0 0 0 1 
-state.WRITE 1 0 0 0 0 0 0 1 
-
-State Machine - |inverted_residual_block|Convolution_1_1:conv_11|state
-Name state.WRITE state.COMPUTATION state.FINISHED state.IDLE state.LOAD_DATA 
-state.IDLE 0 0 0 0 0 
-state.FINISHED 0 0 1 1 0 
-state.LOAD_DATA 0 0 0 1 1 
-state.COMPUTATION 0 1 0 1 0 
-state.WRITE 1 0 0 1 0 

@@ -64,11 +64,12 @@ module DMA( input  logic clk, rst, 										// Clock and reset signals
 	logic [31:0]	offset;
 	logic [$clog2(FMI_N_ELEM+1)-1:0]   x_ram, y_ram, f_ram;
 	logic 			r_req_extmem;
+	logic [31:0] Size_FMI, Size_FMO, Size_KEX, Size_KPW; //Size of the different element
 	
 	
 	// Next value for registers
 	logic [7:0]		Nix_n, Niy_n;
-	logic [10:0]	Nif_n, Nof_n, Ngr_n, Ngrint_n;
+	logic [10:0]	Nif_n, Nof_n, Ngr_n, Ngrint_n, Nintf_n;
 	logic [2:0]		t_n;
 	logic 			S_n;
 	logic [31:0] 	data_n;
@@ -77,6 +78,7 @@ module DMA( input  logic clk, rst, 										// Clock and reset signals
 	logic 			r_request_extmem_n;
 	logic [31:0]	offset_n;
 	logic [$clog2(FMI_N_ELEM+1)-1:0]   x_ram_n, y_ram_n, f_ram_n;
+	logic [31:0] Size_FMI_n, Size_FMO_n, Size_KEX_n, Size_KPW_n; //Size of the different element
 	
 	// Memory (offset & multiplication)
 	logic [31:0] mem_offset [4:0];
@@ -84,7 +86,6 @@ module DMA( input  logic clk, rst, 										// Clock and reset signals
 	
 	// Signals
 	logic padding_condition; //If we insert padding
-	logic [31:0] Size_FMI, Size_FMO, Size_KEX, Size_KPW; //Size of the different element
 	
 	/* 
 		###################################################################################################################################
@@ -107,7 +108,10 @@ module DMA( input  logic clk, rst, 										// Clock and reset signals
 			f <= '0; f_mem <= '0;
 			r_req_extmem <= '0;
 			x_ram <= '0; y_ram <='0; f_ram <= '0;
-			offset <= '0;
+			offset <= '0; 
+			Nintf <= '0;
+			Size_FMI <= '0; Size_FMO <= '0;
+			Size_KEX <= '0; Size_KPW <= '0;
 			for (int i = 0; i<5 ; i=i+1) begin
 				mem_offset[i] <= '0;
 			end
@@ -129,6 +133,9 @@ module DMA( input  logic clk, rst, 										// Clock and reset signals
 			r_req_extmem <= r_request_extmem_n;
 			offset <= offset_n;
 			x_ram <= x_ram_n; y_ram <= y_ram_n; f_ram <= f_ram_n;
+			Nintf <= Nintf_n;
+			Size_FMI <= Size_FMI_n; Size_FMO <= Size_FMO_n;
+			Size_KEX <= Size_KEX_n; Size_KPW <= Size_KPW_n;
 			for (int i = 0; i<5 ; i=i+1) begin
 				mem_offset[i] <= mem_offset_n[i];
 			end
@@ -182,11 +189,11 @@ module DMA( input  logic clk, rst, 										// Clock and reset signals
 	assign addr_ram    =          x_ram + y_ram + f_ram;
 	
 	// Store constant depending on the layer parameters
-	assign Size_FMI = Nix * Niy; // The size of one channel of input FM
-	assign Size_KEX = Ngr * Nnp; // The size of 1*1 exp kernel
-	assign Nintf = Nif * t;   // The number of intermediate channels
-	assign Size_KPW = Ngrint * Nnp; // The size of pointwise exp kernel
-	assign Size_FMO = Nox * Noy; // The size of one channel of output FM
+	assign Size_FMI_n = Nix * Niy; // The size of one channel of input FM
+	assign Size_KEX_n = Ngr * Nnp; // The size of 1*1 exp kernel
+	assign Nintf_n = Nif * t;   // The number of intermediate channels
+	assign Size_KPW_n = Ngrint * Nnp; // The size of pointwise exp kernel
+	assign Size_FMO_n = Nox * Noy; // The size of one channel of output FM
 	
 	always_comb begin
 		// If no values has changed

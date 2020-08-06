@@ -38,11 +38,12 @@ module Convolution_dsc(input logic clk, rst, start, S,
 		###################################################################################################################################
 	*/
 	// States
-	typedef enum logic [2:0] {IDLE,             
+	typedef enum logic [3:0] {IDLE,             
 									  FINISHED,					// State telling the DMA has finished its transaction
 									  LOAD_K_DW,
 									  LOAD_FMINT,
-									  DW_CONV,
+									  DW_CONV_MUL,
+									  DW_CONV_ADD,
 									  LOAD_K_PW,
 									  PW_CONV,
 									  WRITE
@@ -54,8 +55,12 @@ module Convolution_dsc(input logic clk, rst, start, S,
 	logic signed [WG_W-1 : 0] dw_wg    				[0 : (Nkx * Nky * Npar) - 1];
 	logic signed [PX_W-1 : 0] res_dw   				[0 : Npar - 1];
 	logic signed [PX_W-1 : 0] res_dw_n 				[0 : Npar - 1];
+	logic signed [PX_W-1 : 0] res_dw_mul			[0 : (Nkx * Nky * Npar) - 1];
+	logic signed [PX_W-1 : 0] res_dw_mul_n 		[0 : (Nkx * Nky * Npar) - 1];
 	logic signed [PX_W-1 : 0] res_dw_rel			[0 : Npar - 1];
+	logic signed [PX_W-1 : 0] res_dw_rel_n			[0 : Npar - 1];
 	logic signed [WG_W-1 : 0] pw_wg					[0 : Nnp - 1];
+	
 	logic signed [$clog2(Npar+1)-1 : 0] pw_pos		[0 : Nnp - 1];
 	// Registers
 	logic [PX_W-1 : 0] sum;
@@ -87,6 +92,7 @@ module Convolution_dsc(input logic clk, rst, start, S,
 	logic [$clog2(FMINT_N_ELEM+1)-1:0] addr_fmint_x_n, addr_fmint_y_n, addr_fmint_f_n;
 	logic [$clog2(FMINT_N_ELEM+1)-1:0] addr_fmint_x_ref_n, addr_fmint_y_ref_n;
 	logic first_par_n;
+	logic [PX_W-1 : 0] local_sum [0 : Npar - 1];
 	/* 
 		###################################################################################################################################
 		# Modules instatiation																																					 #
@@ -100,7 +106,7 @@ module Convolution_dsc(input logic clk, rst, start, S,
 	genvar i;
 	generate begin
 			for(i=0; i<Npar;i++) begin : activation_for
-				RELU6_DSC activation(.in(res_dw[i]), .out(res_dw_rel[i]));
+				RELU6_DSC activation(.in(res_dw[i]), .out(res_dw_rel_n[i]));
 			end
 		end
 	endgenerate
@@ -128,6 +134,10 @@ module Convolution_dsc(input logic clk, rst, start, S,
 			first_par <= '0;
 			for(int i =0; i < Npar ; i=i+1 ) begin
 				res_dw[i] <= '0;
+				res_dw_rel[i] <= '0;
+			end
+			for(int i = 0; i < (Nkx * Nky * Npar); i=i+1) begin
+				res_dw_mul[i] = '0;
 			end
 		end
 		else begin
@@ -147,6 +157,10 @@ module Convolution_dsc(input logic clk, rst, start, S,
 			first_par <= first_par_n;
 			for(int i =0; i < Npar ; i=i+1 ) begin
 				res_dw[i] <= res_dw_n[i];
+				res_dw_rel[i] <= res_dw_rel_n[i];
+			end
+			for(int i = 0; i < (Nkx * Nky * Npar); i=i+1) begin
+				res_dw_mul[i] = res_dw_mul_n[i];
 			end
 		end
 	end
@@ -199,7 +213,11 @@ module Convolution_dsc(input logic clk, rst, start, S,
 		// Intermediate result
 		for(int i =0; i < Npar ; i=i+1 ) begin
 				res_dw_n[i] = res_dw[i];
+				local_sum[i] = '0;
 		end
+		for(int i = 0; i < (Nkx * Nky * Npar); i=i+1) begin
+				res_dw_mul_n[i] = res_dw_mul[i];
+			end
 		case(state) 
 			// IDLE state - when no computation is occuring
 			IDLE: begin
@@ -277,7 +295,7 @@ module Convolution_dsc(input logic clk, rst, start, S,
 					if (tinty == Nky) begin
 						tinty_n = 1;
 						if (tintf == Npar) begin
-							state_n = DW_CONV;
+							state_n = DW_CONV_MUL;
 						end
 						else begin
 							tintf_n = tintf+ {{$clog2(Npar+1) - 1{1'b0}}, 1'b1}; 
@@ -316,13 +334,9 @@ module Convolution_dsc(input logic clk, rst, start, S,
 			end
 			
 			// DW convolution
-			DW_CONV: begin
-				state_n = LOAD_K_PW;
-				addr_fmo_f_n = '0;
-				tkpw_n = 1;
-				addr_k_pw_n = '0;
+			DW_CONV_MUL: begin
+				state_n = DW_CONV_ADD;
 				for(int f = 0; f < Npar ; f=f+1) begin
-					res_dw_n[f] = 0;
 					for (int y = 0; y < Nky ; y=y+1) begin
 						for (int x = 0; x < Nkx ; x=x+1) begin
 							// Intermediate values
@@ -330,16 +344,29 @@ module Convolution_dsc(input logic clk, rst, start, S,
 							logic signed [WG_W - 1 : 0] cur_wg;
 							logic signed [PX_W + WG_W - 1 : 0] int_res;
 							logic signed [PX_W - 1 : 0] trunc_res;
-							//logic signed [PX_W - 1 : 0] round_res;
-							// COmputation
+							// Computation
 							cur_val = fmint_px[(f*Nkx*Nky) + (y * Nkx) + x];
 							cur_wg  = dw_wg   [(f*Nkx*Nky) + (y * Nkx) + x];
 							int_res = cur_val * cur_wg;
 							trunc_res = int_res[PX_W + WG_W - 4 - 1: PX_W - 4];
-							//round_res = int_res[PX_W + WG_W - 4 - 1];
-							res_dw_n[f] = res_dw_n[f] + trunc_res; //+ round_res; 
+							res_dw_mul_n[f*Nky*Nky + y*Nkx + x] = trunc_res;
 						end
 					end
+				end
+			end
+			
+			DW_CONV_ADD: begin
+				state_n = LOAD_K_PW;
+				addr_fmo_f_n = '0;
+				tkpw_n = 1;
+				addr_k_pw_n = '0;
+				for(int f = 0; f < Npar ; f=f+1) begin
+					for (int y = 0; y < Nky ; y=y+1) begin
+						for (int x = 0; x < Nkx ; x=x+1) begin
+							local_sum[f] = local_sum[f] + res_dw_mul[f*Nky*Nky + y*Nkx + x];
+						end
+					end
+					res_dw_n[f] = local_sum[f];
 				end
 			end
 			

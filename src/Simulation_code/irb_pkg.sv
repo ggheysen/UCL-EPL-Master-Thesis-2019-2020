@@ -11,7 +11,7 @@ package irb_pkg;
 		parameter Toy_I = 7; // Tox parameter
 		parameter Tiy_T = Toy_I + Nky - 1; // Corresponding Tix
 		parameter Toy_T = Toy_I; // To have Tix and Tox have the same value
-		parameter Tif 	= 64; // Maximum number of input channel
+		parameter Tif 	= 1280; // Maximum number of input channel
 		parameter Tof 	= Tif; // Maximum number of output channel
 		
 		/* Pruning parameters */
@@ -28,11 +28,11 @@ package irb_pkg;
 		
 		/* RAM parameters */
 		// RAM FMI
-		parameter FMI_N_ELEM = Tix_T * Tiy_T * Tif; // Number of element in RAM
+		parameter FMI_N_ELEM = 7*7*1280; // Number of element in RAM
 		parameter Size_FMI_T = Tix_T * Tiy_T; 		  // Size of one FMI Tile
 		
 		// RAM FMO 
-		parameter FMO_N_ELEM = Tox_T * Toy_T * Tof; // Number of element in RAM
+		parameter FMO_N_ELEM = 7*7*1280; // Number of element in RAM
 		parameter Size_FMO_T = Tox_T * Toy_T;		  // Size of one FMO Tile (in address)
 		
 		// RAM KEX

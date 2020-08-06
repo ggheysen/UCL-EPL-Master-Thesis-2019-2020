@@ -11,7 +11,7 @@ Nof = 64
 Nkx = 3
 Nky = 3
 S = 1
-t = 6
+t = 1
 # Tiling params
 Tix = 7
 Tiy = 7

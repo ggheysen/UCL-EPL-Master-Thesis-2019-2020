@@ -56,6 +56,8 @@ module Main_controller(input logic clk, rst, start,
 	
 	
 	// Next value for registers
+	logic [31:0] Size_Ti_n, Size_To_n, Size_par_kex_n;
+	logic [7:0] Nintf_n, NTix_n, NTiy_n, Nox_n, Noy_n, Tox_n, Toy_n;
 	logic s_dma_n, s_c11_n, s_dsc_n;
 	logic [7:0] tix_n, tiy_n, tox_n, toy_n;
 	logic [10:0] par_n;
@@ -89,6 +91,11 @@ module Main_controller(input logic clk, rst, start,
 			par_dw_mem <= '0;
 			grint <= '0; grint_mem <= '0;
 			first_par <= '0;
+			Nintf <= '0; NTix <= '0; 
+			NTiy <= '0; Nox <= '0; 
+			Noy <= '0;
+			Tox <= '0; Toy <= '0;
+			Size_Ti <= '0; Size_To <= '0; Size_par_kex <= '0;
 			measure_cnt_dma <= '0; 
 			measure_cnt_c11 <= '0; 
 			measure_cnt_dsc <= '0;		
@@ -107,9 +114,14 @@ module Main_controller(input logic clk, rst, start,
 			par_dw_mem <= par_dw_mem_n;
 			grint <= grint_n; grint_mem <= grint_mem_n;
 			first_par <= first_par_n;
+			Nintf <= Nintf_n; NTix <= NTix_n; 
+			NTiy <= NTiy_n; Nox <= Nox_n; 
+			Noy <= Noy_n;
+			Tox <= Tox_n; Toy <= Toy_n;
+			Size_Ti <= Size_Ti_n; Size_To <= Size_To_n; Size_par_kex <= Size_par_kex_n;
 			measure_cnt_dma <= measure_cnt_dma_n; 
 			measure_cnt_c11 <= measure_cnt_c11_n; 
-			measure_cnt_dsc <= measure_cnt_dsc_n;	
+			measure_cnt_dsc <= measure_cnt_dsc_n;
 		end
 	end
 	
@@ -121,22 +133,22 @@ module Main_controller(input logic clk, rst, start,
 	
 	assign finish = (state == FINISH);
 	//Nox & Noy
-	assign Nox = (inf_conv[7:0] >> inf_conv[41]); assign Noy = (inf_conv[15:8] >> inf_conv[41]);
+	assign Nox_n = (inf_conv[7:0] >> inf_conv[41]); assign Noy_n = (inf_conv[15:8] >> inf_conv[41]);
 	// Nintf
 	assign Nintf_inter = inf_conv[40:38] * inf_conv[26:16];
-	assign Nintf = Nintf_inter[7:0];
+	assign Nintf_n = Nintf_inter[7:0];
 	//
-	assign NTix = (Tix_T[7:0] - Nkx[7:0]);
+	assign NTix_n = (Tix_T[7:0] - Nkx[7:0]);
 	//
-	assign NTiy = (Tiy_T[7:0] - Nky[7:0]);
+	assign NTiy_n = (Tiy_T[7:0] - Nky[7:0]);
 	// Tox
-	assign Tox = (NTix + 8'b1) >> inf_conv[41];
+	assign Tox_n = (NTix + 8'b1) >> inf_conv[41];
 	// Toy
-	assign Toy = (NTiy + 8'b1) >> inf_conv[41];
+	assign Toy_n = (NTiy + 8'b1) >> inf_conv[41];
 	// Size
-	assign Size_Ti = inf_conv[7:0] * NTiy;
-	assign Size_To = (inf_conv[7:0] >> inf_conv[41]) * Toy ;
-	assign Size_par_kex = inf_conv[26:16] * Nnp;
+	assign Size_Ti_n = inf_conv[7:0] * NTiy;
+	assign Size_To_n = (inf_conv[7:0] >> inf_conv[41]) * Toy ;
+	assign Size_par_kex_n = inf_conv[26:16] * Nnp;
 	
 	//FSM
 	always_comb begin
@@ -179,6 +191,7 @@ module Main_controller(input logic clk, rst, start,
 			end
 			
 			LOAD_INF: begin
+				measure_cnt_dma_n = measure_cnt_dma + 1;
 				if (f_dma) begin
 					// Next state & start module
 					state_n = LOAD_FMI;
@@ -194,10 +207,10 @@ module Main_controller(input logic clk, rst, start,
 					// Assign op
 					op_n = 1;
 				end
-				measure_cnt_dma_n = measure_cnt_dma + 1;
 			end
 			
 			LOAD_FMI: begin
+				measure_cnt_dma_n = measure_cnt_dma + 1;
 				if (f_dma) begin
 					state_n = LOAD_KEX;
 					s_dma_n = 1;
@@ -208,15 +221,14 @@ module Main_controller(input logic clk, rst, start,
 					// Update variables
 					par_mem_n = par_mem + Size_par_kex; //Par updated after DSC
 				end
-				measure_cnt_dma_n = measure_cnt_dma + 1;
 			end
 			
 			LOAD_KEX: begin
+				measure_cnt_dma_n = measure_cnt_dma + 1;
 				if (f_dma) begin
 					state_n = CONV_11;
 					s_c11_n = 1;
 				end
-				measure_cnt_dma_n = measure_cnt_dma + 1;
 			end
 			
 			CONV_11: begin
@@ -236,6 +248,7 @@ module Main_controller(input logic clk, rst, start,
 			end
 			
 			LOAD_KPW: begin
+				measure_cnt_dma_n = measure_cnt_dma + 1;
 				if (f_dma) begin
 					state_n = LOAD_KDW;
 					s_dma_n = 1;
@@ -244,10 +257,10 @@ module Main_controller(input logic clk, rst, start,
 					dma_info1_n = par + 1;
 					dma_mem_info1_n = par_dw_mem;
 				end
-				measure_cnt_dma_n = measure_cnt_dma + 1;
 			end
 			
 			LOAD_KDW: begin
+				measure_cnt_dma_n = measure_cnt_dma + 1;
 				if (f_dma) begin
 					state_n = CONV_DSC;
 					s_dsc_n = 1;
@@ -256,7 +269,6 @@ module Main_controller(input logic clk, rst, start,
 					par_dw_mem_n = par_dw_mem + SIZE_PAR_DW;
 					first_par_n = (par == '0);
 				end
-				measure_cnt_dma_n = measure_cnt_dma + 1;
 			end
 			
 			CONV_DSC: begin

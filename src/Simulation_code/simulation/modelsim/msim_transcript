@@ -12,17 +12,17 @@
 # 
 # vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/irb_pkg.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 11:25:36 on Aug 04,2020
+# Start time: 16:24:14 on Aug 06,2020
 # vlog -reportprogress 300 -sv -work work "+incdir+D:/GitRepo/Memoire/src/Simulation_code" D:/GitRepo/Memoire/src/Simulation_code/irb_pkg.sv 
 # -- Compiling package irb_pkg
 # 
 # Top level modules:
 # 	--none--
-# End time: 11:25:36 on Aug 04,2020, Elapsed time: 0:00:00
+# End time: 16:24:14 on Aug 06,2020, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/inverted_residual_block.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 11:25:37 on Aug 04,2020
+# Start time: 16:24:14 on Aug 06,2020
 # vlog -reportprogress 300 -sv -work work "+incdir+D:/GitRepo/Memoire/src/Simulation_code" D:/GitRepo/Memoire/src/Simulation_code/inverted_residual_block.sv 
 # -- Compiling package inverted_residual_block_sv_unit
 # -- Importing package irb_pkg
@@ -30,11 +30,11 @@
 # 
 # Top level modules:
 # 	inverted_residual_block
-# End time: 11:25:37 on Aug 04,2020, Elapsed time: 0:00:00
+# End time: 16:24:14 on Aug 06,2020, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/Main_Controller.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 11:25:37 on Aug 04,2020
+# Start time: 16:24:14 on Aug 06,2020
 # vlog -reportprogress 300 -sv -work work "+incdir+D:/GitRepo/Memoire/src/Simulation_code" D:/GitRepo/Memoire/src/Simulation_code/Main_Controller.sv 
 # -- Compiling package Main_Controller_sv_unit
 # -- Importing package irb_pkg
@@ -42,11 +42,11 @@
 # 
 # Top level modules:
 # 	Main_controller
-# End time: 11:25:37 on Aug 04,2020, Elapsed time: 0:00:00
+# End time: 16:24:15 on Aug 06,2020, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 # vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/DMA.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 11:25:37 on Aug 04,2020
+# Start time: 16:24:15 on Aug 06,2020
 # vlog -reportprogress 300 -sv -work work "+incdir+D:/GitRepo/Memoire/src/Simulation_code" D:/GitRepo/Memoire/src/Simulation_code/DMA.sv 
 # -- Compiling package DMA_sv_unit
 # -- Importing package irb_pkg
@@ -54,11 +54,11 @@
 # 
 # Top level modules:
 # 	DMA
-# End time: 11:25:37 on Aug 04,2020, Elapsed time: 0:00:00
+# End time: 16:24:15 on Aug 06,2020, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/Convolution_1_1.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 11:25:37 on Aug 04,2020
+# Start time: 16:24:15 on Aug 06,2020
 # vlog -reportprogress 300 -sv -work work "+incdir+D:/GitRepo/Memoire/src/Simulation_code" D:/GitRepo/Memoire/src/Simulation_code/Convolution_1_1.sv 
 # -- Compiling package Convolution_1_1_sv_unit
 # -- Importing package irb_pkg
@@ -70,11 +70,11 @@
 # 
 # Top level modules:
 # 	Convolution_1_1
-# End time: 11:25:37 on Aug 04,2020, Elapsed time: 0:00:00
+# End time: 16:24:15 on Aug 06,2020, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/Convolution_dsc.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 11:25:37 on Aug 04,2020
+# Start time: 16:24:15 on Aug 06,2020
 # vlog -reportprogress 300 -sv -work work "+incdir+D:/GitRepo/Memoire/src/Simulation_code" D:/GitRepo/Memoire/src/Simulation_code/Convolution_dsc.sv 
 # -- Compiling package Convolution_dsc_sv_unit
 # -- Importing package irb_pkg
@@ -87,11 +87,11 @@
 # 
 # Top level modules:
 # 	Convolution_dsc
-# End time: 11:25:37 on Aug 04,2020, Elapsed time: 0:00:00
+# End time: 16:24:15 on Aug 06,2020, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/RAM_FMI.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 11:25:37 on Aug 04,2020
+# Start time: 16:24:15 on Aug 06,2020
 # vlog -reportprogress 300 -sv -work work "+incdir+D:/GitRepo/Memoire/src/Simulation_code" D:/GitRepo/Memoire/src/Simulation_code/RAM_FMI.sv 
 # -- Compiling package RAM_FMI_sv_unit
 # -- Importing package irb_pkg
@@ -99,11 +99,11 @@
 # 
 # Top level modules:
 # 	RAM_FMI
-# End time: 11:25:37 on Aug 04,2020, Elapsed time: 0:00:00
+# End time: 16:24:15 on Aug 06,2020, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/RAM_FMINT.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 11:25:37 on Aug 04,2020
+# Start time: 16:24:15 on Aug 06,2020
 # vlog -reportprogress 300 -sv -work work "+incdir+D:/GitRepo/Memoire/src/Simulation_code" D:/GitRepo/Memoire/src/Simulation_code/RAM_FMINT.sv 
 # -- Compiling package RAM_FMINT_sv_unit
 # -- Importing package irb_pkg
@@ -111,11 +111,11 @@
 # 
 # Top level modules:
 # 	RAM_FMINT
-# End time: 11:25:37 on Aug 04,2020, Elapsed time: 0:00:00
+# End time: 16:24:15 on Aug 06,2020, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/RAM_FMO.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 11:25:38 on Aug 04,2020
+# Start time: 16:24:15 on Aug 06,2020
 # vlog -reportprogress 300 -sv -work work "+incdir+D:/GitRepo/Memoire/src/Simulation_code" D:/GitRepo/Memoire/src/Simulation_code/RAM_FMO.sv 
 # -- Compiling package RAM_FMO_sv_unit
 # -- Importing package irb_pkg
@@ -123,11 +123,11 @@
 # 
 # Top level modules:
 # 	RAM_FMO
-# End time: 11:25:38 on Aug 04,2020, Elapsed time: 0:00:00
+# End time: 16:24:15 on Aug 06,2020, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/RAM_KEX.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 11:25:38 on Aug 04,2020
+# Start time: 16:24:15 on Aug 06,2020
 # vlog -reportprogress 300 -sv -work work "+incdir+D:/GitRepo/Memoire/src/Simulation_code" D:/GitRepo/Memoire/src/Simulation_code/RAM_KEX.sv 
 # -- Compiling package RAM_KEX_sv_unit
 # -- Importing package irb_pkg
@@ -135,11 +135,11 @@
 # 
 # Top level modules:
 # 	RAM_KEX
-# End time: 11:25:38 on Aug 04,2020, Elapsed time: 0:00:00
+# End time: 16:24:15 on Aug 06,2020, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/RAM_KDW.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 11:25:38 on Aug 04,2020
+# Start time: 16:24:16 on Aug 06,2020
 # vlog -reportprogress 300 -sv -work work "+incdir+D:/GitRepo/Memoire/src/Simulation_code" D:/GitRepo/Memoire/src/Simulation_code/RAM_KDW.sv 
 # -- Compiling package RAM_KDW_sv_unit
 # -- Importing package irb_pkg
@@ -147,11 +147,11 @@
 # 
 # Top level modules:
 # 	RAM_KDW
-# End time: 11:25:38 on Aug 04,2020, Elapsed time: 0:00:00
+# End time: 16:24:16 on Aug 06,2020, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/RAM_KPW.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 11:25:38 on Aug 04,2020
+# Start time: 16:24:16 on Aug 06,2020
 # vlog -reportprogress 300 -sv -work work "+incdir+D:/GitRepo/Memoire/src/Simulation_code" D:/GitRepo/Memoire/src/Simulation_code/RAM_KPW.sv 
 # -- Compiling package RAM_KPW_sv_unit
 # -- Importing package irb_pkg
@@ -159,23 +159,23 @@
 # 
 # Top level modules:
 # 	RAM_KPW
-# End time: 11:25:38 on Aug 04,2020, Elapsed time: 0:00:00
+# End time: 16:24:16 on Aug 06,2020, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # 
 # vlog -sv -work work +incdir+D:/GitRepo/Memoire/src/Simulation_code {D:/GitRepo/Memoire/src/Simulation_code/testbench.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 11:25:38 on Aug 04,2020
+# Start time: 16:24:16 on Aug 06,2020
 # vlog -reportprogress 300 -sv -work work "+incdir+D:/GitRepo/Memoire/src/Simulation_code" D:/GitRepo/Memoire/src/Simulation_code/testbench.sv 
 # -- Compiling module testbench
 # 
 # Top level modules:
 # 	testbench
-# End time: 11:25:38 on Aug 04,2020, Elapsed time: 0:00:00
+# End time: 16:24:16 on Aug 06,2020, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # 
 # vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -voptargs="+acc"  testbench
 # vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -voptargs=""+acc"" testbench 
-# Start time: 11:25:38 on Aug 04,2020
+# Start time: 16:24:16 on Aug 06,2020
 # Loading sv_std.std
 # Loading work.testbench
 # Loading work.irb_pkg
@@ -228,7 +228,7 @@
 # .main_pane.objects.interior.cs.body.tree
 # run -all
 # ** Note: $stop    : D:/GitRepo/Memoire/src/Simulation_code/testbench.sv(245)
-#    Time: 7516135 ns  Iteration: 0  Instance: /testbench
+#    Time: 1375175 ns  Iteration: 0  Instance: /testbench
 # Break in Module testbench at D:/GitRepo/Memoire/src/Simulation_code/testbench.sv line 245
-# End time: 11:27:28 on Aug 04,2020, Elapsed time: 0:01:50
+# End time: 16:29:45 on Aug 06,2020, Elapsed time: 0:05:29
 # Errors: 0, Warnings: 5
