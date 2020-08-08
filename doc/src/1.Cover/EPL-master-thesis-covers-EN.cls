@@ -37,6 +37,7 @@ maxcitenames=1
 % Load the package
 \usepackage[acronym]{glossaries}
 \usepackage{algorithm,algpseudocode}
+\usepackage{makecell}
 % Listing properties
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
