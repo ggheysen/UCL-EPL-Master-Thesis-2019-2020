@@ -1,4 +1,4 @@
-\subsection{dsc}
+\subsection{DSC}
 %
 %
 Some works put their interest in the implementation of the \acrshort{dsc}. In particular, we analyse the work of \textcite{bai_cnn_2018, liu_fpga-based_2019}. They present an \acrshort{fpga} accelerator that implement both standard and depthwise separable convolution. Networks like MobileNetV2 uses the 2 convolutions, the first one for not loosing to much information, the second one to speed up the inference. They both use a a commonly used \acrshort{dl} architecture that is called a heterogeneous system: a \acrshort{cpu} which controls the memory accesses and an accelerator that computes the convolution. The accelerator is designed in such a way that it can perform each layer of the network.
@@ -10,7 +10,7 @@ To improve the throughout of the network, they use a ping-pong buffer for the we
 Moreover, \textcite{liu_fpga-based_2019} has used the roofline model as method for design space exploration.
 %
 %
-\subsection{pruning}
+\subsection{Pruning} \label{subsec:impl_prun}
 %
 %
 When implementing a pruned \acrshort{cnn} on an \acrshort{fpga}, we must address the problem of sparsity to keep the parallelism and the performance of the \acrshort{fpga} \cite{zhu_efficient_2020}. As a regular data access pattern is assured by applying a structured pruning scheme, there are some source of inefficiency that an implementation must handle.
@@ -19,4 +19,4 @@ First, the \acrshort{pe}s must avoid performing computation involving 0 weights.
 
 Second, in order to reduce the storage utilization, the zero-weights in a kernel must be discarded. The weights must be encoded in such a way that we keep both values and index of the weights to reduce the overhead of computing the output address.  Usually, kernels are encoded in format derived from the \acrfull{csr} \cite{mao_exploring_2017}. For example, \cite{zhu_efficient_2020} modified the format to compress further and accelerate the inference.
 
-Finally, the problem of \textbf{load ballancing} can arise if the number of non-pruned weights is different in each \acrshort{pe} \cite{kim_zena_2018}. Therefore some \acrshort{pe} can finish before an other one and it can lead to inefficiency. \textcite{zhu_efficient_2020, kang_accelerator-aware_2020} solved this by setting an uniform number of weight in each kernels or group of fetched weights.
+Finally, the problem of \textbf{load-imballance} can arise if the number of non-pruned weights is different in each \acrshort{pe} \cite{kim_zena_2018}. Therefore some \acrshort{pe} can finish before an other one and it can lead to inefficiency. \textcite{zhu_efficient_2020, kang_accelerator-aware_2020} solved this by setting an uniform number of weight in each kernels or group of fetched weights.

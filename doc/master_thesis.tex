@@ -48,8 +48,9 @@
 \newacronym{clb}{CLB}{configurable logic block}
 \newacronym{ioe}{IOE}{input/output elements}
 \newacronym{rnn}{RNN}{Recurrent Neural Network}
-\newacronym{csr}{CSR}{Compressed Row Storage}
+\newacronym{csr}{CSR}{Compressed Sparse Row}
 \newacronym{dma}{DMA}{Direct Memory Access}
+\newacronym{fsm}{FSM}{Final State Machine}
 % Graphic path
 \graphicspath{{Images/}}
 
@@ -73,7 +74,7 @@
 	\newpage
 	\listoffigures
 	\afterpage{\blankpage}
-	\newpage§
+	\newpage
 	\printnoidxglossary[type=\acronymtype, title=List of Abbrevation, nonumberlist=true, toctitle=List of terms]
 	\afterpage{\blankpage}
 	\newpage
@@ -97,7 +98,13 @@
 
 	%% Appendixes
 	\appendix
+	\input{src/9.Appendixes/mbv2}
+	%
 	\input{src/9.Appendixes/demo_factor}
+	%
+	\input{src/9.Appendixes/demo_cf}
+	%
+	\input{src/9.Appendixes/detail_sig}
 
   	%% Bibliography
 	\input{src/0.Bibliography/Bibliography}

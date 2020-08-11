@@ -37,7 +37,6 @@ module Convolution_1_1(input logic clk, rst, start,								// clock, reset and s
 	typedef enum logic [2:0] {IDLE,             
 									  FINISHED,					// State telling the DMA has finished its transaction
 									  LOAD_DATA,
-									  FINISHED_LOAD,
 									  COMPUTATION,
 									  WRITE
 									  } statetype;

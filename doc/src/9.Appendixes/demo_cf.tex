@@ -1,0 +1,21 @@
+\chapter{Minimal pruning ratio required to reduce memory utilization} \label{appendix:cf}
+%
+To reduce the memory utilization, the number of bits required to represent a sparse kernel in the proposed compressed format must be less than if we store this kernel without compressed format. We can therefore express this requirement as in Equation \eqref{eq:cond_cf}, where $BW_{weight}$ is the bitwidtht of a weight.
+\begin{equation}
+    N_{np} \times N_{gr} \times (BW_{weight} + log_2(N_{par})) < N_{if} \times BW_{weight}
+    \label{eq:cond_cf}
+\end{equation}
+Equation \eqref{eq:cond_cf} can be developped to express the maximal pruning ratio $\alpha$ in order to save memory:
+\begin{align*}
+    N_{np} \times N_{gr} \times (BW_{weight} + log_2(N_{par})) &< N_{if} \times BW_{weight} \\
+    N_{np} \times \frac{N_{if}}{N_{par}} \times (BW_{weight} + log_2(N_{par})) &< N_{if} \times BW_{weight} \\
+    \frac{N_{np}}{N_{par}} \times (BW_{weight} + log_2(N_{par})) &< BW_{weight} \\
+    \alpha &< \frac{BW_{weight}}{(BW_{weight} + log_2(N_{par}))}
+\end{align*}
+
+As a result, to save memory utilization, given a $N_{par}$, we need a pruning ratio that satisfies the relation in Equation \ref{eq:relation_cf}.
+\begin{equation}
+    \alpha < \frac{BW_{weight}}{(BW_{weight} + log_2(N_{par}))}
+    \label{eq:relation_cf}
+\end{equation} 
+\newpage

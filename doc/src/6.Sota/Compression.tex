@@ -1,3 +1,8 @@
-\chapter{Model Compression}
-\label{chap:compress}
-babla
+\section{CNN optimizations for FPGA} \label{sec:opti_cnn}
+%
+%
+The previous chapter has described the way \acrshort{cnn} work and the different state-of-the-art models. Section \ref{subs:mbv2} evidenced the issue to implement the inference phase on mobile devices such as \acrshort{fpga}. Indeed, the computational complexity and the storage requirements are way beyond their capabilities. This section explores the state-of-the-art approaches to reduce the arithmetic complexity and the hardware utilization to handle this problem on a \acrshort{fpga}. First, Section \ref{subsec:algopti} details how to efficiently handle and optimize the convolution operation on \acrshort{fpga}. Then, Section \ref{subsec:mdopti} covers techniques to reduce the size of the model.
+%
+\input{src/6.Sota/subsection/opti_algo}
+%
+\input{src/6.Sota/subsection/opti_md}

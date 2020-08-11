@@ -57,19 +57,15 @@ This work focus on weights pruning that is not efficiently exploitable on a \acr
 \addcontentsline{toc}{section}{Structure of the thesis}
 %
 %
-This master thesis is composed of 7 chapters.
+This master thesis is composed of 3 chapters.
 
-Chapter \ref{chap:cnn} details the theory behind \acrshort{cnn} and goes deeper into its computational background. We also explore algorithmic and model optimizations to reduce the cost of the convolution operation and the size of the models.
+Chapter \ref{chap:background} details the background information about the two main topics of this thesis: \acrshort{cnn} and \acrshort{fpga}. First, we explore the theory behind \acrshort{cnn} and goes deeper into its computational background at Section \ref{sec:cnn}. Then, the concept of \acrshort{fpga} is explained at Secion \ref{sec:fpga}. We detail there the workflow and \acrshort{fpga} designs.
 
-The concept of \acrshort{fpga} is explained in Chapter \ref{chap:fpga}. We detail there the workflow and \acrshort{fpga} designs. The chapter also details datapath optimizations which reduce the inefficiency of the convolution on \acrshort{fpga}.
+Using knowledge of Chapter \ref{chap:background} , we explain in Chapter \ref{chap:sota} what is the focus of this work, the state-of-the-art techniques on accelerating the inference on \acrshort{fpga}. We explore algorithmic and model optimizations to reduce the cost of the convolution operation and the size of the models. The chapter also details datapath optimizations which reduce the inefficiency of the convolution on \acrshort{fpga} and on how to build an efficient architecture on \acrshort{fpga}.
 
-Using knowledge of Chapters \ref{chap:cnn} and \ref{chap:fpga}, we explain in chapter \ref{chap:inf} what is the focus of this work, pruning. We detail our hypothesis and \acrshort{fpga} architectures that have managed pruning schemes.
+Chapter \ref{chap:pratique} uses the knowledge from Chapter \ref{chap:sota} to design an efficient architecture using pruning and depthwise separable convolution. It also details the experimental setup to measure the performance of the developed architecture and discusses the obtained results
 
-Chapter \ref{chap:arch} explains on how to build an efficient architecture on \acrshort{fpga} and uses this knowledge to design our architecture using pruning and depthwise separable convolution.
-
-Chapter \ref{chap:measure} explains the simulation on SystemVerilog of the architecture developed in Chapter \ref{chap:arch} and details the experiments on this simulation. Potential improvements will be discussed.
-
-Finally, a conclusion on results obtained and discussion on future works is done in Chapter \ref{chap:ccl}.
+Finally, a conclusion on this work and the obtained results are done in the Conclusion. A discussion on the methodology and future works is also done.
 
 \afterpage{\blankpage}
 \cleardoublepage

@@ -33,7 +33,8 @@ maxcitenames=1
 \usepackage{svg}
 \usepackage{listings}
 \usepackage{xcolor}
-\usepackage{hyperref}
+\usepackage[pdfencoding=auto, psdextra]{hyperref}
+\usepackage{bookmark}% faster updated bookmarks
 % Load the package
 \usepackage[acronym]{glossaries}
 \usepackage{algorithm,algpseudocode}

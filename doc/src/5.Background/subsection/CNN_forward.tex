@@ -1,6 +1,6 @@
-\subsection{Forward-propagation} \label{subs:trainforward}
+\subsubsection{Forward-propagation} \label{subs:trainforward}
 %
-The first step of the backpropagation algorithm is the forward propagation. During this step, the training data are used as input of the model and each input is propagated through the network using the initialized weights. A vector of outputs is produced and is compared using a loss function (for example mean-square error defined by Equation \eqref{eq:mse}) with the label of the input (target $\boldsymbol{t}$) \cite{matteucci_artificial_2019}. The weights are then adjusted in order minimize the loss function. This can be done using the algorithms found in the next section \ref{subs:trainbackward}. When the model is trained, the inference consists only of the forward propagation \cite{abdelouahab_accelerating_2018}. 
+The first step of the backpropagation algorithm is the forward propagation. During this step, the training data are used as input of the model and each input is propagated through the network using the initialized weights. A vector of outputs is produced and is compared using a loss function (for example mean-square error defined by Equation \eqref{eq:mse}) with the label of the input (target $\boldsymbol{t}$) \cite{matteucci_artificial_2019}. The weights are then adjusted in order minimize the loss function. This can be done using the algorithms found in the next section \ref{subs:trainbackward}. When the model is trained, the inference consists only of the forward propagation \cite{abdelouahab_accelerating_2018}.
 %
 \begin{equation}
     L(\boldsymbol{x}, \boldsymbol{w}) = \sum^{N}_{i=1} (t_i - p(x_i, \boldsymbol{w}))^2

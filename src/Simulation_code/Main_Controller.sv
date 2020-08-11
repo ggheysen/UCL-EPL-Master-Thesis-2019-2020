@@ -41,8 +41,7 @@ module Main_controller(input logic clk, rst, start,
 									  LOAD_KPW,
 									  LOAD_KDW,
 									  CONV_DSC,
-									  WRITE_FMO,
-									  ADDRESS
+									  WRITE_FMO
 									  } statetype;
 	statetype state, state_n; // Variables containing the state
 	

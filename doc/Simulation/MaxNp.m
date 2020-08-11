@@ -16,7 +16,7 @@ min_compr = 1 - (Nnp ./ Npar);
 f = figure('visible','off');
 hold on;
 xlabel('Npar')
-ylabel('Minimal compression')
+ylabel('Minimal ratio of pruned weights')
 plot(Npar(min_compr < 1), min_compr(min_compr < 1));
 saveas(f,'MinCompr.pdf');
 system('pdfcrop MinCompr.pdf MinCompr.pdf');

@@ -1,52 +1,20 @@
-\chapter{Accelerating the inference on FPGA} \label{chap:fpga}
+\section{Field-Programmable Gate Array (FPGA)} \label{sec:fpga}
 %
 %
-As said in Chapter \ref{chap:intr}, \acrshort{fpga} is a promising platform for the acceleration of \acrshort{cnn}s. According to \textcite{mittal_survey_2014}, \acrshort{fpga}s provide higher energy efficiency than both \acrshort{gpu}s and \acrshort{cpu} and a higher performance than \acrshort{cpu}s. Besides, \acrshort{fpga}s are very flexible hardware that can be tailored for each particular \acrshort{nn} \cite{vestias_fast_2019}. Furthermore, we can even expect that \acrshort{fpga}s will provide higher performance for performing \acrshort{cnn}s with respect to \acrshort{gpu} \cite{nurvitadhi_can_2017}.
+As said in the Introduction, \acrshort{fpga} is a promising platform for the acceleration of \acrshort{cnn}s. According to \textcite{mittal_survey_2014}, \acrshort{fpga}s provide higher energy efficiency than both \acrshort{gpu}s and \acrshort{cpu} and a higher performance than \acrshort{cpu}s. Besides, \acrshort{fpga}s are very flexible hardware that can be tailored for each particular \acrshort{nn} \cite{vestias_fast_2019}. Furthermore, we can even expect that \acrshort{fpga}s will provide higher performance for performing \acrshort{cnn}s with respect to \acrshort{gpu} \cite{nurvitadhi_can_2017}.
 
-We develop in Chapter \ref{chap:cnn} the theory behind \acrshort{cnn}s and the various optimizations to apply on networks to implement them on a \acrshort{fpga}. Meanwhile, this Chapter \ref{chap:fpga} is focused on, given a model, how to implement it on a \acrshort{fpga}, and what hardware optimizations can be made to accelerate the inference.
-
-First, Section \ref{sec:concept} explains what is a \acrshort{fpga} and what are its main components. We also detail the \acrshort{fpga} design flow.
-
-Second, Section \ref{sec:opti_dataflow} review de various approaches to perform an efficient inference on \acrshort{fpga}.
-
-Finally, Section \ref{sec:inf_fpga} gives an overview on how to perform \acrshort{dsc} on \acrshort{fpga}.
-%
-%
-\section{Field-Programmable Gate Array (FPGA)} \label{sec:concept}
-%
-%
 According to \textcite{harris_digital_2015}, The definition of a \acrshort{fpga} is: \textquote{\textit{a \acrfull{fpga} is an array of reconfigurable gates}}. It is an integrated circuit that can implement combinatinal, sequential logic, and multilevel logic functions. An \acrshort{fpga} also integrates built-in multipliers, high-speed I/Os, data converters, large RAM arrays, and processors.
 
 An illustration of a general \acrshort{fpga} layout can be found in Figure \ref{fig:fpga}. An \acrshort{fpga} is an array of configurable \acrfull{le}, also referred as \acrfull{clb}. Each \acrshort{le} can be configured to perform combinational or sequential logic and is connected to other \acrshort{le}s. The \acrshort{le}s array is connected to a set of \acrfull{ioe} to interface with the outside world.
 
 A programmer can implement digital designs on the \acrshort{fpga} with a software programming tool, using either a \acrfull{hdl} or a schematic. An \acrshort{hdl} is a language to give the specifications of a digitial design. It allows a faster development cycle than schematic since we work at a higher level of abstraction. Moreover, the software is designed to optimize automatically the gates. The two leading \acrshort{hdl} are \textit{VHDL} and \textit{SystemVerilog}. They are build on the same principles and they mostly differ on the syntax.
 
+%
 The design flow of an \acrshort{fpga} can be described as follows: first the programmer creates the design by either a schematic or \acrshort{hdl}. Second, the design is synthesized, which means that the software determine how to configure the components of the \acrshort{fpga} in order to execute the specified function. Third, the software determines if the design is correct using a functional simulation. If it is correct, the software fits the element into the \acrshort{fpga} and does the \textbf{timing analysis}. This step simulates the real delay to check if the timing requirements are met. Finally, the design is programmed into the \acrshort{fpga} when the timing analysis simulation is correct.
-
-\begin{figure}
-    \includegraphics[width=\textwidth]{fpga.pdf}
+%
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{fpga.pdf}
     \caption{General \acrshort{fpga} layout \cite{harris_digital_2015}}
     \label{fig:fpga}
 \end{figure}
-%
-%
-\section{CNN optimizations on FPGA} \label{sec:opti_dataflow}
-%
-%
-The previous section \ref{sec:concept} provides a general layout of what is an \acrshort{fpga} and how does it work. Now, we focus our interest in the design development of a \acrshort{cnn} and what optimizations can be made to perform an efficient inference.
-
-The convolution requires loading weights and pixels into the \acrshort{fpga} and using them to compute the output results. According to \textcite{chen_eyeriss_2017}, the data movement can often be more energy-consuming than actual computation. Smart memory management is then required to implement \acrshort{cnn} on low power device such as \acrshort{fpga}. We discover in this section various techniques for handling the Datapath on the \acrshort{fpga}.
-%
-\input{src/5.Background/subsection/opti_dtpt}
-%
-%
-\section{Depthwise separable convolution inference on FPGA} \label{sec:inf_fpga}
-%
-%
-\input{src/5.Background/subsection/inf_dsc}
-
-\fbox{\parbox{ \linewidth \fboxrule \fboxsep }{ \textbf{Conclusion about the implementation of \acrshort{cnn} on \acrshort{fpga}}:
-
-\vspace{5mm}
-balbla
-}}

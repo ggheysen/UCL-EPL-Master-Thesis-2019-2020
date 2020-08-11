@@ -1,5 +1,7 @@
-\section{Design of an FPGA-based accelerator integrating structured sparse DSC} \label{sec:design}
-As previously said,  the aim of this section is to develop a pruning scheme for \acrshort{cnn} model (MobileNetV2) and an algorithm able to support it. First we detail the pruning scheme used and the gain obtained by applying the pruning. Second, we describe the algorithm to perform the convolution using weights pruned with the scheme. Finally, we analyse the loops of the convolution in order to determine the design of the \acrshort{pe} that will perfom the operation.
+\section{Design of a FPGA-based accelerator integrating structured sparse DSC} \label{sec:design}
+%
+%
+As previously said,  the aim of this section is to develop a pruning scheme for the \acrshort{dsc} and an algorithm able to support it. First, we detail the pruning scheme used and the gain obtained by applying the pruning. Second, we analyse the sparse kernels to find a compressed format that reduces the memory use and reduce the overhead of determing the address of the non-pruned weights. Third, we describe the algorithm proposed to perform the sparse \acrshort{dsc}, where weights are pruned with the scheme. Finally, we analyse the loops of the convolution in order to determine the optimal design of the \acrshort{pe} that will perfom the convolution.
 %
 \subsection{Pruning scheme} \label{subsec:pscheme}
 %
@@ -7,7 +9,7 @@ As previously said,  the aim of this section is to develop a pruning scheme for 
 %
 \begin{itemize}
     \item In MobileNet and MobileNetV2, most of the operations are done in the pointwise convolutions \cite{zhang_channel_2019, tu_pruning_2019}. So it is the operation where the reduction of the computational complexity would be the most relevant.
-    \item As each kernel of pointwise filter is a vector of size $1 \times 1  \times Nif$, we therefore have to prune in the channel axis. This scheme has been proven to be successful by \textcite{kang_accelerator-aware_2020}.
+    \item As each kernel of pointwise filter is a vector of size $1 \times 1  \times N_{if}$, we therefore have to prune in the channel axis. This scheme has been proven to be successful by \textcite{kang_accelerator-aware_2020}.
     \item The pruning scheme can be applied to each $1 \times 1$ convolution in the network.
 \end{itemize}
 %
@@ -18,11 +20,11 @@ Ideally, without pruning, each \acrshort{pe} performing a pointwise convolution,
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{pruningscheme.pdf}
-    \caption{Process of convolution with a sparse pointwise kernel, inspired from \cite{kang_accelerator-aware_2020}}
+    \caption{Process of a pointwise convolution with a sparse pointwise kernel, inspired by \cite{kang_accelerator-aware_2020}}
     \label{fig:prunedwg}
 \end{figure}
 %
-First, it can cause misalignement between the weight and pixel fetching groups. Indeed if we prune the first $N_{par}$ weights in the kernel, the first pixel fetching group is useless. Second, there can be a load-imbalance problem that can occur between two \acrshort{pe}s if the number of weights between the two kernels is different. To solve these problems, the solution proposed by \cite{kang_accelerator-aware_2020} is to align pixel and weight fetching groups. We also constrain the number of non-pruned weights in each fetching group to be the same number, called $N_{np}$, as illustrated in Figure \ref{fig:prunedwg}. Therefore, it solves also the load-imbalance problem and can be applied to each $1 \times 1$ kernel.
+First, it can cause misalignement between the weight and pixel fetching groups. Indeed if we prune the first $N_{par}$ weights in the kernel, the first pixel fetching group is useless. Second, there can be a load-imbalance problem (see Section \ref{subsec:impl_prun}) that can occur between two \acrshort{pe}s if the number of pruned weights between two kernels is different. To solve these problems, the solution proposed by \cite{kang_accelerator-aware_2020} is to align pixel and weight fetching groups. We also constrain the number of non-pruned weights in each fetching group to be the same number, called $N_{np}$, as illustrated in Figure \ref{fig:prunedwg}. Therefore, it solves also the load-imbalance problem and can be applied to each $1 \times 1$ kernel.
 
 %
 \begin{table}
@@ -42,36 +44,49 @@ First, it can cause misalignement between the weight and pixel fetching groups. 
     \label{tab:pr_param}
 \end{table}
 %
-To summarise, each depthwise kernel is composed of $N_{gr}$ fetching groups of $N_{np}$ weights. Each group corresponds to a pixel fetching group of size $N_{par}$. The pruning parameters are defined in Table \ref{tab:pr_param}. We should add that this pruning scheme is not the same as \textit{channel pruning} since we do not constrain the same weights to be pruned in each group. Therefore, I have not considered the pruning of the pointwise filter associated with the pruning of a weight in each kernel. We have then proposed a pruning-scheme that is not coarse-grained (channel pruning), satisfying first design objective: \textbf{\textquote{The pruning scheme is as fine-grained as possible}}.
+To summarise, each depthwise kernel is composed of $N_{gr}$ fetching groups of $N_{np}$ weights. Each group corresponds to a pixel fetching group of size $N_{par}$. We define the ratio between the number of non-pruned weights and the size of the fetching group without pruning as the \textbf{pruning ratio $\alpha$}. The ratio of pruned weights is therefore equal to $1 - \alpha$. The pruning parameters are defined in Table \ref{tab:pr_param}. 
+
+We should add that this pruning scheme is not the same as \textit{channel pruning} since we do not constrain the same weights to be pruned in each group. Therefore, I have not considered the pruning of the pointwise filter associated with the pruning of a weight in each kernel, as discussed in Section \ref{subs:pruning}. We have then proposed a pruning-scheme that is not coarse-grained (channel pruning), satisfying first design objective: \textbf{\textquote{The pruning scheme is as fine-grained as possible}}.
 %
 \subsubsection{Reduction factors}
 %
 We can now evaluate the reduction factors of the sparse \acrshort{dsc} compared with the \acrshort{dsc} without pruning and the standard convolution.
 
-We consider that the size of the input feature map of the pointwise convolution is $N_{ix}  \times N_{iy} \times N_{if}$, the size of the depthwise filter is $N_{kx} \times N_{ky} \times N_{if}$, the size of the non-pruned pointwise convolution $N_{if} \times N_{of}$, the fetching group size is $N_{par}$, and the number of pruned weights is $N_{np}$. The amount of weights $W_{DSC}$ and operations $O_{DSC}$ of the \acrshort{dsc} can be determined using Equation \eqref{eq:dsc_wg} and \eqref{eq:dsc_op} \cite{bai_cnn_2018, liu_fpga-based_2019}.
+We consider that the size of the input feature map of the pointwise convolution is $N_{ix}  \times N_{iy} \times N_{if}$, the size of the depthwise filter is $N_{kx} \times N_{ky} \times N_{if}$, the size of the non-pruned pointwise convolution $N_{if} \times N_{of}$, the fetching group size is $N_{par}$, the number of pruned weights is $N_{np}$, and the size of the output \acrshort{fm} is $N_{ox}  \times N_{oy} \times N_{of}$. The amount of weights $W_{DSC}$ and operations $O_{DSC}$ of the \acrshort{dsc} can be determined using Equation \eqref{eq:dsc_wg} and \eqref{eq:dsc_op} \cite{bai_cnn_2018, liu_fpga-based_2019}.
 %
-\begin{align}
-    W_{DSC} &= N_{kx} \times N_{ky} \times N_{if} + N_{if} + \times N_{of}\\
-    O_{DSC} &= N_{ix} \times N_{iy} \times N_{kx} \times N_{ky} \times N_{if} + N_{ix} \times N_{iy} \times N_{if} \times N_{of}
+\begin{equation}
+    W_{DSC} = N_{kx} \times N_{ky} \times N_{if} + N_{if} + \times N_{of}
+    \label{eq:dsc_wg}
+\end{equation}
+%
+\begin{equation}
+    O_{DSC} = N_{ix} \times N_{iy} \times N_{kx} \times N_{ky} \times N_{if} + N_{ix} \times N_{iy} \times N_{if} \times N_{of}
     \label{eq:dsc_op}
-\end{align}
-%
-In a same manner, the amount of weights $W_{PR\_DSC}$ and operations $O_{PR\_DSC}$ of the sparse \acrshort{dsc} can be determined using Equation \eqref{eq:pr_dsc_pr_wg_op}.
-%
-\begin{align}
-    W_{PR\_DSC} &= N_{kx} \times N_{ky} \times N_{if} + \times N_{if} + N_{np} \times N_{gr} \times N_{of}\\
-    O_{PR\_DSC} &= N_{ix} \times N_{iy} \times N_{kx} \times N_{ky} \times N_{if} + N_{ix} \times N_{iy} \times N_{gr} \times N_{np} \times N_{of}
-    \label{eq:pr_dsc_wg_op}
-\end{align}
-%
-Thus, the weights $F_{Wg}$ and operations $F_{Op}$ reduction factors can be expressed according to Equation \eqref{eq:factor_comp}. The demonstration allowing to find these relations can be found in Appendix \ref{appendix:factor}.
+\end{equation}
 
-\begin{align}
-    F_{Wg} &= \frac{1 + \frac{N_{kx} \times N_{ky}} {N_{of}}} {\alpha + \frac{N_{kx} \times N_{ky}} {N_{of}}}\\
-    F_{Op} &= \frac{1 + \frac{N_{kx} \times N_{ky}} {N_{of}}} {\alpha + \frac{N_{kx} \times N_{ky}} {N_{of}}}
-    \label{eq:factor_comp}
-\end{align}
+In a same manner, the amount of weights $W_{PR\_DSC}$ and operations $O_{PR\_DSC}$ of the sparse \acrshort{dsc} can be determined using Equation \eqref{eq:pr_dsc_wg} and \eqref{eq:pr_dsc_op}.
 %
+\begin{equation}
+    W_{PR\_DSC} = N_{kx} \times N_{ky} \times N_{if} + \times N_{if} + N_{np} \times N_{gr} \times N_{of}
+    \label{eq:pr_dsc_wg}
+\end{equation}
+%
+\begin{equation}
+    O_{PR\_DSC} = N_{ix} \times N_{iy} \times N_{kx} \times N_{ky} \times N_{if} + N_{ix} \times N_{iy} \times N_{gr} \times N_{np} \times N_{of}
+    \label{eq:pr_dsc_op}
+\end{equation}
+
+Thus, the weights $F_{Wg}$ and operations $F_{Op}$ reduction factors can be expressed according to Equation \eqref{eq:factor_comp_wg} and \eqref{eq:factor_comp_op}. The demonstration allowing to find these relations can be found in Appendix \ref{appendix:factor}.
+%
+\begin{equation}
+    F_{Wg} = \frac{W_{DSC}}{W_{PR\_DSC}} = \frac{1 + \frac{N_{kx} \times N_{ky}} {N_{of}}} {\alpha + \frac{N_{kx} \times N_{ky}} {N_{of}}}
+    \label{eq:factor_comp_wg}
+\end{equation}
+\begin{equation}
+    F_{Op} = \frac{O_{DSC}}{O_{PR\_DSC}} = \frac{1 + \frac{N_{kx} \times N_{ky}} {N_{of}}} {\alpha + \frac{N_{kx} \times N_{ky}} {N_{of}}}
+    \label{eq:factor_comp_op}
+\end{equation}
+
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{RedFactor.pdf}
@@ -79,9 +94,9 @@ Thus, the weights $F_{Wg}$ and operations $F_{Op}$ reduction factors can be expr
     \label{fig:redfacto}
 \end{figure}
 %
-As the reduction factors depend on the pruning ratio $\alpha$, we can illustrate the evolution of the reduction factors depending on this parameter and the different $N_{of}$ of the network. This can be seen on Figure \ref{fig:redfacto}.
+As the reduction factors depend on the pruning ratio $\alpha$ and the number of output channels $N_{of}$, we can illustrate the evolution of the reduction factors depending on this parameter and the different $N_{of}$ of MobileNetV2. This can be seen on Figure \ref{fig:redfacto}.
 
-For example, if we apply a pruning ratio of $75\%$, the reduction factors compared the \acrshort{dsc} without pruning are between two and four times. If we consider the reduction factor between \acrshort{dsc} and standard convolution is about 9 times \cite{zhang_channel_2019}, the reduction factors between sparse \acrshort{dsc} and standard convolution is between 18 and 36 times. We have therefore validated the second design objective, which is: \textbf{\textquote{The pruning scheme reduces the computational complexity}}.
+For example, if we apply a pruning ratio of $25\%$ (meaning keeping $25\%$ of the weights in each fetching group), the reduction factors compared the \acrshort{dsc} without pruning are between two and four times. If we consider the reduction factor between \acrshort{dsc} and standard convolution is about 9 times \cite{zhang_channel_2019}, the reduction factors between sparse \acrshort{dsc} and standard convolution is between 18 and 36 times (if $\alpha = 25\%$). We have therefore validated the second design objective, which is: \textbf{\textquote{The pruning scheme reduces the computational complexity}}.
 %
 \subsubsection{Compressed format}
 %
@@ -102,25 +117,36 @@ A conventional storage format for sparse matrix is the \acrfull{csr} \cite{buluc
     \item \textbf{Vector row\_ptr}: contains the index of each row in \textbf{val}.
 \end{itemize}
 %
-However, as for \cite{zhu_efficient_2020}, this format can be compressed further thanks to the pruning scheme. Indeed, since the kernels to compress are vectors, we can reduce the storage usage by removing the \textbf{row\_ptr} vector (the vector has only one row). Moreover, we can have a better compression if we reduce the number of bits allocated to represent the column index of a weigth. Indeed, knowing that the weight correponds to a pixel in a fetching group of size $N_{par}$, it is sufficient to store the position of the pixel in that group. As a result, we can reduce the number of bits from $log_2(N_{if})$ to $log_2(N_{par})$, where $N_{par} \leq N_{if}$.
+However, as for \cite{zhu_efficient_2020}, the \acrshort{csr} format can be compressed further thanks to the pruning scheme. Indeed, since the kernels to compress are vectors, we can reduce the storage usage by removing the \textbf{row\_ptr} vector (the vector has only one row). Moreover, we can have a better compression if we reduce the number of bits allocated to represent the column index of a weigth. Indeed, knowing that, without pruning, each weight belongs in a fetching group of size $N_{par}$, it is sufficient to store the position of the weight in that group. As a result, we can reduce the number of bits from $log_2(N_{if})$ to $log_2(N_{par})$, where $N_{par} \leq N_{if}$. Moreover, it also reduces the overhead, giving a weight position, to find the corresponding pixel in a fetching group.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{compressed_format.pdf}
+    \caption{Illustration of the compressed format on an example, where $N_{par} = 4$ and $N_{np} = 2$}
+    \label{fig:compressed_format}
+\end{figure}
+%
+In brief, each sparse kernel is converted into 2 vectors of size $N_{np}$: vector \textbf{val}, which contains the value of the non-pruned weights, and vector \textbf{position}, which contains the position of the corresponding pixel. An example is illustrated in figure \ref{fig:compressed_format}.
+
+We compute the maximal pruning ratio, or in a same way the minimal ratio of pruned weights, required to have a reduction of the memory usage since this compressed format requires an extra position per weight (and hence more bits allocated per weight). The relation between maximal pruning ratio and memory reduction can be found in Equation \eqref{eq:prun_mem} where $BW_{weight}$ is the bitwidth required to represent the value of a weight. The demonstration to find the maximal pruning ratio $\alpha$ to reduce the memory usage can be found in Appendix \ref{appendix:cf}.
+%
+\begin{equation}
+    \alpha < \frac{BW_{weight}}{ BW_{weight} + log_2(N_{par})}
+    \label{eq:prun_mem}
+\end{equation}
 
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{MinCompr.pdf}
-    \caption{Minimal pruning ratio if $BW$ = 16}
+    \caption{Minimal ratio of pruned weights if $BW$ = 16}
     \label{fig:prun_mem}
 \end{figure}
 %
-We compute the minimal pruning ratio required to have a reduction of the memory usage since this compressed format requires an extra position per weight (and hence more memory per weight). The relation between minimal pruning ratio and memory reduction can be found in Equation \eqref{eq:prun_mem} where $BW$ is the bitwidth required to represent the value of a weight. The curve representing the minimal pruning ratio depending on $N_{par}$ is illustrated in Figure \ref{fig:prun_mem}. We can conclude that we need at least a pruning ration of $40\%$ in order to save memory (a fewer pruning ratio can be set if we have a small $N_{par}$). We have therefore validated the third design objective, which is: \textbf{\textquote{The pruning scheme allows a reduction of the memory required to store the weights}}.
-%
-\begin{equation}
-    \alpha < \frac{BW}{ BW + log_2(N_{par})}
-    \label{eq:prun_mem}
-\end{equation}
+The curve representing the minimal ratio of pruned weight, equals to $1 - \alpha$, depending on $N_{par}$ is illustrated in Figure \ref{fig:prun_mem}. For example, if $BW_{weight} = 16$ bits, we need to have a ratio of pruned weights to be greater or equal than $40\%$ in order to save memory. We can prune fewer weights if we have a small $N_{par}$. We have therefore validated the third design objective, which is: \textbf{\textquote{The pruning scheme allows a reduction of the memory required to store the weights}}.
 %
 \subsection{Adding the pruning scheme to MobileNetV2} \label{subsec:mbnv2-pr}
 %
-As we have seen how the weights of a $1 \times 1$ kernel are pruned and explained the compressed format of the kernels, we present in this section how to integrate the proposed pruning scheme into MobileNetV2. In MobileNetV2, the \acrshort{dsc} layer is included into a larger building block, the \textit{inverted residual block} (see Section \ref{subs:mbv2}). It means that the \acrshort{dsc} follows a $1 \times 1$ convolution layer that expands the number of channels. As a result, we have to compute two sparse $1 \times 1$ convolutions.
+As we have seen how the weights of a $1 \times 1$ kernel are pruned and explained the compressed format of the kernels, we present in this section how to integrate the proposed pruning scheme into MobileNetV2. In MobileNetV2, the \acrshort{dsc} layer is included into a larger building block, the \textit{inverted residual block} which performs a bottleneck convolution (see Section \ref{subs:mbv2}). In the bottleneck convolution, the \acrshort{dsc} follows a $1 \times 1$ convolution layer that expands the number of input channels. As a result, we have to compute two sparse $1 \times 1$ convolutions.
 
 %
 \begin{figure}
@@ -130,14 +156,15 @@ As we have seen how the weights of a $1 \times 1$ kernel are pruned and explaine
     \label{fig:algo}
 \end{figure}
 %
-As explained in Section \ref{subsec:pscheme}, each $1 \times 1$ convolution has to fetch $N_{par}$ input pixels, which corresponds to $N_{par}$ channels. Consequently, if the expansion $1 \times 1$ convolution produces $N_{par}$ channels, the \acrshort{dsc} can fetch those intermediate products and produce partial results of the output \acrshort{fm}. Indeed, we can first perform the depthwise convolution with each intermediate channel and then perform the partial pointwise convolution with the corresponding weight in each pointwise kernel, as illustrated in Figure \ref{fig:algo}.
-The output \acrshort{fm} is computed when the \acrshort{dsc} has performed these steps for each intermediate group. This approach was chosen, instead of producing directly each final output result, to reuse at most the products of the $1 \times 1$ convolution.
+As explained in Section \ref{subsec:pscheme}, each $1 \times 1$ convolution has to fetch $N_{par}$ input pixels in the channel-axis, which corresponds to $N_{par}$ channels. Consequently, if the expansion $1 \times 1$ convolution produces $N_{par}$ channels, the \acrshort{dsc} can fetch those intermediate products and produce partial results of the output \acrshort{fm}. Indeed, we can first perform the depthwise convolution with each intermediate channel and then perform the partial pointwise convolution with the corresponding weight in each pointwise kernel, as illustrated in Figure \ref{fig:algo}.
+
+The output \acrshort{fm} is computed when the \acrshort{dsc} has performed these steps for each intermediate group. This approach was chosen, instead of producing directly each final output result, to reuse at most the products of the $1 \times 1$ convolution. Indeed, if we aim at directly producing a final output, the $1 \times 1$ convolution has to produce $N_{kx} \times N_{ky} \times N_{ky} \times N_{par}$ intermediate results. When the \acrshort{dsc} has computed the partial sum from this fetching group (for one kernel since we priotize the computation of one final pixel), the old intermediate pixels will be overwritten by next fetching group intermediate pixels, which could have been reused for another pointwise kernel.
 
 \begin{algorithm}
     \centering
     \begin{algorithmic}
         \For{$group_{int}:=0$; $group_{int} < Ngr_{int}$; $group_{int}++$}
-            \State{1*1\_convolution ($group_{int}$)}
+            \State{$1 \times 1$ convolution ($group_{int}$)}
             \State{DSC($group_{int}$);}
         \EndFor
     \end{algorithmic}
@@ -145,14 +172,11 @@ The output \acrshort{fm} is computed when the \acrshort{dsc} has performed these
     \label{pseudocode:overal_pseudo_code}
 \end{algorithm}
 %
-We can translate this algorithm into a pseudocode, observed in Algorithm \ref{pseudocode:overal_pseudo_code}, where $group$ (respect. $group_{int}$) is the index of fetching group in the input \acrshort{fm} (resp. intermediate \acrshort{fm}, since the number of input channels is expanded by a factor $t$) and $Ngr_{int} = \left\lceil \frac{N_{if} \times t}{N_{par}} \right\rceil$ is the number of intermediate fetching groups. We can now detail how each convolution is going to be performed:
-
-%
-%
+We can translate this algorithm into a pseudocode, observed in Algorithm \ref{pseudocode:overal_pseudo_code}, where $group$ (respect. $group_{int}$) is the index of fetching group in the input \acrshort{fm} (resp. intermediate \acrshort{fm}, since the number of input channels is expanded by a factor $t$) and $Ngr_{int} = \left\lceil \frac{N_{if} \times t}{N_{par}} \right\rceil$ is the number of intermediate fetching groups. We refer the \acrshort{fm} produced by the $1 \times 1$ convolution as \textbf{intermediate  \acrshort{fm}}. We can now detail how each convolution is going to be performed:
 %
 \begin{enumerate}
-    \item \textbf{1*1\_convolution}: We have to fetch the $N_{par}$ kernels corresponding to the \acrshort{dsc} fetching group. Indeed, the \acrshort{dsc} needs to fetch $N_{par}$ channels of the intermediate \acrshort{fm}. Then we can perform the convolution. As described in Section \ref{subs:2dconv}, the kernel acts as a sliding window on the input \acrshort{fm}. For each pixel at position $(ix, iy)$, the convolution loads iteratively each weight and pixel fetching group in the channel-axis. For each fetching group $group \leq N_{group}$, the convolution is performed by multiplying each non-pruned weight with its corresponding pixel and accumulates the multiplication with the result of the previous group. The process is finished when the $N_{par}$ intermediate \acrshort{fm} channels have been produced (of size $N_{ix} \times N_{iy}$). The corresponding pseudocode is found in Algorithm \ref{pseudocode:c11} and the process is shown in Figure \ref{fig:algo_11conv}.
-    \begin{algorithm}[H]
+    \item \textbf{$1 \times 1$ convolution}: We have to fetch the $N_{par}$ kernels corresponding to the \acrshort{dsc} fetching group. Indeed, the \acrshort{dsc} needs to fetch $N_{par}$ channels of the intermediate \acrshort{fm} (each kernel produces one channel). Then we can perform the convolution with the input \acrshort{fm}. As described in Section \ref{subs:2dconv}, the kernel acts as a sliding window on the input \acrshort{fm}. For each pixel at position $(ix, iy)$, the convolution loads iteratively each weight and pixel fetching group in the channel-axis. For each fetching group $group \leq N_{group}$, the convolution is performed by multiplying each non-pruned weight with its corresponding pixel and accumulates the multiplication with the result of the previous group. The process is finished when the $N_{par}$ intermediate \acrshort{fm} channels have been produced (of size $N_{ix} \times N_{iy}$). The corresponding pseudocode is found in Algorithm \ref{pseudocode:c11} and the process is shown in Figure \ref{fig:algo_11conv}.
+    \begin{algorithm}
         \centering
         \begin{algorithmic}
             \For{$int_{f}:=0$; $int_{f} < N_{par}$; $int_{f}++$} \Comment{Loop 3}
@@ -173,16 +197,16 @@ We can translate this algorithm into a pseudocode, observed in Algorithm \ref{ps
         \label{pseudocode:c11}
     \end{algorithm}
     %
-    \begin{figure}[H]
+    \begin{figure}
         \centering
         \includegraphics[width=\linewidth]{algo_c11.pdf}
-        \caption{representation of the sparse $1 \times 1$ convolution}
+        \caption{Representation of the sparse $1 \times 1$ convolution}
         \label{fig:algo_11conv}
     \end{figure}
     %
-    \item \textbf{\acrshort{dsc}} Once the $1 \times 1$ convolution has produced the next $N_{par}$ intermediate \acrshort{fm} channels, we can do the depthwise convolution with these channels. Once the depthwise convolution is done, we can fetch the corresponding weight fetching group in each of the pointwise filters and compute the partial results for each of the output \acrshort{fm} and sum them with the previous partial results. The corresponding pseudocode is found in Algorithm \ref{pseudocode:dsc} and the process is shown in Figure \ref{fig:algo_dsc}. We note that we have to add padding pixels since spatial dimensions are only reduced using stride $S$ (see Section \ref{subs:2dconv}).
+    \item \textbf{\acrshort{dsc}} Once the $1 \times 1$ convolution has produced the next $N_{par}$ intermediate \acrshort{fm} channels, we can do the depthwise convolution with these channels. The depthwise convolution first computes the 2D convolution of each of the intermediate \acrshort{fm} channel. Afterwards, we can load the corresponding weight fetching group in each of the pointwise filters. We cancompute the partial convolution for each of the output \acrshort{fm}, and each partial result is summed with its corresponding previous partial result. If we do the previous step for every intermediate fetching group, we have computed the output \acrshort{fm}. The corresponding pseudocode is found in Algorithm \ref{pseudocode:dsc} and the process is shown in Figure \ref{fig:algo_dsc}. We note that we have to add padding pixels to the intermediate \acrshort{fm} since spatial dimensions are only reduced using stride $S$ (see Section \ref{subs:2dconv}).
     %
-    \begin{algorithm}[H]
+    \begin{algorithm}
         \centering
         \begin{algorithmic}
             \For{$o_{y}:=0$; $o_{y} < N_{oy}$; $o_{y}++$} \Comment{Loop 4}
@@ -211,17 +235,17 @@ We can translate this algorithm into a pseudocode, observed in Algorithm \ref{ps
         \label{pseudocode:dsc}
     \end{algorithm}
     %
-    \begin{figure}[H]
+    \begin{figure}
         \centering
         \includegraphics[width=\linewidth]{algo_dsc.pdf}
-        \caption{representation of the sparse \acrshort{dsc} convolution}
+        \caption{Representation of the sparse \acrshort{dsc} convolution}
         \label{fig:algo_dsc}
     \end{figure}
 \end{enumerate}
 %
 \subsection{Loop analysis}
 %
-Once we have determined how the convolutions are going to be performed, we can now define how it will be implemented on \acrshort{fpga}. As explained in Section \ref{sec:opti_dataflow}, the \acrshort{cnn} inference is executed in three repeated steps:
+We have now determined how the convolutions are going to be performed. Therefore, we can define how it will be implemented on \acrshort{fpga}. As explained in Section \ref{sec:opti_dataflow}, the \acrshort{cnn} inference is executed in three steps:
 %
 \begin{enumerate}
     \item The \acrshort{fpga} loads a tile of the data from the external memory into the on-chip memory.
@@ -229,7 +253,7 @@ Once we have determined how the convolutions are going to be performed, we can n
     \item Once the tile of output results is produced, it is stored into the external memory. Either the \acrshort{fpga} loads the next tile and restarts the operations, either it stops if the last tile of data has been convolved.
 \end{enumerate}
 %
-If we look at Algorithm \ref{pseudocode:c11} and \ref{pseudocode:dsc}, each convolution is implemented with various levels of loop. To optimize the loop operations, we can use tree main loop optimization techniques, as presented in Section \ref{sec:opti_dataflow}: loop tiling, loop unrolling, and loop interchange. Those loop optimization techniques include hardware design parameters that define the acceleration factor and hardware footprint \cite{ma_optimizing_2018}. Therefore, we have to analyse the convolution loops in order to find the optimal tiling, unrolling and loop interchange parameters. We are going to apply the same methodology as \textcite{ma_optimizing_2018}. However, as they studied the standard convolution, in this work we adapt it to the sparse \acrshort{dsc}.
+If we look at Algorithm \ref{pseudocode:c11} and \ref{pseudocode:dsc}, each convolution is implemented with various levels of loop. To optimize the loop operations, we can use tree main loop optimization techniques, as presented in Section \ref{sec:opti_dataflow}: loop tiling, loop unrolling, and loop interchange. Those loop optimization techniques include hardware design parameters that define the acceleration factor and hardware footprint \cite{ma_optimizing_2018}. Therefore, we have to analyse the convolution loops in order to find the optimal tiling, unrolling and loop interchange parameters. We are going to apply the same methodology as \textcite{ma_optimizing_2018}. However, as they studied the standard convolution, in this work we adapt it to the sparse \acrshort{dsc}.\cite{ma_optimizing_2018}
 
 \textcite{ma_optimizing_2018} identified design objectives to optimize the convolution operation. These following design objectives should be minimized:
 %
@@ -245,13 +269,13 @@ We will try to minimize them for both $1 \times 1$ and depthwise separable convo
 %
 Before analyzing the design objectives, we must first define what are the different tiling and unrolling parameters for each convolution. In Table \ref{tab:param_c11} and Table \ref{tab:param_dsc} are defined the different dimensions of the volums and the hardware design parameters.
 
-\textbf{$1 \times 1$ convolution}: the $1 \times 1$ convolution is composed of three convolution loops (the fourth loop is fully-unrolled according to the algorithm). During the first loop, we fetch each fetching group and we do the convolution between them. The first loop is determined by the number of input and weight fetching groups (they are the same since otherwise there would be misalignement). The purpose of the first loop is to compute the output final result of the convolution. The second loop slides spatially the kernel over the input \acrshort{fm} to produce one channel of the intermediate \acrshort{fm}. Since the spatial size of each kernel is $1 \times 1$, there is no spatial reduction between the input and intermediate \acrshort{fm}. The purpose of the third loop is to produce the required $N_{par}$ intermediate \acrshort{fm} channels.
+\textbf{$1 \times 1$ convolution}: the $1 \times 1$ convolution is composed of three convolution loops (the fourth loop is fully-unrolled according to the algorithm). During Loop-1, we get each fetching group and we do the convolution between them. Loop-1 is determined by the number of input and weight fetching groups (they are the same since otherwise there would be misalignement). The purpose of Loop-1 is to compute the output final result of the convolution. Loop-2 slides spatially the kernel over the input \acrshort{fm} to produce one channel of the intermediate \acrshort{fm}. Since the spatial size of each kernel is $1 \times 1$, there is no spatial reduction between the input and intermediate \acrshort{fm}. The purpose of Loop-3 is to choose which of the required $N_{par}$ intermediate \acrshort{fm} channels is produced.
 %
 \begin{table}[H]
     \centering
     \begin{tabular}{c|c|c|c}
     \hline \hline
-    & \makecell{\# of weight \\ and input \\ fetching group} & \makecell{Input \acrshort{fm} \& \\ Output \acrshort{fm} \\ Spatial Axis} & \makecell{Output \acrshort{fm} \\ channels} \\
+    & \makecell{\# of weight \\ and input \\ fetching group} & \makecell{Input \acrshort{fm} \& \\ intermediate \acrshort{fm} \\ Spatial Axis} & \makecell{intermediate \acrshort{fm} \\ channels} \\
     \hline
     Convolution Loops & Loop-1 & Loop-2 & Loop-3 \\
     Convolution Dimensions & $N_{gr}$ & $N_{ix}$,$N_{iy}$ & $N_{par}$ \\
@@ -259,17 +283,17 @@ Before analyzing the design objectives, we must first define what are the differ
     Loop Unrolling         & $P_{gr}$ & $P_{ix}$,$P_{iy}$ & $P_{intf}$ \\
     \hline \hline
     \end{tabular}
-    \caption{$1 \times 1$ convolution loop dimensions and hardware design variables, inspired from \cite{ma_optimizing_2018}}
+    \caption{$1 \times 1$ convolution loop dimensions and hardware design variables, inspired by \cite{ma_optimizing_2018}}
     \label{tab:param_c11}
 \end{table}
 %
-\textbf{\acrshort{dsc}}: the \acrshort{dsc} is composed of four convolution loops. Two loops are specific to the depthwise convolution, one to the pointwise convolution and one loop is shared between the two convolutions. As presented in Section \ref{subsec:mbnv2-pr}, the pointwise convolution uses the output pixels of the depthwise convolution to produce the $N_{of}$ partial results in order to avoid reperforming the same $1 \times 1$ and depthwise convolution. Loop-1 therefore aims at looping over the output channels. The depthwise convolution is composed of two loops. Loop-2 performs the 2D convolution between the input channel and the corresponding kernel and Loop-3 loops over the input channel. Finally, Loop-4 is the one that selects which output pixels to compute and fetches the associated input pixels chunk of data from the on-chip memory.
+\textbf{\acrshort{dsc}}: the \acrshort{dsc} is composed of four convolution loops. Two loops are specific to the depthwise convolution, one to the pointwise convolution and one loop is shared between the two convolutions. As presented in Section \ref{subsec:mbnv2-pr}, the pointwise convolution uses the results of the depthwise convolution to produce $N_{of}$ partial results in order to avoid reperforming the same $1 \times 1$ and depthwise convolution. Loop-1 therefore aims at looping over the output channels. The depthwise convolution is composed of two loops. Loop-2 performs the 2D convolution between the input channel and the corresponding kernel and Loop-3 loops over the input channel. Finally, Loop-4 is the one that selects which output pixels to compute and fetches the associated input pixels chunk of data from the on-chip memory.
 %
 \begin{table}[H]
     \centering
     \begin{tabular}{c|c|c|c|c|c}
     \hline \hline
-    & \makecell{Output \acrshort{fm} \\ channels} & \makecell{Pointwise kernel \\ size} & \makecell{Input \acrshort{fm} \\ channels} & \makecell{Input \acrshort{fm} \\ Spatial Axis} & \makecell{Output \acrshort{fm} \\ Spatial Axis} \\
+    & \makecell{Output \acrshort{fm} \\ channels} & \makecell{Pointwise \\ kernel size} & \makecell{Intermediate\\\acrshort{fm} channels} & \makecell{Intermediate \acrshort{fm} \\ Spatial Axis} & \makecell{Output \acrshort{fm} \\ Spatial Axis} \\
     \hline
     \makecell{Convolution \\ Loops}     & Loop-1   & Loop-2            & Loop-3     & Loop-4            & Loop-4 \\
     \makecell{Convolution \\ Dimensions}  & $N_{of}$ & $N_{kx}$,$N_{ky}$ & $N_{par}$  & $N_{ix}$,$N_{iy}$ & $N_{ox}$,$N_{oy}$\\
@@ -277,7 +301,7 @@ Before analyzing the design objectives, we must first define what are the differ
     \makecell{Loop \\ Unrolling}          & $P_{of}$ & $P_{kx}$,$P_{ky}$ & $P_{intf}$ & $P_{ix}$,$P_{iy}$ & $P_{ox}$,$P_{oy}$\\
     \hline \hline
     \end{tabular}
-    \caption{\acrshort{dsc} loop dimensions and hardware design variables, inspired from \cite{ma_optimizing_2018}}
+    \caption{\acrshort{dsc} loop dimensions and hardware design variables, inspired by \cite{ma_optimizing_2018}}
     \label{tab:param_dsc}
 \end{table}
 %
@@ -291,7 +315,7 @@ In summary, the number of partial sums is determined by the number of $1 \times 
     \label{eq:psum_c11}
 \end{equation}
 
-\textbf{\acrshort{dsc}}: during the \acrshort{dsc}, we can find two kinds of partial sums: the partial depthwise result and the partial output result. According to the proposed algorithm, we can not keep the partial output in the registers since we produce at each new fetching group every possible partial output results. It means that we have to keep the tile of output \acrshort{fm} in the on-chip memory as partial results, as illustrated in Equation \eqref{eq:psum_o_dsc}. Since the kernel size is small and constant accross the network, we can fully unroll Loop-2 and set $P_{kx} = T_{kx} = N_{kx}, P_{ky} = T_{ky} = N_{ky}$. This approach was also chosen by \textcite{motamedi_placid_2017}. Since the fetching group size $N_{par}$ is up to the programmer, we can also fully unroll Loop-3 $P_{intf} = T_{intf} = N_{par}$. As the depthwise convolution is fully unrolled, we can determine the number of depthwise partial sums using equation \ref{eq:psum_dw_dsc}.
+\textbf{\acrshort{dsc}}: during the \acrshort{dsc}, we can find two kinds of partial sums: the partial depthwise result and the partial output result. According to the proposed algorithm, we can not keep the partial output in the registers since we produce at each new fetching group every possible partial output results. It means that we have to keep the tile of output \acrshort{fm} in the on-chip memory as partial results, as illustrated in Equation \eqref{eq:psum_o_dsc}. Since the kernel size is small and constant accross the network, we can fully unroll Loop-2 and set $P_{kx} = T_{kx} = N_{kx}, P_{ky} = T_{ky} = N_{ky}$. This approach was also chosen by \textcite{motamedi_placid_2017}. Since the fetching group size $N_{par}$ is up to the programmer, we can also fully unroll Loop-3 $P_{intf} = T_{intf} = N_{par}$. As the depthwise convolution is fully unrolled, we can determine the number of depthwise partial sums using equation \eqref{eq:psum_dw_dsc}.
 %
 \begin{equation}
     \# psum_{DSC_{PW}} = T_{ox} \times T_{oy} \times T_{of}
@@ -308,10 +332,10 @@ In summary, the number of partial sums is determined by the number of $1 \times 
 According to \textcite{ma_optimizing_2018}, the number of on-chip accesses is determined by Equation \eqref{eq:onchipaccess}, where $\#read_{px}$ (resp. $\#read_{wg}$) is the number of reads in the on-chip memory accesses for input pixel (resp. weight), $\#read\_write\_psum$ is the number of write and read accesses if we store partial sum in the on-chip memory, and  $\#write\_px$ is the number of accesses to write the output results (which is equal to the number of output pixels). Therefore, to reduce on-chip memory accesses, we have to limit partial sums stored in on-chip memory and limit the number of reads.
 The number of reads can be reduced by reusing the data in the registers, and can be expressed using Equation \ref{eq:read_on_px} and \ref{eq:read_on_wg} \cite{ma_optimizing_2018}, where $N_{op}$ is the total number of operations in a convolution. We can analyze for each convolution $Data\_Reuse_{px}$ and $Data\_Reuse_{wg}$.
 %
-\begin{align}
-    \#On\_chip\_accesses &= \#read_{px} + \#read_{wg} \\ &+ \#read\_write\_psum + \#write\_px
+\begin{multline}
+    \#On\_chip\_accesses = \#read_{px} + \#read_{wg} + \\ \#read\_write\_psum + \#write\_px
     \label{eq:onchipaccess}
-\end{align}
+\end{multline}
 %
 \begin{equation}
     \#read_{px} = \frac{N_{op}}{Data\_Reuse_{px}}
@@ -334,7 +358,7 @@ The number of reads can be reduced by reusing the data in the registers, and can
     \label{eq:wg-d-reu}
 \end{equation}
 
-\textbf{\acrshort{dsc}}: Since Loop-3 and Loop-2 are fully unrolled, we have a full temporal data reuse for weight. The data reuse for pixel and weight for the depthwise convolution can be found in Equation \eqref{eq:px_dw-d-reu} \cite{ma_optimizing_2018} and \eqref{eq:wg_dw-d-reu}. For the pointwise convolution, we can avoid reading input pixels from on-chip memory. If we keep the $N_{par}$ results of the depthwise convolution in registers.
+\textbf{\acrshort{dsc}}: Since Loop-3 and Loop-2 are fully unrolled, we have a full temporal data reuse for depthwise weight. The data reuse for pixel and weight for the depthwise convolution can be found in Equation \eqref{eq:px_dw-d-reu} \cite{ma_optimizing_2018} and \eqref{eq:wg_dw-d-reu}. For the pointwise convolution, we can avoid reading input pixels from on-chip memory if we keep the $N_{par}$ results of the depthwise convolution in registers.
 Using the same methodology as for \textbf{$1 \times 1$ convolution}, the weight data reuse can be expressed using Equation \eqref{eq:wg_pw-d-reu}
 %
 \begin{equation}
@@ -362,7 +386,7 @@ In the model presented in Section \ref{subsec:loopopti}, as the on-chip memory i
     \label{fig:tilei}
 \end{figure}
 %
-Since we store every pixel fetching group in the on-chip memory, each pixel should be loaded once from the external memory. However, if the tile does not cover the spatial size of the input \acrshort{fm}, due to the depthwise convolution, the input tile can be expressed as Equation \eqref{eq:tileo} \cite{ma_optimizing_2018}. It means that some pixels are included in multiple tiles, as illustrated in Figure \ref{fig:tilei}. Despite this, we can express the number of external memory accesses per pixel as Equation \eqref{eq:dram_px}.
+Since we store every pixel fetching group in the on-chip memory, each pixel is loaded only once from the external memory. However, thanks to padding and the 2D convolution, the input \acrshort{fm} tile can be expressed as Equation \eqref{eq:tileo} \cite{ma_optimizing_2018}. If the input \acrshort{fm} tile does not cover the spatial size of the input \acrshort{fm}, some pixels are included in multiple tiles due to the depthwise convolution, as illustrated in Figure \ref{fig:tilei}. Despite this, it does not concern every pixel. Therefore, we can express the number of external memory accesses per pixel as Equation \eqref{eq:dram_px}.
 %
 \begin{equation}
     T_{ix/iy} = \left( T_{ox/oy} - 1\right) S + P_{kx/ky}
@@ -373,7 +397,7 @@ Since we store every pixel fetching group in the on-chip memory, each pixel shou
     \label{eq:dram_px}
 \end{equation}
 %
-If all the weights are not buffered into the on-chip buffer, we have to load from external memory the weight corresponding to the intermediate \acrshort{fm} fetching group. It means that we must fetch each weight everytime a new output tile is produced. Therefore, the number of weight external address is expressed as Equation \eqref{eq:dram_wg}.
+If all the weights are not buffered into the on-chip buffer, we have to load from external memory the weight corresponding to the intermediate \acrshort{fm} fetching group. It means that we must fetch each weight everytime a new output tile is produced. Therefore, the number of weight external memory access is expressed as Equation \eqref{eq:dram_wg}.
 %
 \begin{equation}
     \#DRAM\_px = \frac{N_{ox} \times N_{oy}}{T_{ox} \times T_{oy}}
@@ -382,7 +406,24 @@ If all the weights are not buffered into the on-chip buffer, we have to load fro
 %
 \subsubsection{Summary}
 %
-After having analyzed the hardware design variables, we have determined each
-%% tiling
+After having analyzed the hardware design variables, we have determined each hardware design parameters, belonging to each optimization techniques:
+\begin{itemize}
+    \item Loop interchange: for both convolutions, we do the loops in the given order (first Loop-1, ..., and then Loop-n).
+    \item Loop Tiling: as explained previously, the following tiling parameters are set: 
+    \begin{itemize}
+        \item $T_{gr} = N_{gr}$
+        \item $T_{intf} = N_{par}$
+        \item $T_{of} = N_{of}$
+        \item $T_{kx} = N_{kx}$
+        \item $T_{ky} = N_{ky}$
+    \end{itemize}
+    The other tiling parameters should be set as close as $N_{*}$ (depending on the target platform). Moreover, as pointed out by \textcite{ma_optimizing_2018}, the following constraint should be added to avoid inefficiency: \textquote{$T_{*}$ should be a divisor of $N_{*}$}. Indeed, the \acrshort{pe}s are configured to execute a full tile. If the constraint is not satisfied, some \acrshort{pe}s would not be used.
+    \item Loop Unrolling: as explained previously, the following unrolling parameters are set:
+    \begin{itemize}
+        \item $P_{kx} = N_{kx}$
+        \item $P_{ky} = N_{ky}$
+        \item $P_{intf-DW} = N_{par}$
+    \end{itemize}
+    The other unrolling parameters should be set as close as $T_{*}$ (depending on the target platform). Moreover, as pointed out by \textcite{ma_optimizing_2018}, the following constraint should be added to avoid inefficiency: \textquote{$P_{*}$ should be a divisor of $T_{*}$}.
+\end{itemize}
 %% unrolling
-%% Loop interchange

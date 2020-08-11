@@ -1,0 +1,27 @@
+\chapter{Details of the different input and output signals of each components of the architecture} \label{appendix:sig}
+\begin{table}[H]
+    \begin{tabular}{c|c|c}
+        Signals & Input/Output & Description \\
+        \hline \hline
+        start & input & \makecell{Tells the main controller that it can perform \\ the bottleneck convolution}\\
+        %
+        \hline
+        \makecell{$s_{dma}$ \\$s_{c11}$\\$s_{dsc}$} & output & \makecell{starting signals telling that the corresponding \\ component can start its operation}\\
+        %
+        \hline
+        finish & output & \makecell{Enabled by the main controller \\ indicating the output \acrshort{fm} has been produced}\\
+        %
+        \hline
+        \makecell{$f_{dma}$ \\$f_{c11}$\\$f_{dsc}$} & input & \makecell{finishing signals telling that the corresponding \\ component has accomplished its operation}\\
+        %
+        \hline
+        \makecell{$dma_{op}$\\$dma_{info_1}$\\$dma_{info-mem_1}$\\$dma_{info_2}$\\$dma_{info-mem_2}$} & output & \makecell{Since the \acrshort{dma} can handle multiple operations,\\ theses signals specifies which operations to perform \\ and which tile and its external memory address to fetch}\\
+        %
+        \hline
+        first\_par & output & \makecell{ \\ component has accomplished its operation} \\
+        \hline \hline
+    \end{tabular}
+    \caption{The different input and output signals of the main controller}
+    \label{tab:mc_sig}
+\end{table}
+\newpage

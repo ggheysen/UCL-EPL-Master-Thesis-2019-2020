@@ -1,16 +1,14 @@
-\chapter{Convolutional Neural Network} \label{chap:cnn}
-\acrshort{cnn} is a type of \acrshort{nn} specialized in analyzing visual imagery and natural language processing. \acrshort{cnn}s are feedforward, sparsely connected \acrshort{nn}s, and structured as a pipeline of layers \cite{abdelouahab_accelerating_2018}. It has shown superior performances on different competitions related to Computer Vision and Image Processing \cite{khan_survey_2020}. This chapter aims at investigating the aspects of a \acrshort{cnn} and the optimisations that could be made to reduce its size and computational complexity.
+\section{Convolutional Neural Network} \label{sec:cnn}
+\acrshort{cnn} is a type of \acrshort{nn} specialized in analyzing visual imagery and natural language processing. \acrshort{cnn}s are feedforward, sparsely connected \acrshort{nn}s, and structured as a pipeline of layers \cite{abdelouahab_accelerating_2018}. It has shown superior performances on different competitions related to Computer Vision and Image Processing \cite{khan_survey_2020}. This section aims at investigating the aspects of a \acrshort{cnn} and the optimisations that could be made to reduce its size and computational complexity.
 
-First, the building blocks of a CNN are developed in the section \ref{sec:layer} starting from its basic element \textit{the perceptron}. Then, the way to use it to build layers which can perform complex functions is described. Finally, the other types of layers required to improve the efficiency of the model, such as pooling are detailed.
+First, the building blocks of a CNN are developed in the section \ref{subsec:layer} starting from its basic element \textit{the perceptron}. Then, the way to use it to build layers which can perform complex functions is described. Finally, the other types of layers required to improve the efficiency of the model, such as pooling are detailed.
 
-Then, section \ref{sec:models} describes the use of these layers with a focus on state-of-art networks like AlexNet, VGG16, ResNet, and MobileNetV2.
+Then, section \ref{subsec:models} describes the use of these layers with a focus on state-of-art networks like AlexNet, VGG16, ResNet, and MobileNetV2.
 
-Section \ref{sec:train} focuses on the training of a \acrshort{cnn}. We briefly explain the back-propagation algorithm, which consists of a forward-propagation (Section \ref{subs:trainforward}) and a back-propagation (Section \ref{subs:trainbackward}).
-
-Finally, Section \ref{sec:opti_cnn} explores the state-of-the-art approaches to reduce the arithmetic complexity and the hardware utilization of \acrshort{cnn} models. Section \ref{subsec:algopti} details how to efficiently handle and optimize the convolution operation on \acrshort{fpga}. On the other side, Section \ref{subsec:mdopti} covers techniques to reduce the size of the model.
+Finally, Section \ref{subsec:train} focuses on the training of a \acrshort{cnn}. We briefly explain the back-propagation algorithm, which consists of a forward-propagation and a back-propagation.
 %
 %
-\section{Structure of a CNN} \label{sec:layer}
+\subsection{Structure of a CNN} \label{subsec:layer}
 A CNN is a pipeline of layers which can be stacked to form a network \cite{abdelouahab_accelerating_2018}. A layer is a high-level building block, which consists of a set of operations, weights, and non-linear functions. The output of one layer can, therefore, be used as input of the next layer or as the final output of the network. This section will first introduce the simplest element of a layer: the perceptron and its activation function. Then, the theory of layers is detailed and three different kind of layers that can be used in a CNN are introduced.
 First, the fully connected layer is analysed. It can be seen as a non-linear classifier \cite{khan_survey_2020}. Then, the convolutional layer is the main layer of the model, its goal is to extract the features of the input and to transmit them to the next layer. It can use the convolution or an alternative form of convolution: the depthwise separable convolution which will also be described \cite{liu_fpga-based_2019}. Finally, the pooling layer which is used to replace the output of the previous layer by a summary statistic will be investigated \cite{goodfellow_deep_2016}.
 %
@@ -50,15 +48,15 @@ The previously layers can, therefore, decompose a \acrshort{cnn} in two parts \c
 %
 All these types of layers are stacked together to form a \acrshort{cnn}.
 %
-\section{CNN Models} \label{sec:models}
-After this analysis of the CNN structure of section \ref{sec:layer}, this section will detail some of the well-known \acrshort{cnn} networks. They are examples of how to construct an efficient \acrshort{cnn}.
+\subsection{CNN Models} \label{subsec:models}
+After this analysis of the CNN structure of section \ref{subsec:layer}, this section will detail some of the well-known \acrshort{cnn} networks. They are examples of how to construct an efficient \acrshort{cnn}.
 
 %
 \input{src/5.Background/subsection/CNN_models}
 %
 %
-\section{Training} \label{sec:train}
-Section \ref{sec:models} has described the common building blocks present in \acrshort{cnn} and how to design a \acrshort{cnn}. This section aims at detailing how a network improves automatically its performance for a specific task. This is called \textit{learning}.
+\subsection{Training} \label{subsec:train}
+Section \ref{subsec:models} has described the common building blocks present in \acrshort{cnn} and how to design a \acrshort{cnn}. This section aims at detailing how a network improves automatically its performance for a specific task. This is called \textit{learning}.
 
 The learning phase starts after designing the network. However, before the model can learn, we have to assign a value to the weight. The most common form is random initialization drawn from Gaussian distribution \cite{he_delving_2015}. The learning is affected by the initial values of the weight. If it is too small the network does not learn or if it is too large it might take a very long time to converge. To solve this, different initializations have been suggested: Xavier initialization \cite{glorot_understanding_2010} and He initialization \cite{he_delving_2015}.
 
@@ -69,18 +67,3 @@ When values have been assigned to the weights, the backpropagation algorithm can
 \input{src/5.Background/subsection/CNN_backward}
 %
 %
-\section{CNN optimizations for FPGA} \label{sec:opti_cnn}
-%
-%
-The previous chapter has described the way \acrshort{cnn} work and the different state-of-the-art models. Section \ref{subs:mbv2} evidenced the issue to implement the inference phase on mobile devices such as \acrshort{fpga}. Indeed, the computational complexity and the storage requirements are way beyond their capabilities. This chapter will detail different approaches to handle this problem on a \acrshort{fpga}. First, it will focus on techniques to reduce the compuational cost of the convolution operations and then, it will review the methods to reduce the size of a \acrshort{cnn}.
-%
-\input{src/5.Background/subsection/opti_algo}
-%
-\input{src/5.Background/subsection/opti_md}
-
-
-\fbox{\parbox{ \linewidth \fboxrule \fboxsep }{ \textbf{Conclusion about the CNN optimizations}:
-
-\vspace{5mm}
-We have seen in this chapter what is a \acrshort{cnn}, how to build, and train it. We have also seen that the most performing models have a huge computational complexity and memory utilization, which limit the implementation of such models on mobile platforms, such as \acrshort{fpga}. Different approaches can be explored such as fast convolutions algorithms. But they only reduce the computational complexity while increasing hardware utilization. Therefore, pruning and model designs seem to be promising optimizations because they both aim at reducing those problems. Therefore, this work focus on the use of both approaches to see if their gain can be combined. To show our results, we apply pruning on MobileNetV2. As quantizing is an orthogonal approach to pruning, we also use 16-bit fixed-point formats because the loss of accuracy can be controlled.
-}}

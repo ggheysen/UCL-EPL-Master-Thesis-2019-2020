@@ -1,19 +1,19 @@
 \chapter{Accelerating Convolutional Neural Networks for FPGA using Depthwise Separable Convolution and Pruning} \label{chap:pratique}
 %
 %
-In the previous chapter, we have introduced pruning, which can reduce both the size and the computational complexity of a \acrshort{cnn}. We have also seen that there exist various pruning schemes. Each of them can be categorized from coarse-grained to fine-grained. Coarse-grained pruning schemes have the advantage of being easily implemented on \acrshort{gpu} and \acrshort{cpu} in exchange for a drop of accuracy. On the opposite, fine-grained pruning schemes have better accuracy but create irregular access pattern that makes them difficult to implement. To have an efficient \acrshort{fpga}-based architecture, we should focus on implementing the most fine-grained pruning possible in order to have a higher sparsity and limit the drop of accuracy. This shows the advantage of using \acrshort{fpga} accelerator because, as said previously, this type of pruning scheme is not easily implementable on \acrshort{cpu} and \acrshort{gpu}
+In the previous chapter, we have introduced pruning, which can reduce both the size and the computational complexity of a \acrshort{cnn}. We have also seen that there exist various pruning schemes. Each of them can be categorized from coarse-grained to fine-grained. Coarse-grained pruning schemes have the advantage of being easily implemented on \acrshort{gpu} and \acrshort{cpu} in exchange for a drop of accuracy. On the opposite, fine-grained pruning schemes have better accuracy but create irregular access pattern that makes them difficult to implement. To have an efficient \acrshort{fpga}-based accelerator, we should focus on implementing the most fine-grained pruning possible in order to have a higher sparsity while limiting the drop of accuracy. This shows the advantage of using \acrshort{fpga} accelerator because, as said previously, this type of pruning scheme is not easily implementable on \acrshort{cpu} and \acrshort{gpu}
 
-In order to further reduce the number of weights and operations, we will define an accelerator \acrshort{fpga}-based architecture that integrates both pruning and \acrshort{dsc}. The objectives of the architecture and its associated pruning scheme are the following:
+We will define a \acrshort{fpga}-based accelerator architecture that integrates both pruning and \acrshort{dsc} in order to further reduce the number of weights and operations. To show its applicability, we implement this architecture to a state-of-the-art network that includes \acrshort{dsc} and that target embedded platforms, MobileNetV2 (see Section \ref{subs:mbv2}). The objectives of the architecture and its associated pruning scheme are the following:
 %
 \begin{enumerate}
     \item The pruning scheme is as fine-grained as possible.
     \item The pruning scheme reduces the computational complexity.
     \item The pruning scheme allows a reduction of the memory required to store the weights.
     \item The proposed architecture provides a logically correct output.
-    \item An increase of the sparsity does not degrade the performance of the architecture.
+    \item An increase of the sparsity improves the performance of the architecture.
 \end{enumerate}
 %
-First, Section \ref{sec:design} aims at developping the pruning scheme and the algorithm to handle it. We then perform a loop analysis to determine the hardware design variables.
+First, Section \ref{sec:design} aims at developping the pruning scheme and the algorithm to handle it. We also define in this section the reduction factors of weight and computational complexity. We also define a weight compressed format to reduce the weights memory use. We then perform a loop analysis on the proposed algorithm to determine the optimal hardware design variables and the structure of the architecture.
 
 Second, Section \ref{sec:implementation} describes the implementation of the accelerator \acrshort{fpga}-based architecture and details its dataflow.
 
