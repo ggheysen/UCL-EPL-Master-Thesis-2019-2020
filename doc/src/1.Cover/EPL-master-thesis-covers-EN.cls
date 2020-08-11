@@ -35,6 +35,13 @@ maxcitenames=1
 \usepackage{xcolor}
 \usepackage[pdfencoding=auto, psdextra]{hyperref}
 \usepackage{bookmark}% faster updated bookmarks
+%geometry
+\geometry{
+a4paper,
+total={170mm,257mm},
+left=20mm,
+top=20mm,
+}
 % Load the package
 \usepackage[acronym]{glossaries}
 \usepackage{algorithm,algpseudocode}

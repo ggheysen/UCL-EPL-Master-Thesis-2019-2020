@@ -10,7 +10,9 @@ A type of \acrshort{dl} model, \acrfull{cnn}, demonstrates its value in applicat
 
 To implement and train such computationally-intensive models, dedicated accelerators seem to be be more suitable than general \acrfull{cpu} \cite{liu_fpga-based_2019}. \acrfull{gpu}, \acrfull{asic} and \acrfull{fpga} can, therefore, be used to improve the throughput and latency of the \acrshort{cnn}. Today, \acrshort{cnn}s are executed on clusters of \acrshort{gpu} and \acrshort{cpu} because they prodivde the best throughput \cite{liu_uniform_2019}. However, they are highly demanding in terms of energy and therefore not adapted for embedded systems with contraint power resources.
 
-\begin{table}
+\acrshort{fpga} and \acrshort{asic} seem then to be a promising solution because they are more energy-efficient. This has been demonstrated by \textcite{qasaimeh_comparing_2019}. \acrshort{fpga} has a lower energy consumption with respect to \acrshort{gpu} by several order of magnitude, as the vision application’s pipeline complexity grows (which is the case for \acrshort{cnn}). We can observe in Table \ref{tab:benchener} the FPGA’s energy reduction ratios with respect to GPU for various vision application’s pipeline. Moreover, because the \acrshort{fpga} has the properly of reconfigurability comparing to the \acrshort{asic}, developping accelerators on \acrshort{fpga} is time and cost effective \cite{motamedi_placid_2017}. Therefore, \acrshort{fpga} shoudl be the platform to run \acrshort{cnn} on mobile devices.
+%
+\begin{table}[H]
     \center
     \begin{tabular}{|c|c|}
         \hline
@@ -28,18 +30,16 @@ To implement and train such computationally-intensive models, dedicated accelera
     \caption{FPGA’s Reduction Ratios with respect to GPU \cite{qasaimeh_comparing_2019}}
     \label{tab:benchener}
 \end{table}
-%
-\acrshort{fpga} and \acrshort{asic} seem then to be a promising solution because they are more energy-efficient. This has been demonstrated by \textcite{qasaimeh_comparing_2019}. \acrshort{fpga} has a lower energy consumption with respect to \acrshort{gpu} by several order of magnitude, as the vision application’s pipeline complexity grows (which is the case for \acrshort{cnn}). We can observe in Table \ref{tab:benchener} the FPGA’s energy reduction ratios with respect to GPU for various vision application’s pipeline. Moreover, because the \acrshort{fpga} has the properly of reconfigurability comparing to the \acrshort{asic}, developping accelerators on \acrshort{fpga} is time and cost effective \cite{motamedi_placid_2017}. Therefore, \acrshort{fpga} shoudl be the platform to run \acrshort{cnn} on mobile devices.
 
 Still, while \acrshort{gpu} is currently the most dominant platform to perform \acrshort{cnn}s, trends confirm that \acrshort{fpga} will be more suitable to accelerate \acrshort{cnn}s, according to \textcite{nurvitadhi_can_2017}. Two reasons can explain that. First, the advances in \acrshort{fpga} technology show that the performance disparity between \acrshort{fpga} and \acrshort{gpu} has lessened. Second, recent \acrshort{cnn} trends use pruning and extremely quantized data types to reduce the size of the \acrshort{cnn}. It is in favor of the \acrshort{fpga} because those two approaches are more easily handled on \acrshort{fpga}. However, \acrshort{fpga} is resource-constraint (limited memory, I/O bandwidth, and computing resources). As a result, the challenge is to find a mapping between the computational and the execution model.
 
-\begin{figure}
+According to \textcite{abdelouahab_accelerating_2018}, there are 2 phases when executing a \acrshort{cnn}. The first phaese is the \textbf{training}, where the model learns using the back-propagation algorithm \cite{lecun_backpropagation_1989}. The second phase is the \textbf{inference}, where the model predicts the output of new data samples, using the learned model and the feed-forward algorithm \cite{zhang_optimizing_2015}. We can see the different processes in Figure \ref{fig:traininf}. Usually, \acrshort{cnn}s are trained once on \acrshort{gpu} or \acrshort{fpga} and inference is executed every time the \acrshort{cnn} has a new input to process. Most efforts have then been focused on accelerating the inference. The core of this work is therefore aimed at proposing a way to accelerate the inference of a model on \acrshort{fpga}.
+%
+\begin{figure}[H]
     \includegraphics[width=\textwidth]{traininf.pdf}
-    \caption{\acrshort{cnn} setup for predicting new data, inspired from \cite{nurvitadhi_can_2017}}
+    \caption{\acrshort{cnn} setup for predicting new data, inspired by \cite{nurvitadhi_can_2017}}
     \label{fig:traininf}
 \end{figure}
-%
-According to \textcite{abdelouahab_accelerating_2018}, there are 2 phases when executing a \acrshort{cnn}. The first phaese is the \textbf{training}, where the model learns using the back-propagation algorithm \cite{lecun_backpropagation_1989}. The second phase is the \textbf{inference}, where the model predicts the output of new data samples, using the learned model and the feed-forward algorithm \cite{zhang_optimizing_2015}. We can see the different processes in Figure \ref{fig:traininf}. Usually, \acrshort{cnn}s are trained once on \acrshort{gpu} or \acrshort{fpga} and inference is executed every time the \acrshort{cnn} has a new input to process. Most efforts have then been focused on accelerating the inference. The core of this work is therefore aimed at proposing a way to accelerate the inference of a model on \acrshort{fpga}.
 
 The inference can be accelerated using various optimizations. According to \textcite{abdelouahab_accelerating_2018}, these optimizations can be grouped into 3 main categories:
 \begin{itemize}
