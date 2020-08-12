@@ -276,11 +276,11 @@
 					"strict" : false
 				},
 				{
-					"name" : "finish_conv11",
+					"name" : "finish_dsc",
 					"strict" : false
 				},
 				{
-					"name" : "finish_dsc",
+					"name" : "finish_conv11",
 					"strict" : false
 				},
 				{

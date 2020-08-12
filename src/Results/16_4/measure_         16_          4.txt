@@ -1,4 +1,4 @@
-Overal latency :                966533
+Overal latency :                967121
 dma latency :                40047
 c11 :               575448
-dsc :               351036
+dsc :               351624
