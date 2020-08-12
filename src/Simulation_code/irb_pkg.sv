@@ -15,7 +15,7 @@ package irb_pkg;
 		parameter Tof 	= Tif; // Maximum number of output channel
 		
 		/* Pruning parameters */
-		parameter Npar = 32;
+		parameter Npar = 2;
 		parameter Nnp 	= 2;
 		
 		/* Layer information paramters */

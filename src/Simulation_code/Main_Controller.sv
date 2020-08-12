@@ -224,7 +224,7 @@ module Main_controller(input logic clk, rst, start,
 			end
 			
 			LOAD_KEX: begin
-				measure_cnt_dma_n = measure_cnt_dma + 1;
+//				measure_cnt_dma_n = measure_cnt_dma + 1;
 				if (f_dma) begin
 					state_n = CONV_11;
 					s_c11_n = 1;

@@ -1,5 +1,5 @@
 Analysis & Elaboration report for inverted_residual_block
-Thu Aug 06 16:24:05 2020
+Wed Aug 12 12:15:30 2020
 Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 
 
@@ -40,7 +40,7 @@ refer to the applicable agreement for further details.
 +-----------------------------------------------------------------------------+
 ; Analysis & Elaboration Summary                                              ;
 +-------------------------------+---------------------------------------------+
-; Analysis & Elaboration Status ; Successful - Thu Aug 06 16:24:05 2020       ;
+; Analysis & Elaboration Status ; Successful - Wed Aug 12 12:15:30 2020       ;
 ; Quartus Prime Version         ; 18.1.0 Build 625 09/12/2018 SJ Lite Edition ;
 ; Revision Name                 ; inverted_residual_block                     ;
 ; Top-level Entity Name         ; inverted_residual_block                     ;
@@ -166,8 +166,8 @@ refer to the applicable agreement for further details.
 +-----------+--------+----------+-------------------------------------------------------------------------------------+
 ; Port      ; Type   ; Severity ; Details                                                                             ;
 +-----------+--------+----------+-------------------------------------------------------------------------------------+
-; pos[0][5] ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
-; pos[1][5] ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
+; pos[0][1] ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
+; pos[1][1] ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
 +-----------+--------+----------+-------------------------------------------------------------------------------------+
 
 
@@ -176,8 +176,8 @@ refer to the applicable agreement for further details.
 +-----------+--------+----------+-------------------------------------------------------------------------------------+
 ; Port      ; Type   ; Severity ; Details                                                                             ;
 +-----------+--------+----------+-------------------------------------------------------------------------------------+
-; pos[0][5] ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
-; pos[1][5] ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
+; pos[0][1] ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
+; pos[1][1] ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
 +-----------+--------+----------+-------------------------------------------------------------------------------------+
 
 
@@ -196,7 +196,7 @@ refer to the applicable agreement for further details.
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Elaboration
     Info: Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
-    Info: Processing started: Thu Aug 06 16:23:48 2020
+    Info: Processing started: Wed Aug 12 12:15:13 2020
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off master_thesis_layer -c inverted_residual_block --analysis_and_elaboration
 Info (20032): Parallel compilation is enabled and will use up to 8 processors
 Info (12021): Found 1 design units, including 1 entities, in source file inverted_residual_block.sv
@@ -258,9 +258,9 @@ Info (12128): Elaborating entity "RAM_KDW" for hierarchy "RAM_KDW:ram_kdw" File:
 Info (12128): Elaborating entity "RAM_KPW" for hierarchy "RAM_KPW:ram_kpw" File: D:/GitRepo/Memoire/src/Simulation_code/inverted_residual_block.sv Line: 173
 Info (144001): Generated suppressed messages file D:/GitRepo/Memoire/src/Simulation_code/output_files/inverted_residual_block.map.smsg
 Info: Quartus Prime Analysis & Elaboration was successful. 0 errors, 0 warnings
-    Info: Peak virtual memory: 4847 megabytes
-    Info: Processing ended: Thu Aug 06 16:24:05 2020
-    Info: Elapsed time: 00:00:17
+    Info: Peak virtual memory: 5036 megabytes
+    Info: Processing ended: Wed Aug 12 12:15:31 2020
+    Info: Elapsed time: 00:00:18
     Info: Total CPU time (on all processors): 00:00:35
 
 

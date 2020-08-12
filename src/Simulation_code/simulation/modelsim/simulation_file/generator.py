@@ -11,7 +11,7 @@ Nof = 64
 Nkx = 3
 Nky = 3
 S = 1
-t = 1
+t = 6
 # Tiling params
 Tix = 7
 Tiy = 7
@@ -23,7 +23,7 @@ Tiy = Toy + Nky - 1
 Nox = Nix // S
 Noy = Niy // S
 # Pruning param
-Npar = 32
+Npar = 2
 Nnp = 2
 # Calculated parameters related to Pruning
 Ngr = Nif//Npar

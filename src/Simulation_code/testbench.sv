@@ -33,7 +33,7 @@ module testbench();
 	parameter Tif 	= 8;
 	parameter Tof 	= Tif;
 	
-	parameter Npar = 32;
+	parameter Npar = 2;
 	parameter Nnp 	= 2;
 	
 	parameter Size_Par = Npar * Nnp;
