@@ -5,6 +5,13 @@ Some works put their interest in the implementation of the \acrshort{dsc}. In pa
 
 The accelerator in each work has the same structure. The accelerator uses weights, input and output buffers. To use the same accelerator for both convolutions, they firt compute an element-wise multiplication followed by an adder tree. The pattern of additions depens. \textcite{bai_cnn_2018} divides depthwise and pointwise convolution. As the element-wise multiplication produces a cuboid, we only have to sum either in the spatial or channel axis, either all the cuboid pixels to perform the desired convolution. On his side, \textcite{liu_fpga-based_2019} performs both convolution using the same adder tree. The dataflow to feed the adder tree depends then on the convolution. However, to use the same structure for both convolution, it pads some inputs with 0 value for separable convolution (the separable convolution has less arithmetic operations).
 
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{pingpong.pdf}
+	\caption{Weight buffer in ping-pong structure, from \cite{bai_cnn_2018}}
+	\label{fig:ping_pong_buffer}
+\end{figure}
+%
 To improve the throughout of the network, they use a ping-pong buffer for the weight. Instead of using one buffer that stores the data for convolution, they use two buffers. Alternatively, one fetches weights for the next tile while the other is used for convolution. An illustration is found in Figure \ref{fig:ping_pong_buffer}.
 
 Moreover, \textcite{liu_fpga-based_2019} has used the roofline model as method for design space exploration.

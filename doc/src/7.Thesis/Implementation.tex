@@ -20,7 +20,7 @@ The overall architecture has been inspired by \textcite{zhu_efficient_2020}. The
     \item \textbf{External Memory}: it contains the \acrshort{cnn} data and it is where the output \acrshort{fm} will be stored.
     \item \textbf{Main controller}: it synchronizes the different components of the architecture by sending them control signals.
     \item \textbf{\acrfull{dma}}: it handles the read and write requests between the \acrshort{fpga} and the external memory.
-    \item \textbf{\acrshort{pe}}: each \acrshort{pe} performs the actual convolution with the weight and pixel fetched from external memory into the on-chip memory. In the architecture, we have two kinds of \acrshort{pe}: $1 \times 1$ convolution \acrshort{pe} and \acrshort{dsc} \acrshort{pe}.
+    \item \textbf{\acrshort{pe}}: each \acrshort{pe} performs the actual convolution with the weight and pixel fetched from external memory into the on-chip memory. In the architecture, we have two kinds of \acrshort{pe}: $1 \times 1$ convolution \acrshort{pe} and \acrshort{dsc} \acrshort{pe}. Since we have defined that each data is represented using fixed-point number format (see Section \ref{subs:quantization}), the convolution between weights and pixels is done with integer arithmetic.
     \item \textbf{Buffer}: it composes the on-chip memory and contains a tile of data. There are two categories of buffer: \textbf{data buffer} which contains data from external memory and is read by the \acrshort{pe} and \textbf{result buffer} which is filled by \acrshort{pe}s and is read either by other \acrshort{pe} or by the \acrshort{dma} to write its content to external memory. There are four data buffers ($FM_{I}$ buffer, $Conv_{1 \times 1}$ buffer, $Conv_{DW}$ buffer, $Conv_{PW}$ buffer) and two result buffers ($FM_{int}$ buffer, $FM_{O}$ buffer).
 \end{itemize}
 %
@@ -35,9 +35,9 @@ An illustration of the overall architecture can be found in Figure \ref{fig:over
 
 In the following sections, we will go into details about each component. An exhaustive list of the different input and output signals of each component can be found in Appendix \ref{appendix:sig}.
 %
-\subsection{External memory}
+\subsection{External memory} \label{subs:extmem}
 %
-The external memory is an external component that contains all the data required to run the network (MobileNetV2) on an input \acrshort{fm}. Each data stored in the external memory can be identified by its address in the external memory. We can identify 5 types of data:
+The external memory is an external component that contains all the data required to run the network (MobileNetV2) on an input \acrshort{fm}. Each data stored in a memory can be identified by its address (either external memory or buffer). We can identify 5 types of data:
 %
 \begin{enumerate}
     \item \textbf{Input \acrshort{fm}}: the input \acrshort{fm} of a layer, where bitwidth representing one pixel is equal to $BW_{pixel}$. Channels are stored one by one, and the content of one channel is stored line by line. For example, the memory address of the pixel at position $\left(ix, iy, if\right)$ can be expressed using Equation \eqref{eq:addr_fmi}.
@@ -84,6 +84,48 @@ An offset, for each type of data, is added to the computation of the address to 
 \end{figure}
 %
 As a consequence, those layer information are also stored in the external memory. The overall structure of the external memory can be found in Figure \ref{fig:overal_mem}.
+
+We can now evaluate the total memory size required to hold the \acrshort{cnn}. Since this depends on the pruning parameters, we compute the upper-bound of memory required ($\alpha = 1, N_{par} = N_{if-max}$). For the same reason, we also set the memory required for each filter or \acrshort{fm} to be the memory usage of the largest element of each type accross all layers of the network. Moreover, according to \cite{noauthor_cyclone_nodate}, the maximum external memory size for Cyclone V supported is $4GB$, and hence the bitwidth of the offset is $32 \ bits$. Similarly, the maximum $BW_{pixel}$ and $BW_{weight}$ is equal to $32 \ bits$.
+
+As a result, the memory usage of the network depending on the bitwidth used to represent each pixel and weight is expressed in Equation \eqref{eq:max-extmem}.
+The curve representing the maximal external memory required can be found in Figure \ref{fig:max-mem}. We can conclude that we need an external memory size of at least 70 $MB$, which is smaller than the maximal external memory of Cyclone V \acrshort{fpga} ($4 GB$)
+
+The maximum memory required can be reduced with pruning. For example, by modifying Equation \eqref{eq:max-extmem}, with $N_{par} = 8, N_{np} = 4$, and $BW_{weight} = BW_{pixel} = 16$, the total memory required is equal to 16.54 $MB$.
+%
+\begin{align}
+    \# layers_{tot} &= 21 \\
+    \# layers_{standard-conv} &= 1 \\
+    \# layers_{bottleneck-conv} &= 17 \\
+    \# layers_{1-1-conv} &= 2 \\
+    BW_{layer_{information}} &= 238 \text{ bits} \\
+    Max\_FMI &= 112 \times 112 \times 32 = 401408 \\
+    Max\_FMO &= Max\_FMI \\
+    Max\_K11\_filter &= 320 \times 1280 = 409600 \\
+    Max\_KDW\_filter &= 3 \times 3 \times 6 \times 160 = 8640\\
+    Max\_KPW\_filter &= 6 \times 160 \times 320 = 307200 \\
+    Max\_KSC\_filter &= 3 \times 3 \times 32 = 288 \\
+\end{align}
+%
+\begin{equation}
+    \begin{split}
+        Max\_Mem = &\left(\# layers_{tot} \times BW_{layer_{information}} \right) \\
+        &+ \left( Max\_FMI \times BW_{pixel} \right) \\
+        &+ \left( Max\_FMO \times BW_{pixel} \right) \\
+        &+ \left( \# layers_{standard-conv} \times Max\_KSC\_filter \times BW_{weight} \right) \\
+        &+ \left( \# layers_{bottleneck-conv} \times Max\_KDW\_filter \times BW_{weight} \right)\\
+        &+ \left( \# layers_{bottleneck-conv} \times Max\_KPW\_filter \times \alpha \times(BW_{weight} + log_2(N_{par})) \right)\\
+        &+ ( \left(\# layers_{bottleneck-conv} + \# layers_{1-1-conv}\right) \times \\
+        & \ \ \alpha \times Max\_K11\_filter \times  (BW_{weight} + log_2(N_{par})) )
+    \end{split}
+\label{eq:max-extmem}
+\end{equation}
+%
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{maxmem.pdf}
+    \caption{Maximum external memory required in $MB$ in relation with the bitwidth of each data $BW_{pixel}$ and $BW_{weight}$}
+    \label{fig:max-mem}
+\end{figure}
 %
 \subsection{Main controller}
 %
@@ -100,7 +142,7 @@ The main controller remains in an idle state until it receives a starting signal
     \caption{\acrshort{fsm} of the main controller}
     \label{fig:fsm_mc}
 \end{figure}
-We can describe the behavior of the main controller using a \acrfull{fsm}, as illustrated in Figure \ref{fig:fsm_mc}. The \textbf{IDLE} state is the state where the main controller is waiting to perform a bottleneck convolution. Once the main controller has received a starting signal, it performs the following operations:
+We can describe the behavior of the main controller using a \acrfull{fsm}, as illustrated in Figure \ref{fig:fsm_mc}. For the sake of clarity, additional informations transmitted to the components are not shown in the Figure. The \textbf{IDLE} state is the state where the main controller is waiting to perform a bottleneck convolution. Once the main controller has received a starting signal, it performs the following operations:
 %
 \begin{figure}
     \centering
@@ -123,15 +165,16 @@ We can describe the behavior of the main controller using a \acrfull{fsm}, as il
 \end{figure}
 %
 \begin{enumerate}
-    \item \textbf{LOAD\_INF}: to perform the bottleneck convolution, the main controller first needs to fetch the layer information stored in the external memory. Therefore it tells the \acrshort{dma} to fetch them.
+    \item \textbf{LOAD\_INF}: to perform the bottleneck convolution, the main controller first needs to fetch the layer information stored in the external memory. Therefore it tells the \acrshort{dma} to fetch them ($op_{dma} = 0$).
     %
-    \item \textbf{LOAD\_FMI}: the bottleneck convolution starts by fetching a tile of inputs and weights from the main memory. As all inputs in the channel-axis are buffered (corresponding to all the fetching groups), an input \acrshort{fm} tile can be determined only by the spatial coordinates of the tile first element - pixel of reference (with the smallest $(x, y)$). Indeed, the \acrshort{dma} can fetch, for each channel, all pixels in the range $[(x, y); (x+T_{ix}, y+T_{iy})]$, which corresponds to the tile, as illustrated in Figure \ref{fig:pix_of_ref}. As a result, when the main controller asks the \acrshort{dma} to load into the on-chip memory a tile of input \acrshort{fm}, it also transfers the spatial coordinates and the memory address of its pixel of reference. Moreover, since we have to add padding to the tile (spatial dimensions are not reduced by the convolution operations), 0 value pixels are stored in the on-chip memory at corresponding positions when the reference pixel is on one edge of the input \acrshort{fm}, as shown in Figure \ref{fig:tile_padding}.
+    \item \textbf{LOAD\_FMI}: the bottleneck convolution starts by fetching a tile of inputs and weights from the main memory. As all inputs in the channel-axis are buffered (corresponding to all the fetching groups), an input \acrshort{fm} tile can be determined only by the spatial coordinates of the tile first element - pixel of reference (with the smallest $(x, y)$). Indeed, the \acrshort{dma} can fetch, for each channel, all pixels in the range $[(x, y); (x+T_{ix}, y+T_{iy})]$, which corresponds to the tile, as illustrated in Figure \ref{fig:pix_of_ref}.
+    As a result, when the main controller asks the \acrshort{dma} to load into the on-chip memory a tile of input \acrshort{fm} ($op_{dma} = 1$), it also transfers the spatial coordinates and the memory address of its pixel of reference. Moreover, since we have to add padding to the tile (spatial dimensions are not reduced by the convolution operations), 0 value pixels are stored in the on-chip memory at corresponding positions when the reference pixel is on one edge of the input \acrshort{fm}, as shown in Figure \ref{fig:tile_padding}.
     %
-    \item \textbf{LOAD\_KEX}: after fetching the input \acrshort{fm} tile, the main controller asks the \acrshort{dma} to load the $N_{par}$ $1 \times 1$ kernels into the on-chip memory, corresponding to the intermediate fetching group $group_{int}$. %Rajouter le channel de ref
+    \item \textbf{LOAD\_KEX}: after fetching the input \acrshort{fm} tile, the main controller asks the \acrshort{dma} to load the $N_{par}$ $1 \times 1$ kernels into the on-chip memory ($op_{dma} = 2$), corresponding to the intermediate fetching group $group_{int}$. %Rajouter le channel de ref
     \item \textbf{CONV\_11}: after loading the weights and pixels, the $1 \times 1$ convolution can be performed. Once the $N_{par}$ intermediate channels corresponding to the intermediate fetching group $group_{int}$ have been produced, the \acrshort{dsc} can be executed.
-    \item \textbf{LOAD\_KDW} and \textbf{LOAD\_KPW}: before doing the \acrshort{dsc}, the pointwise and depthwise kernels corresponding to the intermediate fetching group should be loaded.
+    \item \textbf{LOAD\_KDW} and \textbf{LOAD\_KPW}: before doing the \acrshort{dsc}, the pointwise and depthwise kernels corresponding to the intermediate fetching group should be loaded by the \acrshort{dma} ($op_{dma} = 3$ and $op_{dma} = 4$).
     \item \textbf{CONV\_DSC}: all output \acrshort{fm} tile partial products can be computed by performing the \acrshort{dsc} on the $N_{par}$ intermediate channels. If all intermediate fetching groups have been processed, final results are computed and can be written into the external memory. Otherwise, the next $N_{par}$ intermediate channels should be computed. Moreover, since output \acrshort{fm} partial results will be kept in on-chip memory, the main controller indicates to the \acrshort{dsc} \acrshort{pe}s whether the values read from the \textit{FMO Buffer} should be consired as valid. If it is not the case, the value should be set to 0.
-    \item \textbf{WRITE\_FMO}: this state indicates that there are only final results in the \textit{FMO Buffer}. The main controller tells the \acrshort{dma} that its content can be written to the external memory. As for the input \acrshort{fm} tiles, the output \acrshort{fm} tiles are determined by their pixel of reference, which is also transmitted to the \acrshort{dma}. If all tiles have been processed, the bottleneck convolution is completed and the main controller state turns to \textbf{FINISHED}. Otherwise, a new tile has to be processed and main controller returns to \textbf{LOAD\_FMI} state.
+    \item \textbf{WRITE\_FMO}: this state indicates that there are only final results in the \textit{FMO Buffer}. The main controller tells the \acrshort{dma} that its content can be written to the external memory ($op_{dma} = 5$). As for the input \acrshort{fm} tiles, the output \acrshort{fm} tiles are determined by their pixel of reference, which is also transmitted to the \acrshort{dma}. If all tiles have been processed, the bottleneck convolution is completed and the main controller state turns to \textbf{FINISHED}. Otherwise, a new tile has to be processed and main controller returns to \textbf{LOAD\_FMI} state.
     \item \textbf{FINISHED}: The bottleneck convolution is done and the main controller sets the finish signal.
 \end{enumerate}
 %
@@ -155,25 +198,71 @@ The purpose of the \acrshort{dma} is to fill the \textbf{data buffer} with its c
     \caption{\acrshort{fsm} of the \acrshort{dma}}
     \label{fig:fsm_dma}
 \end{figure}
-When the main controller asks the \acrshort{dma} for a transfer, it sets its start signal, which operation to execute ($op_{dma}$), and all extra information required. All extra information are related to the external memory, if the \acrshort{dma} reads or writes into a buffer, the initial address $r_{addr-i}/w_{addr-i}$ can be set to 0. The behavior of the \acrshort{dma} can be expressed using a \acrshort{fsm}, as found in Figure \ref{fig:fsm_dma}. A general \acrshort{fsm} has been illustrated because each operation shares the same structure. As the \acrshort{dma} only fetches data from one memory and writes the data into another one, each operation is composed of 2 states:
+When the main controller asks the \acrshort{dma} for a transfer, it sets its start signal, which operation to execute ($op_{dma}$), and all extra information related to the external memory required. If the \acrshort{dma} reads or writes into a buffer, the initial address $r_{addr-i}/w_{addr-i}$ can be set to 0. Indeed, buffer addresses start from 0 to $Buffer_{N_{elem}} - 1$. The behavior of the \acrshort{dma} can be expressed using a \acrshort{fsm}, as found in Figure \ref{fig:fsm_dma}. A general \acrshort{fsm} has been illustrated because each operation shares the same structure. As the \acrshort{dma} only fetches data from one memory and writes the data into another one, each operation is composed of 2 states:
 \begin{itemize}
-    \item \textbf{READ}: the \acrshort{dma} fetches the required data at a address $r_{addr}$. Once the data is loaded by the \acrshort{dma}, it moves to the next state to write the data in the on-chip memory. When loading the input \acrshort{fm} tile, if the address corresponds to a padding pixel, the value to write is 0 and the \acrshort{dma} directly moves to the \textbf{WRITE} state. If the data is fetched from the external memory, the \acrshort{dma} waits the data read from the external memory to be valid. But if the data is fetched from a buffer, the process can be pipelined. That is why, before the \acrshort{dma} reads data from the on-chip memory, it is in a state called \textbf{RAM\_LOADING} to initialize the pipeline process.
+    \item \textbf{READ}: the \acrshort{dma} fetches the required data at a address $r_{addr}$. Once the data is loaded by the \acrshort{dma}, it moves to the next state to write the data in the on-chip memory. When loading the input \acrshort{fm} tile, if the address corresponds to a padding pixel, the value to write is 0 and the \acrshort{dma} directly moves to the \textbf{WRITE} state. If the data is fetched from the external memory, the \acrshort{dma} sets the read request signal $r_{request_{extmem}}$ (enabling a transfet) waits the data read from the external memory to be valid ($r_{valid_{extmem}}$). But if the data is fetched from a buffer, the process can be pipelined. That is why, before the \acrshort{dma} reads data from the on-chip memory, it is in a state called \textbf{RAM\_LOADING} to initialize the pipeline process.
     \item \textbf{WRITE}: the \acrshort{dma} sends a write signal and the associated data $w_data$ and address $w_{address}$ to the corresponding memory . If the operation is finished (the tile has been fetches), the \acrshort{dma} goes into the \textbf{FINISHED} state. Otherwise, it updates the address of the next data to fetch and goes back to the \textbf{READ} state.
 \end{itemize}
 
-Since the \acrshort{dma} performs one transfer at a time, we can share the fetched data (to be written) $w_{data}$ between all memory component and we set the write signal to the corresponding component. In a similar way, the signal to access or write data in a buffer $ram_{addr}$ can also be shared between the different buffers.
+The \acrshort{dma} has therefore signals for reading $r_{extmem}$ a data at address $address_{extmem}$. Since the \acrshort{dma} performs one transfer at a time, we can share the fetched data (to be written) $w_{data}$ between all memory component and we set the write signal to the corresponding component. In a similar way, the signal to access or write data in a buffer $ram_{addr}$ can also be shared between the different buffers. As the \acrshort{dma} reads the contrent of only one buffer, we define the corresponding signal as $r_{ram}$ (and hence at address $ram_{addr}$).
 %
 \subsection{1\texttimes1 convolution PE}
 %
-The purpose of this component is to execute the Algorithm \ref{fig:algo_11conv}. The behavior of the \acrshort{pe} can be expressed using a \acrshort{fsm}, as found in Figure \ref{fig:fsm_c11}.
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{fsm-c11.pdf}
+    \caption{\acrshort{fsm} of the 1\texttimes1 convolution PE}
+    \label{fig:fsm_c11}
+\end{figure}
+%
+The purpose of this component is to execute the Algorithm \ref{pseudocode:c11}. The behavior of the \acrshort{pe} can be expressed using a \acrshort{fsm}, as found in Figure \ref{fig:fsm_c11}.
 
-When the \acrshort{pe} receives a starting signal, it means that the \textbf{FMI} and \textbf{KEX BUFFERS} contain the data to execute the next $1 \times 1$ convolution. For each fetching group corresponding to an intermediate pixel at address $\left( int_x, int_y, int_f \right)$, the \acrshort{pe} loads the corresponding inputs and weights into its registers (\textbf{LOAD\_DATA} state). Once it is done, the computation can be performed (\textbf{COMPUTATION} state). Since the convolution is fully-unrolled, an exemple of the hardware configuration is shown in Figure \ref{fig:c11_hardware}. The output result is then summed with the content of the accumulator (which contains 0 for the first fetching group).
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{hardware_conv11.pdf}
+    \caption{\acrshort{pe} structure performing the convolution where $N_{par} = 4$ and $N_{np} = 2$, inspired by \cite{kang_accelerator-aware_2020}}
+    \label{fig:c11_hardware}
+\end{figure}
+%
+When the \acrshort{pe} receives a starting signal, it means that the \textbf{FMI} and \textbf{KEX BUFFERS} contain the data to execute the next $1 \times 1$ convolution. For each fetching group corresponding to an intermediate pixel at address $w_{addr}$, the \acrshort{pe} loads the corresponding $N_{par}$ inputs and $N_{np}$ weights into its registers (\textbf{LOAD\_DATA} state).
+Once it is done, the computation can be performed (\textbf{COMPUTATION} state). Since the convolution is fully-unrolled, we can use the \acrshort{pe} structure from \textcite{kang_accelerator-aware_2020}, which is shown in Figure \ref{fig:c11_hardware}. The output result is then summed with the content of the accumulator (which contains 0 for the first fetching group).
 
-When the convolution is done for one intermediate pixel, the result is written into the \textbf{FMINT BUFFER}. If all pixels required for the \acrshort{dsc} have been computed, the \acrshort{pe} sends an ending signal to the main controller (\textbf{FINISHED} state). Otherwise it computes the next intermediate pixel.
+When the convolution is done for one intermediate pixel, the result is fed to the ReLU6 activation (see Section \ref{subs:acti}), and its output is written into the \textbf{FMINT BUFFER}. If all pixels required for the \acrshort{dsc} have been computed, the \acrshort{pe} sends an ending signal to the main controller (\textbf{FINISHED} state). Otherwise it computes the next intermediate pixel.
+
+This \acrshort{pe} is described for the its use in the bottleneck convolution, but is could also be used in the $1 \times 1$ layers.
 %
 \subsection{DSC PE}
 %
-This \acrshort{pe} is designed to perform the \acrshort{dsc}. Once the $1 \times 1$ convolution has computed the next \acrshort{dsc} fetching group and the \textbf{Buffers} containts the required data, we can do the \acrshort{dsc} as in Algorithm \ref{fig:algo}. The \acrshort{pe} can be described as a \acrshort{fsm} executign Algorithm \ref{fig:algo_dsc}.
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{fsm-dsc.pdf}
+    \caption{\acrshort{fsm} of the \acrshort{dsc} \acrshort{pe}}
+    \label{fig:fsm_dsc}
+\end{figure}
+This \acrshort{pe} is designed to perform the \acrshort{dsc}. Once the $1 \times 1$ convolution has computed the next intermediate fetching group and the \textbf{Buffers} containts the required data, we can do the \acrshort{dsc} as in Algorithm \ref{pseudocode:dsc}. The \acrshort{pe} can be described as a \acrshort{fsm} executing the proposed algorithm in Figure \ref{fig:fsm_dsc}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{hardware-dw.pdf}
+    \caption{\acrshort{pe} structure performing the depthwise convolution, inspired by \cite{bai_cnn_2018}}
+    \label{fig:dsc_hardware}
+\end{figure}
+%
+The \acrshort{pe} has the same structure as the 1\texttimes1 convolution PE. However, the 2 \acrshort{pe}s diverges on the following elements:
+\begin{itemize}
+    \item For each intermediate pixels, the 1\texttimes1 \acrshort{pe} performs $N_{gr}$ $1 \times 1$ partial convolutions on the input pixels and $1 \times 1$ kernels directly fetched from the buffers.
+    %
+    \item On the other hand, for the \acrshort{dsc} \acrshort{pe} must first loads the $N_{kx} \times N_{ky} \times N_{par}$ intermediate pixels and depthwise weights (\textbf{LOAD\_K\_DW} and \textbf{LOAD\_FMINT} states). This is done in two different states because the depthwise is fully-unrolled and therefore we keep all required weights into the registers. We have to only fetch them once from the external memory.
+    %
+    \item After it has loaded the input pixels and the depthwise weights, the depthwise convolution can be performed. To execute the depthwise convolution for each intermediate channels, we can use the same \acrshort{pe} as \textcite{bai_cnn_2018}, as illustrated in Figure \ref{fig:dsc_hardware}. First we do a element-wise multiplication using a multiplier array between pixels and weights (\textbf{DW\_CONV\_MUL} state). Then, we simply have to sum the products belonging to the same channel to obtain the $N_{par}$ depthwise produtcs used as input for the pointwise convolution (\textbf{DW\_CONV\_ADD} state). Then the registers store the results of the ReLU6 activation function for the \acrshort{dsc}.
+    %
+    \item We can perform the partial \acrshort{dsc} for the $N_{of}$ channels of spatial coordinate $o_x, o_y$. For each channel, we load the $N_{np}$ weights corresponding to that channel and the intermediate fetching group (\textbf{LOAD\_K\_PW} state). We also load the partial sum stored in the \textbf{FMO Buffer} to sum it with the results of the convolution (\textbf{PW\_CONV} state). However, if it is the first intermediate fetching group, this value is set to 0 ($first\_par\_i$ signal, set by the main controller).
+    The structure of the \acrshort{pe} performing the pointwise convolution is the same as Figure \ref{fig:c11_hardware}. Then the sum between the partial sum stored and the result of the convolution is stored in the \textbf{FMO Buffer} (\textbf{WRITE} state).
+    %
+    \item When all the partial sum have been produced, the \acrshort{pe} moves to the \textbf{FINISHED} state and sets its finishing signal.
+\end{itemize}
+
+The \acrshort{dsc} \acrshort{pe} could be extended to support the standard, as pointed out by \textcite{bai_cnn_2018}. Indeed, if we consider sum all products in the multiplier array instead of only those belonging to the same channel, we perform the standard convolution.
 %
 \subsection{Buffer}
 %
@@ -251,5 +340,3 @@ However, the differences between each buffer are the maximum number of elements 
         \label{eq:bw_fmo}
     \end{equation}
 \end{itemize}
-
-%
