@@ -1,9 +1,10 @@
 \section{Convolutional Neural Network} \label{sec:cnn}
-\acrshort{cnn} is a type of \acrshort{nn} specialized in analyzing visual imagery and natural language processing. \acrshort{cnn}s are feedforward, sparsely connected \acrshort{nn}s, and structured as a pipeline of layers \cite{abdelouahab_accelerating_2018}. It has shown superior performances on different competitions related to Computer Vision and Image Processing \cite{khan_survey_2020}. Nowaday, \acrshort{cnn}s are used in character and gesture recognition, video classification, face detection, etc \cite{shawahna_fpga-based_2019}. This section aims at investigating the aspects of a \acrshort{cnn} and the optimizations that could be made to reduce its size and computational complexity.
+\acrshort{cnn} is a type of \acrshort{nn} specialized in analyzing visual imagery and natural language processing. \acrshort{cnn}s are feedforward, sparsely connected \acrshort{nn}s, and structured as a pipeline of layers \cite{abdelouahab_accelerating_2018}. It has shown superior performances on different competitions related to Computer Vision and Image Processing \cite{khan_survey_2020}. Nowadays, \acrshort{cnn}s are used in character and gesture recognition, video classification, face detection, etc \cite{shawahna_fpga-based_2019}. This section aims at investigating the different aspects of a \acrshort{cnn}.
+%Mand the optimizations that could be made to reduce its size and computational complexity.
 
-First, the building blocks of a CNN are developed in the section \ref{subsec:layer} starting from its basic element \textit{the perceptron}. Then, the way to use it to build layers which can perform complex functions is described. Finally, the other types of layers required to improve the efficiency of the model, such as pooling are detailed.
+First, the building blocks of a CNN are developed in the section \ref{subsec:layer} starting from its basic element \textit{the perceptron}. Then, we describe how to use it to build layers which can perform complex functions. Finally, we detail the other types of layers required to improve the efficiency of the model, such as pooling layer.
 
-Then, section \ref{subsec:models} describes the use of these layers with a focus on state-of-art networks like AlexNet, VGG16, ResNet, and MobileNetV2.
+Then, section \ref{subsec:models} describes how to effectively combine these layers with a focus on state-of-art networks like AlexNet, VGG16, ResNet, and MobileNetV2.
 
 Finally, Section \ref{subsec:train} focuses on the training of a \acrshort{cnn}. We briefly explain the back-propagation algorithm, which consists of a forward-propagation and a back-propagation.
 %
@@ -12,8 +13,7 @@ Finally, Section \ref{subsec:train} focuses on the training of a \acrshort{cnn}.
 %
 A CNN is a pipeline of layers which can be stacked to form a network \cite{abdelouahab_accelerating_2018}. A layer is a high-level building block, which consists of a set of operations, weights, and non-linear functions. The output of one layer can be used as input of the next layer or as the final output of the network. 
 
-This section first introduces the simplest building element of a \acrshort{cnn}: the perceptron. We describe its different components and notably its activation function. Then, we can use this element to build more complex layer such as fully connected and convolutional layer. Finally, we present the the pooling layer which it used to reduce the spatial dimensions of the ouput of the previous layer.
-%First, the fully connected layer is analysed. It can be seen as a non-linear classifier \cite{khan_survey_2020}. Then, the convolutional layer is the main layer of the model, its goal is to extract the features of the input and to transmit them to the next layer. It can use the convolution or an alternative form of convolution: the depthwise separable convolution which will also be described \cite{liu_fpga-based_2019}. Finally, the pooling layer which is used to replace the output of the previous layer by a summary statistic will be investigated \cite{goodfellow_deep_2016}.
+This section first introduces the simplest building element of a \acrshort{cnn}: the perceptron. We describe its different components and notably its activation function. Then, we can use this element to build more complex layers such as fully connected and convolutional layer. Finally, we present the pooling layer which it used to reduce the spatial dimensions of the ouput of the previous layer.
 %
 %
 \input{src/5.Background/subsection/CNN_Perceptron}
@@ -27,15 +27,10 @@ This section first introduces the simplest building element of a \acrshort{cnn}:
 \input{src/5.Background/subsection/CNN_dsc}
 %
 \input{src/5.Background/subsection/CNN_pooling}
-
-\begin{figure}
-    \centering
-    \includegraphics[width=\textwidth]{cnn_summary.pdf}
-    \caption{Working principle of a CNN and the different layers which composing it}
-    \label{fig:layer:summary}
-\end{figure}
 %
-In Conclusion, the summary of this section is provided by Figure \ref{fig:layer:summary}. An input image is transmitted to the \acrshort{cnn} then, three different kinds of layers can be used:
+\subsubsection{Summary}
+%
+The summary of this section is provided by Figure \ref{fig:layer:summary}. An input image is transmitted to the \acrshort{cnn} then, three different kinds of layers can be used:
 %
 \begin{enumerate}
     \item The convolutional layer which extract the features from the input.
@@ -43,27 +38,32 @@ In Conclusion, the summary of this section is provided by Figure \ref{fig:layer:
     \item The fully connected layer which is a non linear classifier.
 \end{enumerate}
 %
-The previously layers can, therefore, decompose a \acrshort{cnn} in two parts \cite{matteucci_artificial_2019}:
+A typical \acrshort{cnn} is composed of two parts, which are built from stacking the previously mentioned layers \cite{matteucci_artificial_2019}:
 \begin{enumerate}
-    \item The feature extractor part, composed of blocks made of convolutional, activation function and pooling layers.
-    \item The classifier part, composed only of fully-connected layers.
+    \item The feature extractor part, composed of blocks made of convolutional, activation, and pooling layers.
+    \item The classifier part, composed only of fully connected layers.
 \end{enumerate}
 %
-All these types of layers are stacked together to form a \acrshort{cnn}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{cnn_summary.pdf}
+    \caption{Working principle of a CNN and the different layers which composing it}
+    \label{fig:layer:summary}
+\end{figure}
 %
 \subsection{CNN Models} \label{subsec:models}
-After this analysis of the CNN structure of section \ref{subsec:layer}, this section will detail some of the well-known \acrshort{cnn} networks. They are examples of how to construct an efficient \acrshort{cnn}.
+After the analysis of the CNN structure in Section \ref{subsec:layer}, this section details some of the well-known \acrshort{cnn} networks. They are examples of how to construct an efficient \acrshort{cnn}.
 
 %
 \input{src/5.Background/subsection/CNN_models}
 %
 %
 \subsection{Training} \label{subsec:train}
-Section \ref{subsec:models} has described the common building blocks present in \acrshort{cnn} and how to design a \acrshort{cnn}. This section aims at detailing how a network improves automatically its performance for a specific task. This is called \textit{learning}.
+In previous section were described the common building blocks present in \acrshort{cnn} and how to design a \acrshort{cnn}. This section aims at detailing how a network improves automatically its performance for a specific task. This is called \textit{learning}.
 
-The learning phase starts after designing the network. However, before the model can learn, we have to assign a value to the weight. The most common form is random initialization drawn from Gaussian distribution \cite{he_delving_2015}. The learning is affected by the initial values of the weight. If it is too small the network does not learn or if it is too large it might take a very long time to converge. To solve this, different initializations have been suggested: Xavier initialization \cite{glorot_understanding_2010} and He initialization \cite{he_delving_2015}.
+The learning phase starts after designing the network. However, before the model can learn, we have to initialize the weights. The most common initialization is random Gaussian distribution \cite{he_delving_2015}. However, the learning phase is affected by the initial values of the weights. If it is too small the network does not learn or if it is too large it might take a very long time to converge. Different initializations were suggested to improve the learning phase: Xavier initialization \cite{glorot_understanding_2010} and He initialization \cite{he_delving_2015}.
 
-When values have been assigned to the weights, the backpropagation algorithm can be performed in order to improve the efficiency of the network. This section will first describe its first step: the forward pass and then its second step: the back-propagation.
+When values are assigned to the weights, the backpropagation algorithm can be performed in order to improve the efficiency of the network. The backpropagation algorithm is composed of two steps: the forward pass and the backpropagation. In the following sections we briefly review each of them.
 %
 \input{src/5.Background/subsection/CNN_forward}
 %

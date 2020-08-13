@@ -1,14 +1,21 @@
 \subsubsection{Depthwise Separable Convolution}  \label{subs:dsc}
 \acrfull{dsc} was first introduced by \textcite{sifre_rigid-motion_2014}. According to \textcite{chollet_xception_2017}, \textquote{\textit{A depthwise separable convolution consists in a \textbf{depthwise convolution}, i.e. a spatial convolution performed independently over each channel of an input, followed by a \textbf{pointwise convolution}, i.e. a $1 \times 1$ convolution, projecting the channel's output by the depthwise convolution onto a new channel space}}.
-
-It means that the \acrshort{dsc} is composed of a depthwise convolution followed by a pointwise convolution as illustrated in Figure \ref{fig:dsc}. This alternative form of convolution has been developed to reduce efficiently the arithmetic complexity, in exchange of a limited loss of accuracy \cite{liu_fpga-based_2019}. As a result, the \acrshort{dsc} has significantly fewer parameters and operations with respect to the standard convolution. Equations \eqref{eq:descopred} and \eqref{eq:descwgred} are used to calculate the reduction factors on weigths and on operations respectively, where $F_{*}$ are the factors of reduction, $W_{sc}$ and $O_{sc}$ are the weights and operations required for a standard convolution, and $W_{dsc}$ and $O_{dsc}$ are the weights and operations required for a \acrshort{dsc} \cite{liu_fpga-based_2019}.
 %
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{dsc.pdf}
+    \caption{Depthwise Separable Convolution}
+    \label{fig:dsc}
+\end{figure}
+%
+It means that the \acrshort{dsc} is composed of a depthwise convolution followed by a pointwise convolution, as illustrated in Figure \ref{fig:dsc}. This alternative form of convolution was developed to reduce efficiently the number of weights and the arithmetic complexity, in exchange of a limited loss of accuracy \cite{liu_fpga-based_2019}. As a result, the \acrshort{dsc} has significantly fewer parameters and operations with respect to the standard convolution, which was described previously. Equations \eqref{eq:descopred} and \eqref{eq:descwgred} are used to express the reduction factors on weigths and operations, where $F_{*}$ are the reduction factors, $W_{sc}$ and $O_{sc}$ (resp. $W_{dsc}$ and $O_{dsc}$) are the weights and operations required for a standard convolution (resp. \acrshort{dsc}) \cite{liu_fpga-based_2019, bai_cnn_2018}.
+
 \begin{equation}
     F_w = \frac{W_{dsc}}{W_{sc}} =
     \frac{N_{kx} \times N_{ky} \times N_{if} + N_{if} \times N_{of}}{N_{kx} \times N_{ky} \times N_{if} \times N_{of}} =
     \frac{1}{N_{of}} + \frac{1}{N_{kx} \times N_{ky}}
     \label{eq:descopred}
 \end{equation}
+%
 \begin{equation}
     \begin{split}
         F_o &= \frac{O_{dsc}}{O_{sc}} = \frac{N_{kx} \times N_{ky} \times N_{if} \times N_{ox} \times N_{oy} + N_{if} \times N_{of} \times N_{ox} \times N_{oy}}{N_{kx} \times N_{ky} \times N_{if} \times N_{of} \times N_{ox} \times N_{oy}} \\
@@ -17,10 +24,4 @@ It means that the \acrshort{dsc} is composed of a depthwise convolution followed
     \label{eq:descwgred}
 \end{equation}
 
-Using equation \eqref{eq:descopred} and equation \eqref{eq:descwgred} and $3 \times 3$ kernels, the reduction of computation and parameters in comparison with the standard convolution is about 9 times \cite{zhang_channel_2019}.
-%
-\begin{figure}
-    \includegraphics[width=\textwidth]{dsc.pdf}
-    \caption{Depthwise Separable Convolution}
-    \label{fig:dsc}
-\end{figure}
+Using Equation \eqref{eq:descopred}, Equation \eqref{eq:descwgred}, and $3 \times 3$ kernels, the reduction factors of computational complexity and weights is about 9 times (in comparison with the standard convolution) \cite{zhang_channel_2019}.

@@ -1,12 +1,12 @@
 \subsubsection{Back-propagation} \label{subs:trainbackward}
-According to \textcite{ruder_overview_2017}, gradient descent optimization algorithms are the most common one used  to perform optimizations on \acrshort{nn}. These algorithms derive from the idea of gradient descent. As said in the previous section, gradient descent is a way to minimize the loss function in order to parametriz the parameters of the model (weight). Equation \eqref{eq:gd} defines the gradient descent algorithm, where $\eta$ is the learning rate, a positive scalar determining the size of the step in the direction minimizing the gradient \cite{ruder_overview_2017, goodfellow_deep_2016}. If we update the weight in the opposite direction of the gradient, we can reach a local minimum.
+According to \textcite{ruder_overview_2017}, gradient descent optimization algorithms are the most common ones used to perform optimizations on \acrshort{nn}. These algorithms derive from the idea of gradient descent. As said in the previous section, gradient descent is a way to minimize the loss function in order to parametrize the parameters of the model (weight). Equation \eqref{eq:gd} defines the gradient descent algorithm, where $\eta$ is the learning rate, a positive scalar determining the size of the step in the direction minimizing the gradient \cite{goodfellow_deep_2016, ruder_overview_2017}. If we update the weight in the opposite direction of the gradient, we can reach a local minimum.
 %
 \begin{equation}
     \boldsymbol{w} = \boldsymbol{w} - \eta \frac{ \partial L( \boldsymbol{x}, \boldsymbol{w} ) }{\partial \boldsymbol{w}}
     \label{eq:gd}
 \end{equation}
 
-\textbf{The original gradient descent} or \textbf{batch gradient descent} computes the gradient using the whole dataset (the batch) \cite{ruder_overview_2017, matteucci_artificial_2019}. Equation \eqref{eq:gd-grad} is used to compute this batch gradient. However, this might be impossible to do in practice if the dataset is too large. Indeed, Indeed, the gradient of the whole dataset has to be computed for each update. Therefore, variations of this algorithm have been proposed to make the gradient descent practical.
+\textbf{The original gradient descent} or \textbf{batch gradient descent} computes the gradient using the whole dataset (the batch) \cite{matteucci_artificial_2019, ruder_overview_2017,}. Equation \eqref{eq:gd-grad} is used to compute this batch gradient. However, this might be impossible to do in practice if the dataset is too large. Indeed, the gradient of the whole dataset has to be computed for each update. Therefore, variations of this algorithm have been proposed to make the gradient descent practical.
 %
 \begin{equation}
     \frac{ \partial L( \boldsymbol{x}, \boldsymbol{w} ) }{\partial \boldsymbol{w}} = \frac{1}{N_{in}} \sum^{Nin}_{i = 0} \frac{ \partial L( x_i, \boldsymbol{w} ) }{\partial \boldsymbol{w}}
