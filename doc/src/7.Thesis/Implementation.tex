@@ -60,18 +60,18 @@ The external memory is an external component that contains all the data required
         \label{eq:addr_dw}
     \end{equation}
     \item \textbf{Pointwise kernels}: the kernels of the pointwise convolution. The weights are stored in the same manner as for the $1 \times 1$ filter.
-    \item \textbf{Standard convolution kernels}: since the first layer of MobileNetV2 is a standard convolution \cite{sandler_mobilenetv2_2019}, the weights must be also stored in the external memory, in the same manner as the depthwise filter.
+    \item \textbf{Standard convolution kernels}: since the first layer of MobileNetV2 is a standard convolution \cite{sandler_mobilenetv2_2018}, the weights must be also stored in the external memory, in the same manner as the depthwise filter.
 \end{enumerate}
 
 An offset, for each type of data, is added to the computation of the address to avoid that one address is shared between multiple data. As a result, before executing one layer, the main controller must have the following information, labelled as \textbf{Layer information}:
 %
 \begin{enumerate}
-    \item \textbf{$N_{ix}$ and $N_{iy}$}: the spatial dimensions of the input \acrshort{fm}. Since $N_{ix}, N_{iy} \leq 224$ \cite{sandler_mobilenetv2_2019}, we can use 8 bits to represent them.
-    \item \textbf{$N_{if}$ and $N_{of}$}: the number of channels of the input  and output \acrshort{fm}. Since $N_{if}, N_{of} \leq 1280$ \cite{sandler_mobilenetv2_2019}, we can use 11 bits to represent them.
-    \item \textbf{$t$}: the expansion factor of the $1 \times 1$ convolution. Since $t \leq 6$ \cite{sandler_mobilenetv2_2019}, we can use 3 bits to represent it.
-    \item \textbf{$S$}: the value of the stride. Since $S$ can be either 1 or 0 \cite{sandler_mobilenetv2_2019}, we can use 1 bit to represent it.
+    \item \textbf{$N_{ix}$ and $N_{iy}$}: the spatial dimensions of the input \acrshort{fm}. Since $N_{ix}, N_{iy} \leq 224$ \cite{sandler_mobilenetv2_2018}, we can use 8 bits to represent them.
+    \item \textbf{$N_{if}$ and $N_{of}$}: the number of channels of the input  and output \acrshort{fm}. Since $N_{if}, N_{of} \leq 1280$ \cite{sandler_mobilenetv2_2018}, we can use 11 bits to represent them.
+    \item \textbf{$t$}: the expansion factor of the $1 \times 1$ convolution. Since $t \leq 6$ \cite{sandler_mobilenetv2_2018}, we can use 3 bits to represent it.
+    \item \textbf{$S$}: the value of the stride. Since $S$ can be either 1 or 0 \cite{sandler_mobilenetv2_2018}, we can use 1 bit to represent it.
     \item \textbf{$N_{gr}$ and $N_{grint}$}: the number of fetching groups for the $1 \times 1$ convolution and the \acrshort{dsc}. Since the largest value possible for both parameters is the maximum $N_{if}$ ($N_{par} = 1$), we can use 11 bits to represent them.
-    \item \textbf{$Layer$}: to tell the main controller which layer is going to be executed. Since there are 4 kinds of layers in MobileNetV2 \cite{sandler_mobilenetv2_2019}, we use 2 bits to represent it. However this was not included in the design because only the bottleneck convolution was implemented.
+    \item \textbf{$Layer$}: to tell the main controller which layer is going to be executed. Since there are 4 kinds of layers in MobileNetV2 \cite{sandler_mobilenetv2_2018}, we use 2 bits to represent it. However this was not included in the design because only the bottleneck convolution was implemented.
     \item \textbf{Offsets}: the offset of the different data types must be transfered to the \acrshort{dma} in order to correctly compute the address of the required data. The number of bits required to represent one offset is the bitwidth of the address of the external memory.
 \end{enumerate}
 
@@ -85,7 +85,7 @@ An offset, for each type of data, is added to the computation of the address to 
 %
 As a consequence, those layer information are also stored in the external memory. The overall structure of the external memory can be found in Figure \ref{fig:overal_mem}.
 
-We can now evaluate the total memory size required to hold the \acrshort{cnn}. Since this depends on the pruning parameters, we compute the upper-bound of memory required ($\alpha = 1, N_{par} = N_{if-max}$). For the same reason, we also set the memory required for each filter or \acrshort{fm} to be the memory usage of the largest element of each type accross all layers of the network. Moreover, according to \cite{noauthor_cyclone_nodate}, the maximum external memory size for Cyclone V supported is $4GB$, and hence the bitwidth of the offset is $32 \ bits$. Similarly, the maximum $BW_{pixel}$ and $BW_{weight}$ is equal to $32 \ bits$.
+We can now evaluate the total memory size required to hold the \acrshort{cnn}. Since this depends on the pruning parameters, we compute the upper-bound of memory required ($\alpha = 1, N_{par} = N_{if-max}$). For the same reason, we also set the memory required for each filter or \acrshort{fm} to be the memory usage of the largest element of each type accross all layers of the network. Moreover, according to \cite{noauthor_cyclone_2018}, the maximum external memory size for Cyclone V supported is $4GB$, and hence the bitwidth of the offset is $32 \ bits$. Similarly, the maximum $BW_{pixel}$ and $BW_{weight}$ is equal to $32 \ bits$.
 
 As a result, the memory usage of the network depending on the bitwidth used to represent each pixel and weight is expressed in Equation \eqref{eq:max-extmem}.
 The curve representing the maximal external memory required can be found in Figure \ref{fig:max-mem}. We can conclude that we need an external memory size of at least 70 $MB$, which is smaller than the maximal external memory of Cyclone V \acrshort{fpga} ($4 GB$)

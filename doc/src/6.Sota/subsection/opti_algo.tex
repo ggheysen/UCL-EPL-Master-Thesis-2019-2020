@@ -40,7 +40,7 @@ The output tile $T_O$ of the Winograd Filtering algorithm denoted $F(T_{ix} \tim
     \label{eqn:winograd}
 \end{equation}
 
-According to \textcite{winograd_arithmetic_1980}, the Winograd convolution reduces the number of multiplications at the cost of an increase in the numbers of additions. The gain obtained is defined by Equation \eqref{eq:winograd_gain} \cite{winograd_arithmetic_1980}. For example, if $T_{ix} = T_{iy} = 2$ and $N_{kx} = N_{ky} = 3$, the complexity reduction $F_{multiplication} = 2.25$ \cite{lavin_fast_2015}.
+According to \textcite{winograd_arithmetic_1980}, the Winograd convolution reduces the number of multiplications at the cost of an increase in the numbers of additions. The gain obtained is defined by Equation \eqref{eq:winograd_gain} \cite{winograd_arithmetic_1980}. For example, if $T_{ix} = T_{iy} = 2$ and $N_{kx} = N_{ky} = 3$, the complexity reduction $F_{multiplication} = 2.25$ \cite{lavin_fast_2016}.
 %
 \begin{equation}
     F_{multiplication} = \frac{T_{ix} \times T_{iy} \times N_{kx} \times N_{ky}}{(T_{ix} + N_{kx} - 1) \times (T_{iy} + N_{ky} - 1)}
@@ -59,7 +59,7 @@ Using \acrshort{fft}, the computational complexity can be reduced from $O(N_{ix}
 %
 \subsubsection{Comparison between the two fast convolution algorithms}
 %
-Winograd-based convolution seems to be a preferred way to perform fast convolution. Indeed, \textcite{lavin_fast_2015} demonstrated that Winograd convolution is more efficient when the kernel and the stride are small ($K_* \leq 3$ for the kernel) while \acrshort{fft}-based convolution is more adequate when the kernel is large \cite{ahmad_towards_2019, chitsaz_acceleration_2020}. However, current \acrshort{cnn} trends prior the utilization of small kernel \cite{liang_evaluating_2020, sandler_mobilenetv2_2019} and so, the Winograd convolution.
+Winograd-based convolution seems to be a preferred way to perform fast convolution. Indeed, \textcite{lavin_fast_2016} demonstrated that Winograd convolution is more efficient when the kernel and the stride are small ($K_* \leq 3$ for the kernel) while \acrshort{fft}-based convolution is more adequate when the kernel is large \cite{ahmad_towards_2019, chitsaz_acceleration_2020}. However, current \acrshort{cnn} trends prior the utilization of small kernel \cite{liang_evaluating_2020, sandler_mobilenetv2_2018} and so, the Winograd convolution.
 
 Moreover, FPGA implementations of the Winograd algorithm have produced good results. For example, \cite{aydonat_opencl_2017, liang_evaluating_2020} used Winograd transform and have reduced their computational complexity by around 50\%. However, the Winograd algorithm also has increased bandwidth utilization \cite{xiao_exploring_2017}.
 

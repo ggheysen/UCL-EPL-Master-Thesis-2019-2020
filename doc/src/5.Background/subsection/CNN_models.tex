@@ -23,20 +23,20 @@ After the success of AlexNet in 2012, research has been made to reduce the compu
 \begin{figure}
     \centering
     \includegraphics[width=0.8\textwidth]{resnet.pdf}
-    \caption{ResNet building block \cite{he_deep_2015}}
+    \caption{ResNet building block, from \cite{he_deep_2016}}
     \label{fig:resnet}
 \end{figure}
 %
-\textcite{he_deep_2015} have developed ResNet in 2015. It is a very deep network which can contain from 50 to 1000 convolutional layers. It is composed of structures which are more complex and irregular than in the networks described previously. \textcite{he_deep_2015} have shown that an increase of the depth of the network does not mean an improvement in the performance. Indeed, after a certain amount of layers, a continuous of the depth leads to the degradation of the accuracy. This is not due to overfitting but because the deeper models are harder to optimize than shallower ones (vanishing gradient described in Section \ref{subs:trainbackward}) \cite{matteucci_artificial_2019}. However, deeper networks should at least have similar or better performance than shallower ones. Indeed, let’s compare a deeper and a shallower network. If the deeper network is composed of the same layers than the shallower one and that the other added layers are just identity mapping, then the network should have the same performance than the shallower one. Therefore, a deeper network should not have worst performance than shallower ones \cite{matteucci_artificial_2019}.
+\textcite{he_deep_2016} have developed ResNet in 2015. It is a very deep network which can contain from 50 to 1000 convolutional layers. It is composed of structures which are more complex and irregular than in the networks described previously. \textcite{he_deep_2016} have shown that an increase of the depth of the network does not mean an improvement in the performance. Indeed, after a certain amount of layers, a continuous of the depth leads to the degradation of the accuracy. This is not due to overfitting but because the deeper models are harder to optimize than shallower ones (vanishing gradient described in Section \ref{subs:trainbackward}) \cite{matteucci_artificial_2019}. However, deeper networks should at least have similar or better performance than shallower ones. Indeed, let’s compare a deeper and a shallower network. If the deeper network is composed of the same layers than the shallower one and that the other added layers are just identity mapping, then the network should have the same performance than the shallower one. Therefore, a deeper network should not have worst performance than shallower ones \cite{matteucci_artificial_2019}.
 
-To overcome this issue, \textcite{he_deep_2015} introduced an \textit{identity shortcut connection} which skips one or more layers and set weights to the identity, as can be seen in Figure \ref{fig:resnet}. These weights associated to the shortcut connection can be used to learn a residual $\mathcal{F}(x)$ in order to improve the solution. The performance of this very deep network allowed him to win the 2015 ILSVR for both localization and classification.
+To overcome this issue, \textcite{he_deep_2016} introduced an \textit{identity shortcut connection} which skips one or more layers and set weights to the identity, as can be seen in Figure \ref{fig:resnet}. These weights associated to the shortcut connection can be used to learn a residual $\mathcal{F}(x)$ in order to improve the solution. The performance of this very deep network allowed him to win the 2015 ILSVR for both localization and classification.
 %
 \subsubsection{MobileNetV2} \label{subs:mbv2}
 %
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{mbnv2.pdf}
-    \caption{inverted residual with linear bottleneck \cite{sandler_mobilenetv2_2019}}
+    \caption{inverted residual with linear bottleneck \cite{sandler_mobilenetv2_2018}}
     \label{fig:invreslinbot}
 \end{figure}
 \begin{table}
@@ -49,7 +49,7 @@ To overcome this issue, \textcite{he_deep_2015} introduced an \textit{identity s
         $\frac{N_{ix}}{s} \times \frac{N_{iy}}{s} \times (t \times N_{if})$ & $1 \times 1$ conv2d & $\frac{N_{ix}}{s} \times \frac{N_{iy}}{s} \times N_{of}$ \\
         \hline \hline
     \end{tabular}
-    \caption{inverted residual with linear bottleneck \cite{sandler_mobilenetv2_2019}}
+    \caption{inverted residual with linear bottleneck \cite{sandler_mobilenetv2_2018}}
     \label{tab:invreslinbot}
 \end{table}
 %
@@ -60,7 +60,7 @@ According to \textcite{cheng_recent_2018}, the performance of \acrshort{cnn} in 
     \item The large number of parameters of \acrshort{cnn}s consumes considerable storage and run-time memory.
 \end{itemize}
 
-In order to overcome this issue, \textcite{sandler_mobilenetv2_2019} have introduced a network called MobileNetV2 in 2019. It is specifically developed for constrained environments. First, the size and number of operations is decreased thanks to DSC (see Section \ref{subs:dsc}) and thanks to a new type of layer \textit{inverted residual with a linear bottleneck}, which can be observed in Figure \ref{fig:invreslinbot} and Table \ref{tab:invreslinbot}.
-This layer is composed of a $1 \times 1$ convolution to expand the number of the input \acrshort{fm} channels by a factor $t$ ($N_{intf} = t \times N_{if}$). It is then followed by a \acrshort{dsc}. The purpose of the first convolution layer which increases the number of channels is supposed to counterbalance the loss of information that occurred by the ReLU activation. They have also added a skip connection to build a network of great depth, and the last convolution has a linear activation function \cite{sandler_mobilenetv2_2019}.
+In order to overcome this issue, \textcite{sandler_mobilenetv2_2018} have introduced a network called MobileNetV2 in 2019. It is specifically developed for constrained environments. First, the size and number of operations is decreased thanks to DSC (see Section \ref{subs:dsc}) and thanks to a new type of layer \textit{inverted residual with a linear bottleneck}, which can be observed in Figure \ref{fig:invreslinbot} and Table \ref{tab:invreslinbot}.
+This layer is composed of a $1 \times 1$ convolution to expand the number of the input \acrshort{fm} channels by a factor $t$ ($N_{intf} = t \times N_{if}$). It is then followed by a \acrshort{dsc}. The purpose of the first convolution layer which increases the number of channels is supposed to counterbalance the loss of information that occurred by the ReLU activation. They have also added a skip connection to build a network of great depth, and the last convolution has a linear activation function \cite{sandler_mobilenetv2_2018}.
 
 More information about the structure of MobileNetV2 can be found in Appendix \ref{appendix:mbv2}.

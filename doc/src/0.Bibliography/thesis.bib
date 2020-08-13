@@ -165,33 +165,20 @@ Publisher: Multidisciplinary Digital Publishing Institute},
 	file = {Arnold et al. - 2011 - An Introduction to Deep Learning.pdf:C\:\\Users\\Guigui\\Zotero\\storage\\VM42ZWFS\\Arnold et al. - 2011 - An Introduction to Deep Learning.pdf:application/pdf}
 }
 
-@article{abdelouahab_accelerating_2018,
-	title = {Accelerating {CNN} inference on {FPGAs}: {A} {Survey}},
-	shorttitle = {Accelerating {CNN} inference on {FPGAs}},
-	url = {http://arxiv.org/abs/1806.01683},
-	abstract = {Convolutional Neural Networks (CNNs) are currently adopted to solve an ever greater number of problems, ranging from speech recognition to image classification and segmentation. The large amount of processing required by CNNs calls for dedicated and tailored hardware support methods. Moreover, CNN workloads have a streaming nature, well suited to reconfigurable hardware architectures such as FPGAs. The amount and diversity of research on the subject of CNN FPGA acceleration within the last 3 years demonstrates the tremendous industrial and academic interest. This paper presents a state-of-the-art of CNN inference accelerators over FPGAs. The computational workloads, their parallelism and the involved memory accesses are analyzed. At the level of neurons, optimizations of the convolutional and fully connected layers are explained and the performances of the different methods compared. At the network level, approximate computing and datapath optimization methods are covered and state-of-the-art approaches compared. The methods and tools investigated in this survey represent the recent trends in FPGA CNN inference accelerators and will fuel the future advances on efficient hardware deep learning.},
-	urldate = {2020-06-12},
-	journal = {arXiv:1806.01683 [cs]},
-	author = {Abdelouahab, Kamel and Pelcat, Maxime and Serot, Jocelyn and Berry, François},
-	month = may,
-	year = {2018},
-	note = {arXiv: 1806.01683},
-	keywords = {Computer Science - Computer Vision and Pattern Recognition, Computer Science - Neural and Evolutionary Computing, Computer Science - Hardware Architecture, Computer Science - Distributed, Parallel, and Cluster Computing},
-	annote = {Comment: Cloning our HAL submission in ArXiv, Technical Report - Universite Clermont Auvergne, January 2018},
-	file = {arXiv Fulltext PDF:C\:\\Users\\Guigui\\Zotero\\storage\\876PLGFW\\Abdelouahab et al. - 2018 - Accelerating CNN inference on FPGAs A Survey.pdf:application/pdf;arXiv.org Snapshot:C\:\\Users\\Guigui\\Zotero\\storage\\PTFWQVUY\\1806.html:text/html}
-}
-
 @article{zhu_efficient_2020,
 	title = {An {Efficient} {Hardware} {Accelerator} for {Structured} {Sparse} {Convolutional} {Neural} {Networks} on {FPGAs}},
-	url = {http://arxiv.org/abs/2001.01955},
+	issn = {1557-9999},
+	url = {https://www.computer.org/csdl/journal/si/5555/01/09130762/1l6Ol3eFFok},
+	doi = {10.1109/TVLSI.2020.3002779},
 	abstract = {Deep Convolutional Neural Networks (CNNs) have achieved state-of-the-art performance in a wide range of applications. However, deeper CNN models, which are usually computation consuming, are widely required for complex Artificial Intelligence (AI) tasks. Though recent research progress on network compression such as pruning has emerged as a promising direction to mitigate computational burden, existing accelerators are still prevented from completely utilizing the benefits of leveraging sparsity owing to the irregularity caused by pruning. On the other hand, Field-Programmable Gate Arrays (FPGAs) have been regarded as a promising hardware platform for CNN inference acceleration. However, most existing FPGA accelerators focus on dense CNN and cannot address the irregularity problem. In this paper, we propose a sparse wise dataflow to skip the cycles of processing Multiply-and-Accumulates (MACs) with zero weights and exploit data statistics to minimize energy through zeros gating to avoid unnecessary computations. The proposed sparse wise dataflow leads to a low bandwidth requirement and a high data sharing. Then we design an FPGA accelerator containing a Vector Generator Module (VGM) which can match the index between sparse weights and input activations according to the proposed dataflow. Experimental results demonstrate that our implementation can achieve 987 imag/s and 48 imag/s performance for AlexNet and VGG-16 on Xilinx ZCU102, respectively, which provides 1.5x to 6.7x speedup and 2.0x to 6.2x energy-efficiency over previous CNN FPGA accelerators.},
+	language = {English},
 	urldate = {2020-06-14},
-	journal = {arXiv:2001.01955 [cs, eess]},
+	journal = {IEEE Transactions on Very Large Scale Integration (VLSI) Systems},
 	author = {Zhu, Chaoyang and Huang, Kejie and Yang, Shuyuan and Zhu, Ziqi and Zhang, Hejia and Shen, Haibin},
 	month = jan,
 	year = {2020},
-	note = {arXiv: 2001.01955},
 	keywords = {Electrical Engineering and Systems Science - Image and Video Processing, Electrical Engineering and Systems Science - Systems and Control},
+	pages = {1--13},
 	file = {arXiv Fulltext PDF:C\:\\Users\\Guigui\\Zotero\\storage\\UAE35WRB\\Zhu et al. - 2020 - An Efficient Hardware Accelerator for Structured S.pdf:application/pdf;arXiv.org Snapshot:C\:\\Users\\Guigui\\Zotero\\storage\\9V9S7RGI\\2001.html:text/html}
 }
 
@@ -226,35 +213,6 @@ Publisher: Multidisciplinary Digital Publishing Institute},
 	author = {Winograd, Shmuel},
 	year = {1980},
 	note = {https://doi.org/10.1137/1.9781611970364}
-}
-
-@article{lavin_fast_2015,
-	title = {Fast {Algorithms} for {Convolutional} {Neural} {Networks}},
-	url = {http://arxiv.org/abs/1509.09308},
-	abstract = {Deep convolutional neural networks take GPU days of compute time to train on large data sets. Pedestrian detection for self driving cars requires very low latency. Image recognition for mobile phones is constrained by limited processing resources. The success of convolutional neural networks in these situations is limited by how fast we can compute them. Conventional FFT based convolution is fast for large filters, but state of the art convolutional neural networks use small, 3x3 filters. We introduce a new class of fast algorithms for convolutional neural networks using Winograd's minimal filtering algorithms. The algorithms compute minimal complexity convolution over small tiles, which makes them fast with small filters and small batch sizes. We benchmark a GPU implementation of our algorithm with the VGG network and show state of the art throughput at batch sizes from 1 to 64.},
-	urldate = {2020-06-14},
-	journal = {arXiv:1509.09308 [cs]},
-	author = {Lavin, Andrew and Gray, Scott},
-	month = nov,
-	year = {2015},
-	note = {arXiv: 1509.09308},
-	keywords = {Computer Science - Neural and Evolutionary Computing, Computer Science - Machine Learning, F.2.1, I.2.6},
-	file = {arXiv Fulltext PDF:C\:\\Users\\Guigui\\Zotero\\storage\\2EHFQVVI\\Lavin et Gray - 2015 - Fast Algorithms for Convolutional Neural Networks.pdf:application/pdf;arXiv.org Snapshot:C\:\\Users\\Guigui\\Zotero\\storage\\CBH9KBUK\\1509.html:text/html}
-}
-
-@article{sandler_mobilenetv2_2019,
-	title = {{MobileNetV2}: {Inverted} {Residuals} and {Linear} {Bottlenecks}},
-	shorttitle = {{MobileNetV2}},
-	url = {http://arxiv.org/abs/1801.04381},
-	abstract = {In this paper we describe a new mobile architecture, MobileNetV2, that improves the state of the art performance of mobile models on multiple tasks and benchmarks as well as across a spectrum of different model sizes. We also describe efficient ways of applying these mobile models to object detection in a novel framework we call SSDLite. Additionally, we demonstrate how to build mobile semantic segmentation models through a reduced form of DeepLabv3 which we call Mobile DeepLabv3. The MobileNetV2 architecture is based on an inverted residual structure where the input and output of the residual block are thin bottleneck layers opposite to traditional residual models which use expanded representations in the input an MobileNetV2 uses lightweight depthwise convolutions to filter features in the intermediate expansion layer. Additionally, we find that it is important to remove non-linearities in the narrow layers in order to maintain representational power. We demonstrate that this improves performance and provide an intuition that led to this design. Finally, our approach allows decoupling of the input/output domains from the expressiveness of the transformation, which provides a convenient framework for further analysis. We measure our performance on Imagenet classification, COCO object detection, VOC image segmentation. We evaluate the trade-offs between accuracy, and number of operations measured by multiply-adds (MAdd), as well as the number of parameters},
-	urldate = {2020-06-14},
-	journal = {arXiv:1801.04381 [cs]},
-	author = {Sandler, Mark and Howard, Andrew and Zhu, Menglong and Zhmoginov, Andrey and Chen, Liang-Chieh},
-	month = mar,
-	year = {2019},
-	note = {arXiv: 1801.04381},
-	keywords = {Computer Science - Computer Vision and Pattern Recognition},
-	file = {arXiv Fulltext PDF:C\:\\Users\\Guigui\\Zotero\\storage\\LNCAJF9C\\Sandler et al. - 2019 - MobileNetV2 Inverted Residuals and Linear Bottlen.pdf:application/pdf;arXiv.org Snapshot:C\:\\Users\\Guigui\\Zotero\\storage\\QMYJJDFJ\\1801.html:text/html}
 }
 
 @inproceedings{jong_hwan_ko_design_2017,
@@ -358,20 +316,6 @@ Publisher: Multidisciplinary Digital Publishing Institute},
 	file = {arXiv Fulltext PDF:C\:\\Users\\Guigui\\Zotero\\storage\\JJ9WLATZ\\Han et al. - 2016 - Deep Compression Compressing Deep Neural Networks.pdf:application/pdf;arXiv.org Snapshot:C\:\\Users\\Guigui\\Zotero\\storage\\D84DRTH5\\1510.html:text/html}
 }
 
-@article{zoph_learning_2018,
-	title = {Learning {Transferable} {Architectures} for {Scalable} {Image} {Recognition}},
-	url = {http://arxiv.org/abs/1707.07012},
-	abstract = {Developing neural network image classification models often requires significant architecture engineering. In this paper, we study a method to learn the model architectures directly on the dataset of interest. As this approach is expensive when the dataset is large, we propose to search for an architectural building block on a small dataset and then transfer the block to a larger dataset. The key contribution of this work is the design of a new search space (the "NASNet search space") which enables transferability. In our experiments, we search for the best convolutional layer (or "cell") on the CIFAR-10 dataset and then apply this cell to the ImageNet dataset by stacking together more copies of this cell, each with their own parameters to design a convolutional architecture, named "NASNet architecture". We also introduce a new regularization technique called ScheduledDropPath that significantly improves generalization in the NASNet models. On CIFAR-10 itself, NASNet achieves 2.4\% error rate, which is state-of-the-art. On ImageNet, NASNet achieves, among the published works, state-of-the-art accuracy of 82.7\% top-1 and 96.2\% top-5 on ImageNet. Our model is 1.2\% better in top-1 accuracy than the best human-invented architectures while having 9 billion fewer FLOPS - a reduction of 28\% in computational demand from the previous state-of-the-art model. When evaluated at different levels of computational cost, accuracies of NASNets exceed those of the state-of-the-art human-designed models. For instance, a small version of NASNet also achieves 74\% top-1 accuracy, which is 3.1\% better than equivalently-sized, state-of-the-art models for mobile platforms. Finally, the learned features by NASNet used with the Faster-RCNN framework surpass state-of-the-art by 4.0\% achieving 43.1\% mAP on the COCO dataset.},
-	urldate = {2020-06-17},
-	journal = {arXiv:1707.07012 [cs, stat]},
-	author = {Zoph, Barret and Vasudevan, Vijay and Shlens, Jonathon and Le, Quoc V.},
-	month = apr,
-	year = {2018},
-	note = {arXiv: 1707.07012},
-	keywords = {Computer Science - Computer Vision and Pattern Recognition, Computer Science - Machine Learning, Statistics - Machine Learning},
-	file = {arXiv Fulltext PDF:C\:\\Users\\Guigui\\Zotero\\storage\\FUWH4Q73\\Zoph et al. - 2018 - Learning Transferable Architectures for Scalable I.pdf:application/pdf;arXiv.org Snapshot:C\:\\Users\\Guigui\\Zotero\\storage\\VSNL9FGA\\1707.html:text/html}
-}
-
 @inproceedings{zhang_shufflenet_2018,
 	address = {Salt Lake City, UT},
 	title = {{ShuffleNet}: {An} {Extremely} {Efficient} {Convolutional} {Neural} {Network} for {Mobile} {Devices}},
@@ -389,21 +333,6 @@ Publisher: Multidisciplinary Digital Publishing Institute},
 	year = {2018},
 	pages = {6848--6856},
 	file = {Zhang et al. - 2018 - ShuffleNet An Extremely Efficient Convolutional N.pdf:C\:\\Users\\Guigui\\Zotero\\storage\\55EQ86WN\\Zhang et al. - 2018 - ShuffleNet An Extremely Efficient Convolutional N.pdf:application/pdf}
-}
-
-@article{qasaimeh_comparing_2019,
-	title = {Comparing {Energy} {Efficiency} of {CPU}, {GPU} and {FPGA} {Implementations} for {Vision} {Kernels}},
-	url = {http://arxiv.org/abs/1906.11879},
-	abstract = {Developing high performance embedded vision applications requires balancing run-time performance with energy constraints. Given the mix of hardware accelerators that exist for embedded computer vision (e.g. multi-core CPUs, GPUs, and FPGAs), and their associated vendor optimized vision libraries, it becomes a challenge for developers to navigate this fragmented solution space. To aid with determining which embedded platform is most suitable for their application, we conduct a comprehensive benchmark of the run-time performance and energy efficiency of a wide range of vision kernels. We discuss rationales for why a given underlying hardware architecture innately performs well or poorly based on the characteristics of a range of vision kernel categories. Specifically, our study is performed for three commonly used HW accelerators for embedded vision applications: ARM57 CPU, Jetson TX2 GPU and ZCU102 FPGA, using their vendor optimized vision libraries: OpenCV, VisionWorks and xfOpenCV. Our results show that the GPU achieves an energy/frame reduction ratio of 1.1-3.2x compared to the others for simple kernels. While for more complicated kernels and complete vision pipelines, the FPGA outperforms the others with energy/frame reduction ratios of 1.2-22.3x. It is also observed that the FPGA performs increasingly better as a vision application's pipeline complexity grows.},
-	urldate = {2020-06-17},
-	journal = {arXiv:1906.11879 [cs, eess]},
-	author = {Qasaimeh, Murad and Denolf, Kristof and Lo, Jack and Vissers, Kees and Zambreno, Joseph and Jones, Phillip H.},
-	month = may,
-	year = {2019},
-	note = {arXiv: 1906.11879},
-	keywords = {Electrical Engineering and Systems Science - Image and Video Processing, Computer Science - Computer Vision and Pattern Recognition},
-	annote = {Comment: 8 pages, Design Automation Conference (DAC), The 15th IEEE International Conference on Embedded Software and Systems, 2019},
-	file = {arXiv Fulltext PDF:C\:\\Users\\Guigui\\Zotero\\storage\\CUYP8DAD\\Qasaimeh et al. - 2019 - Comparing Energy Efficiency of CPU, GPU and FPGA I.pdf:application/pdf;arXiv.org Snapshot:C\:\\Users\\Guigui\\Zotero\\storage\\WGFMBFSP\\1906.html:text/html}
 }
 
 @article{howard_mobilenets_2017,
@@ -600,20 +529,6 @@ Publisher: Multidisciplinary Digital Publishing Institute},
 	keywords = {deep learning, Convolutional neural networks, accelerator design, design automation},
 	pages = {62:1--62:21},
 	file = {Full Text PDF:C\:\\Users\\Guigui\\Zotero\\storage\\SGGDW2UJ\\Motamedi et al. - 2017 - PLACID A Platform for FPGA-Based Accelerator Crea.pdf:application/pdf}
-}
-
-@article{szegedy_going_2014,
-	title = {Going {Deeper} with {Convolutions}},
-	url = {http://arxiv.org/abs/1409.4842},
-	abstract = {We propose a deep convolutional neural network architecture codenamed "Inception", which was responsible for setting the new state of the art for classification and detection in the ImageNet Large-Scale Visual Recognition Challenge 2014 (ILSVRC 2014). The main hallmark of this architecture is the improved utilization of the computing resources inside the network. This was achieved by a carefully crafted design that allows for increasing the depth and width of the network while keeping the computational budget constant. To optimize quality, the architectural decisions were based on the Hebbian principle and the intuition of multi-scale processing. One particular incarnation used in our submission for ILSVRC 2014 is called GoogLeNet, a 22 layers deep network, the quality of which is assessed in the context of classification and detection.},
-	urldate = {2020-06-19},
-	journal = {arXiv:1409.4842 [cs]},
-	author = {Szegedy, Christian and Liu, Wei and Jia, Yangqing and Sermanet, Pierre and Reed, Scott and Anguelov, Dragomir and Erhan, Dumitru and Vanhoucke, Vincent and Rabinovich, Andrew},
-	month = sep,
-	year = {2014},
-	note = {arXiv: 1409.4842},
-	keywords = {Computer Science - Computer Vision and Pattern Recognition},
-	file = {arXiv Fulltext PDF:C\:\\Users\\Guigui\\Zotero\\storage\\VSL4PAHD\\Szegedy et al. - 2014 - Going Deeper with Convolutions.pdf:application/pdf;arXiv.org Snapshot:C\:\\Users\\Guigui\\Zotero\\storage\\D7KLEUTS\\1409.html:text/html}
 }
 
 @article{lecun_backpropagation_1989,
@@ -856,43 +771,6 @@ Publisher: Multidisciplinary Digital Publishing Institute},
 	file = {Lee - Programs for Digital Signal Processing.pdf:C\:\\Users\\Guigui\\Zotero\\storage\\86NTKBPX\\Lee - Programs for Digital Signal Processing.pdf:application/pdf}
 }
 
-@article{ma_shufflenet_2018,
-	title = {{ShuffleNet} {V2}: {Practical} {Guidelines} for {Efficient} {CNN} {Architecture} {Design}},
-	shorttitle = {{ShuffleNet} {V2}},
-	url = {https://arxiv.org/abs/1807.11164v1},
-	abstract = {Currently, the neural network architecture design is mostly guided by the
-{\textbackslash}emph\{indirect\} metric of computation complexity, i.e., FLOPs. However, the
-{\textbackslash}emph\{direct\} metric, e.g., speed, also depends on the other factors such as
-memory access cost and platform characterics. Thus, this work proposes to
-evaluate the direct metric on the target platform, beyond only considering
-FLOPs. Based on a series of controlled experiments, this work derives several
-practical {\textbackslash}emph\{guidelines\} for efficient network design. Accordingly, a new
-architecture is presented, called {\textbackslash}emph\{ShuffleNet V2\}. Comprehensive ablation
-experiments verify that our model is the state-of-the-art in terms of speed and
-accuracy tradeoff.},
-	language = {en},
-	urldate = {2020-06-22},
-	author = {Ma, Ningning and Zhang, Xiangyu and Zheng, Hai-Tao and Sun, Jian},
-	month = jul,
-	year = {2018},
-	file = {Full Text PDF:C\:\\Users\\Guigui\\Zotero\\storage\\LYLJRTEL\\Ma et al. - 2018 - ShuffleNet V2 Practical Guidelines for Efficient .pdf:application/pdf;Snapshot:C\:\\Users\\Guigui\\Zotero\\storage\\QN9E7B4R\\1807.html:text/html}
-}
-
-@article{cheng_recent_2018,
-	title = {Recent {Advances} in {Efficient} {Computation} of {Deep} {Convolutional} {Neural} {Networks}},
-	url = {http://arxiv.org/abs/1802.00939},
-	abstract = {Deep neural networks have evolved remarkably over the past few years and they are currently the fundamental tools of many intelligent systems. At the same time, the computational complexity and resource consumption of these networks also continue to increase. This will pose a significant challenge to the deployment of such networks, especially in real-time applications or on resource-limited devices. Thus, network acceleration has become a hot topic within the deep learning community. As for hardware implementation of deep neural networks, a batch of accelerators based on FPGA/ASIC have been proposed in recent years. In this paper, we provide a comprehensive survey of recent advances in network acceleration, compression and accelerator design from both algorithm and hardware points of view. Specifically, we provide a thorough analysis of each of the following topics: network pruning, low-rank approximation, network quantization, teacher-student networks, compact network design and hardware accelerators. Finally, we will introduce and discuss a few possible future directions.},
-	urldate = {2020-06-23},
-	journal = {arXiv:1802.00939 [cs]},
-	author = {Cheng, Jian and Wang, Peisong and Li, Gang and Hu, Qinghao and Lu, Hanqing},
-	month = feb,
-	year = {2018},
-	note = {arXiv: 1802.00939},
-	keywords = {Computer Science - Computer Vision and Pattern Recognition},
-	annote = {Comment: 14 pages, 3 figures},
-	file = {arXiv Fulltext PDF:C\:\\Users\\Guigui\\Zotero\\storage\\P9MIZHZC\\Cheng et al. - 2018 - Recent Advances in Efficient Computation of Deep C.pdf:application/pdf;arXiv.org Snapshot:C\:\\Users\\Guigui\\Zotero\\storage\\245V3VTW\\1802.html:text/html}
-}
-
 @inproceedings{huimin_li_high_2016,
 	title = {A high performance {FPGA}-based accelerator for large-scale convolutional neural networks},
 	doi = {10.1109/FPL.2016.7577308},
@@ -1006,22 +884,6 @@ accuracy tradeoff.},
 	file = {arXiv Fulltext PDF:C\:\\Users\\Guigui\\Zotero\\storage\\8LH6SQRZ\\Liu et al. - 2019 - Rethinking the Value of Network Pruning.pdf:application/pdf;arXiv.org Snapshot:C\:\\Users\\Guigui\\Zotero\\storage\\PCIGEGFJ\\1810.html:text/html}
 }
 
-@article{frankle_lottery_2019,
-	title = {The {Lottery} {Ticket} {Hypothesis}: {Finding} {Sparse}, {Trainable} {Neural} {Networks}},
-	shorttitle = {The {Lottery} {Ticket} {Hypothesis}},
-	url = {http://arxiv.org/abs/1803.03635},
-	abstract = {Neural network pruning techniques can reduce the parameter counts of trained networks by over 90\%, decreasing storage requirements and improving computational performance of inference without compromising accuracy. However, contemporary experience is that the sparse architectures produced by pruning are difficult to train from the start, which would similarly improve training performance. We find that a standard pruning technique naturally uncovers subnetworks whose initializations made them capable of training effectively. Based on these results, we articulate the "lottery ticket hypothesis:" dense, randomly-initialized, feed-forward networks contain subnetworks ("winning tickets") that - when trained in isolation - reach test accuracy comparable to the original network in a similar number of iterations. The winning tickets we find have won the initialization lottery: their connections have initial weights that make training particularly effective. We present an algorithm to identify winning tickets and a series of experiments that support the lottery ticket hypothesis and the importance of these fortuitous initializations. We consistently find winning tickets that are less than 10-20\% of the size of several fully-connected and convolutional feed-forward architectures for MNIST and CIFAR10. Above this size, the winning tickets that we find learn faster than the original network and reach higher test accuracy.},
-	urldate = {2020-06-24},
-	journal = {arXiv:1803.03635 [cs]},
-	author = {Frankle, Jonathan and Carbin, Michael},
-	month = mar,
-	year = {2019},
-	note = {arXiv: 1803.03635},
-	keywords = {Computer Science - Neural and Evolutionary Computing, Computer Science - Machine Learning, Computer Science - Artificial Intelligence},
-	annote = {Comment: ICLR camera ready},
-	file = {arXiv Fulltext PDF:C\:\\Users\\Guigui\\Zotero\\storage\\FB7JEUHZ\\Frankle et Carbin - 2019 - The Lottery Ticket Hypothesis Finding Sparse, Tra.pdf:application/pdf;arXiv.org Snapshot:C\:\\Users\\Guigui\\Zotero\\storage\\ZV48XCQA\\1803.html:text/html}
-}
-
 @article{frankle_early_2020,
 	title = {The {Early} {Phase} of {Neural} {Network} {Training}},
 	url = {http://arxiv.org/abs/2002.10365},
@@ -1052,36 +914,6 @@ accuracy tradeoff.},
 	pages = {1--1},
 	annote = {Comment: 11 pages, 9 figures, accepted to IEEE Transactions on Circuits and Systems for Video Technology},
 	file = {arXiv Fulltext PDF:C\:\\Users\\Guigui\\Zotero\\storage\\A2KUCBVX\\Kang - 2020 - Accelerator-Aware Pruning for Convolutional Neural.pdf:application/pdf;arXiv.org Snapshot:C\:\\Users\\Guigui\\Zotero\\storage\\RNITRZHT\\1804.html:text/html}
-}
-
-@article{han_learning_2015,
-	title = {Learning both {Weights} and {Connections} for {Efficient} {Neural} {Networks}},
-	url = {http://arxiv.org/abs/1506.02626},
-	abstract = {Neural networks are both computationally intensive and memory intensive, making them difficult to deploy on embedded systems. Also, conventional networks fix the architecture before training starts; as a result, training cannot improve the architecture. To address these limitations, we describe a method to reduce the storage and computation required by neural networks by an order of magnitude without affecting their accuracy by learning only the important connections. Our method prunes redundant connections using a three-step method. First, we train the network to learn which connections are important. Next, we prune the unimportant connections. Finally, we retrain the network to fine tune the weights of the remaining connections. On the ImageNet dataset, our method reduced the number of parameters of AlexNet by a factor of 9x, from 61 million to 6.7 million, without incurring accuracy loss. Similar experiments with VGG-16 found that the number of parameters can be reduced by 13x, from 138 million to 10.3 million, again with no loss of accuracy.},
-	urldate = {2020-06-24},
-	journal = {arXiv:1506.02626 [cs]},
-	author = {Han, Song and Pool, Jeff and Tran, John and Dally, William J.},
-	month = oct,
-	year = {2015},
-	note = {arXiv: 1506.02626},
-	keywords = {Computer Science - Computer Vision and Pattern Recognition, Computer Science - Neural and Evolutionary Computing, Computer Science - Machine Learning},
-	annote = {Comment: Published as a conference paper at NIPS 2015},
-	file = {arXiv Fulltext PDF:C\:\\Users\\Guigui\\Zotero\\storage\\MAS2D2GF\\Han et al. - 2015 - Learning both Weights and Connections for Efficien.pdf:application/pdf;arXiv.org Snapshot:C\:\\Users\\Guigui\\Zotero\\storage\\3YTU68VE\\1506.html:text/html}
-}
-
-@article{mao_exploring_2017,
-	title = {Exploring the {Regularity} of {Sparse} {Structure} in {Convolutional} {Neural} {Networks}},
-	url = {http://arxiv.org/abs/1705.08922},
-	abstract = {Sparsity helps reduce the computational complexity of deep neural networks by skipping zeros. Taking advantage of sparsity is listed as a high priority in next generation DNN accelerators such as TPU. The structure of sparsity, i.e., the granularity of pruning, affects the efficiency of hardware accelerator design as well as the prediction accuracy. Coarse-grained pruning creates regular sparsity patterns, making it more amenable for hardware acceleration but more challenging to maintain the same accuracy. In this paper we quantitatively measure the trade-off between sparsity regularity and prediction accuracy, providing insights in how to maintain accuracy while having more a more structured sparsity pattern. Our experimental results show that coarse-grained pruning can achieve a sparsity ratio similar to unstructured pruning without loss of accuracy. Moreover, due to the index saving effect, coarse-grained pruning is able to obtain a better compression ratio than fine-grained sparsity at the same accuracy threshold. Based on the recent sparse convolutional neural network accelerator (SCNN), our experiments further demonstrate that coarse-grained sparsity saves about 2x the memory references compared to fine-grained sparsity. Since memory reference is more than two orders of magnitude more expensive than arithmetic operations, the regularity of sparse structure leads to more efficient hardware design.},
-	urldate = {2020-06-24},
-	journal = {arXiv:1705.08922 [cs, stat]},
-	author = {Mao, Huizi and Han, Song and Pool, Jeff and Li, Wenshuo and Liu, Xingyu and Wang, Yu and Dally, William J.},
-	month = jun,
-	year = {2017},
-	note = {arXiv: 1705.08922},
-	keywords = {Computer Science - Machine Learning, Statistics - Machine Learning},
-	annote = {Comment: submitted to NIPS 2017},
-	file = {arXiv Fulltext PDF:C\:\\Users\\Guigui\\Zotero\\storage\\IZC9SCJI\\Mao et al. - 2017 - Exploring the Regularity of Sparse Structure in Co.pdf:application/pdf;arXiv.org Snapshot:C\:\\Users\\Guigui\\Zotero\\storage\\KKD2QWU8\\1705.html:text/html}
 }
 
 @article{tu_pruning_2019,
@@ -1145,21 +977,6 @@ accuracy tradeoff.},
 	pages = {371--386}
 }
 
-@article{wen_learning_2016,
-	title = {Learning {Structured} {Sparsity} in {Deep} {Neural} {Networks}},
-	url = {http://arxiv.org/abs/1608.03665},
-	abstract = {High demand for computation resources severely hinders deployment of large-scale Deep Neural Networks (DNN) in resource constrained devices. In this work, we propose a Structured Sparsity Learning (SSL) method to regularize the structures (i.e., filters, channels, filter shapes, and layer depth) of DNNs. SSL can: (1) learn a compact structure from a bigger DNN to reduce computation cost; (2) obtain a hardware-friendly structured sparsity of DNN to efficiently accelerate the DNNs evaluation. Experimental results show that SSL achieves on average 5.1x and 3.1x speedups of convolutional layer computation of AlexNet against CPU and GPU, respectively, with off-the-shelf libraries. These speedups are about twice speedups of non-structured sparsity; (3) regularize the DNN structure to improve classification accuracy. The results show that for CIFAR-10, regularization on layer depth can reduce 20 layers of a Deep Residual Network (ResNet) to 18 layers while improve the accuracy from 91.25\% to 92.60\%, which is still slightly higher than that of original ResNet with 32 layers. For AlexNet, structure regularization by SSL also reduces the error by around {\textasciitilde}1\%. Open source code is in https://github.com/wenwei202/caffe/tree/scnn},
-	urldate = {2020-06-26},
-	journal = {arXiv:1608.03665 [cs, stat]},
-	author = {Wen, Wei and Wu, Chunpeng and Wang, Yandan and Chen, Yiran and Li, Hai},
-	month = oct,
-	year = {2016},
-	note = {arXiv: 1608.03665},
-	keywords = {Computer Science - Neural and Evolutionary Computing, Computer Science - Machine Learning, I.2.6, Statistics - Machine Learning, I.5.1},
-	annote = {Comment: Accepted by NIPS 2016},
-	file = {arXiv Fulltext PDF:C\:\\Users\\Guigui\\Zotero\\storage\\M8IVP3ZQ\\Wen et al. - 2016 - Learning Structured Sparsity in Deep Neural Networ.pdf:application/pdf;arXiv.org Snapshot:C\:\\Users\\Guigui\\Zotero\\storage\\MBSACST9\\1608.html:text/html}
-}
-
 @book{harris_digital_2015,
 	address = {San Francisco, CA, USA},
 	edition = {1st},
@@ -1173,27 +990,18 @@ accuracy tradeoff.},
 	file = {Full Text PDF:C\:\\Users\\Guigui\\Zotero\\storage\\DVRWRMPQ\\Harris et Harris - 2015 - Digital Design and Computer Architecture ARM Edit.pdf:application/pdf}
 }
 
-@article{chollet_xception_2017,
-	title = {Xception: {Deep} {Learning} with {Depthwise} {Separable} {Convolutions}},
-	shorttitle = {Xception},
-	url = {http://arxiv.org/abs/1610.02357},
-	abstract = {We present an interpretation of Inception modules in convolutional neural networks as being an intermediate step in-between regular convolution and the depthwise separable convolution operation (a depthwise convolution followed by a pointwise convolution). In this light, a depthwise separable convolution can be understood as an Inception module with a maximally large number of towers. This observation leads us to propose a novel deep convolutional neural network architecture inspired by Inception, where Inception modules have been replaced with depthwise separable convolutions. We show that this architecture, dubbed Xception, slightly outperforms Inception V3 on the ImageNet dataset (which Inception V3 was designed for), and significantly outperforms Inception V3 on a larger image classification dataset comprising 350 million images and 17,000 classes. Since the Xception architecture has the same number of parameters as Inception V3, the performance gains are not due to increased capacity but rather to a more efficient use of model parameters.},
-	urldate = {2020-06-27},
-	journal = {arXiv:1610.02357 [cs]},
-	author = {Chollet, François},
-	month = apr,
-	year = {2017},
-	note = {arXiv: 1610.02357},
-	keywords = {Computer Science - Computer Vision and Pattern Recognition},
-	file = {arXiv Fulltext PDF:C\:\\Users\\Guigui\\Zotero\\storage\\53AMMXHC\\Chollet - 2017 - Xception Deep Learning with Depthwise Separable C.pdf:application/pdf;arXiv.org Snapshot:C\:\\Users\\Guigui\\Zotero\\storage\\DK3CAI88\\1610.html:text/html}
-}
-
-@book{sifre_ecole_2014,
-	title = {Ecole {Polytechnique}, {CMAP} {PhD} thesis {Rigid}-{Motion} {Scattering} {For} {Image} {Classification} {Author}:},
+@phdthesis{sifre_rigid-motion_2014,
+	type = {Ph.{D}. {Thesis}},
+	title = {Rigid-{Motion} {Scattering} {For} {Image} {Classification} {Author}:},
 	shorttitle = {Ecole {Polytechnique}, {CMAP} {PhD} thesis {Rigid}-{Motion} {Scattering} {For} {Image} {Classification} {Author}},
+	url = {https://www.di.ens.fr/data/publications/papers/phd_sifre.pdf},
 	abstract = {Image classification is the problem of assigning a label that best describes the content of unknown images, given a set of training images with known labels. This thesis introduces image classification algorithms based on the scattering transform, studies their properties and describes extensive classification experiments on challenging texture and object image datasets. Images are high dimensional signals for which generic machine learning algorithms fail when applied directly on the raw pixel space. Therefore, most successful approaches involve building a specific low dimensional representation on which the classification is performed. Traditionally, the representation was engineered to reduce the dimensionality of images by building invariance to geometric transformations while retaining discriminative features. More recently, deep convolutional networks have achieved state-of-the-art results on most image classification tasks. Such networks progressively build more invariant representations through a hierarchy of convolutional layers where all the weights are learned. This thesis proposes several scattering representations. Those scattering representa-tions have a structure similar to convolutional networks, but the weights of scattering are},
-	author = {Sifre, Laurent and Mallat, Prof Stéphane},
+	language = {English},
+	urldate = {2020-06-27},
+	school = {Ecole Polytechnique},
+	author = {Sifre, Laurent},
 	year = {2014},
+	note = {Supervisor: Prof. Stéphane Mallat},
 	file = {Citeseer - Snapshot:C\:\\Users\\Guigui\\Zotero\\storage\\DVFHZ65N\\summary.html:text/html;Citeseer - Full Text PDF:C\:\\Users\\Guigui\\Zotero\\storage\\9YCWSHD8\\Sifre et Mallat - 2014 - Ecole Polytechnique, CMAP PhD thesis Rigid-Motion .pdf:application/pdf}
 }
 
@@ -1211,10 +1019,15 @@ accuracy tradeoff.},
 }
 
 @book{goodfellow_deep_2016,
+	series = {Adaptive {Computation} and {Machine} {Learning} serie},
 	title = {Deep {Learning}},
+	isbn = {978-0-262-03561-3},
 	url = {http://www.deeplearningbook.org},
+	language = {English},
+	urldate = {2020-06-28},
 	publisher = {MIT Press},
 	author = {Goodfellow, Ian and Bengio, Yoshua and Courville, Aaron},
+	month = nov,
 	year = {2016}
 }
 
@@ -1233,31 +1046,6 @@ accuracy tradeoff.},
 	year = {2016},
 	pages = {16--25},
 	file = {Suda et al. - 2016 - Throughput-Optimized OpenCL-based FPGA Accelerator.pdf:C\:\\Users\\Guigui\\Zotero\\storage\\PDWIELEQ\\Suda et al. - 2016 - Throughput-Optimized OpenCL-based FPGA Accelerator.pdf:application/pdf}
-}
-
-@article{glorot_understanding_2010,
-	title = {Understanding the difﬁculty of training deep feedforward neural networks},
-	abstract = {Whereas before 2006 it appears that deep multilayer neural networks were not successfully trained, since then several algorithms have been shown to successfully train them, with experimental results showing the superiority of deeper vs less deep architectures. All these experimental results were obtained with new initialization or training mechanisms. Our objective here is to understand better why standard gradient descent from random initialization is doing so poorly with deep neural networks, to better understand these recent relative successes and help design better algorithms in the future. We ﬁrst observe the inﬂuence of the non-linear activations functions. We ﬁnd that the logistic sigmoid activation is unsuited for deep networks with random initialization because of its mean value, which can drive especially the top hidden layer into saturation. Surprisingly, we ﬁnd that saturated units can move out of saturation by themselves, albeit slowly, and explaining the plateaus sometimes seen when training neural networks. We ﬁnd that a new non-linearity that saturates less can often be beneﬁcial. Finally, we study how activations and gradients vary across layers and during training, with the idea that training may be more difﬁcult when the singular values of the Jacobian associated with each layer are far from 1. Based on these considerations, we propose a new initialization scheme that brings substantially faster convergence.},
-	language = {en},
-	author = {Glorot, Xavier and Bengio, Yoshua},
-	year = {2010},
-	pages = {8},
-	file = {Glorot et Bengio - Understanding the difﬁculty of training deep feedf.pdf:C\:\\Users\\Guigui\\Zotero\\storage\\M37FVI3N\\Glorot et Bengio - Understanding the difﬁculty of training deep feedf.pdf:application/pdf}
-}
-
-@article{he_delving_2015,
-	title = {Delving {Deep} into {Rectifiers}: {Surpassing} {Human}-{Level} {Performance} on {ImageNet} {Classification}},
-	shorttitle = {Delving {Deep} into {Rectifiers}},
-	url = {http://arxiv.org/abs/1502.01852},
-	abstract = {Rectified activation units (rectifiers) are essential for state-of-the-art neural networks. In this work, we study rectifier neural networks for image classification from two aspects. First, we propose a Parametric Rectified Linear Unit (PReLU) that generalizes the traditional rectified unit. PReLU improves model fitting with nearly zero extra computational cost and little overfitting risk. Second, we derive a robust initialization method that particularly considers the rectifier nonlinearities. This method enables us to train extremely deep rectified models directly from scratch and to investigate deeper or wider network architectures. Based on our PReLU networks (PReLU-nets), we achieve 4.94\% top-5 test error on the ImageNet 2012 classification dataset. This is a 26\% relative improvement over the ILSVRC 2014 winner (GoogLeNet, 6.66\%). To our knowledge, our result is the first to surpass human-level performance (5.1\%, Russakovsky et al.) on this visual recognition challenge.},
-	urldate = {2020-06-29},
-	journal = {arXiv:1502.01852 [cs]},
-	author = {He, Kaiming and Zhang, Xiangyu and Ren, Shaoqing and Sun, Jian},
-	month = feb,
-	year = {2015},
-	note = {arXiv: 1502.01852},
-	keywords = {Computer Science - Computer Vision and Pattern Recognition, Computer Science - Machine Learning, Computer Science - Artificial Intelligence},
-	file = {arXiv Fulltext PDF:C\:\\Users\\Guigui\\Zotero\\storage\\RF2EYDCE\\He et al. - 2015 - Delving Deep into Rectifiers Surpassing Human-Lev.pdf:application/pdf;arXiv.org Snapshot:C\:\\Users\\Guigui\\Zotero\\storage\\IDBEXI9N\\1502.html:text/html}
 }
 
 @article{ruder_overview_2017,
@@ -1289,27 +1077,17 @@ accuracy tradeoff.},
 	file = {arXiv Fulltext PDF:C\:\\Users\\Guigui\\Zotero\\storage\\QLMK3JTU\\Simonyan et Zisserman - 2015 - Very Deep Convolutional Networks for Large-Scale I.pdf:application/pdf;arXiv.org Snapshot:C\:\\Users\\Guigui\\Zotero\\storage\\YPNXIBWQ\\1409.html:text/html}
 }
 
-@article{he_deep_2015,
-	title = {Deep {Residual} {Learning} for {Image} {Recognition}},
-	url = {http://arxiv.org/abs/1512.03385},
-	abstract = {Deeper neural networks are more difficult to train. We present a residual learning framework to ease the training of networks that are substantially deeper than those used previously. We explicitly reformulate the layers as learning residual functions with reference to the layer inputs, instead of learning unreferenced functions. We provide comprehensive empirical evidence showing that these residual networks are easier to optimize, and can gain accuracy from considerably increased depth. On the ImageNet dataset we evaluate residual nets with a depth of up to 152 layers---8x deeper than VGG nets but still having lower complexity. An ensemble of these residual nets achieves 3.57\% error on the ImageNet test set. This result won the 1st place on the ILSVRC 2015 classification task. We also present analysis on CIFAR-10 with 100 and 1000 layers. The depth of representations is of central importance for many visual recognition tasks. Solely due to our extremely deep representations, we obtain a 28\% relative improvement on the COCO object detection dataset. Deep residual nets are foundations of our submissions to ILSVRC \& COCO 2015 competitions, where we also won the 1st places on the tasks of ImageNet detection, ImageNet localization, COCO detection, and COCO segmentation.},
-	urldate = {2020-06-30},
-	journal = {arXiv:1512.03385 [cs]},
-	author = {He, Kaiming and Zhang, Xiangyu and Ren, Shaoqing and Sun, Jian},
-	month = dec,
-	year = {2015},
-	note = {arXiv: 1512.03385},
-	keywords = {Computer Science - Computer Vision and Pattern Recognition},
-	annote = {Comment: Tech report},
-	file = {arXiv Fulltext PDF:C\:\\Users\\Guigui\\Zotero\\storage\\45D4WKLJ\\He et al. - 2015 - Deep Residual Learning for Image Recognition.pdf:application/pdf;arXiv.org Snapshot:C\:\\Users\\Guigui\\Zotero\\storage\\DBGY74XY\\1512.html:text/html}
-}
-
-@article{maas_rectier_2014,
+@article{maas_rectier_2013,
 	title = {Rectiﬁer {Nonlinearities} {Improve} {Neural} {Network} {Acoustic} {Models}},
+	volume = {30},
+	url = {https://awnihannun.com/papers/relu_hybrid_icml2013_final.pdf},
 	abstract = {Deep neural network acoustic models produce substantial gains in large vocabulary continuous speech recognition systems. Emerging work with rectiﬁed linear (ReL) hidden units demonstrates additional gains in ﬁnal system performance relative to more commonly used sigmoidal nonlinearities. In this work, we explore the use of deep rectiﬁer networks as acoustic models for the 300 hour Switchboard conversational speech recognition task. Using simple training procedures without pretraining, networks with rectiﬁer nonlinearities produce 2\% absolute reductions in word error rates over their sigmoidal counterparts. We analyze hidden layer representations to quantify diﬀerences in how ReL units encode inputs as compared to sigmoidal units. Finally, we evaluate a variant of the ReL unit with a gradient more amenable to optimization in an attempt to further improve deep rectiﬁer networks.},
 	language = {en},
+	urldate = {2020-07-02},
+	journal = {ICML Workshop on Deep Learning for Audio, Speech and Language Processing},
 	author = {Maas, Andrew L and Hannun, Awni Y and Ng, Andrew Y},
-	year = {2014},
+	month = jun,
+	year = {2013},
 	pages = {6},
 	file = {Maas et al. - Rectiﬁer Nonlinearities Improve Neural Network Aco.pdf:C\:\\Users\\Guigui\\Zotero\\storage\\NGF4G4HM\\Maas et al. - Rectiﬁer Nonlinearities Improve Neural Network Aco.pdf:application/pdf}
 }
@@ -1347,28 +1125,15 @@ accuracy tradeoff.},
 	file = {Canziani et al. - 2017 - An Analysis of Deep Neural Network Models for Prac.pdf:C\:\\Users\\Guigui\\Zotero\\storage\\RTJB7K2K\\Canziani et al. - 2017 - An Analysis of Deep Neural Network Models for Prac.pdf:application/pdf}
 }
 
-@article{denton_exploiting_2014,
-	title = {Exploiting {Linear} {Structure} {Within} {Convolutional} {Networks} for {Efficient} {Evaluation}},
-	url = {http://arxiv.org/abs/1404.0736},
-	abstract = {We present techniques for speeding up the test-time evaluation of large convolutional networks, designed for object recognition tasks. These models deliver impressive accuracy, but each image evaluation requires millions of ﬂoating point operations, making their deployment on smartphones and Internet-scale clusters problematic. The computation is dominated by the convolution operations in the lower layers of the model. We exploit the redundancy present within the convolutional ﬁlters to derive approximations that signiﬁcantly reduce the required computation. Using large state-of-the-art models, we demonstrate speedups of convolutional layers on both CPU and GPU by a factor of 2×, while keeping the accuracy within 1\% of the original model.},
-	language = {en},
-	urldate = {2020-07-07},
-	journal = {arXiv:1404.0736 [cs]},
-	author = {Denton, Emily and Zaremba, Wojciech and Bruna, Joan and LeCun, Yann and Fergus, Rob},
-	month = jun,
-	year = {2014},
-	note = {arXiv: 1404.0736},
-	keywords = {Computer Science - Computer Vision and Pattern Recognition, Computer Science - Machine Learning},
-	file = {Denton et al. - 2014 - Exploiting Linear Structure Within Convolutional N.pdf:C\:\\Users\\Guigui\\Zotero\\storage\\4332K8DR\\Denton et al. - 2014 - Exploiting Linear Structure Within Convolutional N.pdf:application/pdf}
-}
-
-@article{zhao_towards_2018,
+@inproceedings{zhao_towards_2018,
+	address = {Dublin, Ireland},
 	title = {Towards {Efficient} {Convolutional} {Neural} {Network} for {Domain}-{Specific} {Applications} on {FPGA}},
-	url = {http://arxiv.org/abs/1809.03318},
+	url = {http://hdl.handle.net/10044/1/62190},
+	doi = {10.1109/FPL.2018.00033},
 	abstract = {FPGA becomes a popular technology for implementing Convolutional Neural Network (CNN) in recent years. Most CNN applications on FPGA are domain-speciﬁc, e.g., detecting objects from speciﬁc categories, in which commonlyused CNN models pre-trained on general datasets may not be efﬁcient enough. This paper presents TuRF, an end-to-end CNN acceleration framework to efﬁciently deploy domain-speciﬁc applications on FPGA by transfer learning that adapts pre-trained models to speciﬁc domains, replacing standard convolution layers with efﬁcient convolution blocks, and applying layer fusion to enhance hardware design performance. We evaluate TuRF by deploying a pre-trained VGG-16 model for a domain-speciﬁc image recognition task onto a Stratix V FPGA. Results show that designs generated by TuRF achieve better performance than prior methods for the original VGG-16 and ResNet-50 models, while for the optimised VGG-16 model TuRF designs are more accurate and easier to process.},
-	language = {en},
+	language = {English},
 	urldate = {2020-07-06},
-	journal = {arXiv:1809.03318 [cs]},
+	publisher = {IEEE},
 	author = {Zhao, Ruizhe and Ng, Ho-Cheung and Luk, Wayne and Niu, Xinyu},
 	month = sep,
 	year = {2018},
@@ -1412,21 +1177,6 @@ accuracy tradeoff.},
 	year = {2017},
 	pages = {1--18},
 	file = {Anwar et al. - 2017 - Structured Pruning of Deep Convolutional Neural Ne.pdf:C\:\\Users\\Guigui\\Zotero\\storage\\KQNQ3D8W\\Anwar et al. - 2017 - Structured Pruning of Deep Convolutional Neural Ne.pdf:application/pdf}
-}
-
-@article{mittal_survey_2014,
-	title = {A {Survey} of {Methods} {For} {Analyzing} and {Improving} {GPU} {Energy} {Efficiency}},
-	url = {http://arxiv.org/abs/1404.4629},
-	abstract = {Recent years have witnessed a phenomenal growth in the computational capabilities and applications of GPUs. However, this trend has also led to dramatic increase in their power consumption. This paper surveys research works on analyzing and improving energy efficiency of GPUs. It also provides a classification of these techniques on the basis of their main research idea. Further, it attempts to synthesize research works which compare energy efficiency of GPUs with other computing systems, e.g. FPGAs and CPUs. The aim of this survey is to provide researchers with knowledge of state-of-the-art in GPU power management and motivate them to architect highly energy-efficient GPUs of tomorrow.},
-	urldate = {2020-07-11},
-	journal = {arXiv:1404.4629 [cs]},
-	author = {Mittal, Sparsh and Vetter, Jeffrey S.},
-	month = apr,
-	year = {2014},
-	note = {arXiv: 1404.4629},
-	keywords = {Computer Science - Hardware Architecture, A.1, H.3.4, I.3.1},
-	annote = {Comment: Accepted with minor revision in ACM Computing Survey Journal (impact factor 3.85, five year impact of 7.85)},
-	file = {arXiv Fulltext PDF:C\:\\Users\\Guigui\\Zotero\\storage\\BR4HH65J\\Mittal et Vetter - 2014 - A Survey of Methods For Analyzing and Improving GP.pdf:application/pdf;arXiv.org Snapshot:C\:\\Users\\Guigui\\Zotero\\storage\\82N6JH7P\\1404.html:text/html}
 }
 
 @article{vestias_fast_2019,
@@ -1492,23 +1242,36 @@ Publisher: Multidisciplinary Digital Publishing Institute},
 	year = {2019}
 }
 
-@article{krizhevsky_convolutional_nodate,
+@unpublished{krizhevsky_convolutional_2010,
 	title = {Convolutional {Deep} {Belief} {Networks} on {CIFAR}-10},
-	language = {en},
+	url = {https://www.cs.toronto.edu/~kriz/conv-cifar10-aug2010.pdf},
+	abstract = {When training a convolutional DBN, one must decide what to do with the edge pixels of teh images. As
+the pixels near the edge of an image contribute to the fewest convolutional  lter outputs, the model may
+see it  t to tailor its few convolutional  lters to better model the edge pixels. This is undesirable becaue it
+usually comes at the expense of a good model for the interior parts of the image. We investigate several ways
+of dealing with the edge pixels when training a convolutional DBN. Using a combination of locally-connected
+convolutional units and globally-connected units, as well as a few tricks to reduce the e ects of over tting,
+we achieve state-of-the-art performance in the classi cation task of the CIFAR-10 subset of the tiny images
+dataset},
+	language = {English},
+	urldate = {2020-07-16},
 	author = {Krizhevsky, Alex},
-	pages = {9},
+	year = {2010},
+	note = {Unpublished manuscript},
 	file = {Krizhevsky - Convolutional Deep Belief Networks on CIFAR-10.pdf:C\:\\Users\\Guigui\\Zotero\\storage\\TILL8IWM\\Krizhevsky - Convolutional Deep Belief Networks on CIFAR-10.pdf:application/pdf}
 }
 
-@book{minsky_perceptrons_1972,
+@book{minsky_perceptrons_1969,
+	address = {Cambridge, MA, USA},
 	title = {Perceptrons: {An} {Introduction} to {Computational} {Geometry}},
 	isbn = {978-0-262-63022-1},
 	shorttitle = {Perceptrons},
-	language = {en},
+	url = {https://mitpress.mit.edu/books/perceptrons},
+	language = {English},
+	urldate = {2020-07-16},
 	publisher = {Mit Press},
 	author = {Minsky, Marvin Lee and Papert, Seymour},
-	year = {1972},
-	note = {Google-Books-ID: Ow1OAQAAIAAJ},
+	year = {1969},
 	keywords = {Computers / Artificial Intelligence, Mathematics / Geometry / General, Perceptrons}
 }
 
@@ -1549,10 +1312,14 @@ Publisher: Multidisciplinary Digital Publishing Institute},
 	file = {Snapshot:C\:\\Users\\Guigui\\Zotero\\storage\\MTYRN6JE\\archive.html:text/html}
 }
 
-@article{noauthor_cyclone_nodate,
+@misc{noauthor_cyclone_2018,
 	title = {Cyclone {V} {Device} {Overview}},
-	language = {en},
-	pages = {37},
+	url = {https://www.intel.com/content/dam/altera-www/global/en_US/pdfs/literature/hb/cyclone-v/cv_51001.pdf},
+	language = {English},
+	urldate = {2020-08-11},
+	publisher = {Intel FPGA Documentation},
+	month = may,
+	year = {2018},
 	file = {Cyclone V Device Overview.pdf:C\:\\Users\\Guigui\\Zotero\\storage\\C69H4H4E\\Cyclone V Device Overview.pdf:application/pdf}
 }
 
@@ -1611,4 +1378,273 @@ Publisher: Multidisciplinary Digital Publishing Institute},
 	year = {2019},
 	keywords = {Convolutional neural networks, embedded-vision, IoT applications, resource-constrained FPGAs},
 	pages = {6:1--6:27}
+}
+
+@inproceedings{szegedy_going_2015,
+	title = {Going deeper with convolutions},
+	url = {https://ieeexplore.ieee.org/document/7298594},
+	doi = {10.1109/CVPR.2015.7298594},
+	abstract = {We propose a deep convolutional neural network architecture codenamed Inception that achieves the new state of the art for classification and detection in the ImageNet Large-Scale Visual Recognition Challenge 2014 (ILSVRC14). The main hallmark of this architecture is the improved utilization of the computing resources inside the network. By a carefully crafted design, we increased the depth and width of the network while keeping the computational budget constant. To optimize quality, the architectural decisions were based on the Hebbian principle and the intuition of multi-scale processing. One particular incarnation used in our submission for ILSVRC14 is called GoogLeNet, a 22 layers deep network, the quality of which is assessed in the context of classification and detection.},
+	booktitle = {2015 {IEEE} {Conference} on {Computer} {Vision} and {Pattern} {Recognition} ({CVPR})},
+	author = {Szegedy, Christian and Wei Liu and Yangqing Jia and Sermanet, Pierre and Reed, Scott and Anguelov, Dragomir and Erhan, Dumitru and Vanhoucke, Vincent and Rabinovich, Andrew},
+	month = jun,
+	year = {2015},
+	note = {ISSN: 1063-6919},
+	keywords = {architectural decision, Computer architecture, Computer vision, convolution, Convolutional codes, convolutional neural network architecture, decision making, feature extraction, Hebbian learning, Hebbian principle, image classification, neural net architecture, Neural networks, object classification, object detection, Object detection, resource allocation, resource utilization, Sparse matrices, Visualization},
+	pages = {1--9},
+	file = {IEEE Xplore Abstract Record:C\:\\Users\\Guigui\\Zotero\\storage\\9VT3BCJN\\7298594.html:text/html;Version soumise:C\:\\Users\\Guigui\\Zotero\\storage\\FI6WKFAT\\Szegedy et al. - 2015 - Going deeper with convolutions.pdf:application/pdf}
+}
+
+@inproceedings{he_deep_2016,
+	title = {Deep {Residual} {Learning} for {Image} {Recognition}},
+	doi = {10.1109/CVPR.2016.90},
+	abstract = {Deeper neural networks are more difficult to train. We present a residual learning framework to ease the training of networks that are substantially deeper than those used previously. We explicitly reformulate the layers as learning residual functions with reference to the layer inputs, instead of learning unreferenced functions. We provide comprehensive empirical evidence showing that these residual networks are easier to optimize, and can gain accuracy from considerably increased depth. On the ImageNet dataset we evaluate residual nets with a depth of up to 152 layers - 8× deeper than VGG nets [40] but still having lower complexity. An ensemble of these residual nets achieves 3.57\% error on the ImageNet test set. This result won the 1st place on the ILSVRC 2015 classification task. We also present analysis on CIFAR-10 with 100 and 1000 layers. The depth of representations is of central importance for many visual recognition tasks. Solely due to our extremely deep representations, we obtain a 28\% relative improvement on the COCO object detection dataset. Deep residual nets are foundations of our submissions to ILSVRC \& COCO 2015 competitions1, where we also won the 1st places on the tasks of ImageNet detection, ImageNet localization, COCO detection, and COCO segmentation.},
+	booktitle = {2016 {IEEE} {Conference} on {Computer} {Vision} and {Pattern} {Recognition} ({CVPR})},
+	author = {He, Kaiming and Zhang, Xiangyu and Ren, Shaoqing and Sun, Jian},
+	month = jun,
+	year = {2016},
+	note = {ISSN: 1063-6919},
+	keywords = {CIFAR-10, COCO object detection dataset, COCO segmentation, Complexity theory, deep residual learning, deep residual nets, deeper neural network training, Degradation, ILSVRC \& COCO 2015 competitions, ILSVRC 2015 classification task, image classification, image recognition, Image recognition, Image segmentation, ImageNet dataset, ImageNet localization, ImageNet test set, learning (artificial intelligence), neural nets, Neural networks, object detection, residual function learning, residual nets, Training, VGG nets, visual recognition tasks, Visualization},
+	pages = {770--778},
+	file = {IEEE Xplore Abstract Record:C\:\\Users\\Guigui\\Zotero\\storage\\YUYUDQKK\\7780459.html:text/html;Version soumise:C\:\\Users\\Guigui\\Zotero\\storage\\7MQUSCVJ\\He et al. - 2016 - Deep Residual Learning for Image Recognition.pdf:application/pdf}
+}
+
+@inproceedings{qasaimeh_comparing_2019,
+	title = {Comparing {Energy} {Efficiency} of {CPU}, {GPU} and {FPGA} {Implementations} for {Vision} {Kernels}},
+	doi = {10.1109/ICESS.2019.8782524},
+	abstract = {Developing high performance embedded vision applications requires balancing run-time performance with energy constraints. Given the mix of hardware accelerators that exist for embedded computer vision (e.g. multi-core CPUs, GPUs, and FPGAs), and their associated vendor optimized vision libraries, it becomes a challenge for developers to navigate this fragmented solution space. To aid with determining which embedded platform is most suitable for their application, we conduct a comprehensive benchmark of the run-time performance and energy efficiency of a wide range of vision kernels. We discuss rationales for why a given underlying hardware architecture innately performs well or poorly based on the characteristics of a range of vision kernel categories. Specifically, our study is performed for three commonly used HW accelerators for embedded vision applications: ARM57 CPU, Jetson TX2 GPU and ZCU102 FPGA, using their vendor optimized vision libraries: OpenCV, VisionWorks and xfOpenCV. Our results show that the GPU achieves an energy/frame reduction ratio of 1.1-3.2× compared to the others for simple kernels. While for more complicated kernels and complete vision pipelines, the FPGA outperforms the others with energy/frame reduction ratios of 1.2-22.3×. It is also observed that the FPGA performs increasingly better as a vision application's pipeline complexity grows.},
+	booktitle = {2019 {IEEE} {International} {Conference} on {Embedded} {Software} and {Systems} ({ICESS})},
+	author = {Qasaimeh, Murad and Denolf, Kristof and Lo, Jack and Vissers, Kees and Zambreno, Joseph and Jones, Phillip H.},
+	month = jun,
+	year = {2019},
+	keywords = {ARM57 CPU, associated vendor, Benchmark testing, complete vision pipelines, Computer architecture, computer vision, CPU implementation, CPUs, embedded computer vision, embedded systems, Embedded Vision, energy constraints, energy efficiency, Energy Efficiency, field programmable gate arrays, Field programmable gate arrays, FPGA implementations, FPGAs, fragmented solution space, GPU implementation, GPUs, graphics processing units, Graphics processing units, Hardware, hardware accelerators, hardware architecture, high performance embedded vision, Jetson TX2 GPU, Kernel, Libraries, multicore CPU, multiprocessing systems, OpenCV vision library, pipeline complexity, run-time performance, software libraries, vision kernel categories, vision kernels, VisionWork vision library, xfOpenCV vision library, ZCU102 FPGA},
+	pages = {1--8},
+	file = {IEEE Xplore Abstract Record:C\:\\Users\\Guigui\\Zotero\\storage\\3PKYTGWE\\8782524.html:text/html;Version soumise:C\:\\Users\\Guigui\\Zotero\\storage\\F3JMV7VP\\Qasaimeh et al. - 2019 - Comparing Energy Efficiency of CPU, GPU and FPGA I.pdf:application/pdf}
+}
+
+@unpublished{abdelouahab_accelerating_2018,
+	address = {France},
+	title = {Accelerating {CNN} inference on {FPGAs}: {A} {Survey}},
+	url = {https://hal.archives-ouvertes.fr/hal-01695375},
+	abstract = {Convolutional Neural Networks (CNNs) are currently adopted to solve an ever greater number of problems, ranging from speech recognition to image classification and segmentation. The large amount of processing required by CNNs calls for dedicated and tailored hardware support methods. Moreover, CNN workloads have a streaming nature, well suited to reconfigurable hardware architectures such as FPGAs. The amount and diversity of research on the subject of CNN FPGA acceleration within the last 3 years demonstrates the tremendous industrial and academic interest. This paper presents a state-of-the-art of CNN inference accelerators over FPGAs. The computational workloads, their parallelism and the involved memory accesses are analyzed. At the level of neurons, optimizations of the convolutional and fully connected layers are explained and the performances of the different methods compared. At the network level, approximate computing and datapath optimization methods are covered and state-of-the-art approaches compared. The methods and tools investigated in this survey represent the recent trends in FPGA CNN inference accelerators and will fuel the future advances on effcient hardware deep learning.},
+	language = {English},
+	urldate = {2020-06-12},
+	author = {Abdelouahab, Kamel and Pelcat, Maxime and Berry, François and Sérot, Jocelyn},
+	month = mar,
+	year = {2018},
+	annote = {working paper or preprint}
+}
+
+@article{cheng_recent_2018,
+	title = {Recent advances in efficient computation of deep convolutional neural networks},
+	volume = {19},
+	issn = {2095-9230},
+	url = {https://doi.org/10.1631/FITEE.1700789},
+	doi = {10.1631/FITEE.1700789},
+	abstract = {Deep neural networks have evolved remarkably over the past few years and they are currently the fundamental tools of many intelligent systems. At the same time, the computational complexity and resource consumption of these networks continue to increase. This poses a significant challenge to the deployment of such networks, especially in real-time applications or on resource-limited devices. Thus, network acceleration has become a hot topic within the deep learning community. As for hardware implementation of deep neural networks, a batch of accelerators based on a field-programmable gate array (FPGA) or an application-specific integrated circuit (ASIC) have been proposed in recent years. In this paper, we provide a comprehensive survey of recent advances in network acceleration, compression, and accelerator design from both algorithm and hardware points of view. Specifically, we provide a thorough analysis of each of the following topics: network pruning, low-rank approximation, network quantization, teacher–student networks, compact network design, and hardware accelerators. Finally, we introduce and discuss a few possible future directions.},
+	language = {en},
+	number = {1},
+	urldate = {2020-06-13},
+	journal = {Frontiers of Information Technology \& Electronic Engineering},
+	author = {Cheng, Jian and Wang, Pei-song and Li, Gang and Hu, Qing-hao and Lu, Han-qing},
+	month = jan,
+	year = {2018},
+	pages = {64--77},
+	file = {Version soumise:C\:\\Users\\Guigui\\Zotero\\storage\\UR46MMC4\\Cheng et al. - 2018 - Recent advances in efficient computation of deep c.pdf:application/pdf}
+}
+
+@inproceedings{sandler_mobilenetv2_2018,
+	title = {{MobileNetV2}: {Inverted} {Residuals} and {Linear} {Bottlenecks}},
+	shorttitle = {{MobileNetV2}},
+	doi = {10.1109/CVPR.2018.00474},
+	abstract = {In this paper we describe a new mobile architecture, MobileNetV2, that improves the state of the art performance of mobile models on multiple tasks and benchmarks as well as across a spectrum of different model sizes. We also describe efficient ways of applying these mobile models to object detection in a novel framework we call SSDLite. Additionally, we demonstrate how to build mobile semantic segmentation models through a reduced form of DeepLabv3 which we call Mobile DeepLabv3. is based on an inverted residual structure where the shortcut connections are between the thin bottleneck layers. The intermediate expansion layer uses lightweight depthwise convolutions to filter features as a source of non-linearity. Additionally, we find that it is important to remove non-linearities in the narrow layers in order to maintain representational power. We demonstrate that this improves performance and provide an intuition that led to this design. Finally, our approach allows decoupling of the input/output domains from the expressiveness of the transformation, which provides a convenient framework for further analysis. We measure our performance on ImageNet [1] classification, COCO object detection [2], VOC image segmentation [3]. We evaluate the trade-offs between accuracy, and number of operations measured by multiply-adds (MAdd), as well as actual latency, and the number of parameters.},
+	urldate = {2020-06-14},
+	booktitle = {2018 {IEEE}/{CVF} {Conference} on {Computer} {Vision} and {Pattern} {Recognition}},
+	author = {Sandler, Mark and Howard, Andrew and Zhu, Menglong and Zhmoginov, Andrey and Chen, Liang-Chieh},
+	month = jun,
+	year = {2018},
+	note = {ISSN: 2575-7075},
+	keywords = {bottleneck layers, COCO object detection, Computational modeling, Computer architecture, convolution, image segmentation, intermediate expansion layer, inverted residual structure, inverted residuals, lightweight depthwise convolutions, linear bottlenecks, Manifolds, mobile architecture, mobile computing, Mobile DeepLabv3, mobile models, mobile semantic segmentation models, MobileNetV2, narrow layers, Neural networks, object detection, Standards, Task analysis},
+	pages = {4510--4520},
+	file = {IEEE Xplore Abstract Record:C\:\\Users\\Guigui\\Zotero\\storage\\WLUH2ZJA\\8578572.html:text/html;Version soumise:C\:\\Users\\Guigui\\Zotero\\storage\\KIPFSMGF\\Sandler et al. - 2018 - MobileNetV2 Inverted Residuals and Linear Bottlen.pdf:application/pdf}
+}
+
+@inproceedings{glorot_understanding_2010,
+	title = {Understanding the difficulty of training deep feedforward neural networks},
+	url = {http://proceedings.mlr.press/v9/glorot10a.html},
+	abstract = {Whereas before 2006 it appears that deep multi-layer neural networks were not successfully trained, since then several algorithms have been shown to successfully train them, with experimental resul...},
+	language = {en},
+	urldate = {2020-06-15},
+	booktitle = {Proceedings of the {Thirteenth} {International} {Conference} on {Artificial} {Intelligence} and {Statistics}},
+	author = {Glorot, Xavier and Bengio, Yoshua},
+	month = mar,
+	year = {2010},
+	note = {ISSN: 1938-7228
+Section: Machine Learning},
+	pages = {249--256},
+	file = {Full Text PDF:C\:\\Users\\Guigui\\Zotero\\storage\\YWYRVPRJ\\Glorot et Bengio - 2010 - Understanding the difficulty of training deep feed.pdf:application/pdf;Snapshot:C\:\\Users\\Guigui\\Zotero\\storage\\CCI4KTEJ\\glorot10a.html:text/html}
+}
+
+@inproceedings{chollet_xception_2017,
+	title = {Xception: {Deep} {Learning} with {Depthwise} {Separable} {Convolutions}},
+	shorttitle = {Xception},
+	doi = {10.1109/CVPR.2017.195},
+	abstract = {We present an interpretation of Inception modules in convolutional neural networks as being an intermediate step in-between regular convolution and the depthwise separable convolution operation (a depthwise convolution followed by a pointwise convolution). In this light, a depthwise separable convolution can be understood as an Inception module with a maximally large number of towers. This observation leads us to propose a novel deep convolutional neural network architecture inspired by Inception, where Inception modules have been replaced with depthwise separable convolutions. We show that this architecture, dubbed Xception, slightly outperforms Inception V3 on the ImageNet dataset (which Inception V3 was designed for), and significantly outperforms Inception V3 on a larger image classification dataset comprising 350 million images and 17,000 classes. Since the Xception architecture has the same number of parameters as Inception V3, the performance gains are not due to increased capacity but rather to a more efficient use of model parameters.},
+	booktitle = {2017 {IEEE} {Conference} on {Computer} {Vision} and {Pattern} {Recognition} ({CVPR})},
+	author = {Chollet, François},
+	month = jul,
+	year = {2017},
+	note = {ISSN: 1063-6919},
+	keywords = {Biological neural networks, Computer architecture, Convolutional codes, Correlation, deep convolutional neural network architecture, deep learning, depthwise separable convolution operation, feedforward neural nets, Google, image classification, image classification dataset, ImageNet dataset, Inception module, Inception V3, learning (artificial intelligence), neural net architecture, pointwise convolution, regular convolution, Xception},
+	pages = {1800--1807},
+	file = {IEEE Xplore Abstract Record:C\:\\Users\\Guigui\\Zotero\\storage\\IZMKLGIU\\8099678.html:text/html;Version soumise:C\:\\Users\\Guigui\\Zotero\\storage\\TR8RM7EP\\Chollet - 2017 - Xception Deep Learning with Depthwise Separable C.pdf:application/pdf}
+}
+
+@inproceedings{he_delving_2015,
+	title = {Delving {Deep} into {Rectifiers}: {Surpassing} {Human}-{Level} {Performance} on {ImageNet} {Classification}},
+	shorttitle = {Delving {Deep} into {Rectifiers}},
+	doi = {10.1109/ICCV.2015.123},
+	abstract = {Rectified activation units (rectifiers) are essential for state-of-the-art neural networks. In this work, we study rectifier neural networks for image classification from two aspects. First, we propose a Parametric Rectified Linear Unit (PReLU) that generalizes the traditional rectified unit. PReLU improves model fitting with nearly zero extra computational cost and little overfitting risk. Second, we derive a robust initialization method that particularly considers the rectifier nonlinearities. This method enables us to train extremely deep rectified models directly from scratch and to investigate deeper or wider network architectures. Based on the learnable activation and advanced initialization, we achieve 4.94\% top-5 test error on the ImageNet 2012 classification dataset. This is a 26\% relative improvement over the ILSVRC 2014 winner (GoogLeNet, 6.66\% [33]). To our knowledge, our result is the first to surpass the reported human-level performance (5.1\%, [26]) on this dataset.},
+	booktitle = {2015 {IEEE} {International} {Conference} on {Computer} {Vision} ({ICCV})},
+	author = {He, Kaiming and Zhang, Xiangyu and Ren, Shaoqing and Sun, Jian},
+	month = dec,
+	year = {2015},
+	note = {ISSN: 2380-7504},
+	keywords = {Adaptation models, Biological neural networks, Computational modeling, Gaussian distribution, human-level performance, ILSVRC 2014 winner, image classification, ImageNet 2012 classification dataset, ImageNet classification, model fitting, network architectures, neural nets, overfitting risk, parametric rectified linear unit, PReLU, rectified activation units, rectifier neural networks, rectifier nonlinearities, robust initialization method, state-of-the-art neural networks, Testing, Training},
+	pages = {1026--1034},
+	file = {IEEE Xplore Abstract Record:C\:\\Users\\Guigui\\Zotero\\storage\\24Z8E6FS\\7410480.html:text/html;Version soumise:C\:\\Users\\Guigui\\Zotero\\storage\\C9Y24LWU\\He et al. - 2015 - Delving Deep into Rectifiers Surpassing Human-Lev.pdf:application/pdf}
+}
+
+@article{mittal_survey_2015,
+	title = {A {Survey} of {Methods} for {Analyzing} and {Improving} {GPU} {Energy} {Efficiency}},
+	volume = {47},
+	issn = {0360-0300, 1557-7341},
+	url = {https://dl.acm.org/doi/10.1145/2636342},
+	doi = {10.1145/2636342},
+	language = {English},
+	number = {2},
+	urldate = {2020-07-11},
+	journal = {ACM Computing Surveys},
+	author = {Mittal, Sparsh and Vetter, Jeffrey S.},
+	month = jan,
+	year = {2015},
+	pages = {1--23},
+	file = {Mittal et Vetter - 2015 - A Survey of Methods for Analyzing and Improving GP.pdf:C\:\\Users\\Guigui\\Zotero\\storage\\GIXZCGX2\\Mittal et Vetter - 2015 - A Survey of Methods for Analyzing and Improving GP.pdf:application/pdf}
+}
+
+@inproceedings{lavin_fast_2016,
+	title = {Fast {Algorithms} for {Convolutional} {Neural} {Networks}},
+	doi = {10.1109/CVPR.2016.435},
+	abstract = {Deep convolutional neural networks take GPU-days of computation to train on large data sets. Pedestrian detection for self driving cars requires very low latency. Image recognition for mobile phones is constrained by limited processing resources. The success of convolutional neural networks in these situations is limited by how fast we can compute them. Conventional FFT based convolution is fast for large filters, but state of the art convolutional neural networks use small, 3 3 filters. We introduce a new class of fast algorithms for convolutional neural networks using Winograd's minimal filtering algorithms. The algorithms compute minimal complexity convolution over small tiles, which makes them fast with small filters and small batch sizes. We benchmark a GPU implementation of our algorithm with the VGG network and show state of the art throughput at batch sizes from 1 to 64.},
+	urldate = {2020-06-14},
+	booktitle = {2016 {IEEE} {Conference} on {Computer} {Vision} and {Pattern} {Recognition} ({CVPR})},
+	author = {Lavin, Andrew and Gray, Scott},
+	month = jun,
+	year = {2016},
+	note = {ISSN: 1063-6919},
+	keywords = {complexity convolution, Complexity theory, convolution, Convolution, convolutional neural networks, fast algorithms, fast Fourier transforms, FFT based convolution, filtering algorithms, filtering theory, GPU, image recognition, Image recognition, Laplace equations, large data sets, mobile phones, neural nets, Neural networks, pedestrian detection, self driving cars, Transforms, Two dimensional displays, VGG network},
+	pages = {4013--4021},
+	file = {IEEE Xplore Abstract Record:C\:\\Users\\Guigui\\Zotero\\storage\\YQ4MGTJW\\7780804.html:text/html;Version soumise:C\:\\Users\\Guigui\\Zotero\\storage\\HC3MD2QN\\Lavin et Gray - 2016 - Fast Algorithms for Convolutional Neural Networks.pdf:application/pdf}
+}
+
+@inproceedings{zoph_learning_2018,
+	title = {Learning {Transferable} {Architectures} for {Scalable} {Image} {Recognition}},
+	doi = {10.1109/CVPR.2018.00907},
+	abstract = {Developing neural network image classification models often requires significant architecture engineering. In this paper, we study a method to learn the model architectures directly on the dataset of interest. As this approach is expensive when the dataset is large, we propose to search for an architectural building block on a small dataset and then transfer the block to a larger dataset. The key contribution of this work is the design of a new search space (which we call the "NASNet search space") which enables transferability. In our experiments, we search for the best convolutional layer (or "cell") on the CIFAR-10 dataset and then apply this cell to the ImageNet dataset by stacking together more copies of this cell, each with their own parameters to design a convolutional architecture, which we name a "NASNet architecture". We also introduce a new regularization technique called ScheduledDropPath that significantly improves generalization in the NASNet models. On CIFAR-10 itself, a NASNet found by our method achieves 2.4\% error rate, which is state-of-the-art. Although the cell is not searched for directly on ImageNet, a NASNet constructed from the best cell achieves, among the published works, state-of-the-art accuracy of 82.7\% top-1 and 96.2\% top-5 on ImageNet. Our model is 1.2\% better in top-1 accuracy than the best human-invented architectures while having 9 billion fewer FLOPS - a reduction of 28\% in computational demand from the previous state-of-the-art model. When evaluated at different levels of computational cost, accuracies of NASNets exceed those of the state-of-the-art human-designed models. For instance, a small version of NASNet also achieves 74\% top-1 accuracy, which is 3.1\% better than equivalently-sized, state-of-the-art models for mobile platforms. Finally, the image features learned from image classification are generically useful and can be transferred to other computer vision problems. On the task of object detection, the learned features by NASNet used with the Faster-RCNN framework surpass state-of-the-art by 4.0\% achieving 43.1\% mAP on the COCO dataset.},
+	booktitle = {2018 {IEEE}/{CVF} {Conference} on {Computer} {Vision} and {Pattern} {Recognition}},
+	author = {Zoph, Barret and Vasudevan, Vijay and Shlens, Jonathon and Le, Quoc V.},
+	month = jun,
+	year = {2018},
+	note = {ISSN: 2575-7075},
+	keywords = {Aerospace electronics, Computational modeling, Computer architecture, computer vision, computer vision problems, Convolution, convolutional architecture, Faster-RCNN framework, feature extraction, Google, human-invented architectures, image classification, image features, ImageNet dataset, learning (artificial intelligence), learning transferable architectures, Microprocessors, mobile platforms, NASNet architecture, neural net architecture, neural network image classification models, object detection, scalable image recognition, ScheduledDropPath, Search methods},
+	pages = {8697--8710},
+	file = {IEEE Xplore Abstract Record:C\:\\Users\\Guigui\\Zotero\\storage\\7FM9XHJC\\8579005.html:text/html;Version soumise:C\:\\Users\\Guigui\\Zotero\\storage\\XSFD7R76\\Zoph et al. - 2018 - Learning Transferable Architectures for Scalable I.pdf:application/pdf}
+}
+
+@inproceedings{ma_shufflenet_2018,
+	address = {Cham},
+	series = {Lecture {Notes} in {Computer} {Science}},
+	title = {{ShuffleNet} {V2}: {Practical} {Guidelines} for {Efficient} {CNN} {Architecture} {Design}},
+	isbn = {978-3-030-01264-9},
+	shorttitle = {{ShuffleNet} {V2}},
+	doi = {10.1007/978-3-030-01264-9_8},
+	abstract = {Currently, the neural network architecture design is mostly guided by the indirect metric of computation complexity, i.e., FLOPs. However, the direct metric, e.g., speed, also depends on the other factors such as memory access cost and platform characterics. Thus, this work proposes to evaluate the direct metric on the target platform, beyond only considering FLOPs. Based on a series of controlled experiments, this work derives several practical guidelines for efficient network design. Accordingly, a new architecture is presented, called ShuffleNet V2. Comprehensive ablation experiments verify that our model is the state-of-the-art in terms of speed and accuracy tradeoff.},
+	language = {en},
+	urldate = {2020-06-22},
+	booktitle = {Computer {Vision} – {ECCV} 2018},
+	publisher = {Springer International Publishing},
+	author = {Ma, Ningning and Zhang, Xiangyu and Zheng, Hai-Tao and Sun, Jian},
+	editor = {Ferrari, Vittorio and Hebert, Martial and Sminchisescu, Cristian and Weiss, Yair},
+	year = {2018},
+	keywords = {CNN architecture design, Efficiency, Practical},
+	pages = {122--138},
+	file = {Version soumise:C\:\\Users\\Guigui\\Zotero\\storage\\MAH7Q7BV\\Ma et al. - 2018 - ShuffleNet V2 Practical Guidelines for Efficient .pdf:application/pdf}
+}
+
+@inproceedings{denton_exploiting_2014,
+	address = {Cambridge, MA, USA},
+	series = {{NIPS}'14},
+	title = {Exploiting linear structure within convolutional networks for efficient evaluation},
+	abstract = {We present techniques for speeding up the test-time evaluation of large convolutional networks, designed for object recognition tasks. These models deliver impressive accuracy, but each image evaluation requires millions of floating point operations, making their deployment on smartphones and Internet-scale clusters problematic. The computation is dominated by the convolution operations in the lower layers of the model. We exploit the redundancy present within the convolutional filters to derive approximations that significantly reduce the required computation. Using large state-of-the-art models, we demonstrate speedups of convolutional layers on both CPU and GPU by a factor of 2 x, while keeping the accuracy within 1\% of the original model.},
+	urldate = {2020-08-13},
+	booktitle = {Proceedings of the 27th {International} {Conference} on {Neural} {Information} {Processing} {Systems} - {Volume} 1},
+	publisher = {MIT Press},
+	author = {Denton, Emily and Zaremba, Wojciech and Bruna, Joan and LeCun, Yann and Fergus, Rob},
+	month = dec,
+	year = {2014},
+	pages = {1269--1277}
+}
+
+@inproceedings{frankle_lottery_2018,
+	title = {The {Lottery} {Ticket} {Hypothesis}: {Finding} {Sparse}, {Trainable} {Neural} {Networks}},
+	shorttitle = {The {Lottery} {Ticket} {Hypothesis}},
+	url = {https://openreview.net/forum?id=rJl-b3RcF7},
+	abstract = {Neural network pruning techniques can reduce the parameter counts of trained networks by over 90\%, decreasing storage requirements and improving computational performance of inference without...},
+	urldate = {2020-06-24},
+	author = {Frankle, Jonathan and Carbin, Michael},
+	month = sep,
+	year = {2018},
+	file = {Full Text PDF:C\:\\Users\\Guigui\\Zotero\\storage\\65GIT3FD\\Frankle et Carbin - 2018 - The Lottery Ticket Hypothesis Finding Sparse, Tra.pdf:application/pdf;Snapshot:C\:\\Users\\Guigui\\Zotero\\storage\\8HVEHHSW\\forum.html:text/html}
+}
+
+@inproceedings{han_learning_2015,
+	address = {Cambridge, MA, USA},
+	series = {{NIPS}'15},
+	title = {Learning both weights and connections for efficient neural networks},
+	abstract = {Neural networks are both computationally intensive and memory intensive, making them difficult to deploy on embedded systems. Also, conventional networks fix the architecture before training starts; as a result, training cannot improve the architecture. To address these limitations, we describe a method to reduce the storage and computation required by neural networks by an order of magnitude without affecting their accuracy by learning only the important connections. Our method prunes redundant connections using a three-step method. First, we train the network to learn which connections are important. Next, we prune the unimportant connections. Finally, we retrain the network to fine tune the weights of the remaining connections. On the ImageNet dataset, our method reduced the number of parameters of AlexNet by a factor of 9x, from 61 million to 6.7 million, without incurring accuracy loss. Similar experiments with VGG-16 found that the total number of parameters can be reduced by 13x, from 138 million to 10.3 million, again with no loss of accuracy.},
+	urldate = {2020-08-13},
+	booktitle = {Proceedings of the 28th {International} {Conference} on {Neural} {Information} {Processing} {Systems} - {Volume} 1},
+	publisher = {MIT Press},
+	author = {Han, Song and Pool, Jeff and Tran, John and Dally, William J.},
+	month = dec,
+	year = {2015},
+	pages = {1135--1143}
+}
+
+@inproceedings{mao_exploring_2017,
+	title = {Exploring the {Granularity} of {Sparsity} in {Convolutional} {Neural} {Networks}},
+	doi = {10.1109/CVPRW.2017.241},
+	abstract = {Sparsity helps reducing the computation complexity of DNNs by skipping the multiplication with zeros. The granularity of sparsity affects the efficiency of hardware architecture and the prediction accuracy. In this paper we quantitatively measure the accuracy-sparsity relationship with different granularity. Coarse-grained sparsity brings more regular sparsity pattern, making it easier for hardware acceleration, and our experimental results show that coarsegrained sparsity have very small impact on the sparsity ratio given no loss of accuracy. Moreover, due to the index saving effect, coarse-grained sparsity is able to obtain similar or even better compression rates than fine-grained sparsity at the same accuracy threshold. Our analysis, which is based on the framework of a recent sparse convolutional neural network (SCNN) accelerator, further demonstrates that it saves 30\% - 35\% of memory references compared with fine-grained sparsity.},
+	urldate = {2020-06-24},
+	booktitle = {2017 {IEEE} {Conference} on {Computer} {Vision} and {Pattern} {Recognition} {Workshops} ({CVPRW})},
+	author = {Mao, Huizi and Han, Song and Pool, Jeff and Li, Wenshuo and Liu, Xingyu and Wang, Yu and Dally, William J.},
+	month = jul,
+	year = {2017},
+	note = {ISSN: 2160-7516},
+	keywords = {Acceleration, accuracy-sparsity relationship, coarse-grained sparsity, compression rates, computation complexity, computational complexity, Computational modeling, convolutional neural networks, data compression, feedforward neural nets, fine-grained sparsity, Grain size, Hardware, hardware acceleration, index saving effect, Kernel, memory references, neural net architecture, Neural networks, SCNN accelerator, sparse convolutional neural network accelerator, sparsity granularity, sparsity pattern, Tensile stress},
+	pages = {1927--1934},
+	file = {IEEE Xplore Abstract Record:C\:\\Users\\Guigui\\Zotero\\storage\\APIU5BL3\\8014975.html:text/html}
+}
+
+@incollection{wen_learning_2016,
+	title = {Learning {Structured} {Sparsity} in {Deep} {Neural} {Networks}},
+	url = {http://papers.nips.cc/paper/6504-learning-structured-sparsity-in-deep-neural-networks.pdf},
+	urldate = {2020-06-26},
+	booktitle = {Advances in {Neural} {Information} {Processing} {Systems} 29},
+	publisher = {Curran Associates, Inc.},
+	author = {Wen, Wei and Wu, Chunpeng and Wang, Yandan and Chen, Yiran and Li, Hai},
+	editor = {Lee, D. D. and Sugiyama, M. and Luxburg, U. V. and Guyon, I. and Garnett, R.},
+	year = {2016},
+	pages = {2074--2082},
+	file = {NIPS Full Text PDF:C\:\\Users\\Guigui\\Zotero\\storage\\KMN63SRZ\\Wen et al. - 2016 - Learning Structured Sparsity in Deep Neural Networ.pdf:application/pdf;NIPS Snapshot:C\:\\Users\\Guigui\\Zotero\\storage\\LLKTFXQV\\6504-learning-structured-sparsity-in-deep-neural-networks.html:text/html}
 }

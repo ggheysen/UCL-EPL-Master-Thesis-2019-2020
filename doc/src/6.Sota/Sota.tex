@@ -1,15 +1,14 @@
-\chapter{State-of-art} \label{chap:sota}
+\chapter{State of the art} \label{chap:sota}
 % inference optimization
 \input{src/6.Sota/Compression}
 %
 \input{src/6.Sota/Modopti}
 %
+\begin{tcolorbox}
+    \textbf{Conclusions about the State of the art}:
 
-\fbox{\parbox{ \linewidth \fboxrule \fboxsep }{ \textbf{Conclusion about the background}:
-
-\vspace{5mm}
-We have seen in this chapter what is a \acrshort{cnn}, how to build, and train it. We have also seen that the most performing models have a huge computational complexity and memory utilization, which limit the implementation of such models on mobile platforms, such as \acrshort{fpga}. Different approaches can be explored such as fast convolutions algorithms. But they only reduce the computational complexity while increasing hardware utilization. Therefore, pruning and model designs seem to be promising optimizations because they both aim at reducing those problems. Therefore, this work focus on the use of both approaches to see if their gain can be combined. To show our results, we apply pruning on MobileNetV2. As quantizing is an orthogonal approach to pruning, we also use 16-bit fixed-point formats because the loss of accuracy can be controlled.
-}}
+    We have seen in this chapter what is a \acrshort{cnn}, how to build, and train it. We have also seen that the most performing models have a huge computational complexity and memory utilization, which limit the implementation of such models on mobile platforms, such as \acrshort{fpga}. Different approaches can be explored such as fast convolutions algorithms. But they only reduce the computational complexity while increasing hardware utilization. Therefore, pruning and model designs seem to be promising optimizations because they both aim at reducing those problems. Therefore, this work focus on the use of both approaches to see if their gain can be combined. To show our results, we apply pruning on MobileNetV2. As quantizing is an orthogonal approach to pruning, we also use 16-bit fixed-point formats because the loss of accuracy can be controlled.
+\end{tcolorbox}
 \afterpage{\blankpage}
 \cleardoublepage
 \newpage
