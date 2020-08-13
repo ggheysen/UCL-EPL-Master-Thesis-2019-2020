@@ -35,6 +35,7 @@ maxcitenames=1
 \usepackage{xcolor}
 \usepackage[pdfencoding=auto, psdextra]{hyperref}
 \usepackage{bookmark}% faster updated bookmarks
+\usepackage{tcolorbox}
 %geometry
 \geometry{
 a4paper,
