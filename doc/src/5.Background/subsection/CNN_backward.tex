@@ -1,5 +1,5 @@
 \subsubsection{Back-propagation} \label{subs:trainbackward}
-According to \textcite{ruder_overview_2017}, gradient descent optimization algorithms are the most common ones used to perform optimizations on \acrshort{nn}. These algorithms derive from the idea of gradient descent. As said in the previous section, gradient descent is a way to minimize the loss function in order to parametrize the parameters of the model (weight). Equation \eqref{eq:gd} defines the gradient descent algorithm, where $\eta$ is the learning rate, a positive scalar determining the size of the step in the direction minimizing the gradient \cite{goodfellow_deep_2016, ruder_overview_2017}. If we update the weight in the opposite direction of the gradient, we can reach a local minimum.
+According to \textcite{ruder_overview_2017}, gradient descent optimization algorithms are the most common ones used to perform optimizations on \acrshort{nn}. These algorithms derive from the idea of gradient descent. As said in the previous section, gradient descent is a way to minimize the loss function to parametrize the weights of the model. Equation \eqref{eq:gd} defines the gradient descent algorithm, where $\eta$ is the learning rate, a positive scalar determining the size of the step in the direction minimizing the gradient \cite{goodfellow_deep_2016, ruder_overview_2017}. If we update the weight in the opposite direction of the gradient, we can reach a local minimum.
 %
 \begin{equation}
     \boldsymbol{w} = \boldsymbol{w} - \eta \frac{ \partial L( \boldsymbol{x}, \boldsymbol{w} ) }{\partial \boldsymbol{w}}
@@ -20,7 +20,7 @@ According to \textcite{ruder_overview_2017}, gradient descent optimization algor
     \label{eq:sgd-grad}
 \end{equation}
 
-\textbf{Mini-batch gradient descent} is a trade-off between the two previous approaches \cite{ruder_overview_2017, matteucci_artificial_2019}. It performs an update of the weights for every mini-batch of the whole dataset. Equation \eqref{eq:bgd-grad} computes the mini-batch gradient descent, where $N$ is the number of training samples. It shows a better convergence than stochastic gradient descent by reducing the variance and has less computations than batch gradient descent.
+\textbf{Mini-batch gradient descent} is a trade-off between the two previous approaches \cite{ruder_overview_2017, matteucci_artificial_2019}. It performs an update of the weights for every mini-batch of the whole dataset. Equation \eqref{eq:bgd-grad} computes the mini-batch gradient descent, where $N$ is the number of training samples. It shows a better convergence than stochastic gradient descent by reducing the variance and has fewer computations than batch gradient descent.
 %
 \begin{equation}
     \frac{ \partial L( \boldsymbol{x}, \boldsymbol{w} ) }{\partial \boldsymbol{w}} = \frac{1}{N} \sum^{N < N_{in}}_{i = 0} \frac{ \partial L( x_i, \boldsymbol{w} ) }{\partial \boldsymbol{w}}

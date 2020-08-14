@@ -6,7 +6,7 @@ The perceptron described in Section \ref{subs:perceptron} can be considered as a
     \label{eq:linearclassifer}
 \end{equation}
 %
-The perceptron is therefore limited because is has only linear decision boundary. For example, it means that it is possible for the perceptron to learn the AND and OR boolean functions but impossible to learn the XOR function \cite{minsky_perceptrons_1969}. In order to be able to build non-linear models, a topology of perceptrons needs to be used \cite{khan_survey_2020}, as illustrated in Figure \ref{fig:fcn}. Therefore, a fully connected layer in \acrshort{cnn} is a set of $N_{in}$ inputs that are fed to $N_{out}$ perceptrons. The $N_{out}$ are either fed to another fully connected layer or are used as the output of the \acrshort{cnn}.
+The perceptron is therefore limited because it has only a linear decision boundary. For example, it means that the perceptron can learn the AND and OR Boolean functions but impossible to learn the XOR function \cite{minsky_perceptrons_1969}. To be able to build non-linear models, a topology of perceptrons needs to be used, as illustrated in Figure \ref{fig:fcn} \cite{khan_survey_2020}. Therefore, a fully connected layer used in \acrshort{cnn} is a set of $N_{in}$ inputs that are fed to $N_{out}$ perceptrons. The $N_{out}$ outputs are either fed to another fully connected layer or are used as the output of the \acrshort{cnn}.
 %
 \begin{figure}[H]
     \centering
@@ -15,7 +15,7 @@ The perceptron is therefore limited because is has only linear decision boundary
     \label{fig:fcn}
 \end{figure}
 %
-A fully connected layer is characterized by the number of neurons, activation function, and the value of weights. The output vector $\boldsymbol{y}$ is defined by equation \eqref{eq:fcn}, where $\boldsymbol{x}$ is the input vector ($x_0 = 1$ correspons to the biases), $\boldsymbol{w}$ is the weights vector ($w^i_*$ are the weights of the ith perceptron and $w^*_0$ are the biases), and $h$ is the activation function \cite{abdelouahab_accelerating_2018}.
+A fully connected layer is characterized by the number of neurons, activation function, and the value of weights. The output vector $\boldsymbol{y}$ is defined by equation \eqref{eq:fcn}, where $\boldsymbol{x}$ is the input vector ($x_0 = 1$ corresponds to the biases), $\boldsymbol{w}$ is the weights vector ($w^i_*$ are the weights of the ith perceptron and $w^*_0$ are the biases), and $h$ is the activation function \cite{abdelouahab_accelerating_2018}.
 %
 \begin{equation}
     \boldsymbol{y} = h(\boldsymbol{w}^T \boldsymbol{x}) \qquad \Leftrightarrow \qquad \forall o \in \{ 1, ..., N_{out} \} : y_o = h(\sum^{N_{in}}_{i=0} w^o_i \cdot x_i)

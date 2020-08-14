@@ -1,5 +1,5 @@
 \subsubsection{Activation functions} \label{subs:acti}
-In order to decide if a perceptron is activated or not (if its threshold is reached), an activation function needs to be defined. To apply the back-propagation algorithm which makes the \acrshort{cnn} learn (will be further detailed in Section \ref{subsec:train}), this function needs to be differentiable \cite{lecun_backpropagation_1989}. Indeed, during the optimization of the network, the gradient of the activation function is computed. Therefore, Equation \ref{eq:step} cannot be used as the activation function because of its zero gradient. The learning does not converge and hence the \acrshort{cnn} does not learn. Various activation functions were proposed with different properties, as illustrated in Figure \ref{fig:acti}. According to \textcite{khan_survey_2020}, the choice of an appropriate activation function can accelerate the learning phase and some activation functions have a lower computational complexity \cite{krizhevsky_imagenet_2012}.
+To decide if a perceptron is activated or not (if its threshold is reached), an activation function needs to be defined. To apply the back-propagation algorithm which makes \acrshort{cnn} learn (will be further detailed in Section \ref{subsec:train}), this function needs to be differentiable \cite{lecun_backpropagation_1989}. Indeed, during the optimization of the network, the gradient of the activation function is computed. Therefore, Equation \ref{eq:step} cannot be used as activation function because of its zero gradients. The learning does not converge and hence the \acrshort{cnn} does not learn. Various activation functions were proposed with different properties, as illustrated in Figure \ref{fig:acti}. According to \textcite{khan_survey_2020}, the choice of an appropriate activation function can accelerate the learning phase and some activation functions have lower computational complexity than others \cite{krizhevsky_imagenet_2012}.
 %
 \begin{figure}[H]
     \centering
@@ -9,7 +9,7 @@ In order to decide if a perceptron is activated or not (if its threshold is reac
 \end{figure}
 %
 \subsubsection{Sigmoid and Hyperbolic Tangent (Tanh)}
-$Sigmoid$ and $Tanh$ are smooth activation functions that limith the $\mathbb{R}$ domain into a narrower domain: $[0, 1]$ for $Sigmoid$, and $[-1, 1]$ for the $Tanh$, as shown in Figure \ref{fig:acti} \cite{matteucci_artificial_2019}. They can be described using Equations \eqref{eq:sigmoid} and \eqref{eq:tanh} \cite{krizhevsky_imagenet_2012}.
+$Sigmoid$ and $Tanh$ are smooth activation functions that limit the $\mathbb{R}$ domain into a narrower domain: $[0, 1]$ for $Sigmoid$, and $[-1, 1]$ for the $Tanh$, as shown in Figure \ref{fig:acti} \cite{matteucci_artificial_2019}. They can be described using Equations \eqref{eq:sigmoid} and \eqref{eq:tanh} \cite{krizhevsky_imagenet_2012}.
 %
 \begin{equation}
     h(x) = \frac{1}{1 + e^{-x}}
@@ -21,7 +21,7 @@ $Sigmoid$ and $Tanh$ are smooth activation functions that limith the $\mathbb{R}
     \label{eq:tanh}
 \end{equation}
 %
-However, they saturate at the asymptotes, which means that their gradient is close to 0 outside the input range $[0, 1]$ \cite{glorot_understanding_2010}. As the back-propagation algorithm (see Section \ref{subsec:train}) requires gradient multiplication, gradient far away from the output vanishes (close to 0) and deep models do not learn. It is the \textbf{vanishing gradient problem} \cite{khan_survey_2020, matteucci_artificial_2019, goodfellow_deep_2016, maas_rectier_2013}.
+However, they saturate at the asymptotes, which means that their gradient is close to 0 outside the input range $[-4, 4]$ \cite{glorot_understanding_2010}. As the back-propagation algorithm (see Section \ref{subsec:train}) requires gradient multiplication, gradient far away from the output vanishes (close to 0) and deep models do not learn. It is the \textbf{vanishing gradient problem} \cite{khan_survey_2020, matteucci_artificial_2019, goodfellow_deep_2016, maas_rectier_2013}.
 %
 \subsubsection{ReLU and ReLU6}
 In order to overcome this vanishing gradient problem, the Rectified Linear Unit (ReLU) which is defined by Equation \eqref{eq:relu} was developed by \textcite{krizhevsky_imagenet_2012}.
@@ -40,5 +40,5 @@ We can also use the dying neuron property to learn sparse features. It was done 
     \label{eq:relu6}
 \end{equation}
 %
-ReLU6 has the advantage to be designed for fixed-point operations and quantization approaches (which will be described in Section \ref{subsec:mdopti}), instead of floating-point operations. It means the number of bits for the integer part can be limited to 3 bits because the output $ \in [0, 6]$ (with 3 bit, we can represent numbers in the range $[0, 2^3-1]$ = $[0, 7]$). The accuracy of the model can thus be increased by assigning the other available bits to the decimal part. This property makes ReLU6 to be used in model that aims mobile and embedded platforms like MobileNet \cite{howard_mobilenets_2017}. Indeed, fixed-point operations, especially on \acrshort{fpga}, are more efficient in terms of hardware utilization and power consumption \cite{david_hardware_2007}. In the frame this thesis, the ReLU6 activation function is used.
+ReLU6 has the advantage to be designed for fixed-point operations and quantization approaches (which will be described in Section \ref{subsec:mdopti}), instead of floating-point operations. It means the number of bits for the integer part can be limited to 3 bits because the output $ \in [0, 6]$ (with 3 bit, we can represent numbers in the range $[0, 2^3-1]$ = $[0, 7]$). The accuracy of the model can thus be increased by assigning the other available bits to the decimal part. This property makes ReLU6 to be used in models that aim mobile and embedded platforms like MobileNet \cite{howard_mobilenets_2017}. Indeed, fixed-point operations, especially on \acrshort{fpga}, are more efficient in terms of hardware utilization and power consumption \cite{david_hardware_2007}. In the frame of this thesis, the ReLU6 activation function is used.
 
