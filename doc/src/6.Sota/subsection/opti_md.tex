@@ -1,41 +1,62 @@
 \subsection{Model Optimizations} \label{subsec:mdopti}
-As mentioned previously, the major issues, when implementing a \acrshort{cnn} on a \acrshort{fpga}, are the \acrshort{cnn} size and its computational complexity. Research has been made to develop techniques in order to tackle those two issues by directly modifying the \acrshort{cnn} architecture. Moreover, \textcite{nurvitadhi_can_2017} believe that sparsity exploitation and extremely compact data types will become the norm in next-generation \acrshort{cnn}s.
+As mentioned previously, the major issues, when implementing a \acrshort{cnn} on a \acrshort{fpga}, are the \acrshort{cnn} size and its computational complexity. Research was made to develop techniques in order to tackle those two issues by directly modifying the \acrshort{cnn} architecture. \textcite{nurvitadhi_can_2017} believe that sparsity exploitation and extremely compact data types will become the norm in next-generation \acrshort{cnn}s.
 %
 %
 \subsubsection{Efficient Model Design}
 %
-\begin{figure}
+Section \ref{subsec:models} presented several state of the art models. However, those models (except MobileNetV2) were designed to provide the highest performance possible, but dit not consider the implementation of such models on mobile and embedded devices \cite{iandola_squeezenet_2016}. Therefore, several other models were designed to run on such constrained platforms trading a reduction of the number of parameters and operations in exchange for a drop of accuracy. Indeed, if we observe Figure \ref{fig:archi}, the lightweight models do not match the high performance ones in terms of accuracy only.
+
+A clever choice of design decreases the number of parameters and computations of the model while reducing the drop of accuracy. As many approaches were proposed to reduce the size of a model, this study will focus on architectures that target the embedded space. This section describes five of these architectures:
+\begin{itemize}
+    \item \textbf{SqueezeNet} \cite{iandola_squeezenet_2016} was focused on reducing the number of parameters of AlexNet (see Section \ref{subsec:models}) by introducing a new building block: \textbf{Fire Module}. Therefore, their archictures are very similar. SqueezeNet replaces all layers (except the first and last one) by \textbf{Fire Modules}. The \textbf{Fire Module}, observed in Figure \ref{fig:archi_building_block:sqn}, is composed of two convolutional layers. The first one called \textit{squeeze block} only performs $1 \times 1$ convolutions to squeeze the number of input channels. The reduction of the number of channels decreases the computational complexity and number of parameters of the next convolutional layer. Moreover, they also chose $1 \times 1$ convolution because it requires fewer parameters than $3 \times 3$ convolution.
+    The second convolutional layer, called \textit{expand block}, is composed of $1 \times 1$ and $3 \times 3$ convolutions. With this architecture, the size of AlexNet is decreased from $240$MB to $4.8$MB \cite{iandola_squeezenet_2016}. It can even be reduced to $0.47$MB without a drop of accuracy method by applying Deep Compression \cite{han_deep_2016}. However, it has a big memory footprint, is slower in runtime, and consumes more energy than AlexNet \cite{sze_efficient_2017}.
+    %
+    \item \textbf{MobileNet} \cite{howard_mobilenets_2017} uses \acrshort{dsc}, described in Section \ref{subs:dsc}, to build small and low latency models which can fulfill the design requirements, as can be seen on Figure \ref{fig:archi_building_block:mbn}. Two hyper-parameters are used to set the model size and throughput:
+    %
+    \begin{itemize}
+        \item The width multiplier $\alpha \in [1; 0[$, which reduces the number of input and output channel at each layer,
+        \item The resolution multiplier $\rho \in [1; 0[$,  which reduces spatially the input and output \acrshort{fm} at each layer.
+    \end{itemize}
+    %
+    \item \textbf{ShuffleNet}  was developed by \textcite{zhang_shufflenet_2018}, in 2018. It is designed to be a computation-efficient architecture, especially for mobile devices with very limited computing power. Indeed, it reduces the computation cost while maintaining the accuracy by using \textbf{pointwise group convolution}, decreasing the computation complexity of $1 \times 1$ convolutions. It also uses \textbf{channel shufﬂe} operation on the channels such that \textbf{group convolutions} obtain information from different groups. Then more powerful structures can be built with multiple group convolutional layers. However, the group convolutions and the bottleneck structures add \acrfull{mac} which is a non-negligible cost \cite{ma_shufflenet_2018}. The group convolution contributes to network fragmentation and reduces parallelism. Moreover, the \textquote{Add} operation, as seen in Figure \ref{fig:archi_building_block:shn}, is non-negligible too.
+    %,
+    \item \textbf{NasNet} was developed by \textcite{zoph_learning_2018}, in 2018. The idea was to use a search method called \acrfull{nas}, to find good convolutional architectures on a specific dataset. For that purpose, NasNet uses a \acrfull{rnn} to generate efficient architectures. The \acrshort{rnn} generates sample child networks with different architectures, which are trained to convergence. The accuracy of the child networks is used to train the \acrshort{rnn}, which will generate better architectures over time. A convolution layer can be seen in Figure \ref{fig:archi_building_block:nasn}. The learned architecture is flexible as it may be scaled in terms of computational cost. The network provides a higher accuracy with comparable parameters and \acrshort{mac} than MobileNet and ShuffleNet (described previously) \cite{zoph_learning_2018}. However, the resulting network ends up very complex \cite{sandler_mobilenetv2_2018}.
+    %
+    \item \textbf{MobileNetV2} was developed by \textcite{sandler_mobilenetv2_2018}, in 2018. It is an improvement of MobileNet (described previously) in terms of accuracy and does not require special operators. It has also a smaller memory footprint. Furthermore, MobileNetV2 has a faster inference and less parameters with respect to MobileNet. MobileNetV2 has already been explained in Section \ref{subs:mbv2}.
+\end{itemize}
+%
+\begin{figure}[H]
     \centering
     %
-    \begin{subfigure}{0.49\linewidth}
+    \begin{subfigure}[t]{0.49\linewidth}
         \centering
         \includegraphics[width=\textwidth, height=0.3\textheight, keepaspectratio]{squeeze.pdf}
         \caption{Squeezenet Fire Module\cite{iandola_squeezenet_2016}}
         \label{fig:archi_building_block:sqn}
     \end{subfigure}
     %
-    \begin{subfigure}{0.49\linewidth}
-        \centering
-        \includegraphics[width=\textwidth, height=0.3\textheight, keepaspectratio]{nasnet.pdf}
-        \caption{NasNet convolutional blocks \cite{zoph_learning_2018}}
-        \label{fig:archi_building_block:nasn}
-    \end{subfigure}
-    %
-    \begin{subfigure}{0.49\linewidth}
+    \begin{subfigure}[t]{0.49\linewidth}
         \centering
         \includegraphics[width=\textwidth, height=0.3\textheight, keepaspectratio]{mobilenet.pdf}
         \caption{MobileNet convolutional block \cite{howard_mobilenets_2017}}
         \label{fig:archi_building_block:mbn}
     \end{subfigure}
     %
-    \begin{subfigure}{0.49\linewidth}
+    \begin{subfigure}[t]{0.49\linewidth}
         \centering
         \includegraphics[width=\textwidth, height=0.3\textheight, keepaspectratio]{shufflenet.pdf}
         \caption{ShuffleNet convolutional block \cite{zhang_shufflenet_2018}}
         \label{fig:archi_building_block:shn}
     \end{subfigure}
     %
-    \begin{subfigure}{0.49\linewidth}
+    \begin{subfigure}[t]{0.49\linewidth}
+        \centering
+        \includegraphics[width=\textwidth, height=0.3\textheight, keepaspectratio]{nasnet.pdf}
+        \caption{NasNet convolutional blocks \cite{zoph_learning_2018}}
+        \label{fig:archi_building_block:nasn}
+    \end{subfigure}
+    %
+    \begin{subfigure}[t]{0.49\linewidth}
         \centering
         \includegraphics[width=\textwidth, height=0.3\textheight, keepaspectratio]{mobilenet2.pdf}
         \caption{MobileNetv2 convolutional blocks \cite{sandler_mobilenetv2_2018}}
@@ -45,33 +66,10 @@ As mentioned previously, the major issues, when implementing a \acrshort{cnn} on
     \caption{Convolutional block from different architectures}
     \label{fig:archi_building_block}
 \end{figure}
+
+The architecture presented by this work was developed to implement MobileNetV2 because of its simplicity and its state-of-the-art performance (see Table \ref{tab:mbv2}). Moreover, MobileNetV2 requires fewer parameters while providing state-of-art accuracy when comparing to the different architectures, as shown in Figure \ref{fig:archi}.
 %
-The size of a model can be reduced by changing its architecture. Indeed, a clever choice of design can reduce the number of parameters and computations of the models. As many approaches have been proposed to reduce the size of a model, this study will focus on architectures that target the embedded space. This section will describe five these architectures.
-
-SqueezeNet \cite{iandola_squeezenet_2016} uses an architecture similar to AlexNet and replaces all layers (except the first and last one) by \textbf{Fire Modules}. The \textbf{Fire Module}, observed in Figure \ref{fig:archi_building_block:sqn}, is a building block where the convolution filter is built of two layers. The first one called \textit{squeeze block} is composed only of $1 \times 1$ kernels, which squeeze the number of input channels to reduce the computational complexity and number of parameters of the next block. Moreover, $1 \times 1$ convolution requires also fewer parameters than $3 \times 3$ convolution.
-The second one called \textit{expand block} is composed of $1 \times 1$ and $3 \times 3$ convolutions. With this architecture, the size of AlexNet is decreased from $240$MB to $4.8$MB \cite{iandola_squeezenet_2016}. It can even be reduced to $0.47$MB without a drop of accuracy method by applying Deep Compression \cite{han_deep_2016}. However, it has a big memory footprint, is slower in runtime, and consumes more energy than AlexNet \cite{sze_efficient_2017}.
-
-MobileNet \cite{howard_mobilenets_2017} uses \acrshort{dsc}, described in Section \ref{subs:dsc}, to build small and low latency models which the design requirement, as can be seen on Figure \ref{fig:archi_building_block:mbn}. Two hyper-parameters are used to set the model size and throughput:
-%
-\begin{itemize}
-    \item The width multiplier $\alpha \in [1; 0[$, which reduces the number of input and output channel at each layer,
-    \item The resolution multiplier $\rho \in [1; 0[$,  which reduces spatially the input and output \acrshort{fm} at each layer.
-\end{itemize}
-
-ShuffleNet was developed by \textcite{zhang_shufflenet_2018}, in 2018. It is designed to be a computation-efficient architecture, specially for mobile devices with very limited computing power. Indeed, it reduces the computation cost while maintaining the accuracy by using \textbf{pointwise group convolution}. It allows to reduce the computation complexity of $1 \times 1$ convolutions. It also uses \textbf{channel shufﬂe} operatoin on the channels such that \textbf{group convolutions} obtain information from different groups. Then more powerful structures can be built with multiple group convolutional layers. However, the group convolutions and the bottleneck structures add \acrshort{mac} which is a non-negligible cost \cite{ma_shufflenet_2018}. The group convolution contributes to network fragmentation and reduces parallelism. Moreover, the \textquote{Add} operation is non-negligible too.
-
-NasNet was developed by \textcite{zoph_learning_2018}, in 2018. The idea is to use a search method called \acrfull{nas}, to find good convolutional architectures on a specific dataset. For that purpose, NasNet uses a \acrfull{rnn} to generate efficient architectures. The \acrshort{rnn} generates samples child networks with different architecture, which are trained to convergence. The accuracies of the child networks are used to train the \acrshort{rnn}, which will generate better architectures over time. A convolution layer can be seen in Figure \ref{fig:archi_building_block:nasn}. The learned architecture is flexible as it may be scaled in terms of computational cost. The network provides a higher accuracy with comparable parameters and \acrshort{mac} than MobileNet and ShuffleNet (described previously) \cite{zoph_learning_2018}. However, the resulting network ends up very complex \cite{sandler_mobilenetv2_2018}.
-
-MobileNetV2 was developed by \textcite{sandler_mobilenetv2_2018}, in 2019. It is an improvement of MobileNet (described previously) in terms of accuracy and does not require special operators. It has also a smaller memory footprint. Furthermore, MobileNetV2 has a faster inference and less parameters with respect to MobileNet. MobileNetV2 has already been explained in Section \ref{subs:mbv2}.
-
-\begin{figure}
-    \centering
-    \includegraphics[width=0.9\textwidth]{archi.pdf}
-    \caption{Ball chart reporting the Top-1 accuracy of various architectures vs. their computational complexity \cite{canziani_analysis_2017}}
-    \label{fig:archi}
-\end{figure}
-%
-\begin{table}
+\begin{table}[H]
     \center
     \begin{tabular}{ | c | c | c c | c| }
         \hline \hline
@@ -89,10 +87,16 @@ MobileNetV2 was developed by \textcite{sandler_mobilenetv2_2018}, in 2019. It is
     \caption{Performance on ImageNet, comparison for different networks \cite{sandler_mobilenetv2_2018}}
     \label{tab:mbv2}
 \end{table}
-%
-The architecture presented by this work has been developed to execute MobileNetV2 because of its simplicity and its state-of-the-art performance (see Table \ref{tab:mbv2}). Moreover, a comparison between different architectures is seen in Figure \ref{fig:archi}. MobileNetV2 requires fewer parameters while providing state-of-art accuracy when comparing to the different architectures.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{archi.pdf}
+    \caption{Ball chart reporting the Top-1 accuracy of various architectures vs. their computational complexity \cite{canziani_analysis_2017}}
+    \label{fig:archi}
+\end{figure}
 %
 \subsubsection{Pruning} \label{subs:pruning}
+%
 In order to improve the efficiency of a deep network, pruning can be used, especially for applications with limited computational resources \cite{liu_rethinking_2019}. According to \textcite{denton_exploiting_2014, liu_rethinking_2019}, the huge number of parameters in a network might create a problem of \textbf{over-parametrization}. Over-parametrization means that there are redundancies in \acrshort{nn} parameters and that the same performance could be achieved with only a subset of them. In other words, a lot of parameters are unimportant or unnecessary \cite{cheng_recent_2018}. Pruning is defined as removing the parameters considered as not important. For example, \textcite{baoyuan_liu_sparse_2015} achieve more than 90\% sparsity of parameters in convolutional layers in AlexNet with less than 1\% accuracy loss.
 
 We can explain why pruning works by the \textbf{The Lottery Ticket Hypothesis} \cite{frankle_lottery_2018, frankle_early_2020}: \textquote{\textit{A randomly-initialized, dense neural network contains a subnetwork that is initialized such that—when trained in isolation—it can match the test accuracy of the original network after training for at most the same number of iterations.}} From this postulate, those unimportant weights can set to zero (prune) because they do not affect the accuracy of the model.

@@ -1,4 +1,9 @@
 \chapter{State of the art} \label{chap:sota}
+Chapter \nameref{chap:background} detailed all the background information required to understand the theory behind \acrshort{cnn} and \acrshort{fpga}. This chapter aims at reviewing the main optimization techniques known in the literature to implement an efficient \acrshort{cnn} accelerator on \acrshort{fpga}, to achieve the objective of this thesis.
+
+Section \ref{sec:opti_cnn} details optimization techniques to modify the computational model of the \acrshort{cnn} allowing an efficient inference on \acrshort{fpga}. Section \ref{subsec:algopti} is focused on reducing the algorithmic complexity of the \acrshort{cnn} by optimizing the convolution operation while Section \ref{subsec:mdopti} covers techniques to trade accuracy for a reduction of the number of parameters and algorithmic complexity.
+
+Section \ref{sec:opti_dataflow} is focused on studying the efficient ways to handle a \acrshort{cnn} on \acrshort{fpga}. First, we review how a general \acrshort{cnn} is implemented while reducing inefficiencies. Then, we look at archictectures that successfully implement \acrshort{dsc} in Section \ref{subsec:impl_dsc}, and pruning in Section \ref{subsec:impl_prun}.
 % inference optimization
 \input{src/6.Sota/Compression}
 %

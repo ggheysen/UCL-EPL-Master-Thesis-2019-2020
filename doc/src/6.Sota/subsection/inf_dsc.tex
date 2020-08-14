@@ -1,4 +1,4 @@
-\subsection{DSC}
+\subsection{DSC} \label{subsec:impl_dsc}
 %
 %
 Some works put their interest in the implementation of the \acrshort{dsc}. In particular, we analyse the work of \textcite{bai_cnn_2018, liu_fpga-based_2019}. They present an \acrshort{fpga} accelerator that implement both standard and depthwise separable convolution. Networks like MobileNetV2 uses the 2 convolutions, the first one for not loosing to much information, the second one to speed up the inference. They both use a a commonly used \acrshort{dl} architecture that is called a heterogeneous system: a \acrshort{cpu} which controls the memory accesses and an accelerator that computes the convolution. The accelerator is designed in such a way that it can perform each layer of the network.
