@@ -1,21 +1,25 @@
 \section{Results and discussion} \label{sec:measure}
-In previous section we detailed our implementation based on the pruning scheme and the algorithm developped in Section \ref{sec:design}. In this section we measured metrics in order to verify if the design objectives were met.  First, we describe the experimental setup to measure the performances of the proposed architecture. Second, we show the obtained results and what conclusions can be made. Finally, a discussion of the obtained results is done.
+In previous section we detailed our implementation based on the pruning scheme and the algorithm developed in Section \ref{sec:design}. In this section we determine if the design objectives are met by measuring the outputs and performance of the proposed accelerator.
+
+First, we describe the experimental setup to measure the performances of the proposed architecture. Second, we show the obtained results and what observations can be made. Finally, a discussion of the obtained results is done.
 %
 \subsection{Experimental setup} \label{subs:exp_set}
 %
-After developing the architecture on SystemVerilog, we can perform a functional simulation using a testbench (see Section \ref{sec:fpga}). Using this functional simulation, we can first verify that the output of the design is logically correct (fourth design objective) and by measuring the number of cycles required to execute the network, we can verify if the pruning increase the performance of the inference (fifth design objective). Indeed, if we reduce the pruning ratio (the number of pruned weights increases), we would expect a reduction of the number of cycles to execute the inference.
+After having developed the architecture on SystemVerilog, we can perform a functional simulation using a testbench (see Section \ref{sec:fpga}). This functional simulation allows us to first verify if the output of the design is logically correct (fourth design objective) and if the pruning increases the performance of the inference by measuring the number of cycles required to execute the layer (fifth design objective). Indeed, if we increase the sparsity, we should expect a reduction of the number of cycles to execute the inference.
 
-Before checking if the design objectives are met, we must choose the targeting platform on which to implement. According to \textcite{liu_fpga-based_2019}, the most commonly used architecture for \acrshort{dl} is a heterogeneous system. It combines both a \acrshort{cpu} and an accelerator (\acrshort{fpga}). We choose the DE10-Nano for this reason. This platofrm integrates a \acrfull{hps} (Dual-core ARM* Cortex*-A9 MPCore), an \acrshort{fpga} (Cyclone V 5CSEBA6U23I7N), and a 1GB DDR3 memory \cite{technologies_terasic_nodate}. The external memory is large enough to store the \acrshort{cnn} data, according to the conclusions made in Section \ref{subs:extmem}. However, in the frame of the thesis, we focus only on the accelerator part.
+This functional simulation was done using \textsc{ModelSim-Altera}, an \acrshort{hdl} simulation environment. The software simulates the testbench and proposed accelerator as implemented on an \acrshort{fpga}. Using this simulation, we can extract the required results.
 
-Since we perform a function simulation of the accelerator part of the design, we have to also simulate the behavior of the external memory (DDR3). This has been done by first creating files using a Python script which will contain the input data for the bottleneck convolution (one file for each type of data). The Python script has been written to produce random values. Therefore when the simulation will be performed, if the \acrshort{dma} request data at a particular address, the testbench reads the data at this address in the corresponding file. Since each data type is specified by its offset (see Section \ref{subs:extmem}), we can easily determine based on the address which file to read.
+Before checking if the design objectives are met, we must choose the target platform on which the design is implemented. According to \textcite{liu_fpga-based_2019}, the most commonly used architecture for \acrshort{dl} is a heterogeneous system. It combines both a \acrshort{cpu} and an accelerator (\acrshort{fpga}). Therefore, we chose the DE10-Nano for this reason. This platform integrates a \acrfull{hps} (Dual-core ARM* Cortex*-A9 MPCore), an \acrshort{fpga} (Cyclone V 5CSEBA6U23I7N), and a 1GB DDR3 memory \cite{technologies_terasic_nodate}. The external memory is large enough to store the \acrshort{cnn} data, according to the conclusions made in Section \ref{subs:extmem}. However, in the frame of the thesis, we focus only on the accelerator part.
 
-In a same manner, when the \acrshort{dma} writes the output \acrshort{fm} tile into the external memory, the data actually writes the tile into a file with the corresponding address to reconstruct the output \acrshort{fm}. To verify if the output \acrshort{fm} is logically correct, a Python script was developed to compute the correct output. Therefore, we can compare both results.
+Since we perform a functionnal simulation of the accelerator part of the design, we have to also simulate the behavior of the external memory (DDR3) using the testbench. This was done by first creating files using a Python script which contains the weights and input data of the bottleneck convolution (one file for each type of data). A Python script was written to produce random weights and input fetching groups. Therefore when the simulation is performed, if the \acrshort{dma} request data at a particular address, the testbench reads the data at this address in the corresponding file. Since each data type is specified by its offset (see Section \ref{subs:extmem}), we can easily determine based on the address which file to read.
 
-As said in Section \ref{subs:quantization}, all pixels and weights are represented using $16$ bits. Since the DDR3 memory stores words of $32 \ bits$, it is sufficient to store each type of data in using a single address.
+In a same manner, when the \acrshort{dma} writes the output \acrshort{fm} tile into the external memory, the testbench actually writes the tile into a file with the corresponding address to reconstruct the output \acrshort{fm}. To verify if the output \acrshort{fm} is logically correct, a Python script was developed to compute the correct output. Therefore, we can compare both results.
 
-Moreover, Table \ref{tab:param} lists the parameters chosen to produce the results. Since the goal is focus on checking the correctness of the output of the network and its performance, we can choose arbitray dimensions for input and output \acrshort{fm}s. I have chosen parameters that are not small to not observe distinct results and not too large for the sake of the latency of the functional simulation. However, the design made is parametrizable and those parameters can be easily modified.
+As said in Section \ref{subs:quantization}, all pixels and weights are represented with $16$ bits. Since the DDR3 memory stores words of $32 \ bits$, it is sufficient to store each type of data in using a single address.
+
+Moreover, Table \ref{tab:param} lists the parameters chosen to produce the results. Since the goal is focus to assess the correctness of the output of the network and measure its performance, we can choose arbitray dimensions for input and output \acrshort{fm}s. I chose parameters that are not too small to be able to observe distinct results and not too large for the sake of the latency of the functional simulation. However, the design made is parametrizable and those parameters can be easily modified.
 %
-\begin{table}
+\begin{table}[H]
     \centering
     \begin{tabular}{|c|c|}
     \hline
@@ -32,7 +36,7 @@ Moreover, Table \ref{tab:param} lists the parameters chosen to produce the resul
     $T_{ox}, T_{oy}$ & 16 \\
     \hline
     \end{tabular}
-    \caption{Parameters of the implemented layers}
+    \caption{Parameters of the implemented layer}
     \label{tab:param}
 \end{table}
 %

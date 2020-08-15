@@ -37,14 +37,14 @@ A clever choice of design decreases the number of parameters and computations of
     %
     \begin{subfigure}[t]{0.49\linewidth}
         \centering
-        \includegraphics[width=\textwidth, height=0.3\textheight, keepaspectratio]{mobilenet.pdf}
+        \includegraphics[width=\textwidth, height=0.2\textheight, keepaspectratio]{mobilenet.pdf}
         \caption{MobileNet convolutional block \cite{howard_mobilenets_2017}}
         \label{fig:archi_building_block:mbn}
     \end{subfigure}
     %
     \begin{subfigure}[t]{0.49\linewidth}
         \centering
-        \includegraphics[width=\textwidth, height=0.3\textheight, keepaspectratio]{shufflenet.pdf}
+        \includegraphics[width=\textwidth, height=0.2\textheight, keepaspectratio]{shufflenet.pdf}
         \caption{ShuffleNet convolutional block \cite{zhang_shufflenet_2018}}
         \label{fig:archi_building_block:shn}
     \end{subfigure}
@@ -58,7 +58,7 @@ A clever choice of design decreases the number of parameters and computations of
     %
     \begin{subfigure}[t]{0.49\linewidth}
         \centering
-        \includegraphics[width=\textwidth, height=0.3\textheight, keepaspectratio]{mobilenet2.pdf}
+        \includegraphics[width=\textwidth, height=0.2\textheight, keepaspectratio]{mobilenet2.pdf}
         \caption{MobileNetv2 convolutional blocks \cite{sandler_mobilenetv2_2018}}
         \label{fig:archi_building_block:mb2n}
     \end{subfigure}
@@ -97,32 +97,40 @@ The architecture presented by this work was developed to implement MobileNetV2 b
 %
 \subsubsection{Pruning} \label{subs:pruning}
 %
-In order to improve the efficiency of a deep network, pruning can be used, especially for applications with limited computational resources \cite{liu_rethinking_2019}. According to \textcite{denton_exploiting_2014, liu_rethinking_2019}, the huge number of parameters in a network might create a problem of \textbf{over-parametrization}. Over-parametrization means that there are redundancies in \acrshort{nn} parameters and that the same performance could be achieved with only a subset of them. In other words, a lot of parameters are unimportant or unnecessary \cite{cheng_recent_2018}. Pruning is defined as removing the parameters considered as not important. For example, \textcite{baoyuan_liu_sparse_2015} achieve more than 90\% sparsity of parameters in convolutional layers in AlexNet with less than 1\% accuracy loss.
+In order to improve the inference phase of a \acrshort{cnn}, pruning can be used, especially for applications with limited computational resources \cite{liu_rethinking_2019}. According to \textcite{liu_rethinking_2019, denton_exploiting_2014}, the huge number of parameters in a network might create a problem of \textbf{over-parametrization}. Over-parametrization means that there are redundancies in \acrshort{nn} parameters and that the same performance could be achieved with only a subset of them. In other words, a lot of parameters are unimportant or unnecessary \cite{cheng_recent_2018}. Pruning is defined as removing the parameters considered as not important. For example, \textcite{baoyuan_liu_sparse_2015} achieve more than 90\% sparsity of parameters in convolutional layers in AlexNet with less than 1\% accuracy loss.
 
-We can explain why pruning works by the \textbf{The Lottery Ticket Hypothesis} \cite{frankle_lottery_2018, frankle_early_2020}: \textquote{\textit{A randomly-initialized, dense neural network contains a subnetwork that is initialized such that—when trained in isolation—it can match the test accuracy of the original network after training for at most the same number of iterations.}} From this postulate, those unimportant weights can set to zero (prune) because they do not affect the accuracy of the model.
+We can explain why pruning works by the \textbf{The Lottery Ticket Hypothesis} \cite{frankle_lottery_2018, frankle_early_2020}: \textquote{\textit{A randomly-initialized, dense neural network contains a subnetwork that is initialized such that—when trained in isolation—it can match the test accuracy of the original network after training for at most the same number of iterations.}} From this postulate, those unimportant weights can be set to zero (prune) because they do not improve the accuracy of the model.
 
-According to \textcite{cheng_recent_2018}, pruning has two major benefits for the inference step. First, less storage is required. Indeed, the non-pruned weights are sparsely distributed among the kernels. Thus, they can be stored into a compressed format and reduces the memory utilization. Second, pruning reduces the arithmetic complexity of the network. As convolutions perform a weighted sum with the input \acrshort{fm}, each \acrfull{mac} operation with a pruned weight can be discarded. Moreover, \textcite{han_learning_2015, mao_exploring_2017, kang_accelerator-aware_2020} pointed out that some pruning ratios can also improve the accuracy of the network, which can be explained by a form of regularization.
+According to \textcite{cheng_recent_2018}, pruning has two major benefits for the inference phase. First, less storage is required. Indeed, the non-pruned weights are sparsely distributed among the kernels. Thus, they can be stored into a compressed format reducing the memory utilization. Second, pruning reduces the arithmetic complexity of the network. As convolutions perform a weighted sum with the input \acrshort{fm}, each \acrfull{mac} operation with a pruned weight can be discarded. Moreover, \textcite{han_learning_2015, mao_exploring_2017, kang_accelerator-aware_2020} pointed out that some pruning ratios can also improve the accuracy of the network, which can be explained by a form of regularization.
 
-Various pruning scheme are focused on increasing the sparsity of the network without a drop of accuracy \cite{han_learning_2015, han_deep_2016}.  We call this pruning scheme where all unimportant parameters are pruned without extra constraint \textbf{unstructured pruning} \cite{cheng_recent_2018}. However, it is challenging to exploit the performance and the high parallelism of \acrshort{fpga} with this kind of pruned network. Indeed, this kind of pruning scheme creates irregularities in the data access pattern \cite{zhu_efficient_2020}. It means that the number of pruned weights is different in each kernels, and we should adapt the circuitry to the worst case. As a consequence, all filters conduct wasteful operations except the worst case \cite{shimoda_filter-wise_2019}. Furthermore, \textcite{anwar_structured_2017} pointed that unstructured pruning requires an overhead for computing addresses of the sparse non-pruned elements. Therefore, we should find pruning patterns that would be more hardware-friendly.
+Various pruning schemes are focused on increasing the sparsity of the network without a drop of accuracy \cite{han_deep_2016, han_learning_2015}.  We call this pruning scheme where all unimportant parameters are pruned without extra constraint \textbf{unstructured pruning} \cite{cheng_recent_2018}. However, it is challenging to exploit the performance and the high parallelism of \acrshort{fpga} with this kind of pruned network. Indeed, this kind of pruning scheme creates irregularities in the data access pattern \cite{zhu_efficient_2020}. It means that the number of pruned weights is different in each kernels, and we should adapt the circuitry to the worst case. As a consequence, all filters conduct wasteful operations except the worst case \cite{shimoda_filter-wise_2019}. Furthermore, \textcite{anwar_structured_2017} pointed out that unstructured pruning requires an overhead for computing addresses of the sparse non-pruned elements. Therefore, we should find pruning patterns that would be more hardware-friendly.
 
-\begin{figure}
+In contrast to the unstructured pruning, we have \textbf{structured pruning} schemes \cite{kang_accelerator-aware_2020}. They combine a structure regularization for accuracy, and locality optimisation for computation efficiency. According to \textcite{anwar_structured_2017}, \textquote{\textit{Structured pruning has no or little extra costs}}. We can categorize the various schemes into different groups \cite{cheng_recent_2018, kang_accelerator-aware_2020, anwar_structured_2017, wen_learning_2016}:
+\begin{itemize}
+    \item \textbf{Depth-wise}: all the weights of a layer are pruned. The layer is then removed.
+    \item \textbf{Kernel-wise}: instead of pruning all the weights, we keep a ratio of kernels, which means a reduction of the number of outputs channel. This pruning scheme is provided in Figure \ref{fig:struct_pruning:fw}.
+    \item \textbf{Channel-wise}: it is one of the most popular method because it still can fit in the convolutional deep learning frameworks \cite{liu_rethinking_2019}. A layer of the input \acrshort{fm} is pruned, which means that the layer is also pruned in all the kernels, as can be seen on Figure \ref{fig:struct_pruning:chw}.
+    \item \textbf{Shape-wise}: we prune the same weight in each kernel, or group of kernels. For example, this pruning scheme has been used in \textcite{zhu_efficient_2020}. It is illustrated in Figure \ref{fig:struct_pruning:sw}
+\end{itemize}
+%
+\begin{figure}[H]
     \centering
     %
-    \begin{subfigure}{.32\textwidth}
+    \begin{subfigure}[t]{.32\textwidth}
     \centering
     \includegraphics[width=0.33\linewidth]{filterwise.pdf}
     \caption{kernel-wise pruning}
     \label{fig:struct_pruning:fw}
     \end{subfigure}
     %
-    \begin{subfigure}{.32\textwidth}
+    \begin{subfigure}[t]{.32\textwidth}
     \centering
     \includegraphics[width=0.33\linewidth]{channelwise.pdf}
     \caption{channel-wise pruning}
     \label{fig:struct_pruning:chw}
     \end{subfigure}
     %
-    \begin{subfigure}{.32\textwidth}
+    \begin{subfigure}[t]{.32\textwidth}
     \centering
     \includegraphics[width=0.70\linewidth]{shapewise.pdf}
     \caption{shape-wise pruning}
@@ -133,48 +141,41 @@ Various pruning scheme are focused on increasing the sparsity of the network wit
     \label{fig:struct_pruning}
 \end{figure}
 %
-In contrast to the unstructured pruning, we have \textbf{structured pruning} schemes. It combines a structure regularization for accuracy, and locality optimisation for computation efficiency. Structured pruning has no or little extra costs. We can categorize the various schemes into different groups \cite{wen_learning_2016, anwar_structured_2017, cheng_recent_2018, kang_accelerator-aware_2020}:
-\begin{itemize}
-    \item \textbf{Depth-wise}: all the weights of a layer are pruned. The layer is then removed.
-    \item \textbf{Kernel-wise}: instead of pruning all the weights, we keep a ratio of kernels, which means a reduction of the number of output channel. This pruning scheme is provided in Figure \ref{fig:struct_pruning:fw}.
-    \item \textbf{Channel-wise}: it is one of the most popular method because it still can fit in the convolutional deep learning frameworks \cite{liu_rethinking_2019}. A layer of the input \acrshort{fm} is pruned, which means that the layer is also pruned in all the kernels, as can be seen on Figure \ref{fig:struct_pruning:chw}.
-    \item \textbf{Shape-wise}: we prune the same weight in each kernel, or group of kernels. For example, this pruning scheme has been used in \textcite{zhu_efficient_2020}. It is illustrated in Figure \ref{fig:struct_pruning:sw}
-\end{itemize}
-
-\begin{figure}
+The previously cited pruning schemes are ordered from very coarse-grained to fine-grained sparsity \cite{mao_exploring_2017}. As explained previously, coarse-grained sparsity (channel-wise and filter-wise pruning) provides a higher acceleration and can be used when implementing \acrshort{cnn} on \acrshort{gpu} or \acrshort{cpu} \cite{cheng_recent_2018, mao_exploring_2017}. However, finer-grained ones provide higher accuracy and as the sparsity increases, the accuracy is less affected, as can be seen in Figure \ref{fig:pruning-accuracy}. Therefore, this work focuses on developing a customized hardware that can exploit a more fine-grained sparsity \cite{mao_exploring_2017} in order to provide a higher pruning while limiting the drop of accuracy.
+%
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{accuracysparsity.pdf}
     \caption{Accuracy-Sparsity Curve of AlexNet obtained by pruning \cite{mao_exploring_2017}}
     \label{fig:pruning-accuracy}
 \end{figure}
 %
-The previously cited pruning schemes are ordered from very coarse-grained to fine-grained sparsity \cite{mao_exploring_2017}. As explained previously, coarse-grained sparsity (Channel-wise pruning) provides a higher acceleration and can be used when deploying \acrshort{cnn} on \acrshort{gpu} or \acrshort{cpu} \cite{mao_exploring_2017, cheng_recent_2018}. However, as the sparsity increases, accuracy of the model drop rapidly, as can be seen in Figure \ref{fig:pruning-accuracy}. Therefore, this work focuses on developing a customized hardware that can exploit a more fine-grained sparsity \cite{mao_exploring_2017} in order to provide a higher pruning while limiting the drop of accuracy.
-
+Some studies focused on the acceleration of the inference step of lightweight models thanks to pruning. \textcite{zhang_channel_2019, tu_pruning_2019} applied pruning on \acrshort{dsc} kernels. They both chose \textbf{Channel-wise} pruning because it does not create sparse connections and it efficiently improves the speed of the inference. It also reduces the computational cost of the $1 \times 1$ (pointwise) convolutions, where the majority of the parameters and the \acrshort{mac} come from. In MobileNet, it is about 95\%. By discarding one channel, the associated depthwise convolution is also avoided.
+Moreover, the pointwise kernel producing that channel in the previous block can also be pruned. We can see the process in Figure \ref{fig:pruning_dsc}.
 %
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{channelwise_ex.pdf}
     \caption{Pruning a depthwise separable convolution \cite{tu_pruning_2019}}
     \label{fig:pruning_dsc}
 \end{figure}
-Some works have focused on improving the inference step of lightweight models thanks to pruning. \textcite{zhang_channel_2019, tu_pruning_2019} have applied pruning on \acrshort{dsc} kernels. They have both chosen \textbf{Channel-wise} pruning because it does not create sparse connection and it improves efficiently the speed. It also reduces the computational cost of the $1 \times 1$ (pointwise) convolutions, where the majority of the parameters and the \acrshort{mac} comes from. In MobileNet, it is about 95\%. By discarding one channel, the associated depthwise convolution is also avoided.
-Moreover, the pointwise kernel producting that channel in the previous block can also be pruned. We can see the process in Figure \ref{fig:pruning_dsc}.
 
 \textbf{In this work we focus on a structured pruning scheme for depthwise separable convolution. More precisely, we develop an architecture on \acrshort{fpga} than combines both advantages of pruning and depthwise separable convolution.}
-%
 %
 \subsubsection{Quantization} \label{subs:quantization}
 %
 %
-Quantization is another approach to reduce the storage requirements of a network while maintaining the accuracy \cite{han_deep_2016}. Indeed, it reduces the number of bits to represent a weight or pixel. Moreover, instead of using floating-point number, we can use \textbf{fixed-point number} \cite{cheng_recent_2018}. As said previously, fixed-point number are known to be more efficient on hardware such as \acrshort{fpga} \cite{david_hardware_2007}. Quantization to fixed-point number can then reduce the memory requirement and the latency of the inference stage.
+Quantization is an approach to trade accuracy for a decrease of the storage requirements of a network \cite{han_deep_2016}. Indeed, we can define quantization as the reduction of the number of bits representing a weight or pixel. Moreover, instead of using floating-point number, we can use \textbf{fixed-point number} \cite{cheng_recent_2018}. As said previously, fixed-point numbers are known to be more efficient on hardware such as \acrshort{fpga} beccause we can use integer arithmetic \cite{david_hardware_2007}. Quantization to fixed-point number can then reduce the memory requirement and the latency of the inference stage.
 
-\begin{figure}
+The format to encode the fixed-point representation of a real number is the \textit{Q-format} \cite{ward_real-time_2001}. A N-bit number, noted $Q_{m.n}$, is divided into two parts separated by an implied binary point. The $m$ bits are used to represent the integer part of the number (including the sign bit), and the $n$ bits are used to represent the fractional part, as can be seen in Figure \ref{fig:Qformat}. The bitwidth associated to each part can be either the same, either fine-tuned for each layers after analysis. Indeed, \textcite{qiu_going_2016, yin_high_2018} choose a different range for each layer, but doing it for every weight is not memory-efficient.
+%
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{Qformat.pdf}
     \caption{Illustration of the Q-format}
     \label{fig:Qformat}
 \end{figure}
-%
-The format to encode the fixed-point representation of a real number is the \textit{Q-format} \cite{ward_real-time_2001}. A N-bit number, noted $Q_{m.n}$, is divided into two parts separated by an implied binary point. The $m$ bits are used to represent the integer part of the number (including the sign bit), and the $n$ bits are used to represent the fractional part, as can be seen in Figure \ref{fig:Qformat}. The bitwidth associated to each part can be either the same, either fine-tuned for each layers after analysis. Indeed, \textcite{qiu_going_2016, yin_high_2018} choose a different range for each layer, but doing it for every weight is not memory-efficient.
 
-As pointed out by \textcite{han_deep_2016}, quantization and pruning techniques are orthogonal and can be combined to compress further the network. Unfortunately, not all existing network are friendly for quantization, like MobileNet. MobiletNet with quantized pixels and weights, has a a large drop of accuracy compared with its non-quantized verion (70.50\% usinf floating point model vs 1.80\% using a 8-bit pipeline) \cite{sheng_quantization-friendly_2018}. However, works of \textcite{sheng_quantization-friendly_2018} have shown that the source of the accuracy drap was the design of the separable convolution core layer. They have therefore proposed a new quantization-friendly separable convolution core layer. Works on MobileNetV2 should then be done to verify the fixed-point inference accuracy. Still, MobileNet had a problem with 8-bit pipeline, increasing the bitwidth to 16-bit could boost accuracy \cite{cheng_recent_2018} and this bitwidth is widely used \cite{huimin_li_high_2016, bai_cnn_2018}. \textbf{Therefore, 16-bit fixed-point Q-format is adopted for input data, weights and intermediate data in this work}. \textbf{Moreover, as said previously in Section \ref{subs:acti}, we can limit the integer part to 3 bits (one bit is added to express the sign of the weights), and we can use $Q_{4.12}$.}
+As pointed out by \textcite{han_deep_2016}, quantization and pruning techniques are orthogonal and can be combined to compress further the network. Unfortunately, not all existing networks are friendly for quantization, like MobileNet. MobiletNet with quantized pixels and weights, has a a large drop of accuracy compared with its non-quantized version (70.50\% using floating point model vs 1.80\% using a 8-bit pipeline) \cite{sheng_quantization-friendly_2018}. However, works of \textcite{sheng_quantization-friendly_2018} showed that the source of the accuracy drop was the design of the separable convolution core layer. They proposed therefore a new quantization-friendly separable convolution core layer. Works on MobileNetV2 should then be done to verify the fixed-point inference accuracy. Still, 8-bit pipeline might not be optimal for MobilNet as increasing the bitwidth to 16-bit could boost accuracy \cite{cheng_recent_2018}. This bitwidth is also widely used \cite{huimin_li_high_2016, bai_cnn_2018}. 
+
+\textbf{Therefore, 16-bit fixed-point Q-format is adopted for input data, weights and intermediate data in the frame of this thesis}. \textbf{Moreover, as said previously in Section \ref{subs:acti}, we can limit the integer part to 3 bits (one bit is added to express the sign of the weights), and we can use $Q_{4.12}$.}
