@@ -1,6 +1,10 @@
 \section{Implementing sparse DSC on FPGA} \label{sec:implementation}
-In the previous section, we detailed how to prune $1 \times 1$ kernels, how the convolution process is performed, and we analyzed the design hardware variables. In this section, we explore how we can implement the chosen design into an \acrshort{fpga}. The hardware design was implemented using SystemVerilog and the corresponding code can be found at this address: \url{https://github.com/ggheysen/UCL-EPL-Master-Thesis-2019-2020}.
-
+In the previous section, we detailed how to prune $1 \times 1$ kernels, how the bottleneck convolution is computed, and we analyzed the design hardware variables. In this section, we explore how we can implement the chosen design into an \acrshort{fpga}. The hardware design was implemented using SystemVerilog and the corresponding code can be found at this address: 
+%
+\begin{center}
+    \url{https://github.com/ggheysen/UCL-EPL-Master-Thesis-2019-2020}.
+\end{center}
+%
 According to the scope of this thesis, the purpose of the implementation is to verify the fourth and fifth design objectives, namely:
 %
 \begin{itemize}
@@ -8,9 +12,11 @@ According to the scope of this thesis, the purpose of the implementation is to v
     \item An increase of the sparsity improves the performance of the architecture.
 \end{itemize}
 %
-Those design objectives are related to the implementation of the inverted residual block with sparse $1 \times 1$ convolution. Therefore, instead of implementing each type of layer of MobileNetV2, we focus only on this one. As those two objectives are independent of the degree of parallelization, it was chosen to set all unrolling parameters to 1. We did not implement the skip connection since it is independent of the pruning scheme. However, as demonstrated by \textcite{bai_cnn_2018, liu_fpga-based_2019}, we can extend the convolution \acrshort{pe}s to support all kind of layers of MobileNetV2.
+Those design objectives are related to the implementation of the inverted residual block with sparse $1 \times 1$ convolution. Therefore, instead of implementing each type of layer of MobileNetV2, we focus only on this one. As those two objectives are independent of the degree of parallelization, it was chosen to set all unrolling parameters to 1. We did not implement the skip connection since it is independent of the pruning scheme. However, as demonstrated by \textcite{bai_cnn_2018, liu_fpga-based_2019}, we can extend the \acrshort{dsc} \acrshort{pe}s to support all kind of layers of MobileNetV2.
 
-The performance results of the architecture will be discussed in next section. First, we describe the overall architecture in Section \ref{subsec:overal}, and then we go deeper into each component defined in the overall architecture. The architecture is inspired by three works: \textcite{zhu_efficient_2020, kang_accelerator-aware_2020, bai_cnn_2018}.
+First, we start by describing the overall architecture of the accelerator. Then, we detail more precisely each component defined previously. The performance results of the architecture will be discussed in next section.
+
+The architecture is inspired by three works: \textcite{zhu_efficient_2020, kang_accelerator-aware_2020, bai_cnn_2018}.
 %
 \subsection{Overall architecture} \label{subsec:overal}
 %
@@ -20,90 +26,91 @@ The overall architecture has been inspired by \textcite{zhu_efficient_2020}. The
     \item \textbf{External Memory}: it contains the \acrshort{cnn} data and it is where the output \acrshort{fm} will be stored.
     \item \textbf{Main controller}: it synchronizes the different components of the architecture by sending them control signals.
     \item \textbf{\acrfull{dma}}: it handles the read and write requests between the \acrshort{fpga} and the external memory.
-    \item \textbf{\acrshort{pe}}: each \acrshort{pe} performs the actual convolution with the weight and pixel fetched from external memory into the on-chip memory. In the architecture, we have two kinds of \acrshort{pe}: $1 \times 1$ convolution \acrshort{pe} and \acrshort{dsc} \acrshort{pe}. Since we have defined that each data is represented using fixed-point number format (see Section \ref{subs:quantization}), the convolution between weights and pixels is done with integer arithmetic.
-    \item \textbf{Buffer}: it composes the on-chip memory and contains a tile of data. There are two categories of buffer: \textbf{data buffer} which contains data from external memory and is read by the \acrshort{pe} and \textbf{result buffer} which is filled by \acrshort{pe}s and is read either by other \acrshort{pe} or by the \acrshort{dma} to write its content to external memory. There are four data buffers ($FM_{I}$ buffer, $Conv_{1 \times 1}$ buffer, $Conv_{DW}$ buffer, $Conv_{PW}$ buffer) and two result buffers ($FM_{int}$ buffer, $FM_{O}$ buffer).
+    \item \textbf{\acrshort{pe}}: each \acrshort{pe} performs the convolution with weight and pixel fetched from external memory into the on-chip memory. In the architecture, we have two kinds of \acrshort{pe}: $1 \times 1$ convolution \acrshort{pe} and \acrshort{dsc} \acrshort{pe}. Since we have defined that each data is represented using fixed-point number format (see Section \ref{subs:quantization}), the convolution between weights and pixels is done with integer arithmetic.
+    \item \textbf{Buffer}: it composes the on-chip memory and contains a tile of data. There are two categories of buffer: \textbf{data buffer} which contains convolution data (pixels and weights) loaded from the external memory, and \textbf{result buffer} which contains partial or final results of the $1 \times 1$ or \acrshort{dsc} convolutions. Our architecture is composed of four data buffers ($FM_{I}$ buffer, $Conv_{1 \times 1}$ buffer, $Conv_{DW}$ buffer, $Conv_{PW}$ buffer) and two result buffers ($FM_{int}$ buffer, $FM_{O}$ buffer).
 \end{itemize}
 %
-\begin{figure}
+An illustration of the overall architecture can be found in Figure \ref{fig:overal_archi}. We should add that every component is synchronous with the clock signal $clk$ and is reset when the $rst$ signal is enabled. For the sake of clarity, this was not included in the drawing.
+%
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{overal_archi.pdf}
     \caption{overall architecture of the accelerator}
     \label{fig:overal_archi}
 \end{figure}
 %
-An illustration of the overall architecture can be found in Figure \ref{fig:overal_archi}. We should add that every component is synchronous with the clock signals and has reset signals. For the sake of clarity, this was not included in the drawing.
 
-In the following sections, we will go into details about each component. An exhaustive list of the different input and output signals of each component can be found in Appendix \ref{appendix:sig}.
+We explain more precisely the behavior of each component in the following sections. An exhaustive list of their different input and output signals can be found in Appendix \ref{appendix:sig}.
 %
 \subsection{External memory} \label{subs:extmem}
 %
-The external memory is an external component that contains all the data required to run the network (MobileNetV2) on an input \acrshort{fm}. Each data stored in a memory can be identified by its address (either external memory or buffer). We can identify 5 types of data:
+The external memory is an external component (of the \acrshort{fpga}) that contains all the data required to feed the network (MobileNetV2). Each data stored in a memory can be identified by its address (either external memory or buffer). We can identify 6 types of data:
 %
 \begin{enumerate}
-    \item \textbf{Input \acrshort{fm}}: the input \acrshort{fm} of a layer, where bitwidth representing one pixel is equal to $BW_{pixel}$. Channels are stored one by one, and the content of one channel is stored line by line. For example, the memory address of the pixel at position $\left(ix, iy, if\right)$ can be expressed using Equation \eqref{eq:addr_fmi}.
+    \item \textbf{Input \acrshort{fm}}: where the bitwidth required to represent the value of one pixel is equal to $BW_{pixel}$. Channels are stored one by one, and the content of one channel is stored line by line. For example, the memory address of the pixel at position $\left(ix, iy, if\right)$ can be expressed using Equation \eqref{eq:addr_fmi}.
     \begin{equation}
         address_{FM_{I}}(ix, iy, if) = ix + iy \times N_{ix} + if \times N_{ix} \times N_{iy}
         \label{eq:addr_fmi}
     \end{equation}
     \item \textbf{Output \acrshort{fm}}: the output \acrshort{fm} is stored in the same manner as the input \acrshort{fm}. We should add that the output \acrshort{fm} of one layer becomes the input \acrshort{fm} of the next layer. Therefore, the addresses where the output \acrshort{fm} pixels are stored become the addresses of the input \acrshort{fm} of the next layer and inversely.
     %
-    \item \textbf{$1 \times 1$ kernels}: the weights of the $1 \times 1$ convolution, where $BW_{weight}$ is the number of bits to represent the value of a weight and $log_2(N_{par})$ the number of bits to represent its position. Each $1 \times 1$ filter is stored kernel by kernel, and each kernel is stored weight by weight. For example, the memory address of the weight $x$ in fetching group \textquote{$group$} of kernel $f$ can be expressed using Equation \eqref{eq:addr_c11}.
-    This terminology is used for weights from the $1 \times 1$ convolution from the bottleneck convolution and also from the $1 \times 1$ convolution layer.
+    \item \textbf{$1 \times 1$ kernels}: the weights of each $1 \times 1$ convolution (bottleneck layers and $1 \times 1$ convolution layers), where $BW_{weight}$ is the number of bits to represent the value of a weight and $log_2(N_{par})$ the number of bits to represent its position. Each $1 \times 1$ filter is stored kernel by kernel, and each kernel is stored weight by weight. For example, the memory address of the weight $x$ in fetching group \textquote{$group$} of kernel $f$ can be expressed using Equation \eqref{eq:addr_c11}.
     %
     \begin{equation}
         address_{K_{EX}}(kx, group, kf) = kx + group \times N_{np} + kf \times N_{np} \times N_{gr}
         \label{eq:addr_c11}
     \end{equation}
+    %
     \item \textbf{Depthwise kernels}: the depthwise kernels, where the bitwidth representing one weight is equal to $BW_{weight}$. Channels are stored one by one, and the content of one channel is stored line by line. For example, the memory address of the weigth at position $\left(kx, ky, kf\right)$ can be expressed using Equation \eqref{eq:addr_dw}.
+    %
     \begin{equation}
         address_{K_{DW}}(kx, ky, kf) = kx + ky \times N_{kx} + kf \times N_{kx} \times N_{ky}
         \label{eq:addr_dw}
     \end{equation}
+    %
     \item \textbf{Pointwise kernels}: the kernels of the pointwise convolution. The weights are stored in the same manner as for the $1 \times 1$ filter.
+    %
     \item \textbf{Standard convolution kernels}: since the first layer of MobileNetV2 is a standard convolution \cite{sandler_mobilenetv2_2018}, the weights must be also stored in the external memory, in the same manner as the depthwise filter.
 \end{enumerate}
 
-An offset, for each type of data, is added to the computation of the address to avoid that one address is shared between multiple data. As a result, before executing one layer, the main controller must have the following information, labelled as \textbf{Layer information}:
+An offset for each type of data is added to the computation of the address to avoid that one address is shared between multiple data. As a result, before executing one layer, the main controller must have the following information, labelled as \textbf{Layer information}:
 %
 \begin{enumerate}
-    \item \textbf{$N_{ix}$ and $N_{iy}$}: the spatial dimensions of the input \acrshort{fm}. Since $N_{ix}, N_{iy} \leq 224$ \cite{sandler_mobilenetv2_2018}, we can use 8 bits to represent them.
-    \item \textbf{$N_{if}$ and $N_{of}$}: the number of channels of the input  and output \acrshort{fm}. Since $N_{if}, N_{of} \leq 1280$ \cite{sandler_mobilenetv2_2018}, we can use 11 bits to represent them.
-    \item \textbf{$t$}: the expansion factor of the $1 \times 1$ convolution. Since $t \leq 6$ \cite{sandler_mobilenetv2_2018}, we can use 3 bits to represent it.
-    \item \textbf{$S$}: the value of the stride. Since $S$ can be either 1 or 0 \cite{sandler_mobilenetv2_2018}, we can use 1 bit to represent it.
-    \item \textbf{$N_{gr}$ and $N_{grint}$}: the number of fetching groups for the $1 \times 1$ convolution and the \acrshort{dsc}. Since the largest value possible for both parameters is the maximum $N_{if}$ ($N_{par} = 1$), we can use 11 bits to represent them.
-    \item \textbf{$Layer$}: to tell the main controller which layer is going to be executed. Since there are 4 kinds of layers in MobileNetV2 \cite{sandler_mobilenetv2_2018}, we use 2 bits to represent it. However this was not included in the design because only the bottleneck convolution was implemented.
+    \item $\boldsymbol{N_{ix}}$ and $\boldsymbol{N_{iy}}$: the spatial dimensions of the input \acrshort{fm}. Since $N_{ix}, N_{iy} \leq 224$ \cite{sandler_mobilenetv2_2018}, we can use 8 bits to represent them.
+    \item $\boldsymbol{N_{if}}$ and $\boldsymbol{N_{of}}$: the number of channels of the input  and output \acrshort{fm}. Since $N_{if}, N_{of} \leq 1280$ \cite{sandler_mobilenetv2_2018}, we can use 11 bits to represent them.
+    \item $\boldsymbol{t}$: the expansion factor of the $1 \times 1$ convolution. Since $t \leq 6$ \cite{sandler_mobilenetv2_2018}, we can use 3 bits to represent it.
+    \item $\boldsymbol{S}$: the value of the stride. Since $S$ can be either 1 or 0 \cite{sandler_mobilenetv2_2018}, we can use 1 bit to represent it.
+    \item $\boldsymbol{N_{gr}}$ and $\boldsymbol{N_{gr-int}}$: the number of fetching groups for the $1 \times 1$ convolution and the \acrshort{dsc}. Since the largest value possible for both parameters is the maximum $N_{if}$ ($N_{par} = 1$), we can use 11 bits to represent them.
+    \item $\boldsymbol{Layer}$: to tell the main controller which layer is going to be executed. Since there are 4 kinds of layers in MobileNetV2 \cite{sandler_mobilenetv2_2018}, we use 2 bits to represent it. However this was not included in the design because only the bottleneck convolution was implemented.
     \item \textbf{Offsets}: the offset of the different data types must be transfered to the \acrshort{dma} in order to correctly compute the address of the required data. The number of bits required to represent one offset is the bitwidth of the address of the external memory.
 \end{enumerate}
-
 %
-\begin{figure}
+As a consequence, those layer information are also stored in the external memory. The overall structure of the external memory can be found in Figure \ref{fig:overal_mem}.
+%
+\begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{overal_mem.pdf}
+    \includegraphics[width=0.75\textwidth]{overal_mem.pdf}
     \caption{overall structure of the external memory}
     \label{fig:overal_mem}
 \end{figure}
 %
-As a consequence, those layer information are also stored in the external memory. The overall structure of the external memory can be found in Figure \ref{fig:overal_mem}.
-
-We can now evaluate the total memory size required to hold the \acrshort{cnn}. Since this depends on the pruning parameters, we compute the upper-bound of memory required ($\alpha = 1, N_{par} = N_{if-max}$). For the same reason, we also set the memory required for each filter or \acrshort{fm} to be the memory usage of the largest element of each type accross all layers of the network. Moreover, according to \cite{noauthor_cyclone_2018}, the maximum external memory size for Cyclone V supported is $4GB$, and hence the bitwidth of the offset is $32 \ bits$. Similarly, the maximum $BW_{pixel}$ and $BW_{weight}$ is equal to $32 \ bits$.
+We can now evaluate the total memory size required to hold the \acrshort{cnn}. Since this depends on the pruning parameters, we compute the upper-bound of memory required ($\alpha = 1, N_{par} = N_{if-max}$). For the same reason, we also set the memory required to store each filter or \acrshort{fm} as the memory usage of the largest element of the same type accross all layers of the network. Moreover, according to \cite{noauthor_cyclone_2018}, the maximum external memory size for Cyclone V supported is $4GB$, and hence the maximum bitwidth of the offset is $32 \ bits$. Similarly, the maximum $BW_{pixel}$ and $BW_{weight}$ is equal to $32 \ bits$.
 
 As a result, the memory usage of the network depending on the bitwidth used to represent each pixel and weight is expressed in Equation \eqref{eq:max-extmem}.
 The curve representing the maximal external memory required can be found in Figure \ref{fig:max-mem}. We can conclude that we need an external memory size of at least 70 $MB$, which is smaller than the maximal external memory of Cyclone V \acrshort{fpga} ($4 GB$)
-
-The maximum memory required can be reduced with pruning. For example, by modifying Equation \eqref{eq:max-extmem}, with $N_{par} = 8, N_{np} = 4$, and $BW_{weight} = BW_{pixel} = 16$, the total memory required is equal to 16.54 $MB$.
 %
 \begin{align}
     \# layers_{tot} &= 21 \\
     \# layers_{standard-conv} &= 1 \\
     \# layers_{bottleneck-conv} &= 17 \\
     \# layers_{1-1-conv} &= 2 \\
-    BW_{layer_{information}} &= 238 \text{ bits} \\
+    BW_{layer_{information}} &= 258 \text{ bits} \\
     Max\_FMI &= 112 \times 112 \times 32 = 401408 \\
     Max\_FMO &= Max\_FMI \\
     Max\_K11\_filter &= 320 \times 1280 = 409600 \\
     Max\_KDW\_filter &= 3 \times 3 \times 6 \times 160 = 8640\\
     Max\_KPW\_filter &= 6 \times 160 \times 320 = 307200 \\
-    Max\_KSC\_filter &= 3 \times 3 \times 32 = 288 \\
+    Max\_KSC\_filter &= 3 \times 3 \times 32 = 288
 \end{align}
 %
 \begin{equation}
@@ -120,12 +127,14 @@ The maximum memory required can be reduced with pruning. For example, by modifyi
 \label{eq:max-extmem}
 \end{equation}
 %
-\begin{figure}
+\begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{maxmem.pdf}
+    \includegraphics[width=0.75\textwidth]{maxmem.pdf}
     \caption{Maximum external memory required in $MB$ in relation with the bitwidth of each data $BW_{pixel}$ and $BW_{weight}$}
     \label{fig:max-mem}
 \end{figure}
+%
+The maximum memory required can be reduced with pruning. For example, by modifying Equation \eqref{eq:max-extmem}, with $N_{par} = 8, N_{np} = 4$, and $BW_{weight} = BW_{pixel} = 16$, the total memory required is equal to 16.54 $MB$.
 %
 \subsection{Main controller}
 %

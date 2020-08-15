@@ -13,7 +13,7 @@
 \secondsupervisor{Prof. Christophe \textsc{de Vleeschouwer}}
 
 % Name of the reader(s)
-\readerone{Victor \textsc{Joos de Ter Beerst}}
+\readerone{Victo-r \textsc{Joos de Ter Beerst}}
 \readertwo{Martin \textsc{Lefèvre}}
 
 % Academic year (update if necessary)
@@ -78,7 +78,7 @@
 	\listoffigures
 	\afterpage{\blankpage}
 	\newpage
-	\printnoidxglossary[type=\acronymtype, title=List of Abbreviation, nonumberlist=true, toctitle=List of terms]
+	\printnoidxglossary[type=\acronymtype, title=List of Abbreviations, nonumberlist=true, toctitle=List of Abbreviation]
 	\afterpage{\blankpage}
 	\newpage
 
@@ -100,15 +100,15 @@
 	\input{src/8.Conclusion/Conclusion}
 
 	%% Appendixes
-	\appendix
-	\input{src/9.Appendixes/mbv2}
-	%
-	\input{src/9.Appendixes/demo_factor}
-	%
-	\input{src/9.Appendixes/demo_cf}
-	%
-	\input{src/9.Appendixes/detail_sig}
-
+	\begin{appendices}(
+		\input{src/9.Appendixes/mbv2}
+		%
+		\input{src/9.Appendixes/demo_factor}
+		%
+		\input{src/9.Appendixes/demo_cf}
+		%
+		\input{src/9.Appendixes/detail_sig}
+ 	\end{appendices}
   	%% Bibliography
 	\input{src/0.Bibliography/Bibliography}
   	% Back cover page

@@ -36,6 +36,7 @@ maxcitenames=1
 \usepackage[pdfencoding=auto, psdextra]{hyperref}
 \usepackage{bookmark}% faster updated bookmarks
 \usepackage{tcolorbox}
+\usepackage[titletoc]{appendix}
 %geometry
 \geometry{
 a4paper,

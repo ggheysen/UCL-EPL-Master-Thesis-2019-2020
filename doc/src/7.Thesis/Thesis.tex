@@ -1,9 +1,11 @@
 \chapter{Accelerating Convolutional Neural Networks for FPGA using Depthwise Separable Convolution and Pruning} \label{chap:pratique}
 %
 %
-In the previous chapter, we have introduced pruning, which can reduce both the size and the computational complexity of a \acrshort{cnn}. We have also seen that there exist various pruning schemes. Each of them can be categorized from coarse-grained to fine-grained. Coarse-grained pruning schemes have the advantage of being easily implemented on \acrshort{gpu} and \acrshort{cpu} in exchange for a drop of accuracy. On the opposite, fine-grained pruning schemes have better accuracy but create irregular access pattern that makes them difficult to implement. To have an efficient \acrshort{fpga}-based accelerator, we should focus on implementing the most fine-grained pruning possible in order to have a higher sparsity while limiting the drop of accuracy. This shows the advantage of using \acrshort{fpga} accelerator because, as said previously, this type of pruning scheme is not easily implementable on \acrshort{cpu} and \acrshort{gpu}
+In the previous chapter, we introduced pruning, which reduces both size and computational complexity of \acrshort{cnn}s. We also discovered that there exist various pruning schemes. Each of them can be categorized from coarse-grained to fine-grained. Coarse-grained pruning schemes have the advantage that they can be easily implemented on \acrshort{gpu} and \acrshort{cpu} in exchange for a drop of accuracy. On the other hand, fine-grained pruning schemes can limit this reduction of accuracy but create irregular access pattern that makes them difficult to implement on such platforms. 
 
-We will define a \acrshort{fpga}-based accelerator architecture that integrates both pruning and \acrshort{dsc} in order to further reduce the number of weights and operations. To show its applicability, we implement this architecture to a state-of-the-art network that includes \acrshort{dsc} and that target embedded platforms, MobileNetV2 (see Section \ref{subs:mbv2}). The objectives of the architecture and its associated pruning scheme are the following:
+To have an efficient \acrshort{fpga}-based accelerator, we should focus on implementing the most fine-grained pruning scheme possible to apply a high sparsity while limiting the loss of accuracy. This shows the advantage of using \acrshort{fpga} accelerator because, as said previously, this type of pruning scheme is not easily implementable on \acrshort{cpu} and \acrshort{gpu}
+
+In this chapter, we define a \acrshort{fpga}-based accelerator architecture that integrates both pruning and \acrshort{dsc} (see Section \ref{subs:dsc})to further reduce the number of weights and operations. To show its applicability, this architecture implements a state-of-the-art network that includes \acrshort{dsc} and targets embedded platforms: MobileNetV2 (see Section \ref{subs:mbv2} and \ref{subsec:mdopti}). The design objectives of the architecture and its associated pruning scheme are the following:
 %
 \begin{enumerate}
     \item The pruning scheme is as fine-grained as possible.
@@ -13,12 +15,11 @@ We will define a \acrshort{fpga}-based accelerator architecture that integrates 
     \item An increase of the sparsity improves the performance of the architecture.
 \end{enumerate}
 %
-First, Section \ref{sec:design} aims at developping the pruning scheme and the algorithm to handle it. We also define in this section the reduction factors of weight and computational complexity. We also define a weight compressed format to reduce the weights memory use. We then perform a loop analysis on the proposed algorithm to determine the optimal hardware design variables and the structure of the architecture.
+Section \ref{sec:design} aims at developping the pruning scheme and the algorithm to handle it. We also define in this section the reduction factors of weight and operations when using the proposed pruning scheme. We also define a weight compressed format to reduce the weights memory use. We then perform a loop analysis on the proposed algorithm to determine the optimal hardware design variables and the structure of the architecture.
 
-Second, Section \ref{sec:implementation} describes the implementation of the accelerator \acrshort{fpga}-based architecture and details its dataflow.
+Section \ref{sec:implementation} describes the implementation of the accelerator \acrshort{fpga}-based architecture and details its dataflow. We start by explaining the overall architecture and then we go into each component.
 
-Third, Section \ref{sec:measure} shows the results obtained and discusses the limits of the implementation.
-%
+Section \ref{sec:measure} shows the results obtained and discusses if the proposed design objectives are met.
 %
 \input{src/7.Thesis/Architecture}
 %
