@@ -1,10 +1,20 @@
 \topskip0pt
 \vspace*{\fill}
-\begin{center}
+
+    \begin{center}
     \huge{\textsc{Abstract}}
     \end{center}
     
-    CNN are powerfull models used in image classification, speech recognition, medical image analysis, etc. However, those models requires a large number of parameters and operations to be executed. Therfore, GPUs are the dominant platform to implement a CNN thanks to their huge computational resources and memory. However, such platforms are power hungry and limit the implementation of CNN on mobile and embedded devices. A solution would be to use, rather than GPU, FPGA which are more energy efficient. However, the FPGA does not require enough resources to implement to most performing models. Therfore, this thesis aims at combining the advantages of two optimizations, pruning and depthwise separable convolution, to further reduce the number of parameters and operations required by a CNN. The performance of this new pruning scheme is studied by implementing such model on FPGA.
+    In the domain of Artificial Intelligence and Deep Learning, Convolutional Neural Networks (CNN) are powerful models used in image classification, speech recognition, medical image analysis, etc. However, those models require a large number of parameters and operations to be executed. Therefore, GPUs are the dominant platform to implement CNNs thanks to their huge computational resources and memory. However, such platforms are power-hungry and limit the implementation of CNNs on mobile and embedded devices. A solution would be to use, rather than GPU, FPGA which are more energy efficient but do not possess enough resources to implement the most performing models. 
+    
+    The analysis of the literature revealed a series of optimizations that could be applied to make it possible to efficiently implement CNNs on FPGA. From this analysis, two optimizations appeared to be more relevant to be investigated.
+
+    Therefore, this thesis aims at combining the advantages of those two optimizations, pruning, and depthwise separable convolution, to further reduce the number of parameters and operations required by a CNN and make it possible to be efficiently implemented on \acrshort{fpga}.
+    To demonstrate the performance of the pruning scheme, an FPGA-based accelerator was designed combining both optimizations.
+    %The performance of this new pruning scheme was studied by implementing such model on FPGA.
+
+    This thesis shows that combining both pruning and depthwise separable convolution provides an efficient way to reduce both the number of weights and computational complexity. Moreover, the proposed pruning scheme can be efficiently handled on \acrshort{fpga} without any loss of performance when the sparsity increases.
+
 \vspace*{\fill}
 \afterpage{\blankpage}
 \newpage

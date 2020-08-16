@@ -1,27 +1,78 @@
 \chapter{Details of the different input and output signals of each components of the architecture} \label{appendix:sig}
+We detail here the different input and output signals of each component of the overall architecture described in Section \ref{sec:implementation}. Each Table details the signals of one component.
+%
 \begin{table}[H]
     \begin{tabular}{c|c|c}
         Signals & Input/Output & Description \\
+        %
         \hline \hline
-        start & input & \makecell{Tells the main controller that it can perform \\ the bottleneck convolution}\\
+        clk, rst & Input & Clock and Resest signals \\
         %
         \hline
-        \makecell{$s_{dma}$ \\$s_{c11}$\\$s_{dsc}$} & output & \makecell{starting signals telling that the corresponding \\ component can start its operation}\\
+        inf\_conv & Input & convolution information of the layer\\
         %
         \hline
-        finish & output & \makecell{Enabled by the main controller \\ indicating the output \acrshort{fm} has been produced}\\
+        start & Input & \makecell{Tells the main controller that it can perform \\ the bottleneck convolution} \\
         %
         \hline
-        \makecell{$f_{dma}$ \\$f_{c11}$\\$f_{dsc}$} & input & \makecell{finishing signals telling that the corresponding \\ component has accomplished its operation}\\
+        \makecell{$s_{dma}$ \\$s_{c11}$\\$s_{dsc}$} & Output & \makecell{Starting signals telling that the corresponding \\ component can start its operation}\\
         %
         \hline
-        \makecell{$dma_{op}$\\$dma_{info_1}$\\$dma_{info-mem_1}$\\$dma_{info_2}$\\$dma_{info-mem_2}$} & output & \makecell{Since the \acrshort{dma} can handle multiple operations,\\ theses signals specifies which operations to perform \\ and which tile and its external memory address to fetch}\\
+        finish & Output & \makecell{Enabled by the main controller \\ indicating the output \acrshort{fm} has been produced}\\
         %
         \hline
-        first\_par & output & \makecell{ \\ component has accomplished its operation} \\
+        \makecell{$f_{dma}$ \\$f_{c11}$\\$f_{dsc}$} & Input & \makecell{Finishing signals telling that the corresponding \\ component has accomplished its operation}\\
+        %
+        \hline
+        \makecell{$dma_{op}$\\$dma_{info_1}$\\$dma_{info-mem_1}$\\$dma_{info_2}$\\$dma_{info-mem_2}$} & Output & \makecell{Since the \acrshort{dma} can handle multiple operations,\\ theses signals specifies which operations to perform \\ and which tile and its external memory address to fetch}\\
+        %
+        \hline
+        first\_par & Output & \makecell{Control signal telling the \acrshort{dsc} \acrshort{pe} \\ that loads its first fetching group \\ Therefore, it does not reads \\ the data in the output \acrshort{fm} buffer} \\
         \hline \hline
     \end{tabular}
-    \caption{The different input and output signals of the main controller}
+    \caption{Input and output signals of the main controller}
     \label{tab:mc_sig}
+\end{table}
+%
+\begin{table}[H]
+    \begin{tabular}{c|c|c}
+        Signals & Input/Output & Description \\
+        %
+        \hline \hline
+        clk, rst & Input & Clock and Resest signals \\
+        %
+        \hline
+        inf\_conv & Output & \makecell{Convolution information of the layer \\ fetched from the external memory}\\
+        %
+        \hline
+        \makecell{$s_op$ \\ $op$} & Input & \makecell{Starting signals telling the \acrshort{dma} that it can perform \\ the operation referenced by $op$} \\
+        %
+        \hline
+        \makecell{$r_{valid\_extmem}$ \\ $data_{extmem}$} & Input & \makecell{If enabled, the signal $data_{extmem}$ corresponds \\ to a data fetched from external memory} \\
+        %
+        \hline
+        \makecell{$r_{request\_extmem}$ \\ $addr_{extmem}$} & Output & \makecell{If enablded, requesting a data transfer \\ at address $addr_{extmem}$}\\
+        %
+        \hline
+        $e_{op}$ & Output & \makecell{Enabled by the \acrshort{dma} \\ indicating the transaction is done}\\
+        %
+        \hline
+        \makecell{$w_{fmi}$ \\$w_{kex}$\\$w_{kpw}$\\$w_{kdw}$\\$w_{ext}$\\$w_{data}$} & Output & \makecell{Write signals, enabled when \\ we write $w_{data}$ into the corresponding memory}\\
+        %
+        \hline
+        $addr_{ram}$ & Output & \makecell{When reading FMO buffer, \\ indicates the address of the data}\\
+        %
+        \hline
+        $ram_{data-i}$ & Input & \makecell{Data reads at address $addr_{ram}$ \\ in the FMO buffer}\\
+        %
+        \hline
+        $r_{fmo-buff}$ & Output & \makecell{Enabled by the \acrshort{dma} when it reads\\ data from the FMO buffer}\\
+        %
+        \hline
+        \makecell{$tx_{i}$\\$x_{mem-i}$\\$ty_{i}$\\$ty_{mem-i}$} & Input & \makecell{Theses signals specifies which tile \\ and its external memory address to fetc \\ (the data type is specified by $op$)}\\
+        \hline \hline
+    \end{tabular}
+    \caption{Input and output signals of the \acrshort{dma}}
+    \label{tab:dma_sig}
 \end{table}
 \newpage

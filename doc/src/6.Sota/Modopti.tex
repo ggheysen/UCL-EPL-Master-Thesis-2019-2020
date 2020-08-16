@@ -1,18 +1,12 @@
 \section{CNN optimizations on FPGA} \label{sec:opti_dataflow}
 %
 %
-This section is focused on, given a model, how to implement it on a \acrshort{fpga}, and what hardware optimizations can be made to accelerate the inference.
-The Section \ref{sec:fpga} provides a general layout of what is an \acrshort{fpga} and how does it work. Now, we focus our interest in the design development of a \acrshort{cnn} and what optimizations can be made to perform an efficient inference.
-Second, Section \ref{sec:opti_dataflow} review de various approaches to perform an efficient inference on \acrshort{fpga}.
+Section \ref{sec:fpga} provided a general layout of what is an \acrshort{fpga} and how did it work. This section is focused on how to implement a given model on an \acrshort{fpga}, and what hardware optimizations can be made to accelerate the inference.
 
-Finally, Section \ref{sec:inf_fpga} gives an overview on how to perform \acrshort{dsc} on \acrshort{fpga}.
+Section \ref{sec:dt_general} reviews de various approaches to perform an efficient inference of a general \acrshort{cnn} on \acrshort{fpga}. 
 
-The convolution requires loading weights and pixels into the \acrshort{fpga} and using them to compute the output results. According to \textcite{chen_eyeriss_2017}, the data movement can often be more energy-consuming than actual computation. Smart memory management is then required to implement \acrshort{cnn} on low power device such as \acrshort{fpga}. We discover in this section various techniques for handling the Datapath on the \acrshort{fpga}.
+Section \ref{subsec:impl_dsc} gives an overview of how to perform \acrshort{dsc} on \acrshort{fpga} and Section \ref{subsec:impl_prun} is focused on successful \acrshort{fpga}-based architecture that implemented pruning.
 %
 \input{src/6.Sota/subsection/opti_dtpt}
-%
-%
-\section{Depthwise separable convolution inference on FPGA} \label{sec:inf_fpga}
-%
 %
 \input{src/6.Sota/subsection/inf_dsc}

@@ -57,7 +57,7 @@ We can now evaluate the reduction factors of the sparse \acrshort{dsc} compared 
 We consider that the size of the input feature map of the pointwise convolution is $N_{ix}  \times N_{iy} \times N_{if}$, the size of the depthwise filter is $N_{kx} \times N_{ky} \times N_{if}$, the size of the non-pruned pointwise convolution $N_{if} \times N_{of}$, the fetching group size is $N_{par}$, the number of pruned weights is $N_{np}$, and the size of the output \acrshort{fm} is $N_{ox}  \times N_{oy} \times N_{of}$. The amount of weights $W_{DSC}$ and operations $O_{DSC}$ of the \acrshort{dsc} can be determined using Equation \eqref{eq:dsc_wg} and \eqref{eq:dsc_op} \cite{bai_cnn_2018, liu_fpga-based_2019}.
 %
 \begin{equation}
-    W_{DSC} = N_{kx} \times N_{ky} \times N_{if} + N_{if} + \times N_{of}
+    W_{DSC} = N_{kx} \times N_{ky} \times N_{if} + N_{if} \times N_{of}
     \label{eq:dsc_wg}
 \end{equation}
 %
@@ -69,7 +69,7 @@ We consider that the size of the input feature map of the pointwise convolution 
 In a same manner, the amount of weights $W_{PR\_DSC}$ and operations $O_{PR\_DSC}$ of the sparse \acrshort{dsc} can be determined using Equation \eqref{eq:pr_dsc_wg} and \eqref{eq:pr_dsc_op}.
 %
 \begin{equation}
-    W_{PR\_DSC} = N_{kx} \times N_{ky} \times N_{if} + \times N_{if} + N_{np} \times N_{gr} \times N_{of}
+    W_{PR\_DSC} = N_{kx} \times N_{ky} \times N_{if} + N_{np} \times N_{gr} \times N_{of}
     \label{eq:pr_dsc_wg}
 \end{equation}
 %

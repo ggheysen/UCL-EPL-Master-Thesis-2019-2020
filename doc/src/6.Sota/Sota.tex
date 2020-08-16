@@ -1,18 +1,20 @@
-\chapter{State of the art} \label{chap:sota}
+\chapter{State of the Art} \label{chap:sota}
 Chapter \nameref{chap:background} detailed all the background information required to understand the theory behind \acrshort{cnn} and \acrshort{fpga}. This chapter aims at reviewing the main optimization techniques known in the literature to implement an efficient \acrshort{cnn} accelerator on \acrshort{fpga}, to achieve the objective of this thesis.
 
 Section \ref{sec:opti_cnn} details optimization techniques to modify the computational model of the \acrshort{cnn} allowing an efficient inference on \acrshort{fpga}. Section \ref{subsec:algopti} is focused on reducing the algorithmic complexity of the \acrshort{cnn} by optimizing the convolution operation while Section \ref{subsec:mdopti} covers techniques to trade accuracy for a reduction of the number of parameters and algorithmic complexity.
 
-Section \ref{sec:opti_dataflow} is focused on studying the efficient ways to handle a \acrshort{cnn} on \acrshort{fpga}. First, we review how a general \acrshort{cnn} is implemented while reducing inefficiencies. Then, we look at archictectures that successfully implement \acrshort{dsc} in Section \ref{subsec:impl_dsc}, and pruning in Section \ref{subsec:impl_prun}.
+Section \ref{sec:opti_dataflow} is focused on studying efficient ways to handle a \acrshort{cnn} on \acrshort{fpga}. First, we review how a general \acrshort{cnn} is implemented while reducing inefficiencies. Then, we look at architectures that successfully implement \acrshort{dsc} in Section \ref{subsec:impl_dsc}, and pruning in Section \ref{subsec:impl_prun}.
 % inference optimization
 \input{src/6.Sota/Compression}
 %
 \input{src/6.Sota/Modopti}
 %
 \begin{tcolorbox}
-    \textbf{Conclusions about the State of the art}:
+    \textbf{Conclusion about the State of the Art}:
 
-    We have seen in this chapter what is a \acrshort{cnn}, how to build, and train it. We have also seen that the most performing models have a huge computational complexity and memory utilization, which limit the implementation of such models on mobile platforms, such as \acrshort{fpga}. Different approaches can be explored such as fast convolutions algorithms. But they only reduce the computational complexity while increasing hardware utilization. Therefore, pruning and model designs seem to be promising optimizations because they both aim at reducing those problems. Therefore, this work focus on the use of both approaches to see if their gain can be combined. To show our results, we apply pruning on MobileNetV2. As quantizing is an orthogonal approach to pruning, we also use 16-bit fixed-point formats because the loss of accuracy can be controlled.
+    We knew from the previous chapter that the most performing models have a huge computational complexity and memory utilization, which limit the implementation of such models on mobile platforms, such as \acrshort{fpga}. Therefore, we reviewed the literature to find optimizations that allow an efficient implementation of \acrshort{cnn}s on \acrshort{fpga}. We have explored algorithmic optimizations, but they only reduce the computational complexity while increasing hardware utilization. Model optimizations seem to be more relevant because they aim at reducing both number of parameters and operation in exchange for a drop of accuracy. Therefore, we can investigate the combination of different optimizations to further compress models, like pruning and quantization. 
+    
+    As a result, this work focus on developing a pruning scheme on \acrshort{dsc} to see if their gain can be combined. To study the performance of the proposed pruning scheme, we use it on a state of the art model that contains \acrshort{dsc}: MobileNetV2. Moreover, as quantizing is an orthogonal approach to pruning, we also use fixed-point formats to accelerate further the inference of the architecture. We chose 16-bit because the loss of accuracy can be controlled.
 \end{tcolorbox}
 \afterpage{\blankpage}
 \cleardoublepage

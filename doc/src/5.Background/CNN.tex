@@ -58,7 +58,7 @@ After the analysis of the CNN structure in Section \ref{subsec:layer}, this sect
 %
 %
 \subsection{Training} \label{subsec:train}
-The previous section was described the common building blocks present in \acrshort{cnn} and how to design a \acrshort{cnn}. This section aims at detailing how a network improves automatically its performance for a specific task. This is called \textit{learning}.
+The previous section was described the common building blocks present in \acrshort{cnn}s and how to design a \acrshort{cnn}. This section aims at detailing how a network improves automatically its performance for a specific task. This is called \textit{learning}.
 
 The learning phase starts after designing the network. However, before the model can learn, we have to initialize the weights. The most common initialization is a random Gaussian distribution \cite{he_delving_2015}. However, the learning phase is affected by the initial values of the weights. If it is too small the network does not learn or if it is too large it might take a very long time to converge. Different initializations were suggested to improve the learning phase: Xavier initialization \cite{glorot_understanding_2010} and He initialization \cite{he_delving_2015}.
 
