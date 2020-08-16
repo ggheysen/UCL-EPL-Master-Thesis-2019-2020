@@ -1,7 +1,7 @@
 \section{CNN optimizations for FPGA} \label{sec:opti_cnn}
 %
 %
-Section \ref{subs:mbv2} highlighted the issues experienced when implementing the inference phase on mobile devices such as \acrshort{fpga}. Indeed, the computational complexity and the storage utilization required by the most performing models are beyond the \acrshort{fpga} resource capability. Therefore, this section explores the state-of-the-art approaches to reduce the arithmetic complexity and the hardware utilization to accelerate the inference stage on \acrshort{fpga}. Section \ref{subsec:algopti} details how to efficiently optimize the convolution operation on \acrshort{fpga}. Section \ref{subsec:mdopti} covers techniques to reduce the size of the model and hence the number of parameters and operations required.
+Section \ref{subs:mbv2} highlighted the issues experienced when implementing the inference phase on mobile devices such as \acrshort{fpga}. Indeed, the computational complexity and the storage utilization required by the most performing models are beyond the \acrshort{fpga} resource capability. Therefore, this section explores the state-of-the-art approaches to reduce the arithmetic complexity and hardware utilization to accelerate the inference stage on \acrshort{fpga}. Section \ref{subsec:algopti} details how to efficiently optimize the convolution operation on \acrshort{fpga}. Section \ref{subsec:mdopti} covers techniques to reduce the size of the model and hence the number of parameters and operations required.
 %
 \input{src/6.Sota/subsection/opti_algo}
 %

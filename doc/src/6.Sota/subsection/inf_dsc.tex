@@ -7,7 +7,7 @@ They both use a commonly used \acrshort{dl} architecture that is called a hetero
 
 The accelerator in each work has the same structure. The accelerator uses weights, input, and output buffers. To use the same accelerator for both convolutions, they first compute an element-wise multiplication followed by an adder tree. The pattern of additions varies between the studies. 
 
-On one side, \textcite{bai_cnn_2018} divides depthwise and pointwise convolution. As the element-wise multiplication produces a cuboid, we only have to sum either in the spatial or channel axis, or all the cuboid pixels to perform the desired convolution. 
+On one side, \textcite{bai_cnn_2018} divide depthwise and pointwise convolution. As the element-wise multiplication produces a cuboid, we only have to sum either in the spatial or channel axis, or all the cuboid pixels to perform the desired convolution. 
 
 On the other side, \textcite{liu_fpga-based_2019} perform both convolutions using the same adder tree. The dataflow to feed the adder tree depends then on the convolution. However, to use the same structure for both convolutions, it must fill some registers with zero-value (the \acrshort{dsc} has fewer arithmetic operations, if we use the same structure we adapt it to the operation with the biggest arithmetic complexity).
 
@@ -32,4 +32,4 @@ First, the \acrshort{pe}s must avoid performing computation involving 0 weights.
 
 Second, to reduce the storage utilization, the zero-weights in a kernel must be discarded. The weights must be encoded in such a way that we keep both values and index of the weights to reduce the overhead of computing the output address. Usually, kernels are encoded in a format derived from the \acrfull{csr} \cite{mao_exploring_2017}. For example, \cite{zhu_efficient_2020} modified the format to compress further and accelerate the inference.
 
-Finally, the problem of \textbf{load-imbalance} can arise if the number of non-pruned weights is different in each \acrshort{pe} \cite{kim_zena_2018}. Therefore some \acrshort{pe} can finish before another one and it can lead to inefficiency. \textcite{zhu_efficient_2020, kang_accelerator-aware_2020} solved this by setting an uniform number of weights in each kernel or group of fetching weights.
+Finally, the problem of \textbf{load-imbalance} can arise if the number of non-pruned weights is different in each \acrshort{pe} \cite{kim_zena_2018}. Therefore some \acrshort{pe} can finish before another one and it can lead to inefficiency. \textcite{zhu_efficient_2020, kang_accelerator-aware_2020} solved this by setting a uniform number of weights in each kernel or group of fetching weights.
