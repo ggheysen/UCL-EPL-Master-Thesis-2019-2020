@@ -40,8 +40,8 @@ This filter is composed of $N_{of}$ kernels, where each kernel has size $N_{kx} 
 The convolution operation is illustrated in Figure \ref{fig:convolution}. It can be considered as a specialized linear operation and is divided into five steps \cite{matteucci_artificial_2019, zhu_efficient_2020}:
 %
 \begin{enumerate}
-    \item A window of the same size than a kernel extracts a chunk of pixels from the input \acrshort{fm}.
-    \item The extracted chunk of pixels is multiplied element-wise with a kernel.
+    \item A window of the same size as a kernel extracts a chunk of pixels from the input \acrshort{fm}.
+    \item The extracted chunk of pixels is element-wise multiplied with a kernel.
     \item The output pixel is obtained by summing the products from the previous step.
     \item The previous steps produce one output pixel of one channel. To compute one output channel, we simply slide the window on the input \acrshort{fm} and repeat the first three steps. The output pixel at position $(x, y)$ is obtained by the movement of the sliding window from the top left of the input \acrshort{fm}. 
     \item We repeat the previous operations with each kernel of the weight filter to obtain the output \acrshort{fm}.

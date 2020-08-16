@@ -5,17 +5,17 @@ In the previous chapter, we introduced pruning, which reduces both size and comp
 
 To have an efficient \acrshort{fpga}-based accelerator, we should focus on implementing the most fine-grained pruning scheme possible to apply a high sparsity while limiting the loss of accuracy. This shows the advantage of using \acrshort{fpga} accelerator because, as said previously, this type of pruning scheme is not easily implementable on \acrshort{cpu} and \acrshort{gpu}
 
-In this chapter, we define a \acrshort{fpga}-based accelerator architecture that integrates both pruning and \acrshort{dsc} (see Section \ref{subs:dsc} )to further reduce the number of weights and operations. To show its applicability, this architecture implements a state-of-the-art network that includes \acrshort{dsc} and targets embedded platforms: MobileNetV2 (see Sections \ref{subs:mbv2} and \ref{subsec:mdopti}). Since the pruning can cause a degradation of the performance, we have to determine the design objectives of the architecture and its associated pruning scheme, which are the following:
+In this chapter, we define an \acrshort{fpga}-based accelerator architecture that integrates both pruning and \acrshort{dsc} (see Section \ref{subs:dsc} )to further reduce the number of weights and operations. To show its applicability, this architecture implements a state-of-the-art network that includes \acrshort{dsc} and targets embedded platforms: MobileNetV2 (see Sections \ref{subs:mbv2} and \ref{subsec:mdopti}). Since the pruning can cause a degradation of the performance, we have to determine the design objectives of the architecture and its associated pruning scheme, which are the following:
 %
 \begin{enumerate}
     \item The pruning scheme is as fine-grained as possible.
     \item The pruning scheme reduces the computational complexity.
     \item The pruning scheme allows a reduction of the memory required to store the weights.
     \item The proposed architecture provides a logically correct output.
-    \item An increase of the sparsity improves the performance of the architecture.
+    \item An increase in the sparsity improves the performance of the architecture.
 \end{enumerate}
 %
-Section \ref{sec:design} aims at developping the pruning scheme and the algorithm to handle it. We also define in this section the reduction factors of weight and operations when using the proposed pruning scheme. We also define a weight compressed format to reduce the weight memory use. We then perform a loop analysis on the proposed algorithm to determine the optimal hardware design variables and the structure of the architecture.
+Section \ref{sec:design} aims at developing the pruning scheme and the algorithm to handle it. We also define in this section the reduction factors of weight and operations when using the proposed pruning scheme. We also define a weight compressed format to reduce weight memory use. We then perform a loop analysis on the proposed algorithm to determine the optimal hardware design variables and the structure of the architecture.
 
 Section \ref{sec:implementation} describes the implementation of the accelerator \acrshort{fpga}-based architecture and details its dataflow. We start by explaining the overall architecture and then we go into each component.
 

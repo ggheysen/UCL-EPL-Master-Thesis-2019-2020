@@ -1,9 +1,9 @@
 \section{Convolutional Neural Network} \label{sec:cnn}
-\acrshort{cnn} is a type of \acrshort{nn} specialized in analyzing visual imagery and natural language processing. \acrshort{cnn}s are feedforward, sparsely connected \acrshort{nn}s, and structured as a pipeline of layers \cite{abdelouahab_accelerating_2018}. It showed superior performances on different competitions related to Computer Vision and Image Processing \cite{khan_survey_2020}. Nowadays, \acrshort{cnn}s are used in character and gesture recognition, video classification, face detection, etc \cite{shawahna_fpga-based_2019}. This section aims at investigating the different aspects of a \acrshort{cnn}.
+\acrshort{cnn} is a type of \acrshort{nn} specialized in analyzing visual imagery and natural language processing. \acrshort{cnn}s are feedforward, sparsely connected \acrshort{nn}s, and structured as a pipeline of layers \cite{abdelouahab_accelerating_2018}. It showed superior performances in different competitions related to Computer Vision and Image Processing \cite{khan_survey_2020}. Nowadays, \acrshort{cnn}s are used in character and gesture recognition, video classification, face detection, etc \cite{shawahna_fpga-based_2019}. This section aims at investigating the different aspects of a \acrshort{cnn}.
 
 First, the building blocks of a CNN are developed in Section \ref{subsec:layer} starting from its basic element, the \textit{perceptron}. Then, we describe how to use multiple perceptrons to build layers that can perform complex functions. Finally, we detail the other types of layers required to improve the efficiency of the model, such as the pooling layer.
 
-Then, Section \ref{subsec:models} describes how to effectively combine these layers with a focus on the state of the art networks like AlexNet, VGG16, ResNet, and MobileNetV2.
+Then, Section \ref{subsec:models} describes how to effectively combine these layers with a focus on the state-of-the-art networks like AlexNet, VGG16, ResNet, and MobileNetV2.
 
 Finally, Section \ref{subsec:train} focuses on the training of \acrshort{cnn}. We briefly explain the back-propagation algorithm, which consists of a forward-propagation and a back-propagation.
 %
@@ -32,14 +32,14 @@ This section first introduces the simplest building element of a \acrshort{cnn}:
 The summary of this section is provided in Figure \ref{fig:layer:summary}. First, an input image is fed to the \acrshort{cnn}. Then, three different kinds of layers can be used:
 %
 \begin{enumerate}
-    \item The convolutional layer, which extracts the features from the input.
-    \item The pooling layers, which summarizes the output of the previous layer.
-    \item The fully connected layer which is a non-linear classifier.
+    \item \textbf{The convolutional layer}, which extracts the features from the input.
+    \item \textbf{The pooling layers}, which summarizes the output of the previous layer.
+    \item \textbf{The fully connected layer}, which is a non-linear classifier.
 \end{enumerate}
 %
 A typical \acrshort{cnn} is composed of two parts, which are built from stacking the previously mentioned layers \cite{matteucci_artificial_2019}:
 \begin{enumerate}
-    \item \textbf{The features extractor} part, composed of blocks made of convolutional, activation, and pooling layers.
+    \item \textbf{The feature extractor} part, composed of blocks made of convolutional, activation, and pooling layers.
     \item \textbf{The classifier} part, composed only of fully connected layers.
 \end{enumerate}
 %
@@ -58,11 +58,11 @@ After the analysis of the CNN structure in Section \ref{subsec:layer}, this sect
 %
 %
 \subsection{Training} \label{subsec:train}
-The previous section was described the common building blocks present in \acrshort{cnn}s and how to design a \acrshort{cnn}. This section aims at detailing how a network improves automatically its performance for a specific task. This is called \textit{learning}.
+The previous section described the common building blocks present in \acrshort{cnn}s and how to design a \acrshort{cnn}. This section aims at detailing how a network improves automatically its performance for a specific task. This is called \textit{learning}.
 
 The learning phase starts after designing the network. However, before the model can learn, we have to initialize the weights. The most common initialization is a random Gaussian distribution \cite{he_delving_2015}. However, the learning phase is affected by the initial values of the weights. If it is too small the network does not learn or if it is too large it might take a very long time to converge. Different initializations were suggested to improve the learning phase: Xavier initialization \cite{glorot_understanding_2010} and He initialization \cite{he_delving_2015}.
 
-When values are assigned to the weights, the backpropagation algorithm can be performed to improve the efficiency of the network. The backpropagation algorithm is composed of two steps: the forward pass and the backpropagation. In the following sections, we briefly review each of them.
+When values are assigned to the weights, the back-propagation algorithm can be performed to improve the efficiency of the network. The back-propagation algorithm is composed of two steps: the forward-propagation and the back-propagation. In the following sections, we briefly review each of them.
 %
 \input{src/5.Background/subsection/CNN_forward}
 %
