@@ -1,27 +1,27 @@
 \chapter*{Conclusion}
 \addcontentsline{toc}{chapter}{Conclusion}
 %
-In the last decade, avances in the domain of \acrshort{cnn} have led to more accurate networks. This came at a price of an increase of the number of parameters and computational complexity. To perform an efficient inference of the \acrshort{cnn} model, the platform on which the model is executed needs to possess enough computational resources. For this reason, \acrshort{gpu}s are the dominant platform to execute \acrshort{cnn} thanks to their high throughput and reprogrammability. However, \acrshort{gpu}s are not suited for embedded and mobile applications due to their high energy consumption. A better solution would be to implement \acrshort{cnn} on \acrshort{fpga} which provides better energy efficiency, better performance than \acrshort{cpu}, and better reconfigurability than \acrshort{asic}. However, the downside of \acrshort{fpga}s is their constrained ressource, and the challenge is then to find the mapping of large \acrshort{cnn} model to the \acrshort{fpga}.
+In the last decade, advances in the domain of \acrshort{cnn} have led to more accurate networks. This came at a price of an increase of the number of parameters and computational complexity. To perform an efficient inference of the \acrshort{cnn} model, the platform on which the model is executed needs to possess enough computational resources. For this reason, \acrshort{gpu}s are the dominant platform to execute \acrshort{cnn} thanks to their high throughput and reprogrammability. However, \acrshort{gpu}s are not suited for embedded and mobile applications due to their high energy consumption. A better solution would be to implement \acrshort{cnn} on \acrshort{fpga} which provides better energy efficiency, better performance than \acrshort{cpu}, and better reconfigurability than \acrshort{asic}. Tthe downside of \acrshort{fpga}s is their constrained ressource, and the challenge is then to find the mapping of large \acrshort{cnn} models to the \acrshort{fpga}.
 
-In the frame of these thesis we looked at different solutions to reduce the size of the model. Two promising optimizations to reduce the size of the \acrshort{cnn} retained our interest : pruning and model optimizations, in particular the use of depthwise separable convolution. The goal of this work is then to combine both approaches by designing an efficient \acrshort{fpga}-based accelerator architecture that integrates sparse \acrshort{dsc} in a \acrshort{cnn} targetting the embedded space.
+In the frame of these thesis we looked at different solutions to reduce the size of the model. Two promising optimizations to reduce the size of the \acrshort{cnn} retained our interest : pruning and model optimizations, in particular the use of depthwise separable convolution. The goal of this work was then to combine both approaches by designing an efficient \acrshort{fpga}-based accelerator architecture integrating sparse \acrshort{dsc} in a \acrshort{cnn} targeting the embedded space.
 
-Before starting the design phase of a structured pruned scheme of the \acrshort{dsc} and the \acrshort{fpga}-based accelerator, we have defined several design objectives that corresponds to the purpose of using pruning:
+Before starting the design phase of a structured pruned scheme of the \acrshort{dsc} and the \acrshort{fpga}-based accelerator, we defined several design objectives that matches with the purpose of using pruning:
 %
 \begin{enumerate}
-    \item The pruning scheme is as fine-grained as possible.
-    \item The pruning scheme reduces the computational complexity.
-    \item The pruning scheme allows a reduction of the memory required to store the weights.
-    \item The proposed architecture provides a logically correct output.
-    \item An increase of the sparsity improves the performance of the architecture.
+    \item The pruning scheme was as fine-grained as possible.
+    \item The pruning scheme reduced the computational complexity.
+    \item The pruning scheme allowed a reduction of the memory required to store the weights.
+    \item The proposed architecture provided a logically correct output.
+    \item An increase of the sparsity improved the performance of the architecture.
 \end{enumerate}
 %
-First, we designed a pruning scheme that prevent the irregular data access patern while imposing the least constraint, satifying the first design objective. The analysis of the reduction factors of the pruning scheme allows us to assess the reduction of the size of the model and its computational complexity.
+First, we designed a pruning scheme that prevented the irregular data access patern while imposing the least constraints, satifying the first design objective. As this pruning scheme is finer-grained than kernel and channel-wise pruning, it would not be efficiently implementable on \acrshort{cpu} and \acrshort{gpu}. The analysis of the reduction factors of the pruning scheme allowed us to assess the reduction of the size of the model and its computational complexity.
 
-Second, we analyzed the sparsity created by the pruning scheme to propose a compressed format to reduce the memory utilization depending on the ratio of sparsity. The results showed that, for the quantization chosen (16 bits), we need to prune at least $40 \%$ of the weights to have a reduction of the memory required, and then satifying the third design objective. 
+Second, we analyzed the sparsity created by the pruning scheme to propose a compressed format reducing the memory utilization depending on the ratio of sparsity. The results showed that, for the quantization chosen (16 bits), we needed to prune at least $40 \%$ of the weights to have a reduction of the memory required, and then satifying the third design objective. 
 
-Third, we developed an \acrshort{fpga}-based accelerator that handle the pruning scheme. In the light of the results achieved, the architecture is logically correct and its performance are not degrated with a higher sparsity, satifying the fourth and fifth design objective.
+Third, we developed an \acrshort{fpga}-based accelerator that handled the pruning scheme. In the light of the results achieved, the architecture was logically correct and its performance were not degrated with a higher sparsity, satifying the fourth and fifth design objective.
 
-This shows that the proposed five design objectives were met. At the end of this thesis, we can conclude that we have proposed a \acrshort{cnn} optimization to reduce the number of parameters and computational complexity that can be implemented more efficiently on \acrshort{fpga}, compared to \acrshort{gpu} and \acrshort{cpu}. This reduction of weights and computational complexity leads to an acceleration of the inference phase, which was the main goal of this thesis.
+This showed that the proposed five design objectives were met. At the end of this thesis, we can conclude that we have proposed a \acrshort{cnn} optimization decreasing the number of parameters and computational complexity, that can be implemented more efficiently on \acrshort{fpga}, compared to \acrshort{gpu} and \acrshort{cpu}. This reduction of weights and computational complexity lead to an acceleration of the inference phase, which was the main objective of this thesis.
 %
 \section*{Future Works}
 \addcontentsline{toc}{section}{Future Works}

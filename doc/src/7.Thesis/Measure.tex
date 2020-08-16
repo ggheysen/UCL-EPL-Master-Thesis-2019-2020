@@ -71,21 +71,21 @@ We measured the performance of the accelerator on a given input using the functi
         \begin{subfigure}[t]{.49\textwidth}
             \centering
             \includegraphics[width=\linewidth]{measur-Nnp.pdf}
-            \caption{Number of cycles of the design depending on the pruning ratio for a $N_{par}$ fixed}
+            \caption{Number of cycles of the design depending on the pruning ratio for an $N_{par}$ fixed}
             \label{fig:measur-Nnp}
         \end{subfigure}
         %
         \begin{subfigure}[t]{.49\textwidth}
             \centering
             \includegraphics[width=\linewidth]{measur-Nnp-redfac.pdf}
-            \caption{Latency reduction factor depending on the pruning ratio for a $N_{par}$ fixed}
+            \caption{Latency reduction factor depending on the pruning ratio for an $N_{par}$ fixed}
             \label{fig:measur-Nnp-redfac}
         \end{subfigure}
         %
         \caption{Number of cycles and Reduction factor of the number of cycles}
     \end{figure}
     %
-    \item Second, we made the same measurements as above of but instead we keep constant the number of non-pruned weights $N_{np}$ and we vary the fetching group size $N_{par}$. The number of cycles depending on the pruning ratio for a $N_{np}$ fixed can be found in Figure \ref{fig:measur-Npar} and the latency reduction factor is shown in Figure \ref{fig:measur-Npar-redfac}. We can observe that the as the pruning ratio increases, the latency increases as well (and hence the latency factor decreases). We can also note that we can achieve a bigger latency reduction factor by varying the pruning ratio with $N_{par}$ instead of $N_{np}$.
+    \item Second, we made the same measurements as above of but instead we keep constant the number of non-pruned weights $N_{np}$ and we vary the fetching group size $N_{par}$. The number of cycles depending on the pruning ratio for an $N_{np}$ fixed can be found in Figure \ref{fig:measur-Npar} and the latency reduction factor is shown in Figure \ref{fig:measur-Npar-redfac}. We can observe that the as the pruning ratio increases, the latency increases as well (and hence the latency factor decreases). We can also note that we can achieve a bigger latency reduction factor by varying the pruning ratio with $N_{par}$ instead of $N_{np}$.
     For example, in Figure \ref{fig:measur-Nnp-redfac}, the reduction factor corresponding to $\alpha = \frac{1}{8}$, is equal to $1.66$. On the other hand,
     in Figure \ref{fig:measur-Nnp-redfac}, the reduction factor corresponding to $\alpha = \frac{1}{8}$, is equal to $2.79$.
     %
@@ -106,7 +106,7 @@ We measured the performance of the accelerator on a given input using the functi
             \label{fig:measur-Npar-redfac}
         \end{subfigure}
         %
-        \caption{Number of cycles and Reduction factor of the number of cycles for a $N_{p}$ fixed}
+        \caption{Number of cycles and Reduction factor of the number of cycles for an $N_{p}$ fixed}
     \end{figure}
     %
     %
@@ -132,7 +132,7 @@ We measured the performance of the accelerator on a given input using the functi
             \caption{$N_{par} = 16, N_{np} = 2$}
         \end{subfigure}
         %
-        \caption{Repartition of the latency accross the different components for various pruning parameters}
+        \caption{Repartition of the latency across the different components for various pruning parameters}
         \label{fig:ratio-pr}
     \end{figure}
 \end{itemize}

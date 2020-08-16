@@ -24,7 +24,7 @@ $Sigmoid$ and $Tanh$ are smooth activation functions that limit the $\mathbb{R}$
 However, they saturate at the asymptotes, which means that their gradient is close to 0 outside the input range $[-4, 4]$ \cite{glorot_understanding_2010}. As the back-propagation algorithm (see Section \ref{subsec:train}) requires gradient multiplication, gradient far away from the output vanishes (close to 0) and deep models do not learn. It is the \textbf{vanishing gradient problem} \cite{khan_survey_2020, matteucci_artificial_2019, goodfellow_deep_2016, maas_rectier_2013}.
 %
 \subsubsection{ReLU and ReLU6}
-In order to overcome this vanishing gradient problem, the Rectified Linear Unit (ReLU) which is defined by Equation \eqref{eq:relu} was developed by \textcite{krizhevsky_imagenet_2012}.
+To overcome this vanishing gradient problem, the Rectified Linear Unit (ReLU) which is defined by Equation \eqref{eq:relu} was developed by \textcite{krizhevsky_imagenet_2012}.
 %
 \begin{equation}
     h(x) = max(0, x)

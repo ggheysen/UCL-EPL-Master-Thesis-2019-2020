@@ -10,9 +10,9 @@ Section \ref{sec:opti_dataflow} is focused on studying efficient ways to handle 
 \input{src/6.Sota/Modopti}
 %
 \begin{tcolorbox}
-    \textbf{Conclusion about the State of the Art}:
+    \textbf{Conclusion about the State of the Art}: \newline \newline
 
-    We knew from the previous chapter that the most performing models have a huge computational complexity and memory utilization, which limit the implementation of such models on mobile platforms, such as \acrshort{fpga}. Therefore, we reviewed the literature to find optimizations that allow an efficient implementation of \acrshort{cnn}s on \acrshort{fpga}. We have explored algorithmic optimizations, but they only reduce the computational complexity while increasing hardware utilization. Model optimizations seem to be more relevant because they aim at reducing both number of parameters and operation in exchange for a drop of accuracy. Therefore, we can investigate the combination of different optimizations to further compress models, like pruning and quantization. 
+    We knew from the previous chapter that the most performing models have a huge computational complexity and memory utilization, which limit the implementation of such models on mobile platforms, such as \acrshort{fpga}. Therefore, we reviewed the literature to find optimizations that allow an efficient implementation of \acrshort{cnn}s on \acrshort{fpga}. We have explored algorithmic optimizations, but they only reduce the computational complexity while increasing hardware utilization. Model optimizations seem to be more relevant because they aim at reducing both the number of parameters and operation in exchange for a drop of accuracy. Therefore, we can investigate the combination of different optimizations to further compress models, like pruning and quantization. \newline \newline
     
     As a result, this work focus on developing a pruning scheme on \acrshort{dsc} to see if their gain can be combined. To study the performance of the proposed pruning scheme, we use it on a state of the art model that contains \acrshort{dsc}: MobileNetV2. Moreover, as quantizing is an orthogonal approach to pruning, we also use fixed-point formats to accelerate further the inference of the architecture. We chose 16-bit because the loss of accuracy can be controlled.
 \end{tcolorbox}
