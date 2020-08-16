@@ -28,7 +28,7 @@ This showed that the proposed five design objectives were met. At the end of thi
 %
 Multiple paths can be explored to extend this work.
 
-First, since we only designed an accelerator of the inverted residual block of MobileNetV2, we can extend its architecture to support all types of layers of the model and compare it with other implementations to see the real impact of the pruning scheme. Also, several improvements can be applied to the proposed design to accelerate the inference further:
+First, since we only designed an accelerator of the Bottleneck residual block of MobileNetV2, we can extend its architecture to support all types of layers of the model and compare it with other implementations to see the real impact of the pruning scheme. Also, several improvements can be applied to the proposed design to accelerate the inference further:
 %
 \begin{itemize}
     \item We can increase the temporal parallelization (pipelining) of the design by using the ping-pong weight buffer presented in Section \ref{subsec:impl_dsc}. It can be applied when fetching weights from the external memory, but we can also use this structure to pipeline both $1 \times 1$ and depthwise separable convolutions. Indeed, while an intermediate fetching group is fed to the \acrshort{dsc}, the next $1 \times 1$ convolution can be computed. 
@@ -38,5 +38,4 @@ First, since we only designed an accelerator of the inverted residual block of M
 Second, we need to study the impact of the proposed pruning scheme and compare it with channel pruning to determine if there is a significant accuracy gap between the two approaches. Furthemore, we can investigate learning algorithms that conducts the pruning scheme of the $1 \times 1$ kernels. As mentionned in Section \ref{subs:discus}, we also need to consider in the learning phase the fact that we used fixed-point arithmetic instead of floating-point arithmetic, in order to lower the loss of accuracy driven by the integer algorithms.
 
 Finally, based on the pruning scheme, we can extend it to reduce further the number of weights and operations. Indeed, to keep all fetching group to be the same size, we dit not consider the fact that a channel can be pruned in each kernel and that the depthwise and $1 \times 1$ kernels corresponding to that channel can be safely removed. Therefore, a possible extent would be to study if added pruning can be efficiently handled on \acrshort{fpga}.
-\afterpage{\blankpage}
 \newpage

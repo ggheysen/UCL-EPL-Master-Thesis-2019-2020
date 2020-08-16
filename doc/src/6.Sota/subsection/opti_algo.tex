@@ -31,20 +31,20 @@ Therefore, both fast convolutions can be described by a common formula, as expre
 %
 \subsubsection{Winograd-based convolution}
 %
-The Winograd minimal filter algorithm was first introduced by \cite{winograd_arithmetic_1980}. According to Equation \eqref{eq:comform} and \textcite{abdelouahab_accelerating_2018}, the algorithm can be defined using the following steps:
+The Winograd minimal filter algorithm was first introduced by \textcite{winograd_arithmetic_1980}. According to Equation \eqref{eq:comform} and \textcite{abdelouahab_accelerating_2018}, the algorithm can be defined using the following steps:
 \begin{itemize}
-    \item An input \acrshort{fm} tile $g$ of size $(T_{ix} \times T_{iy})$ is pre-processed: $$\mathcal{H}(T_I) = \boldsymbol{G^{T}} T_I \boldsymbol{G} $$
+    \item An input \acrshort{fm} tile $T_I$ of size $(T_{ix} \times T_{iy})$ is pre-processed: $$\mathcal{H}(T_I) = \boldsymbol{G^{T}} T_I \boldsymbol{G} $$
     \item In the same way, the kernel $K$, of size $(K_x \times K_y)$ is also transformed: $$\mathcal{H}(K) = \boldsymbol{B^{T}} K \boldsymbol{B}$$
     \item The inverse transformation function is then applied to obtain the output tile: $$\mathcal{H}^{-1}(E) = \boldsymbol{A^{T}} E \boldsymbol{G}$$ Where $E$ is the result of the element-wise multiplication of the two transformed tiles. $$ E = \mathcal{H}(T_I) \ \odot \ \mathcal{H}(K) $$
 \end{itemize}
-As a result, the output tile $T_O$, of the Winograd Filtering algorithm denoted $F(T_{ix} \times T_{iy}, K_x \times K_y)$, is computed using Equation \eqref{eqn:winograd} \cite{winograd_arithmetic_1980}. The advantage of using the Winograd-based convolution is that the transformation matrix $\boldsymbol{G}$, $\boldsymbol{B}$, $\boldsymbol{A}$ can be computed off-line once $(T_{ix}, T_{iy}, K_x, K_y)$ are fixed, using the Winograd Algorithm \cite{winograd_arithmetic_1980}. Therefore, these domain transform operations become multiplications with a constant and can be optimized on \acrshort{fpga} \cite{liang_evaluating_2020}.
+As a result, the output tile $T_O$, of the Winograd Filtering algorithm denoted $F(T_{ix} \times T_{iy}, K_x \times K_y)$, is computed using Equation \eqref{eqn:winograd} \cite{winograd_arithmetic_1980}. The advantage of using the Winograd-based convolution is that the transformation matrices $\boldsymbol{G}$, $\boldsymbol{B}$, $\boldsymbol{A}$ can be computed off-line once $(T_{ix}, T_{iy}, K_x, K_y)$ are fixed, using the Winograd Algorithm \cite{winograd_arithmetic_1980}. Therefore, these domain transform operations become multiplications with a constant and can be optimized on \acrshort{fpga} \cite{liang_evaluating_2020}.
 %
 \begin{equation}
     T_O = \boldsymbol{A^{T}} [ \ \boldsymbol{G^{T}} T_I \boldsymbol{G} \odot \boldsymbol{B^{T}} K\boldsymbol{B} \ ] \boldsymbol{A}
     \label{eqn:winograd}
 \end{equation}
 
-According to \textcite{winograd_arithmetic_1980}, the Winograd convolution reduces the number of multiplications at the cost of an increase in the numbers of additions. The gain obtained is defined in Equation \eqref{eq:winograd_gain} \cite{winograd_arithmetic_1980}. For example, if $T_{ix} = T_{iy} = 2$ and $N_{kx} = N_{ky} = 3$, the complexity reduction factor $F_{multiplication}$ equals $2.25$ \cite{lavin_fast_2016}.
+According to \textcite{winograd_arithmetic_1980}, the Winograd convolution reduces the number of multiplications at the cost of an increase in the number of additions. The gain obtained is defined in Equation \eqref{eq:winograd_gain} \cite{winograd_arithmetic_1980}. For example, if $T_{ix} = T_{iy} = 2$ and $N_{kx} = N_{ky} = 3$, the complexity reduction factor $F_{multiplication}$ equals $2.25$ \cite{lavin_fast_2016}.
 %
 \begin{equation}
     F_{multiplication} = \frac{T_{ix} \times T_{iy} \times N_{kx} \times N_{ky}}{(T_{ix} + N_{kx} - 1) \times (T_{iy} + N_{ky} - 1)}

@@ -1,17 +1,17 @@
 \subsection{DSC} \label{subsec:impl_dsc}
 %
 %
-Two studies of the implementation of the \acrshort{dsc} appeared to be relevant: \textcite{bai_cnn_2018, liu_fpga-based_2019}. They present an \acrshort{fpga} accelerator that implements both standard and \acrshort{dsc}. Networks like MobileNetV2 use both convolutions, the first one for keeping as much information as possible, the second one to speed up the inference. 
+Two studies of the implementation of the \acrshort{dsc} appeared to be relevant for this work: \textcite{bai_cnn_2018, liu_fpga-based_2019}. They present an \acrshort{fpga} accelerator that implements both standard convolution and \acrshort{dsc}. Networks like MobileNetV2 use both convolutions, the first one for keeping as much information as possible, the second one to speed up the inference. 
 
 They both use a commonly used \acrshort{dl} architecture that is called a heterogeneous system: a \acrshort{cpu} which controls the memory accesses and an accelerator that computes the convolution \cite{liu_fpga-based_2019}. The accelerator is designed in such a way that it can perform each layer of the network.
 
 The accelerator in each work has the same structure. The accelerator uses weights, input, and output buffers. To use the same accelerator for both convolutions, they first compute an element-wise multiplication followed by an adder tree. The pattern of additions varies between the studies. 
 
-On one side, \textcite{bai_cnn_2018} divide depthwise and pointwise convolution. As the element-wise multiplication produces a cuboid, we only have to sum either in the spatial or channel axis, either all the cuboid pixels to perform the desired convolution. 
+On one side, \textcite{bai_cnn_2018} divides depthwise and pointwise convolution. As the element-wise multiplication produces a cuboid, we only have to sum either in the spatial or channel axis, or all the cuboid pixels to perform the desired convolution. 
 
-On the other side, \textcite{liu_fpga-based_2019} perform both convolutions using the same adder tree. The dataflow to feed the adder tree depends then on the convolution. However, to use the same structure for both convolutions, it must fill some registers with zero-value (the \acrshort{dsc} has fewer arithmetic operations if we use the same structure we adapt it to the worst case).
+On the other side, \textcite{liu_fpga-based_2019} perform both convolutions using the same adder tree. The dataflow to feed the adder tree depends then on the convolution. However, to use the same structure for both convolutions, it must fill some registers with zero-value (the \acrshort{dsc} has fewer arithmetic operations, if we use the same structure we adapt it to the operation with the biggest arithmetic complexity).
 
-To improve the throughput of the network, they use a ping-pong buffer for the weight. Instead of using one buffer that stores the data for convolution, they use two buffers. Alternatively, one fetches weights for the next tile while the other is used for convolution. An illustration is found in Figure \ref{fig:ping_pong_buffer}.
+To improve the throughput of the network, they use a ping-pong buffer for the weights. Instead of using one buffer that stores the data for convolution, they use two buffers. Alternatively, one fetches weights for the next tile while the other is used for convolution. An illustration is found in Figure \ref{fig:ping_pong_buffer}.
 %
 \begin{figure}[H]
 	\centering
@@ -20,7 +20,7 @@ To improve the throughput of the network, they use a ping-pong buffer for the we
 	\label{fig:ping_pong_buffer}
 \end{figure}
 
-Moreover, \textcite{liu_fpga-based_2019} used the roofline model as a method for design space exploration.
+Finally, \textcite{liu_fpga-based_2019} used the roofline model as a method for design space exploration.
 %
 %
 \subsection{Pruning} \label{subsec:impl_prun}
@@ -30,6 +30,6 @@ When implementing a pruned \acrshort{cnn} on an \acrshort{fpga}, we must address
 
 First, the \acrshort{pe}s must avoid performing computation involving 0 weights. \textcite{kang_accelerator-aware_2020} fetches $N_{par}$ data in the channel axis and the $N_{non-zero}$ weights corresponding to the fetched group. A multiplexer is used to choose the pixels associated with non-zero weights. An improvement can be made by avoiding 0 value pixels. \textcite{zhu_efficient_2020} clock gated the computation involving pixels with 0 value to save energy.
 
-Second, to reduce the storage utilization, the zero-weights in a kernel must be discarded. The weights must be encoded in such a way that we keep both values and index of the weights to reduce the overhead of computing the output address.  Usually, kernels are encoded in a format derived from the \acrfull{csr} \cite{mao_exploring_2017}. For example, \cite{zhu_efficient_2020} modified the format to compress further and accelerate the inference.
+Second, to reduce the storage utilization, the zero-weights in a kernel must be discarded. The weights must be encoded in such a way that we keep both values and index of the weights to reduce the overhead of computing the output address. Usually, kernels are encoded in a format derived from the \acrfull{csr} \cite{mao_exploring_2017}. For example, \cite{zhu_efficient_2020} modified the format to compress further and accelerate the inference.
 
-Finally, the problem of \textbf{load-imbalance} can arise if the number of non-pruned weights is different in each \acrshort{pe} \cite{kim_zena_2018}. Therefore some \acrshort{pe} can finish before another one and it can lead to inefficiency. \textcite{zhu_efficient_2020, kang_accelerator-aware_2020} solved this by setting a uniform number of weights in each kernel or group of fetching weights.
+Finally, the problem of \textbf{load-imbalance} can arise if the number of non-pruned weights is different in each \acrshort{pe} \cite{kim_zena_2018}. Therefore some \acrshort{pe} can finish before another one and it can lead to inefficiency. \textcite{zhu_efficient_2020, kang_accelerator-aware_2020} solved this by setting an uniform number of weights in each kernel or group of fetching weights.
