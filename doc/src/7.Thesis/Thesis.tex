@@ -5,7 +5,7 @@ In the previous chapter, we introduced pruning, which reduces both size and comp
 
 To have an efficient \acrshort{fpga}-based accelerator, we should focus on implementing the most fine-grained pruning scheme possible to apply a high sparsity while limiting the loss of accuracy. This shows the advantage of using \acrshort{fpga} accelerator because, as said previously, this type of pruning scheme is not easily implementable on \acrshort{cpu} and \acrshort{gpu}
 
-In this chapter, we define a \acrshort{fpga}-based accelerator architecture that integrates both pruning and \acrshort{dsc} (see Section \ref{subs:dsc})to further reduce the number of weights and operations. To show its applicability, this architecture implements a state-of-the-art network that includes \acrshort{dsc} and targets embedded platforms: MobileNetV2 (see Section \ref{subs:mbv2} and \ref{subsec:mdopti}). The design objectives of the architecture and its associated pruning scheme are the following:
+In this chapter, we define a \acrshort{fpga}-based accelerator architecture that integrates both pruning and \acrshort{dsc} (see Section \ref{subs:dsc})to further reduce the number of weights and operations. To show its applicability, this architecture implements a state-of-the-art network that includes \acrshort{dsc} and targets embedded platforms: MobileNetV2 (see Section \ref{subs:mbv2} and \ref{subsec:mdopti}). Since the pruning can cause a degradation of the performance, we have to determine the design objectives of the architecture and its associated pruning scheme, which are the following:
 %
 \begin{enumerate}
     \item The pruning scheme is as fine-grained as possible.

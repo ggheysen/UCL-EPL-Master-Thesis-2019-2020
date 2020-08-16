@@ -1,6 +1,6 @@
-\chapter{Details of the different input and output signals of each components of the architecture} \label{appendix:sig}
+\chapter{Details of the different signals of each components of the architecture} \label{appendix:sig}
 We detail here the different input and output signals of each component of the overall architecture described in Section \ref{sec:implementation}. Each Table details the signals of one component.
-%
+
 \begin{table}[H]
     \begin{tabular}{c|c|c}
         Signals & Input/Output & Description \\
@@ -74,5 +74,74 @@ We detail here the different input and output signals of each component of the o
     \end{tabular}
     \caption{Input and output signals of the \acrshort{dma}}
     \label{tab:dma_sig}
+\end{table}
+%
+\begin{table}[H]
+    \begin{tabular}{c|c|c}
+        Signals & Input/Output & Description \\
+        %
+        \hline \hline
+        clk, rst & Input & Clock and Resest signals \\
+        %
+        \hline
+        $N_{if}$ & Input & Number of channels of the Input \acrshort{fm}\\
+        %
+        \hline
+        start & Input & \makecell{Tells the \acrshort{pe} that it can perform \\ the $1 \times 1$ convolution} \\
+        %
+        \hline
+        finish & Output & \makecell{Enabled by the \acrshort{pe} \\ indicating the intermediate \acrshort{fm} tile has been produced} \\
+        %
+        \hline
+        \makecell{$fmi_{data}$\\$kex_{data}$\\$kex_{pos}$} & Input & \makecell{Output data signal of the corresponding buffers}\\
+        %
+        \hline
+        \makecell{$fmi_{addr}$\\$kex_{addr}$} & Output & \makecell{Buffer address of the data to fetch}\\
+        %
+        \hline
+        \makecell{$res$\\$fmint_{addr}$\\$write$} & Output & \makecell{If $write$ enabled, write the signal $res$ \\into the FMINT buffer at\\address $fmint_{addr}$}\\
+        %
+        \hline
+        $Size_{KEX}$ & Input & \makecell{Size of one $1 \times 1$ \\ convolution kernel} \\
+        \hline \hline
+    \end{tabular}
+    \caption{Input and output signals of the $1 \times 1$ convolution \acrshort{pe}}
+    \label{tab:c11_sig}
+\end{table}
+%
+\begin{table}[H]
+    \begin{tabular}{c|c|c}
+        Signals & Input/Output & Description \\
+        %
+        \hline \hline
+        clk, rst & Input & Clock and Resest signals \\
+        %
+        \hline
+        \makecell{$N_{if}$\\$N_{of}$\\$N_{ox}$\\$N_{oy}$\\$T_{ox}$\\$T_{oy}$\\$S$} & Input & \makecell{Layer information required by the \acrshort{pe}}\\
+        %
+        \hline
+        start & Input & \makecell{Tells the \acrshort{pe} that it can perform \\ the \acrshort{dsc} convolution} \\
+        %
+        \hline
+        finish & Output & \makecell{Enabled by the \acrshort{pe} \\ indicating the output \acrshort{fm} tile has been produced} \\
+        %
+        \hline
+        \makecell{$fmint_{data}$\\$kdw_{data}$\\$kpw_{data}$\\$kpw_{pos}$} & Input & \makecell{Output data signal of the corresponding buffers}\\
+        %
+        \hline
+        \makecell{$fmint_{addr}$\\$kdw_{addr}$\\$kpw_{addr}$} & Output & \makecell{Buffer address of the data to fetch}\\
+        %
+        \hline
+        \makecell{$res$\\$fmo_{addr}$\\$write$} & Output & \makecell{If $write$ enabled, write the signal $res$ \\into the FMINT buffer at\\address $fmint_{addr}$}\\
+        %
+        \hline
+        $Size_{KEX}$ & Input & \makecell{Size of one $1 \times 1$ \\ convolution kernel} \\
+        %
+        \hline
+        first\_par\_i & Output & \makecell{Control signal telling the \acrshort{dsc} \acrshort{pe} \\ that loads its first fetching group \\ Therefore, it does not reads \\ the data in the output \acrshort{fm} buffer} \\
+        \hline \hline
+    \end{tabular}
+    \caption{Input and output signals of the \acrshort{dsc} convolution \acrshort{pe}}
+    \label{tab:c11_sig}
 \end{table}
 \newpage
