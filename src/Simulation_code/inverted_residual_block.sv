@@ -15,15 +15,15 @@ import irb_pkg::*;
 	# module definition 																																					 #
    ###################################################################################################################################
 */
-module inverted_residual_block(input 	logic clk, rst, start,
-										 input 	logic valid_extmem,
-										 input	logic [31:0] data_extmem,
-										 output 	logic finish,
-										 output 	logic request_extmem, write_extmem,
-										 output logic [31:0] addr_extmem,
-										 output logic [31:0] w_data,
-										 output logic finish_dma, finish_conv11, finish_dsc,
-										 output logic [63:0] measure_cnt_dma, measure_cnt_c11, measure_cnt_dsc 
+module inverted_residual_block(input 	logic clk, rst, start,									// clock, reset, and start signal of the accelerator
+										 input 	logic valid_extmem,								// Enabled when the external memory transfered data to the accelerator
+										 input	logic [31:0] data_extmem,						// Data sent from the external memory to the accelerator
+										 output 	logic finish,								// Signal enabled by the accelerator when it has finished its operation
+										 output 	logic request_extmem, write_extmem,			// enabled by the accelerator to initiate a read or write with the external memory
+										 output logic [31:0] addr_extmem,						// Address to which read or write data to the external memory
+										 output logic [31:0] w_data //,							// Data to be written to the external memory (or buffer)
+										 //output logic finish_dma, finish_conv11, finish_dsc, => Only used with the testbench
+										 //output logic [63:0] measure_cnt_dma, measure_cnt_c11, measure_cnt_dsc => Only used with the testbench
 									 );
 									 
 	/* 
@@ -32,15 +32,14 @@ module inverted_residual_block(input 	logic clk, rst, start,
 		###################################################################################################################################
 	*/
 	// Control signals
-	logic start_dma;//, finish_dma;
-	logic start_conv11;//, finish_conv11;
-	logic start_dsc;//, finish_dsc;
-	logic dma_r_fmo;
-	logic w_fmi, w_kex, w_kpw, w_kdw, w_fmint, w_fmo;
-	logic [2:0] op;
-	logic first_par_mc;
+	logic start_dma, start_conv11, start_dsc; 			// Start signals of the different component
+	logic finish_dma, finish_conv11, finish_dsc;		// Finish signals of the different component
+	logic dma_r_fmo; 									// DMA FMO buffer read signal
+	logic w_fmi, w_kex, w_kpw, w_kdw, w_fmint, w_fmo;	// Write signals of the different buffer
+	logic [2:0] op;										// DMA operations signal
+	logic first_par_mc;									// DSC first par signal
 	
-	// Addr
+	// Addr of the different buffers
 	logic [$clog2(FMI_N_ELEM+1) - 1:0] ram_addr_dma;
 	logic [$clog2(KEX_N_ELEM+1)-1:0] ram_addr_kex_conv11, ram_addr_kex;
 	logic [$clog2(FMI_N_ELEM+1)-1:0] ram_addr_fmi, ram_addr_fmi_conv11;
@@ -49,10 +48,12 @@ module inverted_residual_block(input 	logic clk, rst, start,
 	logic [$clog2(KPW_N_ELEM+1)-1:0] ram_addr_kpw, ram_addr_kpw_dsc; 	
 	logic [$clog2(FMO_N_ELEM+1)-1:0] ram_addr_fmo, ram_addr_fmo_dsc;
 	
-	// Data
+	// Data of the different buffers
 	logic [PX_W-1:0] res_fmi, res_fmint, px_fmint, res_kdw;
 	logic [PX_W-1:0] res_fmo, px_fmo;
 	logic [WG_W + $clog2(Npar+1) -1:0] res_kex, res_kpw;
+
+	// Layer information signals
 	logic [63:0] inf_conv;
 	logic [31:0] dma_info1, dma_mem_info1, dma_info2, dma_mem_info2;
 	logic [(2*$clog2(KEX_N_ELEM+1))-1:0] size_kex;
@@ -72,7 +73,7 @@ module inverted_residual_block(input 	logic clk, rst, start,
 							 .dma_info1(dma_info1), .dma_mem_info1(dma_mem_info1), 
 							 .dma_info2(dma_info2), .dma_mem_info2(dma_mem_info2),
 							 .first_par(first_par_mc),
-							 .measure_cnt_dma(measure_cnt_dma), .measure_cnt_c11(measure_cnt_c11), .measure_cnt_dsc(measure_cnt_dsc) 
+							 //.measure_cnt_dma(measure_cnt_dma), .measure_cnt_c11(measure_cnt_c11), .measure_cnt_dsc(measure_cnt_dsc) => Only used with the testbench
 							);
 	
 	// DMA
@@ -176,6 +177,7 @@ module inverted_residual_block(input 	logic clk, rst, start,
 		# Combinational logic																																				 #
 		###################################################################################################################################
 	*/
+	// Buffer read address selection
 	assign ram_addr_fmi 	 = w_fmi   ? ram_addr_dma[$clog2(FMI_N_ELEM+1)-1:0] : ram_addr_fmi_conv11 ;
 	assign ram_addr_fmint = w_fmint ? ram_addr_fmint_conv11 					  : ram_addr_fmint_dsc;
 	assign ram_addr_kex 	 = w_kex   ? ram_addr_dma[$clog2(KEX_N_ELEM+1)-1:0] : ram_addr_kex_conv11 ;

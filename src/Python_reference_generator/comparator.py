@@ -1,9 +1,27 @@
+ #!/usr/bin/env python
+
+""" Python code comparairing the obtained and expected results """
+
+###############################################################################
+#                                   IMPORT                                    #
+###############################################################################
 from fxpmath import Fxp
 import random
 import math
 import os
 import shutil
-# Size of the volumes
+
+###############################################################################
+#                          Authorship information                             #
+###############################################################################
+
+__author__ = "Guillaume Gheysen"
+
+###############################################################################
+#                          Global parameters                                  #
+###############################################################################
+
+# Layer information
 Nix = 7
 Niy = 7
 Nif = 32
@@ -12,6 +30,7 @@ Nkx = 3
 Nky = 3
 S = 1
 t = 6
+
 # Tiling params
 Tix = 7
 Tiy = 7
@@ -19,21 +38,26 @@ Tox = Tix
 Toy = Tiy
 Tix = Tox + Nkx - 1
 Tiy = Toy + Nky - 1
+
 # Calculated volume
 Nox = Nix // S
 Noy = Niy // S
+
 # Pruning param
 Npar = 8
 Nnp = 2
+
 # Calculated parameters related to Pruning
 Ngr = Nif//Npar
 Ngrint = (Nif * t) // Npar
+
 # Offset
 off_fmi = 2 * 2**20
 off_fmo = 4 * 2**20
 off_kex = 6 * 2**20
 off_kpw = 26 * 2**20
 off_kdw = 44 * 2**20
+
 # Bitwidth
 BW_px = 16
 BW_wg = 16
@@ -42,8 +66,15 @@ fr_wg = 12
 BW_pos = math.ceil(math.log2(Npar))
 Ngr = (Nif // Npar) + ((Nif % Npar) % 2)
 
+# threshold
+threshold = 1
+
 fmo             = [[[ 0 for _ in range(Nox)] for _ in range(Noy)] for _ in range(Nof)]
 fmo_obtained    = [[[ 0 for _ in range(Nox)] for _ in range(Noy)] for _ in range(Nof)]
+
+###############################################################################
+#                          Script                                             #
+###############################################################################
 
 # A : Fill FMI
 with open("fmo.txt", "r") as file1:
@@ -69,13 +100,15 @@ with open("result_fmo.txt", "r") as file2:
                         # Check pos
                         if (not pos == f*Nox*Noy + y * Nox + ty * Toy * Nox + x + tx * Tox):
                             input("Error: expected " + str(f*Nox*Noy + y * Nox + ty * Toy * Nox + x + tx * Tox) + ", obtained " + str(pos))
+
+# Compute the number of correct & incorrect output
 cnt_error = 0
 cnt_nerror = 0
 for f in range(0, Nof):
     for y in range(0, Noy):
         for x in range(0, Nox):
             diff = abs(fmo[f][y][x]() - fmo_obtained[f][y][x]())
-            if (diff > 1):
+            if (diff > threshold):
                 cnt_error = cnt_error + 1
             else:
                 cnt_nerror = cnt_nerror + 1

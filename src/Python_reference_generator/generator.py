@@ -1,8 +1,27 @@
+ #!/usr/bin/env python
+
+""" Python code generating a .txt reference for the output of the simulated layer """
+
+###############################################################################
+#                                   IMPORT                                    #
+###############################################################################
+
 from fxpmath import Fxp
 import random
 import math
 import os
 import shutil
+
+###############################################################################
+#                          Authorship information                             #
+###############################################################################
+
+__author__ = "Guillaume Gheysen"
+
+###############################################################################
+#                          Global parameters                                  #
+###############################################################################
+
 # Size of the volumes
 Nix = 7
 Niy = 7
@@ -26,7 +45,7 @@ Noy = Niy // S
 Npar = 2
 Nnp = 2
 # Calculated parameters related to Pruning
-Ngr = Nif//Npar
+Ngr = (Nif // Npar)
 Ngrint = (Nif * t) // Npar
 # Offset
 off_fmi = 2 * 2**20
@@ -40,8 +59,9 @@ BW_wg = 16
 fr_px = 12
 fr_wg = 12
 BW_pos = math.ceil(math.log2(Npar))
-Ngr = (Nif // Npar) + ((Nif % Npar) % 2)
-#
+
+
+# generating the input & weights
 fmi     = [[[Fxp(random.randint(0, 255)/255, True, BW_px, fr_px, overflow = 'wrap')  for _ in range(Nix)] for _ in range(Niy)] for _ in range(Nif)]
 
 fmo_res = [[[Fxp(0, True, BW_px, fr_px, overflow = 'wrap')                           for _ in range(Nox)] for _ in range(Noy)] for _ in range(Nof)]
@@ -67,8 +87,8 @@ os.mkdir("Tile/fmint_tile")
 os.mkdir("Tile/fmo_tile")
 os.mkdir("Tile/conv_kdw_tile")
 
-# Generate content
-
+# Generating .txt files
+# 1: layer information
 with open("inf_conv.txt", "w") as f:
     stri = ((S-1) << 19) + (t << 16) + (Niy << 8) + (Nix)
     stri = ('0' * (8 - len(hex(stri)[2:])))+ hex(stri)[2:]
