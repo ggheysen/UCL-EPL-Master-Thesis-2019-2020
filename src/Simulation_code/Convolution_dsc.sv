@@ -14,22 +14,22 @@ import irb_pkg::*;
 	# module definition 																																					 #
    ###################################################################################################################################
 */
-module Convolution_dsc(input logic clk, rst, start, S,
-							  input logic first_par_i,
-							  input logic signed [PX_W - 1:0] fmint_data,
-							  input logic signed [PX_W - 1:0] fmo_data,
-							  input logic signed [WG_W -1:0] kdw_data,
-							  input logic signed [WG_W -1:0] kpw_data,
-							  input logic [$clog2(Npar+1) - 1:0] kpw_pos,
-							  input logic [10:0] Nif, Nof, 
-							  input logic [7:0] Nox, Noy,
-							  input logic [7:0] Tox, Toy, 
-							  output logic [$clog2(FMO_N_ELEM+1)-1:0] fmo_addr,
-							  output logic [$clog2(KDW_N_ELEM+1)-1:0] kdw_addr,
-							  output logic [$clog2(KPW_N_ELEM+1)-1:0] kpw_addr,
-							  output logic [$clog2(FMINT_N_ELEM+1)-1:0] fmint_addr,
-							  output logic finish, write,
-							  output logic signed [PX_W - 1:0] res
+module Convolution_dsc(input logic clk, rst, start, S, 									// clock, reset, start, and Stride  the module signals
+							  input logic first_par_i,									// Control Signal enabled if the PE must not load the partial sum in the FMO buffer
+							  input logic signed [PX_W - 1:0] fmint_data,   			// Data sent from the FMINT Buffer
+							  input logic signed [PX_W - 1:0] fmo_data,					// Data sent from the FMO Buffer
+							  input logic signed [WG_W -1:0] kdw_data,					// Data sent from the KDW Buffer
+							  input logic signed [WG_W -1:0] kpw_data,					// Data sent from the KPW Buffer (value of weight)
+							  input logic [$clog2(Npar+1) - 1:0] kpw_pos,				// Data sent from the KPW Buffer (pos of weight)
+							  input logic [10:0] Nif, Nof, 								// Layer information
+							  input logic [7:0] Nox, Noy,								// Layer information
+							  input logic [7:0] Tox, Toy, 								// Layer information
+							  output logic [$clog2(FMO_N_ELEM+1)-1:0] fmo_addr,			// Address of the fmo buffer to read & write the partial results
+							  output logic [$clog2(KDW_N_ELEM+1)-1:0] kdw_addr,			// Address of the kdw buffer to read the weights
+							  output logic [$clog2(KPW_N_ELEM+1)-1:0] kpw_addr,			// Address of the kpw buffer to read the weights
+							  output logic [$clog2(FMINT_N_ELEM+1)-1:0] fmint_addr,		// Address of the fmint buffer to read results
+							  output logic finish, write,								// Finish enabled when the module has finished its computation and write enabled if intermediate results can be written to main memory
+							  output logic signed [PX_W - 1:0] res						// output pixel to be written to fmo buffer
 							 );
 	
 	/* 
@@ -38,46 +38,45 @@ module Convolution_dsc(input logic clk, rst, start, S,
 		###################################################################################################################################
 	*/
 	// States
-	typedef enum logic [3:0] {IDLE,             
-									  FINISHED,					// State telling the DMA has finished its transaction
-									  LOAD_K_DW,
-									  LOAD_FMINT,
-									  DW_CONV_MUL,
-									  DW_CONV_ADD,
-									  LOAD_K_PW,
-									  PW_CONV,
-									  WRITE
+	typedef enum logic [3:0] {IDLE,             				// Idle state
+									  FINISHED,					// State telling the PE has finished its operation
+									  LOAD_K_DW,				// State loading the depthwise weights
+									  LOAD_FMINT,				// State loading the intermediate pixels
+									  DW_CONV_MUL,				// State performing the first part of the depthwise convolution (multiplication)
+									  DW_CONV_ADD,				// State performing the second part of the depthwise convolution (add)
+									  LOAD_K_PW,				// State loading the pointwise weights
+									  PW_CONV,					// State performing the pointwise convolution
+									  WRITE						// State writing results to output buffer
 									  } statetype;
 	statetype state, state_n; // Variables containing the state
 	
 	//Banked registers
-	logic signed [PX_W-1 : 0] fmint_px 				[0 : (Nkx * Nky * Npar) - 1];
-	logic signed [WG_W-1 : 0] dw_wg    				[0 : (Nkx * Nky * Npar) - 1];
-	logic signed [PX_W-1 : 0] res_dw   				[0 : Npar - 1];
-	logic signed [PX_W-1 : 0] res_dw_n 				[0 : Npar - 1];
-	logic signed [PX_W-1 : 0] res_dw_mul			[0 : (Nkx * Nky * Npar) - 1];
-	logic signed [PX_W-1 : 0] res_dw_mul_n 		[0 : (Nkx * Nky * Npar) - 1];
-	logic signed [PX_W-1 : 0] res_dw_rel			[0 : Npar - 1];
-	logic signed [PX_W-1 : 0] res_dw_rel_n			[0 : Npar - 1];
-	logic signed [WG_W-1 : 0] pw_wg					[0 : Nnp - 1];
-	
-	logic signed [$clog2(Npar+1)-1 : 0] pw_pos		[0 : Nnp - 1];
+	logic signed [PX_W-1 : 0] fmint_px 				[0 : (Nkx * Nky * Npar) - 1];	// Registers containing the intermediate pixels  (for next depthwise convolution)
+	logic signed [WG_W-1 : 0] dw_wg    				[0 : (Nkx * Nky * Npar) - 1];	// Registers containing the depthwise weights  (for next depthwise convolution)
+	logic signed [PX_W-1 : 0] res_dw_mul			[0 : (Nkx * Nky * Npar) - 1];	// Registers containing the resulting pixels of the first step of depthwise convolution
+	logic signed [PX_W-1 : 0] res_dw   				[0 : Npar - 1];					// Registers containing the resulting pixels of the depthwise convolution		
+	logic signed [PX_W-1 : 0] res_dw_rel			[0 : Npar - 1];					// Registers containing the resulting pixels of activation function of the depthwise convolution
+	logic signed [WG_W-1 : 0] pw_wg					[0 : Nnp - 1];					// Registers containing the pointwise weights (for next pointwise convolution)
+	logic signed [$clog2(Npar+1)-1 : 0] pw_pos		[0 : Nnp - 1];					// Registers containing the pointwise position
 	// Registers
-	logic [PX_W-1 : 0] sum;
-	logic load_fmint, load_dw, load_pw;
-	logic [$clog2(Npar+1)-1:0] kf, tintf;
-	logic [$clog2(Nky+1)-1:0] ky, tinty;
-	logic [$clog2(Nkx+1)-1:0] kx, tintx;
-	logic [$clog2(Tox_T+1)-1:0] tox;
-	logic [$clog2(Toy_T+1)-1:0] toy;
-	logic [$clog2(Tof+1)-1:0] tof;
-	logic [$clog2(KDW_N_ELEM+1)-1:0] addr_k_dw;
-	logic [$clog2(KPW_N_ELEM+1)-1:0] addr_k_pw, tkpw;
-	logic [$clog2(FMO_N_ELEM+1)-1:0] addr_fmo_x, addr_fmo_y, addr_fmo_f;
-	logic [$clog2(FMINT_N_ELEM+1)-1:0] addr_fmint_x, addr_fmint_y, addr_fmint_f;
-	logic [$clog2(FMINT_N_ELEM+1)-1:0] addr_fmint_x_ref, addr_fmint_y_ref;
+	logic [PX_W-1 : 0] sum;															// Result of the pointwise convolution		
+	logic load_fmint, load_dw, load_pw;												// Signals telling if the banked registers need to load the next value
+	logic [$clog2(Npar+1)-1:0] kf, tintf;											// Control signals (depthwise convolution, intermediate fm channels and corresponding depthwise kernel)
+	logic [$clog2(Nky+1)-1:0] ky, tinty;											// Control signals (depthwise convolution, intermediate fm height and corresponding depthwise kernel height)
+	logic [$clog2(Nkx+1)-1:0] kx, tintx;											// Control signals (depthwise convolution, intermediate fm width and corresponding depthwise kernel width)
+	logic [$clog2(Tox_T+1)-1:0] tox;												// Control signals (output fm width)
+	logic [$clog2(Toy_T+1)-1:0] toy;												// Control signals (output fm height)
+	logic [$clog2(Tof+1)-1:0] tof;													// Control signals (output fm channel)
+	logic [$clog2(KDW_N_ELEM+1)-1:0] addr_k_dw;										// Address of KDW buffer signals
+	logic [$clog2(KPW_N_ELEM+1)-1:0] addr_k_pw, tkpw;								// Address of KPW buffer signals
+	logic [$clog2(FMO_N_ELEM+1)-1:0] addr_fmo_x, addr_fmo_y, addr_fmo_f;			// Addresses of FMO buffer signals
+	logic [$clog2(FMINT_N_ELEM+1)-1:0] addr_fmint_x, addr_fmint_y, addr_fmint_f;	// Addresses of FMINT buffer signals 
+	logic [$clog2(FMINT_N_ELEM+1)-1:0] addr_fmint_x_ref, addr_fmint_y_ref;			// Address references of FMINT buffer signals
 	logic first_par;
 	// Next value for registers 
+	logic signed [PX_W-1 : 0] res_dw_n 				[0 : Npar - 1];
+	logic signed [PX_W-1 : 0] res_dw_mul_n 		[0 : (Nkx * Nky * Npar) - 1];
+	logic signed [PX_W-1 : 0] res_dw_rel_n			[0 : Npar - 1];
 	logic [PX_W-1 : 0] sum_n;
 	logic load_fmint_n, load_dw_n, load_pw_n;
 	logic [$clog2(Npar+1)-1:0] kf_n, tintf_n;
@@ -241,12 +240,12 @@ module Convolution_dsc(input logic clk, rst, start, S,
 			
 			// Load into registers the pixels
 			LOAD_K_DW: begin
-				if (kx == Nkx) begin
+				if (kx == Nkx) begin // One ligne read, go to next line
 					kx_n = 1;
-					if (ky == Nky) begin
+					if (ky == Nky) begin // One kernel loaded, go to next kernel
 						ky_n = 1;
-						if (kf == Npar) begin
-							//Set new state
+						if (kf == Npar) begin // All kernels loaded
+							// Set new state
 							state_n = LOAD_FMINT;
 							// set the output pixel to produce and the associated input pixel
 							tintx_n = 1;
@@ -261,28 +260,36 @@ module Convolution_dsc(input logic clk, rst, start, S,
 							addr_fmint_y_ref_n = '0;
 						end
 						else begin
-							kf_n = kf + load_dw;
-							state_n = LOAD_K_DW;
+							// Set new state & enable load
 							load_dw_n = 1;
+							state_n = LOAD_K_DW;
+							// Set the addresses & control signals
+							kf_n = kf + load_dw;
 							addr_k_dw_n = addr_k_dw + {{$clog2(KDW_N_ELEM+1) - 1{1'b0}}, 1'b1};
 						end
 					end
 					else begin
-						ky_n = ky + load_dw;
+						// Set new state & enable load
 						state_n = LOAD_K_DW;
 						load_dw_n = 1;
+						// Set the addresses & control signals
+						ky_n = ky + load_dw;
 						addr_k_dw_n = addr_k_dw +  {{$clog2(KDW_N_ELEM+1) - 1{1'b0}}, 1'b1};
 					end
 				end
 				else if ((kx + 1 == Nkx) && (ky == Nky) && (kf == Npar)) begin // Avoid address overflow
-					kx_n = kx + load_dw;
+					// Set new state & enable load
 					state_n = LOAD_K_DW;
 					load_dw_n = 1;
+					// Set the addresses & control signals 
+					kx_n = kx + load_dw;
 				end
 				else begin
-					kx_n = kx + load_dw;
+					// Set new state & enable load
 					state_n = LOAD_K_DW;
 					load_dw_n = 1;
+					// Set the addresses & control signals
+					kx_n = kx + load_dw;
 					addr_k_dw_n = addr_k_dw + {{$clog2(KDW_N_ELEM+1) - 1{1'b0}}, 1'b1}; 
 				end
 			end
@@ -333,7 +340,7 @@ module Convolution_dsc(input logic clk, rst, start, S,
 				end
 			end
 			
-			// DW convolution
+			// DW convolution (step 1)
 			DW_CONV_MUL: begin
 				state_n = DW_CONV_ADD;
 				for(int f = 0; f < Npar ; f=f+1) begin
@@ -355,6 +362,7 @@ module Convolution_dsc(input logic clk, rst, start, S,
 				end
 			end
 			
+			// DW convolution (step 1)
 			DW_CONV_ADD: begin
 				state_n = LOAD_K_PW;
 				addr_fmo_f_n = '0;
@@ -374,26 +382,34 @@ module Convolution_dsc(input logic clk, rst, start, S,
 			LOAD_K_PW: begin
 				if (tkpw >= Nnp) begin
 					if (tkpw == 1) begin
+						// enable load
 						load_pw_n = 1;
+						// Set the addresses & control signals 
 						tkpw_n = tkpw + {{$clog2(KPW_N_ELEM+1) - 1{1'b0}}, 1'b1};
 					end
 					else begin
+						// Set new state
 						state_n = PW_CONV;
 					end
 				end
 				else if (tkpw +1 == Nnp) begin
+					// Set new state & enable load
 					state_n = LOAD_K_PW;
+					load_pw_n = 1;
+					// Set the addresses & control signals 
 					tkpw_n = tkpw + load_pw;
 					addr_k_pw_n = addr_k_pw + {{$clog2(KPW_N_ELEM+1) - 1{1'b0}}, ~load_pw}; 
-					load_pw_n = 1;
 				end
 				else begin
+					// Set new state & enable load
 					state_n = LOAD_K_PW;
+					load_pw_n = 1;
+					// Set the addresses & control signals 
 					addr_k_pw_n = addr_k_pw + {{$clog2(KPW_N_ELEM+1) - 1{1'b0}}, 1'b1};
 					tkpw_n = tkpw + load_pw;
-					load_pw_n = 1;
 				end
 			end
+
 			// PW CONVOLUTION
 			PW_CONV: begin
 				state_n = WRITE;
@@ -409,60 +425,63 @@ module Convolution_dsc(input logic clk, rst, start, S,
 					logic signed [$clog2(Npar+1)-1:0] cur_pos;
 					logic signed [PX_W + WG_W - 1 : 0] int_res;
 					logic signed [PX_W - 1 : 0] trunc_res;
-					//logic signed [PX_W - 1 : 0] round_res;
-					// COmputation
+					// Computation
 					cur_pos[$clog2(Npar+1)-1:0] = pw_pos[np][$clog2(Npar+1) -1 :0];
 					cur_val = res_dw_rel[cur_pos[$clog2(Npar+1)-1:0]][PX_W - 1 : 0];
 					cur_wg = pw_wg[np][WG_W - 1:0];
 					int_res = cur_val * cur_wg;
 					trunc_res = int_res[PX_W + WG_W - 4 - 1: PX_W - 4];
-					//round_res = int_res[PX_W + WG_W - 4 - 1];
-					sum_n = sum_n + trunc_res;// + round_res; 
+					sum_n = sum_n + trunc_res;
 				end
 			end
+
 			// Write Result to FMO buffer
 			WRITE: begin
-				if (tof == Nof) begin
+				if (tof == Nof) begin // We wrote all channel of output fm tile
 					addr_fmo_f_n = '0; tof_n = 1; addr_fmint_f_n = '0;
-					if(tox == Tox) begin
+					if(tox == Tox) begin // We wrote the a line of the output fm tile
 						addr_fmo_x_n = '0; tox_n = 1; addr_fmint_x_n = '0; addr_fmint_x_ref_n = '0;
-						if(toy == Toy) begin
+						if(toy == Toy) begin // We wrote the output fm tile
+							// Set finish states
 							state_n = FINISHED;
 						end
 						else begin
-							addr_fmo_y_n = addr_fmo_y + Tox; 
-							toy_n = toy + {{$clog2(Tox_T+1) - 1{1'b0}}, 1'b1};
-							state_n = LOAD_FMINT;
 							// Init the load
+							state_n = LOAD_FMINT;
 							// set the output pixel to produce and the associated input pixel
 							tintx_n = 1;
 							tinty_n = 1;
 							tintf_n = 1;
+							toy_n = toy + {{$clog2(Tox_T+1) - 1{1'b0}}, 1'b1};
 							// Set the addresses
 							addr_fmint_y_ref_n = addr_fmint_y_ref + (Tix_T[$clog2(FMINT_N_ELEM+1)-1:0] << S); 
 							addr_fmint_y_n     = addr_fmint_y     + (Tix_T[$clog2(FMINT_N_ELEM+1)-1:0] << S);
+							addr_fmo_y_n = addr_fmo_y + Tox; 
 						end
 					end
 					else begin
-						tox_n = tox + {{$clog2(Tox_T+1) - 1{1'b0}}, 1'b1};
-						state_n = LOAD_FMINT;
-						addr_fmo_x_n = addr_fmo_x + {{$clog2(FMO_N_ELEM+1) - 1{1'b0}}, 1'b1};
 						// Init the load
-						// set the output pixel to produce and the associated input pixel
+						state_n = LOAD_FMINT;
+						// Set the output pixel to produce and the associated input pixel
 						tintx_n = 1;
 						tinty_n = 1;
 						tintf_n = 1;
+						tox_n = tox + {{$clog2(Tox_T+1) - 1{1'b0}}, 1'b1};
 						// Set the addresses
 						addr_fmint_x_ref_n = addr_fmint_x_ref + ({{$clog2(FMINT_N_ELEM+1) - 1{1'b0}}, 1'b1} << S);
 						addr_fmint_x_n     = addr_fmint_x     + ({{$clog2(FMINT_N_ELEM+1) - 1{1'b0}}, 1'b1} << S);
+						addr_fmo_x_n = addr_fmo_x + {{$clog2(FMO_N_ELEM+1) - 1{1'b0}}, 1'b1};
 					end
 				end
 				else begin
+					// Init the load
+					state_n = LOAD_K_PW;
+					// Set the output pixel to produce and the associated input pixel
+					tkpw_n = 1;
+					tof_n = tof + {{$clog2(Tof+1) - 1{1'b0}}, 1'b1};
+					// Set the addresses
 					addr_fmo_f_n = addr_fmo_f + Size_FMO_T[$clog2(FMO_N_ELEM+1)-1:0];
 					addr_k_pw_n = addr_k_pw + {{$clog2(KPW_N_ELEM+1) - 1{1'b0}}, 1'b1}; 
-					tkpw_n = 1;
-					state_n = LOAD_K_PW;
-					tof_n = tof + {{$clog2(Tof+1) - 1{1'b0}}, 1'b1};
 				end
 			end
 			
@@ -477,9 +496,11 @@ module Convolution_dsc(input logic clk, rst, start, S,
 endmodule
 /* 
 	###################################################################################################################################
-	# Additional modules																																				 #
+	# Additional modules : shift registers holding the data for the current convolution	& RELU6 function																																			 #
 	###################################################################################################################################
 */
+
+
 module SHIFT_REGISTER_FMINT(
 								 input logic clk, load,
 								 input logic signed[PX_W - 1:0] data,

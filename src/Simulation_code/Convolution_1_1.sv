@@ -22,10 +22,10 @@ module Convolution_1_1(input logic clk, rst, start,								// clock, reset and s
 							  input logic [10:0] Nif,										//	Number of input channels
 							  input logic [$clog2(KEX_N_ELEM+1)-1:0]	Size_KEX,		// Size of one expasion kernel (number of element)
 							  output logic [$clog2(FMI_N_ELEM+1)-1:0] fmi_addr,		// Address of the fmi buffer to read the pixels
-							  output logic [$clog2(KEX_N_ELEM+1)-1:0] kex_addr,		// Address of the fmi buffer to read the weights
-							  output logic [$clog2(FMINT_N_ELEM+1)-1:0] fmint_addr,	// Address of the fmint buffer to write resutls
+							  output logic [$clog2(KEX_N_ELEM+1)-1:0] kex_addr,		// Address of the kex buffer to read the weights
+							  output logic [$clog2(FMINT_N_ELEM+1)-1:0] fmint_addr,	// Address of the fmint buffer to write results
 							  output logic finish, write,									// Finish enabled when the module has finished its computation and write enabled if intermediate results can be written to main memory
-							  output logic signed [PX_W - 1:0] res						// output pixel to be written to fmint buffer
+							  output logic signed [PX_W - 1:0] res						// intermediate pixel to be written to fmint buffer
 							 );
 	
 	/* 
@@ -34,11 +34,11 @@ module Convolution_1_1(input logic clk, rst, start,								// clock, reset and s
 		###################################################################################################################################
 	*/
 	// States
-	typedef enum logic [2:0] {IDLE,             
-									  FINISHED,					// State telling the DMA has finished its transaction
-									  LOAD_DATA,
-									  COMPUTATION,
-									  WRITE
+	typedef enum logic [2:0] {IDLE,             	// Idle state
+									  FINISHED,		// State telling the PE has finished its operation				
+									  LOAD_DATA,	// State loading the input pixels and weights
+									  COMPUTATION,	// State performing the 1*1 convolution
+									  WRITE			// State writing results to intermediate buffer
 									  } statetype;
 	statetype state, state_n; // Variables containing the state
 	
@@ -214,15 +214,13 @@ module Convolution_1_1(input logic clk, rst, start,								// clock, reset and s
 					logic signed [$clog2(Npar+1):0] cur_pos;
 					logic signed [(2*PX_W) - 1 : 0] int_res;
 					logic signed [PX_W - 1 : 0] trunc_res;
-					//logic signed [PX_W - 1 : 0] round_res;
 					// Computation
 					cur_pos[$clog2(Npar+1)-1:0] = pos[i][$clog2(Npar+1) -1 :0];
 					cur_val = px[cur_pos[$clog2(Npar+1) - 1:0]][PX_W - 1 : 0];
 					cur_wg = wg[i][WG_W - 1:0]; 
 					int_res = cur_val * cur_wg;
 					trunc_res = int_res[(2*PX_W) - 4 - 1: PX_W - 4];
-					//round_res = int_res[(2*PX_W) - 4 - 1];
-					sum_n = sum_n + trunc_res;// + round_res; 
+					sum_n = sum_n + trunc_res;
 				end
 				
 				if(f_fmi == Nif) begin
@@ -293,7 +291,7 @@ module Convolution_1_1(input logic clk, rst, start,								// clock, reset and s
 endmodule
 /* 
 	###################################################################################################################################
-	# Additional modules																																				 #
+	# Additional modules: shift registers holding the data for the current convolution & RELU6 function																																			 #
 	###################################################################################################################################
 */
 module SHIFT_REGISTER_PX(
