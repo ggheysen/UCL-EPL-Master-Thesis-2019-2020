@@ -41,7 +41,7 @@ Table \ref{tab:param} lists the parameters chosen to produce the results. Since 
 \end{table}
 %
 \subsection{Results} \label{subs:res}
-In this section are presented the results obtained from the functional simulation of the design using parameters from Table \ref{tab:param}. First, we present the comparason between expected and obtained output \acrshort{fm}, to check if the proposed architecture provides a logically correct output (fourth design objective). Second, we compare the performance of the network by modifying the pruning parameters to observe if an increase in the sparsity improves the performance of the architecture (fifth objective). Finally, we look at the resource usage of the network to see if the design can be implemented on the target platform.
+In this section are presented the results obtained from the functional simulation of the design using parameters from Table \ref{tab:param}. First, we present the comparison between expected and obtained output \acrshort{fm}, to check if the proposed architecture provides a logically correct output (fourth design objective). Second, we compare the performance of the network by modifying the pruning parameters to observe if an increase in the sparsity improves the performance of the architecture (fifth objective). Finally, we look at the resource usage of the network to see if the design can be implemented on the target platform.
 %
 \subsubsection{Logical correctness of the design}
 %
@@ -167,7 +167,7 @@ We can deduce, from the results of the compilation results, some relevant inform
     \item The compilation proves the design can be implemented on the target platform.
     \item The increase in $N_{np}$ and $N_{par}$ means bigger on-chip buffers and it is confirmed in the Table.
     \item An increase in the number of $N_{np}$ decreases the operational frequency of the \acrshort{fpga}. This makes sense since an increase in $N_{np}$ means an increase in the number of additions in the convolution. Therefore the critical path becomes larger and the frequency is reduced.
-    \item An increase in the number of $N_{par}$ increases also the number of \acrshort{dsp}. This is explained by the depthwise \acrshort{pe} who must performs $N_{par} \times N_{ky} \times N_{kx}$ \acrshort{mac}. According to \textcite{bai_cnn_2018}, the tree adder in Figure \ref{fig:dsc_hardware} is responsible for the limiting frequency. As $N_{par}$ grows, the size of the adder tree increases and the frequency is more limited because the \acrshort{fpga} does not have enough \acrshort{dsp} which are suited for such operation (when $N_{par} = 16$, all \acrshort{dsp} were fully used).
+    \item An increase in the number of $N_{par}$ increases also the number of \acrshort{dsp}. This is explained by the depthwise \acrshort{pe} who must perform $N_{par} \times N_{ky} \times N_{kx}$ \acrshort{mac}. According to \textcite{bai_cnn_2018}, the tree adder in Figure \ref{fig:dsc_hardware} is responsible for the limiting frequency. As $N_{par}$ grows, the size of the adder tree increases and the frequency is more limited because the \acrshort{fpga} does not have enough \acrshort{dsp} which are suited for such operation (when $N_{par} = 16$, all \acrshort{dsp} were fully used).
 \end{itemize}
 %
 \subsection{Discussion} \label{subs:discus}
