@@ -272,18 +272,6 @@
 					"strict" : false
 				},
 				{
-					"name" : "finish_dma",
-					"strict" : false
-				},
-				{
-					"name" : "finish_dsc",
-					"strict" : false
-				},
-				{
-					"name" : "finish_conv11",
-					"strict" : false
-				},
-				{
 					"name" : "clk",
 					"strict" : false
 				},
