@@ -6,7 +6,7 @@ We detail here the different input and output signals of each component of the o
         Signals & Input/Output & Description \\
         %
         \hline \hline
-        clk, rst & Input & Clock and Resest signals \\
+        clk, rst & Input & Clock and Reset signals \\
         %
         \hline
         inf\_conv & Input & convolution information of the layer\\
@@ -24,10 +24,10 @@ We detail here the different input and output signals of each component of the o
         \makecell{$f_{dma}$ \\$f_{c11}$\\$f_{dsc}$} & Input & \makecell{Finishing signals telling that the corresponding \\ component has accomplished its operation}\\
         %
         \hline
-        \makecell{$dma_{op}$\\$dma_{info_1}$\\$dma_{info-mem_1}$\\$dma_{info_2}$\\$dma_{info-mem_2}$} & Output & \makecell{Since the \acrshort{dma} can handle multiple operations,\\ theses signals specifies which operations to perform \\ and which tile and its external memory address to fetch}\\
+        \makecell{$dma_{op}$\\$dma_{info_1}$\\$dma_{info-mem_1}$\\$dma_{info_2}$\\$dma_{info-mem_2}$} & Output & \makecell{Since the \acrshort{dma} can handle multiple operations,\\ theses signals specify which operations to perform \\ and which tile and its external memory address to fetch}\\
         %
         \hline
-        first\_par & Output & \makecell{Control signal telling the \acrshort{dsc} \acrshort{pe} \\ that loads its first fetching group \\ Therefore, it does not reads \\ the data in the output \acrshort{fm} buffer} \\
+        first\_par & Output & \makecell{Control signal telling the \acrshort{dsc} \acrshort{pe} \\ that loads its first fetching group \\ Therefore, it does not read \\ the data in the output \acrshort{fm} buffer} \\
         \hline \hline
     \end{tabular}
     \caption{Input and output signals of the main controller}
@@ -39,7 +39,7 @@ We detail here the different input and output signals of each component of the o
         Signals & Input/Output & Description \\
         %
         \hline \hline
-        clk, rst & Input & Clock and Resest signals \\
+        clk, rst & Input & Clock and Reset signals \\
         %
         \hline
         inf\_conv & Output & \makecell{Convolution information of the layer \\ fetched from the external memory}\\
@@ -51,7 +51,7 @@ We detail here the different input and output signals of each component of the o
         \makecell{$r_{valid\_extmem}$ \\ $data_{extmem}$} & Input & \makecell{If enabled, the signal $data_{extmem}$ corresponds \\ to a data fetched from external memory} \\
         %
         \hline
-        \makecell{$r_{request\_extmem}$ \\ $addr_{extmem}$} & Output & \makecell{If enablded, requesting a data transfer \\ at address $addr_{extmem}$}\\
+        \makecell{$r_{request\_extmem}$ \\ $addr_{extmem}$} & Output & \makecell{If enabled, requesting a data transfer \\ at address $addr_{extmem}$}\\
         %
         \hline
         $e_{op}$ & Output & \makecell{Enabled by the \acrshort{dma} \\ indicating the transaction is done}\\
@@ -69,7 +69,7 @@ We detail here the different input and output signals of each component of the o
         $r_{fmo-buff}$ & Output & \makecell{Enabled by the \acrshort{dma} when it reads\\ data from the FMO buffer}\\
         %
         \hline
-        \makecell{$tx_{i}$\\$x_{mem-i}$\\$ty_{i}$\\$ty_{mem-i}$} & Input & \makecell{Theses signals specifies which tile \\ and its external memory address to fetc \\ (the data type is specified by $op$)}\\
+        \makecell{$tx_{i}$\\$x_{mem-i}$\\$ty_{i}$\\$ty_{mem-i}$} & Input & \makecell{Theses signals specify which tile \\ and its external memory address to fetch \\ (the data type is specified by $op$)}\\
         \hline \hline
     \end{tabular}
     \caption{Input and output signals of the \acrshort{dma}}
@@ -81,7 +81,7 @@ We detail here the different input and output signals of each component of the o
         Signals & Input/Output & Description \\
         %
         \hline \hline
-        clk, rst & Input & Clock and Resest signals \\
+        clk, rst & Input & Clock and Reset signals \\
         %
         \hline
         $N_{if}$ & Input & Number of channels of the Input \acrshort{fm}\\
@@ -114,7 +114,7 @@ We detail here the different input and output signals of each component of the o
         Signals & Input/Output & Description \\
         %
         \hline \hline
-        clk, rst & Input & Clock and Resest signals \\
+        clk, rst & Input & Clock and Reset signals \\
         %
         \hline
         \makecell{$N_{if}$\\$N_{of}$\\$N_{ox}$\\$N_{oy}$\\$T_{ox}$\\$T_{oy}$\\$S$} & Input & \makecell{Layer information required by the \acrshort{pe}}\\
@@ -138,7 +138,7 @@ We detail here the different input and output signals of each component of the o
         $Size_{KEX}$ & Input & \makecell{Size of one $1 \times 1$ \\ convolution kernel} \\
         %
         \hline
-        first\_par\_i & Output & \makecell{Control signal telling the \acrshort{dsc} \acrshort{pe} \\ that loads its first fetching group \\ Therefore, it does not reads \\ the data in the output \acrshort{fm} buffer} \\
+        first\_par\_i & Output & \makecell{Control signal telling the \acrshort{dsc} \acrshort{pe} \\ that loads its first fetching group \\ Therefore, it does not read \\ the data in the output \acrshort{fm} buffer} \\
         \hline \hline
     \end{tabular}
     \caption{Input and output signals of the \acrshort{dsc} convolution \acrshort{pe}}
