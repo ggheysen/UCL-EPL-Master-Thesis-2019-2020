@@ -71,7 +71,7 @@ Except for $1 \times 1$ kernel, a spatial reduction between the input and output
 The sliding movement of the window on the input \acrshort{fm} is called the \textit{stride} and is initially set to 1. The stride can be increased to decrease the spatial dimensions of the output FM \cite{liu_fpga-based_2019}. For example, if padding and a stride of 2 are used: $\frac{N_{ix}}{N_{ox}} = \frac{N_{iy}}{N_{oy}} = \frac{1}{2}$, and hence the output \acrshort{fm} has 4 times fewer pixels. Equation \eqref{label:conv_spatial_red_tot} represents the spatial reduction during convolution as a function of the stride \cite{ma_optimizing_2018}. There are also other ways to reduce the spatial dimensions of the output \acrshort{fm}. One of them, named \textit{pooling}, will be developed in the next section.
 %
 \begin{equation}
-    N_{o\{x,y\}} = \left\lfloor \frac{ N_{i\{x,y\}}}{S} \right\rfloor - N_{k\{x,y\}} + 1
+    N_{o\{x,y\}} = \left\lfloor \frac{ N_{i\{x,y\}} - N_{k\{x,y\}}}{S} \right\rfloor + 1
     \label{label:conv_spatial_red_tot}
 \end{equation}
 

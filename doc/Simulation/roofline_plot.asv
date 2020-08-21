@@ -7,6 +7,8 @@ BW = 16;
 Npar = 8;
 Nnp = 2;
 max_mem = 5570e3;
+BW_wg = 16;
+BW_
 %% Computation
 roof = roofline(f, dsp, BW, hp, ctc);
 %%
@@ -20,6 +22,6 @@ saveas(f,'rooflineFPGA.pdf');
 system('pdfcrop rooflineFPGA.pdf rooflineFPGA.pdf');
 %% Do the DSE
 for Tixy = [1 7 14 28 56 112 224]
-    if (internal_mem(Tixy, Npar, Nnp, BW) <= max_mem)
+    if (internal_mem <= max_mem)
     end
 end
