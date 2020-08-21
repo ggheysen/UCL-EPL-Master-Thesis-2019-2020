@@ -1,5 +1,5 @@
 function comp_roof = comp_roof(Nixy, Tixy, Nif, Nof, Nnp, Npar, ...
-                               Pix, Piy, Pkexf, Pgri, Pof, ...
+                               Pixy, Pkexf, Pgri, Pof, Poxy, ...
                                t, S, f)
 %COMP_ROOF Summary of this function goes here
 %   Detailed explanation goes here
@@ -17,8 +17,8 @@ Nop = 2 *(Expand + DSC); % 2 because Comp + Add
 intertile_exp = ceil(Nixy/Tixy) * ceil(Nixy/Tixy);
 intertile_dsc = ceil(Noxy/Toxy) * ceil(Noxy/Toxy) * 2;
 %% compute intratile cycle
-intratile_exp = ceil(Tixy/Pix) * ceil(Tixy/Piy) * ceil(Npar/Pkexf) * ceil(Ngri/Pgri);
-intratile_dsc = ceil(Toxy/Pix) * ceil(Toxy/Piy) * (2 +  ceil(Nof/Pof));
+intratile_exp = ceil(Tixy/Pixy) * ceil(Tixy/Pixy) * ceil(Npar/Pkexf) * ceil(Ngri/Pgri);
+intratile_dsc = ceil(Toxy/Poxy) * ceil(Toxy/Poxy) * (2 +  ceil(Nof/Pof));
 %% Compute number of cycle
 Expand = intertile_exp * intratile_exp;
 DSC = intertile_dsc * intratile_dsc;

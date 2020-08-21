@@ -2,17 +2,17 @@ function ctc_ratio = ctc_ratio(Noxy, Nif, Nof, Toxy, t, S, Nnp, Npar, BW)
 %BW_ROOF Summary of this function goes here
 %   Detailed explanation goes here
 %% Dimension
+Noxy = Nixy / S;
 K = 3;
-Nixy = (Noxy - 1)*S + K ;
 Tixy = (Toxy - 1)*S + K ;
 %% Compute number of operation for the layer
 Expand = Nixy*Nixy * Nif * t * Nnp * ceil(Nif/Npar);
 DSC = (K*K*t*Nif*Noxy*Noxy) + (Noxy*Noxy * Nof * Nnp * ceil(t*Nif/Npar));
 Nop = 2 *(Expand + DSC); % 2 because Comp + Add
 %% Computation of B, data fetched from external memory to fill the on chip memory
-B_i = Nif * min(Tixy, Nixy) * min(Tixy, Nixy);
+B_i = Nif * Tixy * Tixy;
 B_k = Nif * t * Nif + Nif * t * K * K + Nif * t * Nof;
-B_o = Nof *  min(Toxy, Noxy) * min(Toxy, Noxy);
+B_o = Nof * Toxy * Toxy;
 %% Computation of alpha, number of time we fectch from external mem
 alpha_i = ceil(Noxy / Toxy) * ceil(Noxy / Toxy);
 alpha_k = alpha_i;
