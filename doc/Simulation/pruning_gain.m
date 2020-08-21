@@ -9,7 +9,7 @@ col = {'black'; [0.4 0.4 0.4]; [0.4940, 0.1840, 0.5560]; 'blue'; 'cyan';...
     'green'; 'yellow'; 'magenta'; [0.8500, 0.3250, 0.0980]};
 res_5 = zeros(length(Nof), 1);
 %% Figure properties
-f = figure('visible','off');
+f = figure('visible','on');
 set(gca,'yscale','log')
 hold on;
 xlabel('alpha')
@@ -24,7 +24,7 @@ for j = 1:length(Nof)
             res_5(j) = res(i);
         end
     end
-    plot(alpha, res, 'Color', col{j}, 'DisplayName', ['Nof = ', num2str(Nof(j))]);
+    plot(alpha, res, 'linewidth', 2,'Color', col{j}, 'DisplayName', ['Nof = ', num2str(Nof(j))]);
     drawnow
 end
 

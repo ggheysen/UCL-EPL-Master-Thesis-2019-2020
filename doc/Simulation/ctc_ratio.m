@@ -14,7 +14,7 @@ B_i = Nif * Tixy * Tixy;
 B_k = Nif * t * Nif + Nif * t * K * K + Nif * t * Nof;
 B_o = Nof * Toxy * Toxy;
 %% Computation of alpha, number of time we fectch from external mem
-alpha_i = ceil(Nixy / Tixy) * ceil(Nixy / Tixy);
+alpha_i = ceil(Noxy / Toxy) * ceil(Noxy / Toxy);
 alpha_k = alpha_i;
 alpha_o = ceil(Noxy / Toxy) * ceil(Noxy / Toxy);
 %% Computation of accesses
