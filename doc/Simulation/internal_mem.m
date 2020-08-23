@@ -2,7 +2,6 @@ function mem = internal_mem(Tixy, Toxy, Npar, Nnp, BW )
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 Nixy = [224 112 112 56 56 28 28 14 14 14 14  7   7   7    7    1];
-Nixy = [224 112 112 56 56 28 28 14 14 14 14  7   7   7    7    1];
 Nif  = [3   32  16  24 24 32 32 64 64 96 96  160 160 320  1280 1280];
 Nof  = [32  16  24  24 32 32 64 64 96 96 160 160 320 1280 1280 1000];
 %t    = [    1   6   6  6  6  6  6  6  6  6   6   6];
